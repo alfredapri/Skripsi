@@ -3,7 +3,9 @@
 \usepackage[bahasa]{babel}
 \usepackage{graphicx}
 \usepackage{graphics}
+\usepackage{subcaption}
 \usepackage{float}
+\usepackage[]{hyperref}
 \usepackage[cm]{fullpage}
 \pagestyle{myheadings}
 \usepackage{etoolbox}
@@ -16,12 +18,16 @@
 \makeatletter
 \renewcommand{\@maketitle} {\begin{center} {\LARGE \textbf{ \textsc{\@title}} \par} \bigskip {\large \textbf{\textsc{\@author}} }\end{center} }
 \renewcommand{\thispagestyle}[1]{}
-\markright{\textbf{\textsc{AIF401/AIF402 \textemdash Rencana Kerja Skripsi \textemdash Sem. Genap 2016/2017}}}
+\markright{\textbf{\textsc{AIF401/AIF402 \textemdash Rencana Kerja Skripsi \textemdash Sem. Genap 2021/2022}}}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.4mm}}
 \renewcommand{\baselinestretch}{1}
 \setlength{\parindent}{0 pt}
 \setlength{\parskip}{6 pt}
+
+\graphicspath{{./Gambar/}}% folder tempat gambar 
+%untuk url dan link
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue,citecolor=green,filecolor=magenta, urlcolor=cyan}
 
 \onehalfspacing
  
@@ -31,11 +37,11 @@
 \author{\nama \textendash \@npm} 
 
 %tulis nama dan NPM anda di sini:
-\newcommand{\nama}{Lionov}
-\newcommand{\@npm}{1997730020}
-\newcommand{\@judultopik}{Simulasi Kerumunan di Museum} % Judul/topik anda
+\newcommand{\nama}{Alfred Aprianto Liaunardi}
+\newcommand{\@npm}{6181801014}
+\newcommand{\@judultopik}{Perkakas Command Line KIRI} % Judul/topik anda
 \newcommand{\jumpemb}{1} % Jumlah pembimbing, 1 atau 2
-\newcommand{\tanggal}{01/01/1900}
+\newcommand{\tanggal}{14/03/2022}
 
 % Dokumen hasil template ini harus dicetak bolak-balik !!!!
 
@@ -44,23 +50,43 @@
 \pagenumbering{arabic}
 
 \section{Deskripsi}
-Tuliskan deskripsi dari topik skripsi yang akan anda ajukan. Di sini dapat dituliskan latar belakang, seperti apa penelitian yang sudah ada sebelumnya dan apa yang akan anda kerjakan. Sertakan gambar agar penjelasan anda menjadi lebih baik.
+Semakin pesat perkembangan teknologi, semakin dominan pula penggunaan dan pengaruh teknologi dalam kehidupan kita sehari-hari, salah satunya adalah dalam aspek transportasi. Dengan adanya kendaraan bermotor, seperti mobil dan motor, berpergian ke satu lokasi ke lokasi lainnya berpotensi menjadi lebih mudah, cepat, dan efisien. Seiring dengan perkembangan waktu dan teknologi, sarana transportasi ini menjadi lebih aksesibel ke masyarakat umum, yang menyebabkan semakin banyaknya individu-individu yang memiliki kendaraan bermotor pribadi, dengan beberapa dari mereka bahkan memiliki lebih dari satu.
 
-Pada skripsi ini, akan dibuat sebuah perangkat lunak yang dapat menampilkan visualisasi dan simulasi kerumunan orang yang berkunjung ke sebuah museum. Dengan menggunakan perangkat lunak tersebut, pengelola museum dapat mengatur tempat peletakan objek sehingga tidak terjadi kerumunan yang terlalu padat.
+Dengan bertambahnya kendaraan bermotor yang digunakan oleh masyarakat setiap harinya, timbul sebuah masalah yang sudah membelenggu kota-kota metropolitan selama bertahun-tahun lamanya, yaitu kemacetan. Masalah ini tidak hanya telah menimpa kota-kota besar di seluruh dunia---termasuk di Indonesia, tetapi masalah ini juga tidak menunjukkan tanda-tanda pemulihan selama beberapa tahun terakhir, melainkan dampak-dampak negatif dari kemacetan justru semakin parah, mulai dari pemanasan global, polusi udara, kepadatan tempat parkir kendaraan bermotor, penambahan biaya pemeliharaan infrastruktur bagi pemerintah, penambahan biaya pemeliharaan kendaraan bagi tiap pemiliknya, dan sebagainya.
 
-Dari berbagai macam teknik yang dapat digunakan untuk melakukan simulasi kerumunan, dipilih dua buah teknik yaitu teknik {\it flow tiles} dan {\it social force model (steering behaviour)}.
+Oleh karena alasan-alasan di atas, kendaraan umum sebagai alternatif dari kepemilikan kendaraan bermotor pribadi menjadi semakin penting, guna mengurangi kepadatan kendaraan di jalan-jalan raya. Di Indonesia, sudah banyak kendaraan umum yang dikerahkan oleh pemerintah sebagai bentuk dari usaha untuk mengurangi dampak kemacetan ini, salah satunya adalah angkutan kota, atau biasa disingkat sebagai ``angkot'', seperti terlihat pada gambar \ref{fig:angkot}. Sistem yang dimiliki angkot-angkot yang ada sudah cukup baik, dan penerapannya dapat dikatakan cukup efektif. 
 
-Dst, dst, dst, \ldots\ldots\ldots 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{angkot}
+	\caption[Angkot yang sedang beroperasi]{Angkutan kota (angkot) yang sedang beroperasi}
+	\label{fig:angkot}
+\end{figure}
 
-Perangkat lunak akan dibuat dengan bantuan {\it framework} OpenSteer. Sebagai studi kasus, museum yang digunakan untuk melakukan simulasi adalah Museum Geologi Bandung.
+Walaupun begitu, ada salah satu kelemahan fatal dari sistem ini, yaitu kurangnya akses informasi yang dapat dilihat terlebih dahulu oleh penumpang angkot sebelum menggunakan layanan tersebut. Sistem angkot yang ada bergantung pada kode angka yang ada di angkot tersebut (biasanya ditempelkan pada kaca jendela angkot.) Masing-masing kode angka yang berbeda menandakan bahwa angkot tersebut akan menempuh rute yang berbeda. Hal ini menjadi sebuah kekurangan karena sampai sekarang pun tidak ada akses informasi yang konsisten untuk rute mana saja yang ditempuh angkot-angkot dengan kode angka tertentu---informasi yang ada saat ini hanyalah tulisan lokasi rute yang ditempuh oleh angkot, yang tidak hanya mengandalkan penumpang angkot untuk hafal letak-letak dari lokasi tersebut, tetapi juga terkadang bahkan tidak ada sama sekali, seperti pada Gambar \ref{fig:angkot}, di mana angkot yang ditunjukkan pada gambar tersebut tidak memiliki teks lokasi rute baik di kaca depan, samping, maupun belakang dari angkot tersebut.
 
-Dst, dst, dst, \ldots\ldots\ldots 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{projectkiri}
+	\caption[Tampilan halaman web KIRI]{Tampilan halaman web \href{https://projectkiri.id}{KIRI}, menunjukkan rute dari Cihampelas Walk ke Universitas Katolik Parahyangan.}
+	\label{fig:kiripage}
+\end{figure}
+
+Permasalahan inilah yang merupakan tujuan dari pencetusan Project KIRI. Project KIRI (atau KIRI saja) adalah sebuah perkakas berbasis web yang dapat menunjukkan rute angkot dari satu titik ke titik lain, mulai dari seberapa jauh pengguna harus berjalan untuk menaiki angkot yang bersangkutan, di mana pengguna harus naik atau turun, seberapa jauh lagi pengguna harus berjalan sampai ke titik tujuan, dan seberapa lama estimasi waktu perjalanan yang akan ditempuh.
+
+Pada skripsi ini akan dibuat sebuah perkakas \textit{command line} (\textit{command line tool}) yang dapat menjalankan fungsi-fungsi API dari Project KIRI Keseluruhan dari perangkat lunak ini akan dibangun dalam bahasa C.
 
 \section{Rumusan Masalah}
-Tuliskan rumusan dari masalah yang akan anda bahas pada skripsi ini. Rumusan masalah biasanya berupa kalimat pertanyaan. Gunakan itemize seperti contoh di bagian Deskripsi Perangkat Lunak.
+\begin{itemize}
+	\item Sejauh mana KIRI dapat membantu penumpang angkot untuk mengetahui rute angkot?
+	\item Bagaimana membangun perkakas \textit{command line} yang dapat mengimplementasikan fitur-fitur API KIRI dalam bahasa C?
+\end{itemize}
 
 \section{Tujuan}
-Tuliskan tujuan dari topik skripsi yang anda ajukan. Tujuan penelitian biasanya berkaitan erat dengan pertanyaan yang diajukan di bagian rumusan masalah. Gunakan itemize seperti contoh di bagian Deskripsi Perangkat Lunak.
+\begin{itemize}
+	\item Mengetahui sejauh mana KIRI dapat membantu penumpang angkot untuk mengetahui rute angkot dengan lebih baik.
+	\item Membangun perkakas \textit{command line} yang dapat mengimplementasikan fitur-fitur API KIRI dalam bahasa C.
+\end{itemize}
 
 \section{Deskripsi Perangkat Lunak}
 Tuliskan deksripsi dari perangkat lunak yang akan anda hasilkan. Apa saja fitur yang disediakan oleh PL tersebut dan apa saja kemampuan dari PL tersebut. Perhatikan contoh di bawah ini:
