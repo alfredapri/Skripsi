@@ -52,18 +52,27 @@
 \section{Deskripsi}
 Semakin pesat perkembangan teknologi, semakin dominan pula penggunaan dan pengaruh teknologi dalam kehidupan kita sehari-hari, salah satunya adalah dalam aspek transportasi. Dengan adanya kendaraan bermotor, seperti mobil dan motor, berpergian ke satu lokasi ke lokasi lainnya berpotensi menjadi lebih mudah, cepat, dan efisien. Seiring dengan perkembangan waktu dan teknologi, sarana transportasi ini menjadi lebih aksesibel ke masyarakat umum, yang menyebabkan semakin banyaknya individu-individu yang memiliki kendaraan bermotor pribadi, dengan beberapa dari mereka bahkan memiliki lebih dari satu.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.25]{macet}
+	\caption[Contoh kemacetan yang terjadi di Jakarta]{Contoh kemacetan yang terjadi di Jakarta, Indonesia}
+	\label{fig:macet}
+\end{figure}
+
 Dengan bertambahnya kendaraan bermotor yang digunakan oleh masyarakat setiap harinya, timbul sebuah masalah yang sudah membelenggu kota-kota metropolitan selama bertahun-tahun lamanya, yaitu kemacetan. Masalah ini tidak hanya telah menimpa kota-kota besar di seluruh dunia---termasuk di Indonesia, tetapi masalah ini juga tidak menunjukkan tanda-tanda pemulihan selama beberapa tahun terakhir, melainkan dampak-dampak negatif dari kemacetan justru semakin parah, mulai dari pemanasan global, polusi udara, kepadatan tempat parkir kendaraan bermotor, penambahan biaya pemeliharaan infrastruktur bagi pemerintah, penambahan biaya pemeliharaan kendaraan bagi tiap pemiliknya, dan sebagainya.
 
 Oleh karena alasan-alasan di atas, kendaraan umum sebagai alternatif dari kepemilikan kendaraan bermotor pribadi menjadi semakin penting, guna mengurangi kepadatan kendaraan di jalan-jalan raya. Di Indonesia, sudah banyak kendaraan umum yang dikerahkan oleh pemerintah sebagai bentuk dari usaha untuk mengurangi dampak kemacetan ini, salah satunya adalah angkutan kota, atau biasa disingkat sebagai ``angkot'', seperti terlihat pada gambar \ref{fig:angkot}. Sistem yang dimiliki angkot-angkot yang ada sudah cukup baik, dan penerapannya dapat dikatakan cukup efektif. 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.3]{angkot}
 	\caption[Angkot yang sedang beroperasi]{Angkutan kota (angkot) yang sedang beroperasi}
 	\label{fig:angkot}
 \end{figure}
 
-Walaupun begitu, ada salah satu kelemahan fatal dari sistem ini, yaitu kurangnya akses informasi yang dapat dilihat terlebih dahulu oleh penumpang angkot sebelum menggunakan layanan tersebut. Sistem angkot yang ada bergantung pada kode angka yang ada di angkot tersebut (biasanya ditempelkan pada kaca jendela angkot.) Masing-masing kode angka yang berbeda menandakan bahwa angkot tersebut akan menempuh rute yang berbeda. Hal ini menjadi sebuah kekurangan karena sampai sekarang pun tidak ada akses informasi yang konsisten untuk rute mana saja yang ditempuh angkot-angkot dengan kode angka tertentu---informasi yang ada saat ini hanyalah tulisan lokasi rute yang ditempuh oleh angkot, yang tidak hanya mengandalkan penumpang angkot untuk hafal letak-letak dari lokasi tersebut, tetapi juga terkadang bahkan tidak ada sama sekali, seperti pada Gambar \ref{fig:angkot}, di mana angkot yang ditunjukkan pada gambar tersebut tidak memiliki teks lokasi rute baik di kaca depan, samping, maupun belakang dari angkot tersebut.
+Walaupun begitu, ada salah satu kelemahan fatal dari sistem ini, yaitu kurangnya akses informasi yang dapat dilihat terlebih dahulu oleh penumpang angkot sebelum menggunakan layanan tersebut. Sistem angkot yang ada bergantung pada kode angka yang ada di angkot tersebut (biasanya ditempelkan pada kaca jendela angkot.) Masing-masing kode angka yang berbeda menandakan bahwa angkot tersebut akan menempuh rute yang berbeda. Hal ini menjadi sebuah kekurangan karena sampai sekarang pun tidak ada akses informasi yang konsisten untuk rute mana saja yang ditempuh angkot-angkot dengan kode angka tertentu---informasi yang ada saat ini hanyalah tulisan lokasi rute yang ditempuh oleh angkot, yang tidak hanya mengandalkan penumpang angkot untuk hafal letak-letak dari lokasi tersebut, tetapi juga terkadang bahkan tidak ada sama sekali, seperti pada gambar \ref{fig:angkot}, di mana angkot yang ditunjukkan pada gambar tersebut tidak memiliki teks lokasi rute baik di kaca depan, samping, maupun belakang dari angkot tersebut.
+
+Permasalahan inilah yang merupakan tujuan dari pencetusan Project KIRI. Project KIRI (atau KIRI saja) adalah sebuah perangkat lunak berbasis web yang dapat menunjukkan rute angkot dari satu titik ke titik lain, mulai dari seberapa jauh pengguna harus berjalan untuk menaiki angkot yang bersangkutan, di mana pengguna harus naik atau turun, seberapa jauh lagi pengguna harus berjalan sampai ke titik tujuan, dan seberapa lama estimasi waktu perjalanan yang akan ditempuh. Tampilan dari halaman web ini dapat dilihat di gambar \ref{fig:kiripage}.
 
 \begin{figure}[h]
 	\centering
@@ -72,9 +81,7 @@ Walaupun begitu, ada salah satu kelemahan fatal dari sistem ini, yaitu kurangnya
 	\label{fig:kiripage}
 \end{figure}
 
-Permasalahan inilah yang merupakan tujuan dari pencetusan Project KIRI. Project KIRI (atau KIRI saja) adalah sebuah perkakas berbasis web yang dapat menunjukkan rute angkot dari satu titik ke titik lain, mulai dari seberapa jauh pengguna harus berjalan untuk menaiki angkot yang bersangkutan, di mana pengguna harus naik atau turun, seberapa jauh lagi pengguna harus berjalan sampai ke titik tujuan, dan seberapa lama estimasi waktu perjalanan yang akan ditempuh.
-
-Pada skripsi ini akan dibuat sebuah perkakas \textit{command line} (\textit{command line tool}) yang dapat menjalankan fungsi-fungsi API dari Project KIRI Keseluruhan dari perangkat lunak ini akan dibangun dalam bahasa C.
+Pada skripsi ini akan dibuat sebuah perangkat lunak berupa perkakas \textit{command line} (\textit{command line tool}) yang dapat menjalankan fungsi-fungsi API dari Project KIRI. Perangkat lunak ini, seperti jenisnya, akan dibuat murni sebagai perkakas yang dijalankan dari \textit{command line} (terminal, cmd, PowerShell, dll.), dan tampilan akhir dari perangkat lunak akan berupa \textit{command line interface} (CLI) tanpa tambahan \textit{graphical user interface} (GUI). Keseluruhan dari perangkat lunak ini akan dibangun dalam bahasa C.
 
 \section{Rumusan Masalah}
 \begin{itemize}
