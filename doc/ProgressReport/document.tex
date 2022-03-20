@@ -4,7 +4,9 @@
 \usepackage{graphicx}
 \usepackage{graphics}
 \usepackage{float}
+\usepackage[]{hyperref}
 \usepackage[cm]{fullpage}
+\usepackage{xspace}
 \pagestyle{myheadings}
 \usepackage{etoolbox}
 \usepackage{setspace} 
@@ -16,9 +18,21 @@
 \makeatletter
 \renewcommand{\@maketitle} {\begin{center} {\LARGE \textbf{ \textsc{\@title}} \par} \bigskip {\large \textbf{\textsc{\@author}} }\end{center} }
 \renewcommand{\thispagestyle}[1]{}
-\markright{\textbf{\textsc{Laporan Perkembangan Pengerjaan Skripsi\textemdash Sem. Genap 2015/2016}}}
+\markright{\textbf{\textsc{Laporan Perkembangan Pengerjaan Skripsi\textemdash Sem. Genap 2021/2022}}}
+
+\graphicspath{{./Gambar/}}% folder tempat gambar 
+%untuk url dan link
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue,citecolor=green,filecolor=magenta, urlcolor=cyan}
 
 \onehalfspacing
+
+\hyphenation{me-ngu-rangi}
+\hyphenation{ma-sya-ra-kat}
+\hyphenation{com-mand}
+\hyphenation{line}
+\hyphenation{me-nam-pil-kan}
+\hyphenation{pe-rang-kat}
+\hyphenation{kom-pu-ter}
  
 \begin{document}
 
@@ -26,21 +40,23 @@
 \author{\nama \textendash \@npm} 
 
 %ISILAH DATA BERIKUT INI:
-\newcommand{\nama}{Lionov}
-\newcommand{\@npm}{1997730020}
-\newcommand{\tanggal}{01/01/1900} %Tanggal pembuatan dokumen
-\newcommand{\@judultopik}{Simulasi Kerumunan di Museum} % Judul/topik anda
-\newcommand{\kodetopik}{TAB0901}
-\newcommand{\jumpemb}{2} % Jumlah pembimbing, 1 atau 2
-\newcommand{\pembA}{Thomas Anung Basuki}
+\newcommand{\nama}{Alfred Aprianto Liaunardi}
+\newcommand{\@npm}{6181801014}
+\newcommand{\tanggal}{20/03/2022} %Tanggal pembuatan dokumen
+\newcommand{\@judultopik}{Perkakas Command Line KIRI} % Judul/topik anda
+\newcommand{\kodetopik}{PAN5201}
+\newcommand{\jumpemb}{1} % Jumlah pembimbing, 1 atau 2
+\newcommand{\pembA}{Pascal Alfadian Nugroho, M.Comp.}
 \newcommand{\pembB}{-}
-\newcommand{\semesterPertama}{40 - Genap 15/16} % semester pertama kali topik diambil, angka 1 dimulai dari sem Ganjil 96/97
+\newcommand{\semesterPertama}{52 - Genap 21/22} % semester pertama kali topik diambil, angka 1 dimulai dari sem Ganjil 96/97
 \newcommand{\lamaSkripsi}{1} % Jumlah semester untuk mengerjakan skripsi s.d. dokumen ini dibuat
 \newcommand{\kulPertama}{Skripsi 1} % Kuliah dimana topik ini diambil pertama kali
 \newcommand{\tipePR}{B} % tipe progress report :
 % A : dokumen pendukung untuk pengambilan ke-2 di Skripsi 1
 % B : dokumen untuk reviewer pada presentasi dan review Skripsi 1
 % C : dokumen pendukung untuk pengambilan ke-2 di Skripsi 2
+\newcommand{\cl}{\textit{command line}\xspace}
+\newcommand{\cli}{\textit{command line interface}\xspace}
 
 % Dokumen hasil template ini harus dicetak bolak-balik !!!!
 
@@ -65,55 +81,79 @@ Tipe Laporan : {\bf \tipePR} -
 		}
 		
 \section{Latar Belakang}
+Project KIRI\footnote{\href{https://projectkiri.id}{https://projectkiri.id}} (akan disingkat sebagai KIRI dalam dokumen ini) adalah sebuah perangkat lunak berbasis web yang dibuat untuk \mbox{membantu} mengurangi efek dari kemacetan. KIRI mengurangi dampak kemacetan dengan membantu penggunanya, baik \mbox{masyarakat} maupun turis, dalam menggunakan salah satu sarana transportasi umum yang ada di Indonesia, yaitu angkutan kota (angkot). Cara KIRI \mbox{mempermudah} penggunaan angkot adalah dengan menunjukkan rute yang akan ditempuh, beserta langkah-langkah yang harus dilakukan oleh pengguna yang ingin berpergian dari satu titik ke titik lain, mulai dari seberapa jauh pengguna harus berjalan untuk menaiki angkot yang bersangkutan, di mana pengguna harus naik atau turun, seberapa jauh lagi pengguna harus berjalan sampai ke titik tujuan, dan seberapa lama estimasi waktu perjalanan yang akan ditempuh. Untuk kebutuhan pembuatan perangkat lunak yang memanfaatkan fitur dari KIRI, tersedia juga REST API KIRI yang dapat digunakan secara praktis. Adapun tampilan dari halaman web ini dapat dilihat di gambar \ref{fig:kiripage}. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{projectkiri}
+    \caption[Tampilan halaman web KIRI]{Tampilan halaman web KIRI, yang menunjukkan rute dari Cihampelas Walk ke Universitas Katolik Parahyangan.}
+    \label{fig:kiripage}
+\end{figure}
+
+Sementara itu, dalam komputer, salah satu dari sekian banyak tipe perangkat lunak adalah \textit{command line}. \textit{\mbox{Command} line} adalah perangkat lunak paling sederhana, yang sudah ada sejak pertama kali \mbox{komputer} \mbox{diciptakan}. Perangkat lunak selalu memiliki tampilan berupa \cli (CLI), yang \mbox{tidak} \mbox{memiliki} tampilan apapun selain sebuah kotak yang memuat teks berupa perintah-perintah tertentu, \mbox{baik} perintah yang meminta masukan dari user untuk dilakukan oleh komputer, maupun perintah yang menampilkan keluaran dari komputer, tanpa ada tambahan gambar grafis apapun, seperti pada perangkat lunak dengan tampilan \textit{graphical user interface} (GUI). Singkatnya, tipe perangkat lunak ini bukan merupakan tipe yang paling indah untuk dilihat oleh para pengguna, tetapi jika digunakan dengan tepat, maka \mbox{jenis} \mbox{perangkat} lunak ini bisa menyuruh komputer untuk melakukan banyak sekali perintah-perintah dengan sangat cepat dan sangat efektif.
+
+Pada skripsi ini akan dibuat sebuah perangkat lunak berupa perkakas \cl (\textit{command line tool}) yang dapat menjalankan fungsi-fungsi API dari KIRI. Perangkat lunak ini, seperti jenisnya, akan dibuat murni sebagai perkakas yang dijalankan dari \cl (terminal, cmd, PowerShell, dll.), dan tampilan akhir dari perangkat lunak akan berupa \cli tanpa tambahan \textit{graphical user interface}. Keseluruhan dari perangkat lunak ini akan dibangun dalam bahasa C.
 
 \section{Rumusan Masalah}
+\begin{enumerate}
+	\item Bagaimana membangun perkakas \textit{command line} yang dapat mengimplementasikan fitur-fitur API KIRI dalam bahasa C?
+	\item Bagaimana integrasi perkakas \textit{command line} KIRI dapat dilakukan dengan perkakas-perkakas \textit{command line} lainnya di Linux?
+\end{enumerate}
 
 \section{Tujuan}
+\begin{enumerate}
+	\item Membangun perkakas \textit{command line} yang dapat mengimplementasikan fitur-fitur API KIRI dalam bahasa C.
+	\item Melakukan integrasi perkakas \textit{command line} KIRI dengan perkakas-perkakas \textit{command line} lainnya di Linux.
+\end{enumerate}
+
+\section{Deskripsi Perangkat Lunak}
+Perangkat lunak akhir yang akan dibuat memiliki fitur minimal sebagai berikut:
+\begin{itemize}
+	\item Pengguna dapat memasukkan lokasi awal dan tujuan akhir sebagai masukan dari perangkat lunak.
+	\item Pengguna dapat melihat langkah-langkah yang harus ditempuh dalam perjalanan, mulai dari angkot mana saja yang harus dinaiki, ke mana pengguna harus berjalan kaki untuk bisa mencapai angkot terdekat dari lokasi terakhir pengguna, sampai seberapa jauh pengguna harus berjalan untuk mencapai tujuan akhir.
+	\item Pengguna dapat melihat jarak yang harus ditempuh untuk setiap langkahnya.
+	\item Pengguna dapat melihat seberapa lama waktu perjalanan untuk setiap langkahnya.
+\end{itemize}
 
 
 \section{Detail Perkembangan Pengerjaan Skripsi}
 Detail bagian pekerjaan skripsi sesuai dengan rencan kerja/laporan perkembangan terkahir :
 	\begin{enumerate}
-		\item \textbf{Melakukan survei ke Museum Geologi Bandung untuk mendapatkan denah serta mengetahui perilaku pengunjung museum secara umum (arah perjalanan, kecepatan, lama melihat objek, dll).}\\
+		\item \textbf{Melakukan eksplorasi fungsi-fungsi perangkat lunak KIRI serta eksplorasi cara implementasi API KIRI.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :} Survei sudah dilakukan sebanyak 3x pada tanggal X, Y dan Z. Pada kunjungan pertama, diperhaitkan denah museum dan dibuat sketsa berdasarkan pengamatan. Pada kunjunga kedua, bertemu dengan bagian humas museum dan berhasil mendapatkan denah serta melakukan wawancara. Hasil wawancara sudah dibuat dan ada softcopy-nya. Pada kunjungan ketiga, secara khusus dilihat perilaku pengunjung. Masih direncakanan 2x kunjungan lagi. Bukti-bukti kunjungan dapat dilihat di lampiran
+		{\bf Hasil :} \lipsum[1]
 		
-		\item \textbf{Melakukan analisis pada hasil survei terhadap pergerakan pengunjung di museum dan membuat rancangan denah di komputer yang dilengkapi dengan penghalang dan objek di museum.}\\
+		\item \textbf{Mempelajari bahasa pemrograman C serta mempelajari dokumentasi-dokumentasi dari seluruh modul yang dibutuhkan untuk pembuatan perangkat lunak.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :}
 
-		\item \textbf{Melakukan studi literatur mengenai sifat kolektif suatu kerumunan, teknik {\it social force model} dan teknik {\it flow tiles}}\\
+		\item \textbf{Melakukan analisis dan desain perangkat lunak yang akan dibangun.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :}
 
-		\item \textbf{Mempelajari bahasa pemrograman C++ dan cara menggunakan framework OpenSteer}\\
+		\item \textbf{Melakukan analisis kebutuhan fitur-fitur perangkat lunak dan melakukan eksplorasi \textit{library} yang dapat digunakan dan memenuhi spesifikasi dalam pembuatan perangkat lunak.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :}
 
-		\item \textbf{Merancang pergerakan kerumunan di dalam museum menggunakan teknik {\it social force model} dan {\it flow tiles} serta menggunakan teknik lainnya seperti konsep pathway dan waypoints. Selain itu, dirancang pula adanya waktu tunggu (pada saat pengunjung melihat objek di museum) dan cara pembuatan jalur bagi setiap individu pengunjung}\\
+		\item \textbf{Membangun perangkat lunak berdasarkan rancangan yang sudah dibuat, dengan megimplementasikan seluruh modul dan \textit{library} yang telah ditentukan di tahap sebelumnya dalam bahasa C.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :}
 
-		\item \textbf{Melakukan analisa dan merancang struktur data yang cocok untuk menyimpan penghalang (obstacle)}\\
-		{\bf Status :} dihapuskan/tidak dikerjakan \\
-		{\bf Hasil :} berdasarkan analisis singkat, tidak dilakukan analisis lebih jauh karena tidak diperlukan struktur data baru, karena sudah disediakan oleh OpenSteer versi terbaru
+		\item \textbf{Melakukan pengujian fungsional dan perbaikan \textit{bug}.}\\
+		{\bf Status :} Tidak dikerjakan \\
+		{\bf Hasil :} Berdasarkan analisis singkat, tidak dilakukan analisis lebih jauh karena tidak diperlukan struktur data baru, karena sudah disediakan oleh OpenSteer versi terbaru
 
-		\item \textbf{Mengimplementasikan keseluruhan algoritma dan struktur data yang dirancang, dengan menggunakan framework OpenSteer} \\
+		\item \textbf{Menulis dokumentasi perangkat lunak.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :}
 
-		\item \textbf{Melakukan pengujian (dan eksperimen) yang melibatkan responde untuk menilai hasil simulasi secara kualitatif}\\
+		\item \textbf{Menulis dokumen skripsi.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :}
 
 		\item \textbf{Menulis dokumen skripsi}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :} \lipsum[1]
-		
-		\item \textbf{Mempelajari cara menggunakan fitur manipulasi obstacle yang disediakan oleh framework Opensteer versi terbaru}\\
-		{\bf Status :} baru ditambahkan pada semester ini\\
-		{\bf Hasil :} baru direncanakan karena framework Opensteer versi paling akhir baru selesai diinstall dan dilihat-lihat bagian contoh-contoh simulasinya
-		
+		{\bf Hasil :}
 
 	\end{enumerate}
 
@@ -125,13 +165,12 @@ Langkah-langkah kerja yang berhasil diselesaikan dalam Skripsi 1 ini adalah seba
 \item
 \end{enumerate}
 
-
-
 \section{Kendala yang Dihadapi}
 %TULISKAN BAGIAN INI JIKA DOKUMEN ANDA TIPE A ATAU C
 Kendala - kendala yang dihadapi selama mengerjakan skripsi :
 \begin{itemize}
-	\item Terlalu banyak melakukan prokratinasi
+	\item Note: MASIH CONTOH!
+	\item Terlalu banyak melakukan prokratinasi.
 	\item Terlalu banyak godaan berupa hiburan (game, film, dll)
 	\item Skripsi diambil bersamaan dengan kuliah ASD karena selama 5 semester pertama kuliah tersebut sangat dihindari dan tidak diambil, dan selama 4 semester terakhir kuliah tersebut selalu mendapat nilai E
 	\item Mengalami kesulitan pada saat sudah mulai membuat program komputer karena selama ini selalu dibantu teman
