@@ -2,6 +2,52 @@
 \chapter{Landasan Teori}
 \label{chap:teori}
 
+\section{\textit{Command Line}}
+\label{sec:commandline}
+\textit{Command line} (atau \cli) dapat diartikan sebagai tampilan antarmuka/\textit{interface} yang memproses perintah dari pengguna dan meneruskannya langsung ke sistem operasi untuk dijalankan. Seluruh sistem operasi komputer yang ada memiliki sebuah \cli dalam bentuk \textit{shell}, yang dapat digunakan oleh penggunanya untuk langsung mengakses fungsi atau servis yang disediakan oleh sistem operasi. Sedangkan, perangkat lunak yang memproses \cli ini disebut sebagai \cl \textit{interpreter}, atau \cl \textit{processor}.
+
+%Untuk hampir seluruh distribusi dari sistem operasi Linux, perangkat lunak \textit{shell}-nya bernama \textit{bash}, yang merupakan singkatan dari ``\textbf{B}ourne \textbf{A}gain \textbf{Sh}ell''.\cite{shottsjr:2019:linuxcommandline}
+
+\subsection{\textit{Command Line Interface} dan \textit{Graphical User Interface}}
+\label{sec:commandline-comparison}
+
+Ada beberapa dari tipe antarmuka yang masih banyak digunakan di zaman sekarang, tetapi dua tipe yang paling banyak muncul adalah \cli dan \gui. Perangkat lunak berbasis \cl sendiri bisa memiliki berbagai macam tampilan, tetapi semuanya selalu mengikuti satu bentuk antarmuka umum. Bentuk yang dimaksud adalah sebuah area/\textit{window} yang memuat teks berupa perintah-perintah dari user untuk dilakukan oleh komputer, beserta keluarannya yang juga berupa teks, seperti dapat dilihat pada gambar \ref{fig:commandline-cli}. Jenis perangkat lunak seperti ini disebut memiliki antarmuka jenis \cli (CLI). Adapun dekorasi visual yang dimiliki oleh jenis tampilan ini hanya berupa warna pada teks-teks yang ada, tanpa tambahan gambar apapun. Jika perangkat lunak tersebut memiliki dekorasi dan/atau tombol interaktif berupa gambar grafis, seperti pada gambar \ref{fig:commandline-gui}, maka perangkat lunak tersebut dikategorikan sebagai perangkat lunak berbasis \gui.
+
+\begin{figure}[ht]
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[height=4.7cm]{terminal-linux}
+		\caption{Antarmuka perangkat lunak berbasis \cli.}
+		\label{fig:commandline-cli}
+	\end{subfigure}
+	\hfill
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[height=4.5cm]{gui}
+		\caption{Antarmuka perangkat lunak berbasis \gui.}
+		\label{fig:commandline-gui}
+	\end{subfigure}
+    \caption[Dua jenis tampilan perangkat lunak]{Contoh dua jenis antarmuka (\textit{interface)} perangkat lunak.}
+	\label{fig:commandline-interfacetypes}
+\end{figure}
+
+Selain dari tampilannya sendiri, ada beberapa perbedaan utama lain antara perangkat-perangkat lunak berbasis \cli dengan perangkat lunak berbasis \gui. Adapun perbedaan-perbedaan utama dari kedua jenis antarmuka ini adalah sebagai berikut.
+\begin{itemize}
+	\item Pengunaan sumber daya sistem untuk menjalankan perangkat lunak berbasis \cli lebih rendah dibandingkan dengan perangkat lunak berbasis \gui.
+	\item Bagi pengguna pemula (atau pengguna awam pada umumnya), perangkat lunak berbasis \cli akan lebih sulit digunakan karena tidak adanya bantuan apapun dalam bentuk visual, sehingga satu-satunya cara untuk tahu bagaimana cara menggunakan fitur-fiturnya adalah melalui dokumentasi perangkat lunak yang ada. Karena alasan yang sama pula, perangkat lunak berbasis \cli lebih sulit untuk dibiasakan penggunaannya.
+	\item Automasi perintah yang bersifat berulan-ulang jauh lebih mudah dilakukan pada perangkat lunak berbasis \cli. Hal ini dikarenakan perangkat lunak berbasis \cli tidak hanya lebih mudah untuk dibuat \textit{script}-nya, tetapi juga lebih efisien untuk digunakan ketika ada banyak sekali perintah yang harus dilakukan pada suatu saat tertentu.
+\end{itemize}
+
+\subsection{Cara Kerja \textit{Command Line}}
+\label{sec:commandline-workings}
+
+\subsection{Tipe \textit{Command Line}}
+\label{sec:commandline-type}
+
+
+\section{KIRI}
+\label{sec:kiri}
+
 \section{Skripsi}
 \label{sec:skripsi} 
  
