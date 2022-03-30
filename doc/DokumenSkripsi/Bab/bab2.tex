@@ -4,9 +4,7 @@
 
 \section{\textit{Command Line}}
 \label{sec:commandline}
-\textit{Command line} (atau \cli) dapat diartikan sebagai tampilan antarmuka/\textit{interface} yang memproses perintah dari pengguna dan meneruskannya langsung ke sistem operasi untuk dijalankan. Seluruh sistem operasi komputer yang ada memiliki sebuah \cli dalam bentuk \textit{shell}, yang dapat digunakan oleh penggunanya untuk langsung mengakses fungsi atau servis yang disediakan oleh sistem operasi. Sedangkan, perangkat lunak yang memproses \cli ini disebut sebagai \cl \textit{interpreter}, atau \cl \textit{processor}.
-
-%Untuk hampir seluruh distribusi dari sistem operasi Linux, perangkat lunak \textit{shell}-nya bernama \textit{bash}, yang merupakan singkatan dari ``\textbf{B}ourne \textbf{A}gain \textbf{Sh}ell''.\cite{shottsjr:2019:linuxcommandline}
+\textit{Command line} (atau \cli) dapat diartikan sebagai tampilan antarmuka/\textit{interface} yang memproses perintah dari pengguna dan meneruskannya langsung ke sistem operasi untuk dijalankan. Seluruh sistem operasi komputer yang ada memiliki sebuah \cli dalam bentuk \textit{shell}, yang dapat digunakan oleh penggunanya untuk langsung mengakses fungsi atau servis yang disediakan oleh sistem operasi.\cite{mueller:2007:windowscommandline} Sedangkan, perangkat lunak yang memproses \cli ini disebut sebagai \cl \textit{interpreter}, atau \cl \textit{processor}.
 
 \subsection{\textit{Command Line Interface} dan \textit{Graphical User Interface}}
 \label{sec:commandline-comparison}
@@ -35,11 +33,27 @@ Selain dari tampilannya sendiri, ada beberapa perbedaan utama lain antara perang
 \begin{itemize}
 	\item Pengunaan sumber daya sistem untuk menjalankan perangkat lunak berbasis \cli lebih rendah dibandingkan dengan perangkat lunak berbasis \gui.
 	\item Bagi pengguna pemula (atau pengguna awam pada umumnya), perangkat lunak berbasis \cli akan lebih sulit digunakan karena tidak adanya bantuan apapun dalam bentuk visual, sehingga satu-satunya cara untuk tahu bagaimana cara menggunakan fitur-fiturnya adalah melalui dokumentasi perangkat lunak yang ada. Karena alasan yang sama pula, perangkat lunak berbasis \cli lebih sulit untuk dibiasakan penggunaannya.
-	\item Automasi perintah yang bersifat berulan-ulang jauh lebih mudah dilakukan pada perangkat lunak berbasis \cli. Hal ini dikarenakan perangkat lunak berbasis \cli tidak hanya lebih mudah untuk dibuat \textit{script}-nya, tetapi juga lebih efisien untuk digunakan ketika ada banyak sekali perintah yang harus dilakukan pada suatu saat tertentu.
+	\item Automasi perintah yang bersifat berulan-ulang jauh lebih mudah dilakukan pada perangkat lunak berbasis \cli. Hal ini dikarenakan perangkat lunak berbasis \cli tidak hanya lebih mudah untuk dibuat \textit{script}-nya, tetapi juga lebih efisien untuk digunakan ketika ada banyak sekali perintah yang harus dilakukan pada suatu saat tertentu.\cite{mueller:2007:windowscommandline}
 \end{itemize}
 
-\subsection{Cara Kerja \textit{Command Line}}
-\label{sec:commandline-workings}
+\subsection{Struktur Perintah \textit{Command Line}}
+\label{sec:commandline-commands}
+
+Perangkat lunak \cl memiliki struktur perintah sebagai berikut:\footnote{Ditafsir dari \href{https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html\#Shell-Commands}{Bash Reference Manual} dan \href{https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-xp/bb490954(v=technet.10)}{Microsoft Docs}}
+
+\begin{quote}
+	\centering
+	\textit{prompt command parameter1 parameter2 ... parameterN}
+\end{quote}
+
+\begin{itemize}
+	\item \textit{Prompt} \cite{shottsjr:2019:linuxcommandline} \\
+	\textit{Prompt} merupakan keluaran teks dari \cli yang menandakan tempat/waktu di mana \textit{shell} sudah siap untuk menerima input dari pengguna. \textit{Prompt} umumnya berupa karakter tertentu, seperti tanda dolar (\$), tanda pagar (\#), atau tanda kurung sudut kiri (>).\footnote{\href{http://www.cpm.z80.de/manuals/SID86\_User\_Guide.txt}{http://www.cpm.z80.de/manuals/SID86\_User\_Guide.txt}}
+	\item \textit{Command} \\
+	Merupakan perintah yang diberikan oleh pengguna untuk dijalankan oleh perangkat lunak.
+	\item \textit{Parameter} \\
+	Parameter yang diberikan oleh pengguna sebagai iringan dari perintah yang diinginkan. Parameter biasanya berupa huruf, kata, atau angka, dan merupakan nilai variabel tambahan yang diperlukan untuk operasi yang akan dilakukan oleh perintah yang dimasukkan sebelumnya. Bersifat opsional, dalam arti bahwa beberapa perintah bisa jadi memerlukan \textit{N}-buah parameter, sedangkan beberapa lainnya tidak perlu parameter apapun.
+\end{itemize}
 
 \subsection{Tipe \textit{Command Line}}
 \label{sec:commandline-type}
