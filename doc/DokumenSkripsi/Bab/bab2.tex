@@ -5,7 +5,7 @@
 % Reference test
 %\cite{mueller:2007:windowscommandline}
 %\cite{shottsjr:2019:linuxcommandline}
-%\ce{mitatthew:2007:beginninglinuxprogramming}
+%\cite{matthew:2007:beginninglinuxprogramming}
 %\cite{kerrisk:2010:linuxprogramminginterface}
 
 \section{\textit{Command Line}}
@@ -47,20 +47,60 @@ Selain dari tampilannya sendiri, ada beberapa perbedaan utama lain antara perang
 \subsection{\textit{Command Line} di Linux}
 \label{sec:commandline-linux}
 
-Linux merupakan sebuah sistem operasi yang sangat modular, jadi ada banyak sekali \textit{shell} yang dapat dijalankan dan digunakan di dalamnya. Walaupun begitu, ada satu \textit{shell} yang selalu datang ter-\textit{install} di dalam semua sistem operasi Linux, yaitu \textit{"bash"} (GNU \textit{Bourne Again Shell).}
+Linux merupakan sebuah sistem operasi yang sangat modular, jadi ada banyak sekali \textit{shell} yang dapat dijalankan dan digunakan di dalamnya. Walaupun begitu, ada satu \textit{shell} yang selalu datang ter-\textit{install} di dalam semua sistem operasi Linux, yaitu \textit{"bash"} (GNU \textit{Bourne Again Shell).}\cite{matthew:2007:beginninglinuxprogramming}
 
 \subsubsection{Tampilan}
 \label{sec:commandline-linux-appearance}
 
-%\begin{figure}[ht]
-%	\centering
-%	\includegraphics[width=0.75\linewidth]{terminal-linux}
-%	\caption{Antarmuka perangkat lunak berbasis \cli.}
-%	\label{fig:linux-cli}
-%\end{figure}
+Ketika terminal di Linux dijalankan, akan keluar kotak dialog, beserta sebuah baris. Baris ini biasanya berisi sebuah teks dengan format sebagai berikut.
+
+\begin{verbatim}
+        <nama pengguna>@<nama perangkat>:<direktori yang sedang diproses>$
+\end{verbatim}
+
+Tanda dolar di ujung baris ini menandakan bahwa baris tersebut merupakan baris \textit{shell prompt}, yang merupakan waktu di mana terminal sudah siap menerima masukan dari pengguna untuk diproses. Perlu diingat bahwa di posisi tanda dolar ini, terkadang justru terdapat tanda pagar (\#). Tanda pagar di akhir baris \textit{shell prompt} menandakan bahwa terminal tersebut dijalankan dengan tingkat akses \textit{superuser}, yang berarti bahwa entah pengguna masuk ke sistem sebagai user \textit{root}, atau terminal memiliki izin tingkat \textit{superuser/administrator}.\cite{shottsjr:2019:linuxcommandline}
+
+\begin{figure}[ht]
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{linux-shellprompt-normal}
+		\caption{\textit{Shell prompt} terminal dengan tingkat izin \mbox{normal}.}
+		\label{fig:shellprompt-linux-normal}
+	\end{subfigure}
+	\hfill
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{linux-shellprompt-superuser}
+		\caption{\textit{Shell prompt} terminal dengan tingkat izin \textit{\mbox{superuser}}.}
+		\label{fig:shellprompt-linux-superuser}
+	\end{subfigure}
+    \caption{Baris \textit{shell prompt} terminal di sistem operasi Linux.}
+	\label{fig:commandline-shellprompt-linux}
+\end{figure}
 
 \subsubsection{Navigasi}
 \label{sec:commandline-linux-nav}
+
+Sama seperti di Windows, Linux menyimpan file-filenya di sebuah struktur direktori yang bersifat hierarkial. Hal ini berarti bahwa file-file tersebut disimpan dalam direktori-direktori (atau \textit{folder-folder}) yang tersusun seperti sebuah pohon. dalam arti bahwa satu \textit{folder} bisa jadi berada di dalam satu \textit{folder} lain, atau berisi beberapa \textit{folder} lainnya.\cite{shottsjr:2019:linuxcommandline}
+
+Untuk navigasi, terminal Linux memiliki beberapa perintah utama. Adapun perintah-perintah tersebut adalah sebagai berikut.
+
+\begin{itemize}
+	\item \verb|pwd| \cite{shottsjr:2019:linuxcommandline}\\
+	\verb|pwd| merupakan singkatan dari \textit{print working directory}, yang berarti bahwa perintah ini akan mengeluarkan \textit{working directory}, atau direktori tempat terminal sekarang sedang bekerja/berjalan, sebagai keluaran dari perintah tersebut. Ketika pengguna pertama kali menjalankan terminal, \textit{working directory}-nya selalu merupakan direktori \textit{home} dari perangkat.
+	\item \verb|ls| \cite{shottsjr:2019:linuxcommandline}\\
+	\verb|ls| digunakan untuk menghasilkan keluaran berupa isi dari folder yang dispesifikasi. Biasanya digunakan ketika pengguna sudah memasuki folder yang diinginkan, walaupun dengan perintah ini, pengguna bisa saja mengintip isi dari folder manapun di direktori manapun, dengan mengikutkan direktori yang diinginkan sebagai parameter dari perintah tersebut. Adapun Isi dari folder yang diikutkan sebagai parameter tidak hanya berupa folder lain, tetapi juga seluruh file-file yang ada, walaupun untuk file-file yang disembunyikan (nama file diawali dengan tanda titik), perlu ditambahkan opsi \verb|-a| agar file-file tersebut muncul pula dalam keluarannya.
+	\item \verb|cd| \cite{shottsjr:2019:linuxcommandline}\\
+	\verb|cd| adalah perintah yang berfungsi untuk mengganti \textit{working directory} dari terminal. Untuk melakukan hal tersebut, perintah yang perlu dimasukkan adalah sebagai berikut:
+	
+	\begin{verbatim}
+	                     cd <direktori yang diinginkan>
+	\end{verbatim}
+	
+	Direktori yang diinginkan dapat berupa direktori absolut, atau direktori relatif. Perbedaannya adalah direktori absolut selalu dimulai dari folder \textit{root}, mengikuti folder-folder apapun yang ada di antara \textit{root} sampai ke folder yang diinginkan.
+	
+	Sedangkan, direktori relatif selalu dimulai dari \textit{working directory}. Untuk penggunaan direktori relatif, diperlukan dua buah notasi spesial, yaitu titik (\verb|.|), yang merepresentasikan \textit{working directory} sekarang itu sendiri, dan dua titik (\verb|..|), yang merepresentasikan \textit{parent folder} dari \textit{working directory}.
+\end{itemize}
 
 \subsection{\textit{Command Line} di Windows}
 \label{sec:commandline-windows}
@@ -104,8 +144,6 @@ Antarmuka \cl tipe ini merupakan antarmuka yang datang sebagai fitur dari aplika
 
 \section{KIRI}
 \label{sec:kiri}
-
-%KIRI merupakan sebuah perangkat lunak berbasis web yang \footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
 
 \section{Skripsi}
 \label{sec:skripsi} 
