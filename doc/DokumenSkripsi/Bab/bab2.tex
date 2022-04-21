@@ -147,14 +147,95 @@ Antarmuka \cl tipe ini merupakan antarmuka yang datang sebagai fitur dari aplika
 
 KIRI merupakan sebuah perangkat lunak berbasis web yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun begitu, masih banyak masyarakat lokal sendiri yang segan untuk menaiki transportasi publik, umumnya karena transportasi publik lebih rumit persiapannya dibandingkan dengan transportasi privat, seperti kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
 
-Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot - termasuk kode angkot mana saja yang harus dinaiki, ataupun seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi rute angkot berikutnya.
+Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot. Keluaran ini sudah meliputi kode angkot mana saja yang harus dinaiki, dan juga seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi rute angkot berikutnya.
 
 \subsection{Tampilan}
 \label{sec:kiri-appearance}
 
-\subsection{API}
-\label{sec:kiri-appearance}
+Pada saat pertama kali dibuka, hal pertama yang paling mencolok di halaman awal web KIRI adalah sebuah peta besar di sebelah kiri yang dapat diperbesar ataupun diperkecil. Sedangkan, bagian kanan dari halamannya terdiri atas beberapa bagian. Di bagian paling atas terdapat logo KIRI, beserta sepasang menu \textit{dropdown} - yang pertama merupakan pilihan kota tempat pengguna berada (untuk sekarang hanya tersedia pilihan kota Jakarta dan Bandung), dan yang kedua merupakan pilihan bahasa, entah bahasa Indonesia atau Inggris. Di bawahnya merupakan sepasang menu \textit{dropdown} yang merupakan tempat di mana pengguna memasukkan lokasi awal dan tujuan yang akan diproses oleh KIRI. Terakhir, di bawahnya ada sebuah bagian kosong, yang nantinya akan menjadi tempat di mana KIRI akan meletakkan keluaran dari prosesnya. Adapun tampilan awal dari halaman web ini dapat dilihat di gambar \ref{fig:kiri-base}.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{projectkiri-base}
+    \caption[Tampilan awal halaman web KIRI]{Tampilan awal halaman web KIRI.}
+    \label{fig:kiri-base}
+\end{figure}
+
+Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memasukkan masukan dan menyuruh KIRI untuk memprosesnya. Bagian yang pertama adalah bagian peta, yang setelah pemrosesan masukan, akan memiliki garis-garis berwarna yang menandakan rute angkot maupun tujuan perjalanan kaki yang harus ditempuh oleh pengguna. Bagian kedua adalah bagian keluaran, yang tadinya kosong, sekarang akan berisi langkah-langkah yang harus ditempuh oleh penggunanya untuk pergi dari lokasi awal ke lokasi tujuan. Spesifiknya, perbedaan-perbedaan ini dapat dilihat di gambar \ref{fig:kiri-example}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{projectkiri-example}
+    \caption[Tampilan akhir halaman web KIRI]{Tampilan halaman web KIRI setelah pemrosesan masukan dari pengguna selesai.}
+    \label{fig:kiri-example}
+\end{figure}
+
+\subsection{API}
+\label{sec:kiri-api}
+
+KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. Seluruh permintaan (\textit{request}) yang dilakukan melalui API KIRI harus dilakukan sebagai permintaan tipe GET ke \href{https://projectkiri.id/api}{https://projectkiri.id/api}, beserta parameter-parameter yang dibutuhkan. 
+
+Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
+
+\begin{itemize}
+	\item \verb|version|\\
+	\textbf{Kemungkinan nilai:} \verb|2|\\
+	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
+	\item \verb|mode|\\
+	\textbf{Kemungkinan nilai:} \verb|findroute|\\
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk mode \verb|findroute|, jasa yang akan digunakan adalah jasa pencarian rute dengan angkot.
+	\item \verb|locale|\\
+	\textbf{Kemungkinan nilai:} \verb|en| atau \verb|id|\\
+	Parameter ini mengatur bahasa apa yang akan digunakan dalam keluaran API nantinya\textemdash\verb|en| berarti keluaran akan menggunakan bahasa Inggris, dan \verb|id| berarti keluaran akan menggunakan bahasa Indonesia.
+	\item \verb|start|\\
+	\textbf{Kemungkinan nilai:} \verb|lat|, \verb|lng|; dalam bentuk desimal\\
+	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna.
+	\item \verb|finish|\\
+	\textbf{Kemungkinan nilai:} \verb|lat|, \verb|lng|; dalam bentuk desimal\\
+	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
+	\item \verb|presentation|\\
+	\textbf{Kemungkinan nilai:} \verb|desktop|\\
+	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}.
+	\item \verb|apikey|\\
+	\textbf{Kemungkinan nilai:} angka heksadesimal 16-digit\\
+	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
+\end{itemize}
+
+Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
+
+\begin{itemize}
+	\item \verb|status|\\
+	\textbf{Kemungkinan nilai:} \verb|ok| atau \verb|error|\\
+	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	\item \verb|message|\\
+	Variabel ini bisa berisi dua macam objek. Jika permintaan dari user tidak berhasil diproses, atau dalam kata lain, terjadi sebuah \textit{error}, maka variabel ini akan berisi string yang merupakan pesan \textit{error} serta alasan spesifik mengapa \textit{error} tersebut terjadi. Di lain sisi, jika permintaan dari user berhasil diproses, variabel ini akan mengalami dua perubahan utama. Pertama, nama variabel ini akan berubah menjadi \verb|routingresults|, dan kedua, isi dari variabel ini akan menjadi sebuah \textit{array} JSON yang merupakan respon dari API KIRI berupa keluaran yang akan dilihat oleh pengguna. \textit{Array} JSON ini sendiri terbagi menjadi beberapa variabel lainnya, yang dapat dilihat di daftar di bawah ini.
+	
+	\begin{itemize}
+		\item \verb|steps|\\
+		\textbf{Tipe:} array\\
+		Variabel ini merepresentasikan satu buah langkah yang harus ditempuh oleh pengguna. Adapun \textit{array} ini sendiri berisi variabel-variabel berikut:
+		
+		\begin{itemize}
+			\item Tipe transportasi\\
+			Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
+			\item Kode angkot\\
+			Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
+			\item Array \latlon lokasi\\
+			\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
+			\item Deskripsi langkah\\
+			Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa apa yang digunakan untuk deskripsi ini tergantung parameter \verb|locale| yang diatur dalam masukan.
+			\item URL untuk mendapatkan tiket kendaraan\\
+			Tautan untuk mendapatkan tiket angkutan umum, jika diperlukan. Jika transportasi pada langkah tersebut tidak memerlukan tiket, variabel ini akan berisi \verb|null|.
+			\item URL editor rute\\
+			Tautan untuk meng-edit rute, jika situasinya memungkinkan. Jika tidak, variabel ini akan berisi \verb|null|.
+		\end{itemize}
+		
+		\item \verb|traveltime|\\
+		\textbf{Tipe:} string\\
+		Variabel ini berisi estimasi jangka waktu yang diperlukan untuk menyelesaikan langkah tersebut.
+	\end{itemize}
+	
+\end{itemize}
 
 \section{Skripsi}
 \label{sec:skripsi} 
