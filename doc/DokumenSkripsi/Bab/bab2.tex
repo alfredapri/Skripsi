@@ -136,7 +136,73 @@ Di sistem operasi Windows, ada dua jenis antarmuka \cl, yaitu cmd (\textit{Comma
 \subsubsection{Navigasi}
 \label{sec:commandline-windows-nav}
 
+Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai ketika pengguna sedang berurusan dengan file-file dan navigasi dalam direktori sistem. Kedua perintah tersebut adalah \verb|cd| dan \verb|dir|.
 
+\begin{itemize}
+	\item \verb|cd| (\verb|chdir|)\footnote{\href{https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd}{cd | Microsoft Docs}}\\
+	\verb|cd| merupakan sebuah perintah yang memiliki tiga fungsi utama, yaitu menampilkan \textit{drive} tempat sedang \cl berada (jika pengguna hanya memasukkan \verb|cd| tanpa parameter apapun), menampilkan direktori tempat \cl sedang berada (jika pengguna hanya memasukkan \textit{drive} sebagai parameter, atau fungsi yang paling umumnya, untuk mengganti \textit{working directory} dari \cl.
+	
+	Adapun format dari perintah \verb|dir| adalah sebagai berikut.
+	
+	\begin{verbatim}
+                        cd [/d] [<drive>:][<path>]
+	\end{verbatim}
+	
+	Dengan fungsi dari semua opsi dan parameter yang ada sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|/d|\\
+		Opsi yang menandakan bahwa pengguna ingin mengganti \textit{drive} (partisi) dan juga \textit{working directory} dari \cl.
+		\item \verb|<drive>:|\\
+		Kode huruf dari partisi yang akan diproses.
+		\item \verb|<path>|\\
+		Direktori yang akan diproses. Parameter ini harus diikutkan beserta kode huruf partisi (tidak dapat berdiri sendiri.)
+	\end{itemize}
+	
+	\item \verb|dir|\\
+	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apapun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}).\footnote{\href{https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir}{dir | Microsoft Docs}}
+	
+	Adapun format dari perintah \verb|dir| adalah sebagai berikut.\cite{mueller:2007:windowscommandline}
+	
+	\begin{verbatim}
+dir [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N] 
+[/O[[:]sortorder]] [/P] [/Q] [/R] [/S] [/T[[:]timefield]] [/W] [/X] [/4]
+	\end{verbatim}
+	
+	Untuk perintah ini, seperti terlihat di atas, memiliki banyak sekali opsi dan parameter. Tiap-tiap dari parameter tersebut memiliki fungsi tersendiri, yaitu:
+	\begin{itemize}
+		\item \verb|/A[[:]attributes]|\\
+		Menampilkan file-file dengan atribut tertentu, seperti file yang disembunyikan, file sistem, file \textit{read-only}, dan sebagainya.
+		\item \verb|/B|\\
+		Menghilangkan \textit{heading} dan ringkasan informasi dari keluaran, atau dengan kata lain, hanya menampilkan file-file dan direktori, tanpa informasi tambahan apapun.
+		\item \verb|/C|\\
+		Menggunakan separator koma untuk tiap angka ribuan di ukuran file. Jika opsi yang dimasukkan adalah \verb|/-C|, separator koma justru akan dihilangkan.
+		\item \verb|/D|\\
+		Menampilkan keluaran dengan format yang lebih lebar. Jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan kolom.
+		\item \verb|/L|\\
+		Seluruh teks dalam keluaran akan menggunakan huruf kecil. Jika opsi ini tidak digunakan, keluaran akan mengandung huruf besar dan huruf kecil \textit{mixed case}.
+		\item \verb|/N|\\
+		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
+		\item \verb|/O[[:]sortorder]|\\
+		Menampilkan daftar direktori yang terurut berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan terurut secara menaik.
+		\item \verb|/P|\\
+		Sementara memberhentikan keluaran (memberi jeda kecil) setelah setiap halaman informasi.
+		\item \verb|/Q|\\
+		Menambahkan informasi mengenai pemilik file dalam keluaran.
+		\item \verb|/R|\\
+		Menampilkan \textit{data stream} alternatif, jika ada.
+		\item \verb|/S|\\
+		Mendaftarkan seluruh file di direktori dan subdirektori yang diproses. Tiap-tiap direktori akan memiliki \textit{header} tersendiri dalam keluarannya.
+		\item \verb|/T[[:]timefield]|\\
+		Menspesifikasi \textit{time field} mana yang akan tampil dan digunakan sebagai urutan, jika aturan pengurutan lain tidak ditentukan. \textit{Time field} yang dapat digunakan adalah waktu pembuatan file, kapan terakhir file diakses, dan kapan file terakhir dimodifikasi. Jika parameter ini tidak dispesifikasi, \textit{time field} yang digunakan adalah kapan file terakhir dimodifikasi.
+		\item \verb|/W|\\
+		Menampilkan keluaran dengan format yang lebih lebar. Opsi ini hampir sama dengan \verb|/D|, hanya saja untuk \verb|/W|, jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan baris, dan bukan kolom.
+		\item \verb|/X|\\
+		Menampilkan nama pendek yang dibuat untuk nama-nama file non-8.3. Format penampilannya akan sama seperti opsi \verb|/N|, dengan nama pendeknya ditampilkan di keluaran sebelum nama panjangnya.
+		\item \verb|4|\\
+		Menampilkan angka tahun sebagai angka empat digit.
+	\end{itemize}
+\end{itemize}
 
 % Start of block comment (old ver)
 \begin{comment}
