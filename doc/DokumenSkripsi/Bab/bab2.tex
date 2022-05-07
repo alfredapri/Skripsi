@@ -166,13 +166,13 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 	Adapun format dari perintah \verb|dir| adalah sebagai berikut.\cite{mueller:2007:windowscommandline}
 	
 	\begin{verbatim}
-dir [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N] 
-[/O[[:]sortorder]] [/P] [/Q] [/R] [/S] [/T[[:]timefield]] [/W] [/X] [/4]
+dir [<drive:>][<path>][<filename>] [/A[[:]<attributes>]] [/B] [/C] [/D] [/L] [/N] 
+[/O[[:]<sortorder>]] [/P] [/Q] [/R] [/S] [/T[[:]<timefield>]] [/W] [/X] [/4]
 	\end{verbatim}
 	
 	Untuk perintah ini, seperti terlihat di atas, memiliki banyak sekali opsi dan parameter. Tiap-tiap dari parameter tersebut memiliki fungsi tersendiri, yaitu:
 	\begin{itemize}
-		\item \verb|/A[[:]attributes]|\\
+		\item \verb|/A[[:]<attributes>]|\\
 		Menampilkan file-file dengan atribut tertentu, seperti file yang disembunyikan, file sistem, file \textit{read-only}, dan sebagainya.
 		\item \verb|/B|\\
 		Menghilangkan \textit{heading} dan ringkasan informasi dari keluaran, atau dengan kata lain, hanya menampilkan file-file dan direktori, tanpa informasi tambahan apapun.
@@ -185,7 +185,7 @@ dir [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N]
 		\item \verb|/N|\\
 		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
 		\newpage \enlargethispage{1.5\baselineskip} % Preventing widow
-		\item \verb|/O[[:]sortorder]|\\
+		\item \verb|/O[[:]<sortorder>]|\\
 		Menampilkan daftar direktori yang terurut berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan terurut secara menaik.
 		\item \verb|/P|\\
 		Memberhentikan keluaran selama beberapa waktu singkat (memberi jeda kecil) setelah setiap halaman informasi.
@@ -195,7 +195,7 @@ dir [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N]
 		Menampilkan \textit{data stream} alternatif, jika ada.
 		\item \verb|/S|\\
 		Mendaftarkan seluruh file di direktori dan subdirektori yang diproses. Tiap-tiap direktori akan memiliki \textit{header} tersendiri dalam keluarannya.
-		\item \verb|/T[[:]timefield]|\\
+		\item \verb|/T[[:]<timefield>]|\\
 		Menspesifikasi \textit{time field} mana yang akan tampil dan digunakan sebagai urutan, jika aturan pengurutan lain tidak ditentukan. \textit{Time field} yang dapat digunakan adalah waktu pembuatan file, kapan terakhir file diakses, dan kapan file terakhir dimodifikasi. Jika parameter ini tidak dispesifikasi, \textit{time field} yang digunakan adalah kapan file terakhir dimodifikasi.
 		\item \verb|/W|\\
 		Menampilkan keluaran dengan format yang lebih lebar. Opsi ini hampir sama dengan \verb|/D|, hanya saja untuk \verb|/W|, jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan baris, dan bukan kolom.
