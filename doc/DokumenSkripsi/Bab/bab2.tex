@@ -278,7 +278,7 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 	
 	\begin{itemize}
 		\item \verb|steps|\\
-		\textbf{Tipe:} array\\
+		\textbf{Tipe:} \textit{array}\\
 		Variabel ini merepresentasikan satu buah langkah yang harus ditempuh oleh pengguna. Adapun \textit{array} ini sendiri berisi variabel-variabel berikut:
 		
 		\begin{itemize}
@@ -286,7 +286,7 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 			Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
 			\item Kode angkot\\
 			Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
-			\item Array \latlon lokasi\\
+			\item \textit{Array} \latlon lokasi\\
 			\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
 			\item Deskripsi langkah\\
 			Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa yang digunakan tergantung parameter \verb|locale| yang diatur dalam masukan.
