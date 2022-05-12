@@ -62,7 +62,7 @@ Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON dengan propert
 Perkakas \cl ini berfungsi untuk melakukan pencarian melalui API iTunes, sehingga seakan-akan pengguna langsung melakukan pencarian di iTunes sendiri. Hasil pencarian yang dilakukan termasuk judul lagu, nama artis, ataupun nama album, dan pengguna dapat memilih secara spesifik objek apa yang ingin dicari.
 
 \subsubsection{Penggunaan}
-\label{sec:similarapps-chromewebstore-usage}
+\label{sec:similarapps-itunesapi-usage}
 
 Perkakas ini dapat digunakan melalui \textit{command prompt} dengan cara mengetikkan perintah sebagai berikut.
 
@@ -98,15 +98,67 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\linewidth]{itunesapi}
-    \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi.\footnote{Gambar hanya memuat satu objek untuk menghemat tempat.}}
+    \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi. Gambar hanya memuat satu objek untuk menghemat tempat.}
     \label{fig:similarapps-itunesapi}
 \end{figure}
 
-\section{Analisis Modul-Modul Bahasa C}
+\section{Analisis Modul dan Fungsi Bahasa C}
 \label{sec:cmodules}
 
-
+Di bagian ini akan dilakukan analisis terhadap seluruh modul dan fungsi dalam bahasa pemrograman C yang akan digunakan dalam pebuatan perkakas ini.
 
 \subsection{getopt}
 \label{sec:cmodules-getopt}
 
+\verb|getopt| merupakan sebuah fungsi yang dapat mengautomasi pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl berbasis UNIX.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Getopt.html}}
+\newline\newline\noindent
+Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
+
+\begin{verbatim}
+                         getopt (argc, argv, <options>)
+\end{verbatim}
+
+Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
+\vspace{\baselineskip}
+Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
+
+\begin{itemize}
+	\item \verb|opterr|\\
+	Isi dari variabel ini akan memberi signal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
+	\item \verb|optopt|\\
+	Ketika \verb|getopt| menemukan sebuah karakter yang tidak didefinisikan dalam kumpulan opsi, atau sebuah opsi yang tidak disertai argumen yang diperlukan, karakter tersebut akan disimpan di variabel ini.
+	\item \verb|optind|\\
+	Variabel ini digunakan oleh \verb|getopt| sebagai indeks untuk \textit{array} \verb|argv|. Jika seluruh argumen sudah diproses, nilai variabel ini dapat digunakan untuk menentukan argumen mana yang merupakan arguman tambahan yang tidak terpakai. Nilai dari variabel ini dimulai dari 1.
+	\item \verb|optarg|\\
+	Jika opsi yang sedang diproses memerlukan argumen, variabel ini adalah tempat dimana argumen tersebut akan disimpan.
+	\item \verb|<options>|\\
+	Variabel ini berupa \textit{string} yang menandakan karakter-karakter apa saja yang menjadi opsi yang mungkin dalam perkakas tersebut, beserta tipenya. Jika karakter opsi:
+	
+	\begin{itemize}
+		\item Diikuti dengan titik dua (\verb|:|), maka opsi tersebut memiliki argumen yang bersifat wajib.
+		\item Diikuti dengan titik dua ganda (\verb|::|), maka opsi tersebut memiliki argumen yang bersifat opsional.
+		\item Tidak diikuti apa-apa, maka opsi tersebut merupakan opsi tidak berarguman.
+	\end{itemize}
+	
+\end{itemize}
+
+\subsubsection{getopt-long}
+\label{sec:cmodules-getopt-long}
+
+Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata.
+
+\verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
+
+\begin{itemize}
+	\item \verb|name|\\
+	Variabel ini merupakan nama panjang dari opsi.
+	\item \verb|has_arg|\\
+	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai yang mungkin dalam variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
+	\item \verb|flag| \& \verb|val|\\ 
+	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt-long|. Variabel \verb|flag| dapat diisi dengan penunjuk ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt-long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt-long| akan mengembalikan isi dari variabel \verb|val|.
+\end{itemize}
+\noindent
+Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
+
+\section{Analisis API KIRI}
+\label{sec:kiri-analysis}
