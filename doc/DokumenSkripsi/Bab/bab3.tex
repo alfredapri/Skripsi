@@ -55,7 +55,7 @@ Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON dengan propert
 	\item \verb|id|\\
 	Properti ini mengandung ID dari ekstensi tersebut. Nilai dari properti ini akan sama dengan ID yang digunakan sebagai parameter masukan perkakas.
 \end{itemize}
-
+\vfill
 \subsection{\itunesapi\footnote{\href{https://github.com/awcross/itunes-search-api}{https://github.com/awcross/itunes-search-api}}}
 \label{sec:similarapps-itunesapi}
 
@@ -102,10 +102,10 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
     \label{fig:similarapps-itunesapi}
 \end{figure}
 
-\section{Analisis Modul dan Fungsi Bahasa C}
+\section{Analisis Fungsi dan \textit{Library} Bahasa C}
 \label{sec:cmodules}
 
-Di bagian ini akan dilakukan analisis terhadap seluruh modul dan fungsi dalam bahasa pemrograman C yang akan digunakan dalam pebuatan perkakas ini.
+Di bagian ini akan dilakukan analisis terhadap seluruh fungsi bawaan, serta \textit{library-library} bahasa pemrograman C yang akan digunakan dalam pebuatan perkakas ini.
 
 \subsection{getopt}
 \label{sec:cmodules-getopt}
@@ -119,7 +119,7 @@ Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
 \end{verbatim}
 
 Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
-\vspace{\baselineskip}
+\newline\newline
 Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
 
 \begin{itemize}
@@ -160,5 +160,70 @@ Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima du
 \noindent
 Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
 
-\section{Analisis API KIRI}
-\label{sec:kiri-analysis}
+\section{Analisis API KIRI\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}}
+\label{sec:analysis-kiri}
+
+API KIRI dapat digunakan dengan mengirim sebuah permintaan GET ke alamat API\footnote{\href{https://projectkiri.id/api}{https://projectkiri.id/api}} dari KIRI. Permintaan tersebut harus memiliki parameter-parameter sebagai berikut.
+
+\begin{itemize}
+	\item \verb|version|\\
+	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
+	\item \verb|mode|\\
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna.
+	\item \verb|locale|\\
+	Parameter ini mengatur bahasa apa yang akan digunakan dalam keluaran API.
+	\item \verb|start|\\
+	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna.
+	\item \verb|finish|\\
+	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
+	\item \verb|presentation|\\
+	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}.
+	\item \verb|apikey|\\
+	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
+\end{itemize}
+\vspace{\baselineskip}\noindent
+Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI\footnote{\href{https://projectkiri.id/dev/apikeys}{https://
+projectkiri.id/dev/apikeys}}, yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{projectkiri-apikey}
+    \caption[Halaman web \textit{API Keys} KIRI.]{Halaman web \textit{API Keys} KIRI.}
+    \label{fig:kiri-apikeypage}
+\end{figure}
+
+Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
+\newline\newline
+Ketika seluruh parameter sudah valid dan berhasil diproses oleh API, sebuah keluaran berupa objek JSON akan dikirim kembali ke user. Adapun keluaran tersebut memiliki variabel-variabel sebagai berikut.
+
+\begin{itemize}
+	\item \verb|status|\\
+	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	\item \verb|message|/\verb|routingresults|\\
+	Isi utama dari respon API. Jika permintaan dari user tidak berhasil diproses, variabel ini akan bernama \verb|message| dan berisi pesan \textit{error} beserta alasan spesifik mengapa \textit{error} tersebut terjadi. Jika permintaan dari user berhasil diproses, nama variabel ini akan menjadi \verb|routingresults|, dan isi dari variabel ini adalah sebuah \textit{array} JSON yang merupakan data keluaran dari API KIRI. \textit{Array} JSON ini sendiri terbagi menjadi beberapa variabel lainnya, yang dapat dilihat di daftar di bawah ini.
+
+\begin{itemize}
+	\item \verb|steps|\\
+	Variabel ini merupakan array yang tiap-tiap elemennya merepresentasikan satu buah langkah yang harus ditempuh oleh pengguna. Adapun tiap elemen ini sendiri berisi variabel-variabel berikut:
+	
+	\begin{itemize}
+		\item Tipe transportasi\\
+		Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
+		\item Kode angkot\\
+		Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
+		\item \textit{Array} \latlon lokasi\\
+		\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
+		\item Deskripsi langkah\\
+		Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa yang digunakan tergantung parameter \verb|locale| yang diatur dalam masukan.
+		\item URL untuk mendapatkan tiket kendaraan\\
+		Tautan untuk mendapatkan tiket angkutan umum, jika diperlukan. Jika transportasi pada langkah tersebut tidak memerlukan tiket, variabel ini akan berisi \verb|null|.
+		\item URL editor rute\\
+		Tautan untuk meng-edit rute, jika situasinya memungkinkan. Jika tidak, variabel ini akan berisi \verb|null|.
+	\end{itemize}
+		
+	\item \verb|traveltime|\\
+	\textbf{Tipe:} string\\
+	Variabel ini berisi estimasi jangka waktu yang diperlukan untuk menyelesaikan langkah tersebut.
+\end{itemize}
+	
+\end{itemize}
