@@ -124,8 +124,7 @@ API KIRI dapat digunakan dengan mengirim sebuah permintaan GET ke alamat API\foo
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
 
-Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI\footnote{\href{https://projectkiri.id/dev/apikeys}{https://
-projectkiri.id/dev/apikeys}}, yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
+Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
 
 \begin{figure}[ht]
     \centering
@@ -135,7 +134,7 @@ projectkiri.id/dev/apikeys}}, yang dapat dilihat di gambar \ref{fig:kiri-apikeyp
 \end{figure}
 
 Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
-\newline\newline
+
 Ketika seluruh parameter sudah valid dan berhasil diproses oleh API, sebuah keluaran berupa objek JSON akan dikirim kembali ke user. Adapun keluaran tersebut memiliki variabel-variabel sebagai berikut.
 
 \begin{itemize}
@@ -151,6 +150,7 @@ Ketika seluruh parameter sudah valid dan berhasil diproses oleh API, sebuah kelu
 	\begin{itemize}
 		\item Tipe transportasi\\
 		Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
+		\newpage % prevent widow
 		\item Kode angkot\\
 		Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
 		\item \textit{Array} \latlon lokasi\\
@@ -187,7 +187,7 @@ Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
 Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
 \newline\newline
 Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
-
+\newpage % prevent widow
 \begin{itemize}
 	\item \verb|opterr|\\
 	Isi dari variabel ini akan memberi signal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
@@ -228,6 +228,15 @@ Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh v
 
 \subsection{libcurl}
 \label{sec:cmodules-libcurl}
+
+libcurl merupakan sebuah \textit{library} yang digunakan untuk transfer berkas dengan berbagai protokol, seperti DICT, FILE, FTP, FTPS, GOPHER, HTTP, HTTPS, dan sebagainya. Tidak hanya itu, libcurl juga sangat portabel\textemdash dalam arti bahwa libcurl bisa digunakan (dan berjalan dengan tingkat fungsionalitas yang sama) di banyak sistem operasi, seperti Windows, Linux, MacOS, NetBSD, Solaris, Amiga, dan lain-lain.\footnote{\href{https://curl.se/libcurl/}{https://curl.se/libcurl/}}
+
+\subsubsection{API\footnote{\href{https://curl.se/libcurl/c/libcurl.html}{https://curl.se/libcurl/c/libcurl.html}}}
+\label{sec:cmodules-libcurl-CAPI}
+
+libcurl juga memiliki sebuah API yang dapat digunakan untuk perangkat-perangkat lunak dalam bahasa C. API ini memiliki sebuah \textit{environment} global yang konstan. Ini berarti bahwa setiap perangkat lunak yang membutuhkan API ini harus menginisialisasi \textit{environment} ini (dengan memanggil \verb|curl_global_init()|), dan ketika perangkat lunak sudah selesai digunakan/dijalankan, fungsi \verb|curl_global_cleanup()| harus dipanggil pula.
+
+Untuk mulai melakukan transfer berkas, diperlukan juga sebuah ``\textit{easy handle}'' yang dapat digunakan untuk satu orang individu/pihak, dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
 
 \subsection{cJSON}
 \label{sec:cmodules-cJSON}
