@@ -139,7 +139,7 @@ Di sistem operasi Windows, ada dua jenis antarmuka \cl, yaitu cmd (\textit{Comma
 Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai ketika pengguna sedang berurusan dengan file-file dan navigasi dalam direktori sistem. Kedua perintah tersebut adalah \verb|cd| dan \verb|dir|.
 
 \begin{itemize}
-	\item \verb|cd| (\verb|chdir|)\footnote{\href{https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd}{cd | Microsoft Docs}}\\
+	\item \verb|cd| (\verb|chdir|) \cite{microsoftdocs:2021:cd}\\
 	\verb|cd| merupakan sebuah perintah yang memiliki tiga fungsi utama, yaitu menampilkan \textit{drive} tempat sedang \cl berada (jika pengguna hanya memasukkan \verb|cd| tanpa parameter apapun), menampilkan direktori tempat \cl sedang berada (jika pengguna hanya memasukkan \textit{drive} sebagai parameter, atau fungsi yang paling umumnya, untuk mengganti \textit{working directory} dari \cl.
 	\newline\newline
 	Adapun format dari perintah \verb|dir| adalah sebagai berikut.
@@ -161,7 +161,7 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 	\end{itemize}
 	
 	\item \verb|dir|\\
-	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apapun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}).\footnote{\href{https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir}{dir | Microsoft Docs}}
+	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apapun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}).\cite{microsoftdocs:2021:dir}
 	\newline\newline
 	Adapun format dari perintah \verb|dir| adalah sebagai berikut.\cite{mueller:2007:windowscommandline}
 	
@@ -235,12 +235,12 @@ Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memas
     \label{fig:kiri-example}
 \end{figure}
 
-\subsection{API}
+\subsection{API \cite{github:2021:kiriapiv2}}
 \label{sec:kiri-api}
 
 KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. Seluruh permintaan (\textit{request}) yang dilakukan melalui API KIRI harus dilakukan sebagai permintaan tipe GET ke \href{https://projectkiri.id/api}{https://projectkiri.id/api}, beserta parameter-parameter yang dibutuhkan. 
 \newline\newline
-Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
+Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
 
 \begin{itemize}
 	\item \verb|version|\\
@@ -267,7 +267,7 @@ Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
 \vspace{\baselineskip}
-Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
+Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
 
 \begin{itemize}
 	\item \verb|status|\\
