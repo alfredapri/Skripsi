@@ -2,13 +2,6 @@
 \chapter{Landasan Teori}
 \label{chap:teori}
 
-% Reference test
-%\cite{mueller:2007:windowscommandline}
-%\cite{hill:2009:effectivewindowspowershell}
-%\cite{shottsjr:2019:linuxcommandline}
-%\cite{matthew:2007:beginninglinuxprogramming}
-%\cite{kerrisk:2010:linuxprogramminginterface}
-
 \section{\textit{Command Line}}
 \label{sec:commandline}
 \textit{Command line} (atau \cli) dapat diartikan sebagai tampilan antarmuka/\textit{interface} yang memproses perintah dari pengguna dan meneruskannya langsung ke sistem operasi untuk dijalankan.\cite{shottsjr:2019:linuxcommandline} Seluruh sistem operasi komputer yang ada memiliki sebuah \cli dalam bentuk \textit{shell}, yang dapat digunakan oleh penggunanya untuk langsung mengakses fungsi atau servis yang disediakan oleh sistem operasi.\cite{mueller:2007:windowscommandline} 
@@ -235,12 +228,12 @@ Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memas
     \label{fig:kiri-example}
 \end{figure}
 
-\subsection{API \cite{github:2021:kiriapiv2}}
+\subsection{API}
 \label{sec:kiri-api}
 
 KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. Seluruh permintaan (\textit{request}) yang dilakukan melalui API KIRI harus dilakukan sebagai permintaan tipe GET ke \href{https://projectkiri.id/api}{https://projectkiri.id/api}, beserta parameter-parameter yang dibutuhkan. 
 \newline\newline
-Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
+Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
 
 \begin{itemize}
 	\item \verb|version|\\
@@ -267,7 +260,7 @@ Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
 \vspace{\baselineskip}
-Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
+Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel,\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}} yaitu:
 
 \begin{itemize}
 	\item \verb|status|\\
