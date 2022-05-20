@@ -14,33 +14,320 @@
 % Perhatian: Abaikan warning tentang textasteriskcentered!!
 %
 
-
-\begin{lstlisting}[language=Java, caption=MyCode.c]
-
-// This does not make algorithmic sense, 
-// but it shows off significant programming characters.
-
-#include<stdio.h>
-
-void myFunction( int input, float* output ) {
-	switch ( array[i] ) {
-		case 1: // This is silly code
-			if ( a >= 0 || b <= 3 && c != x )
-				*output += 0.005 + 20050;
-			char = 'g';
-			b = 2^n + ~right_size - leftSize * MAX_SIZE;
-			c = (--aaa + &daa) / (bbb++ - ccc % 2 );
-			strcpy(a,"hello $@?"); 
-	}
-	count = ~mask | 0x00FF00AA;
+\begin{lstlisting}[language=Java, caption=Pesan Error Perkakas \textit{Uber CLI}]
+Could not get time estimates:
+    Error: Request failed with status code 401
+        at createError (C:\Users\Alfred\AppData\Roaming\npm\node_modules\uber-cli\node_modules\axios\lib\core\createError.js:16:15)
+        at settle (C:\Users\Alfred\AppData\Roaming\npm\node_modules\uber-cli\node_modules\axios\lib\core\settle.js:18:12)
+        at IncomingMessage.handleStreamEnd (C:\Users\Alfred\AppData\Roaming\npm\node_modules\uber-cli\node_modules\axios\lib\adapters\http.js:202:11)
+        at IncomingMessage.emit (node:events:538:35)
+        at endReadableNT (node:internal/streams/readable:1345:12)
+        at processTicksAndRejections (node:internal/process/task_queues:83:21) {
+    config: {
+        adapter: [Function: httpAdapter],
+        transformRequest: { '0': [Function: transformRequest] },
+        transformResponse: { '0': [Function: transformResponse] },
+        timeout: 0,
+        xsrfCookieName: 'XSRF-TOKEN',
+        xsrfHeaderName: 'X-XSRF-TOKEN',
+        maxContentLength: -1,
+        validateStatus: [Function: validateStatus],
+        headers: {
+            Accept: 'application/json, text/plain, */*',
+            Authorization: 'Token We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh',
+            'Accept-Language': 'en_US',
+            'User-Agent': 'axios/0.18.1'
+        },
+        method: 'get',
+        baseURL: 'https://api.uber.com/v1.2/estimates',
+        url: 'https://api.uber.com/v1.2/estimates/time',
+        params: {
+            start_latitude: 42.3697672,
+            start_longitude: -71.077356,
+            productId: null
+        },
+        data: undefined
+    },
+    request: <ref *1> ClientRequest {
+        _events: [Object: null prototype] {
+            abort: [Function (anonymous)],
+            aborted: [Function (anonymous)],
+            error: [Function (anonymous)],
+            socket: [Function (anonymous)],
+            timeout: [Function (anonymous)],
+            prefinish: [Function: requestOnPrefinish]
+        },
+        _eventsCount: 6,
+        _maxListeners: undefined,
+        outputData: [],
+        outputSize: 0,
+        writable: true,
+        destroyed: false,
+        _last: true,
+        chunkedEncoding: false,
+        shouldKeepAlive: false,
+        maxRequestsOnConnectionReached: false,
+        _defaultKeepAlive: true,
+        useChunkedEncodingByDefault: false,
+        sendDate: false,
+        _removedConnection: false,
+        _removedContLen: false,
+        _removedTE: false,
+        _contentLength: 0,
+        _hasBody: true,
+        _trailer: '',
+        finished: true,
+        _headerSent: true,
+        _closed: false,
+        socket: TLSSocket {
+            _tlsOptions: [Object],
+            _secureEstablished: true,
+            _securePending: false,
+            _newSessionPending: false,
+            _controlReleased: true,
+            secureConnecting: false,
+            _SNICallback: null,
+            servername: 'api.uber.com',
+            alpnProtocol: false,
+            authorized: true,
+            authorizationError: null,
+            encrypted: true,
+            _events: [Object: null prototype],
+            _eventsCount: 10,
+            connecting: false,
+            _hadError: false,
+            _parent: null,
+            _host: 'api.uber.com',
+            _readableState: [ReadableState],
+            _maxListeners: undefined,
+            _writableState: [WritableState],
+            allowHalfOpen: false,
+            _sockname: null,
+            _pendingData: null,
+            _pendingEncoding: '',
+            server: undefined,
+            _server: null,
+            ssl: [TLSWrap],
+            _requestCert: true,
+            _rejectUnauthorized: true,
+            parser: null,
+            _httpMessage: [Circular *1],
+            [Symbol(res)]: [TLSWrap],
+            [Symbol(verified)]: true,
+            [Symbol(pendingSession)]: null,
+            [Symbol(async_id_symbol)]: 48,
+            [Symbol(kHandle)]: [TLSWrap],
+            [Symbol(kSetNoDelay)]: false,
+            [Symbol(lastWriteQueueSize)]: 0,
+            [Symbol(timeout)]: null,
+            [Symbol(kBuffer)]: null,
+            [Symbol(kBufferCb)]: null,
+            [Symbol(kBufferGen)]: null,
+            [Symbol(kCapture)]: false,
+            [Symbol(kBytesRead)]: 0,
+            [Symbol(kBytesWritten)]: 0,
+            [Symbol(connect-options)]: [Object],
+            [Symbol(RequestTimeout)]: undefined
+        },
+        _header: 'GET /v1.2/estimates/time?start_latitude=42.3697672&start_longitude=-71.077356 HTTP/1.1\r\n' +
+            'Accept: application/json, text/plain, */*\r\n' +
+            'Authorization: Token We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh\r\n' +
+            'Accept-Language: en_US\r\n' +
+            'User-Agent: axios/0.18.1\r\n' +
+            'Host: api.uber.com\r\n' +
+            'Connection: close\r\n' +
+            '\r\n',
+        _keepAliveTimeout: 0,
+        _onPendingData: [Function: nop],
+        agent: Agent {
+            _events: [Object: null prototype],
+            _eventsCount: 2,
+            _maxListeners: undefined,
+            defaultPort: 443,
+            protocol: 'https:',
+            options: [Object: null prototype],
+            requests: [Object: null prototype] {},
+            sockets: [Object: null prototype],
+            freeSockets: [Object: null prototype] {},
+            keepAliveMsecs: 1000,
+            keepAlive: false,
+            maxSockets: Infinity,
+            maxFreeSockets: 256,
+            scheduling: 'lifo',
+            maxTotalSockets: Infinity,
+            totalSocketCount: 1,
+            maxCachedSessions: 100,
+            _sessionCache: [Object],
+            [Symbol(kCapture)]: false
+        },
+        socketPath: undefined,
+        method: 'GET',
+        maxHeaderSize: undefined,
+        insecureHTTPParser: undefined,
+        path: '/v1.2/estimates/time?start_latitude=42.3697672&start_longitude=-71.077356',
+        _ended: true,
+        res: IncomingMessage {
+            _readableState: [ReadableState],
+            _events: [Object: null prototype],
+            _eventsCount: 3,
+            _maxListeners: undefined,
+            socket: [TLSSocket],
+            httpVersionMajor: 1,
+            httpVersionMinor: 1,
+            httpVersion: '1.1',
+            complete: true,
+            rawHeaders: [Array],
+            rawTrailers: [],
+            aborted: false,
+            upgrade: false,
+            url: '',
+            method: null,
+            statusCode: 401,
+            statusMessage: 'Unauthorized',
+            client: [TLSSocket],
+            _consuming: false,
+            _dumped: false,
+            req: [Circular *1],
+            responseUrl: 'https://api.uber.com/v1.2/estimates/time?start_latitude=42.3697672&start_longitude=-71.077356',
+            redirects: [],
+            [Symbol(kCapture)]: false,
+            [Symbol(kHeaders)]: [Object],
+            [Symbol(kHeadersCount)]: 24,
+            [Symbol(kTrailers)]: null,
+            [Symbol(kTrailersCount)]: 0,
+            [Symbol(RequestTimeout)]: undefined
+        },
+        aborted: false,
+        timeoutCb: null,
+        upgradeOrConnect: false,
+        parser: null,
+        maxHeadersCount: null,
+        reusedSocket: false,
+        host: 'api.uber.com',
+        protocol: 'https:',
+        _redirectable: Writable {
+            _writableState: [WritableState],
+            _events: [Object: null prototype],
+            _eventsCount: 2,
+            _maxListeners: undefined,
+            _options: [Object],
+            _redirectCount: 0,
+            _redirects: [],
+            _requestBodyLength: 0,
+            _requestBodyBuffers: [],
+            _onNativeResponse: [Function (anonymous)],
+            _currentRequest: [Circular *1],
+            _currentUrl: 'https://api.uber.com/v1.2/estimates/time?start_latitude=42.3697672&start_longitude=-71.077356',
+            [Symbol(kCapture)]: false
+        },
+        [Symbol(kCapture)]: false,
+        [Symbol(kNeedDrain)]: false,
+        [Symbol(corked)]: 0,
+        [Symbol(kOutHeaders)]: [Object: null prototype] {
+            accept: [Array],
+            authorization: [Array],
+            'accept-language': [Array],
+            'user-agent': [Array],
+            host: [Array]
+        }
+    },
+    response: {
+        status: 401,
+        statusText: 'Unauthorized',
+        headers: {
+            date: 'Fri, 20 May 2022 12:46:31 GMT',
+            'content-type': 'application/json',
+            'content-length': '75',
+            'x-uber-edge': 'e4-dca4:w:85',
+            'strict-transport-security': 'max-age=31536000',
+            'x-content-type-options': 'nosniff',
+            'x-xss-protection': '1; mode=block',
+            'x-frame-options': 'SAMEORIGIN',
+            'cache-control': 'max-age=0',
+            'x-envoy-upstream-service-time': '69',
+            server: 'ufe',
+            connection: 'close'
+        },
+        config: {
+            adapter: [Function: httpAdapter],
+            transformRequest: [Object],
+            transformResponse: [Object],
+            timeout: 0,
+            xsrfCookieName: 'XSRF-TOKEN',
+            xsrfHeaderName: 'X-XSRF-TOKEN',
+            maxContentLength: -1,
+            validateStatus: [Function: validateStatus],
+            headers: [Object],
+            method: 'get',
+            baseURL: 'https://api.uber.com/v1.2/estimates',
+            url: 'https://api.uber.com/v1.2/estimates/time',
+            params: [Object],
+            data: undefined
+        },
+        request: <ref *1> ClientRequest {
+            _events: [Object: null prototype],
+            _eventsCount: 6,
+            _maxListeners: undefined,
+            outputData: [],
+            outputSize: 0,
+            writable: true,
+            destroyed: false,
+            _last: true,
+            chunkedEncoding: false,
+            shouldKeepAlive: false,
+            maxRequestsOnConnectionReached: false,
+            _defaultKeepAlive: true,
+            useChunkedEncodingByDefault: false,
+            sendDate: false,
+            _removedConnection: false,
+            _removedContLen: false,
+            _removedTE: false,
+            _contentLength: 0,
+            _hasBody: true,
+            _trailer: '',
+            finished: true,
+            _headerSent: true,
+            _closed: false,
+            socket: [TLSSocket],
+            _header: 'GET /v1.2/estimates/time?start_latitude=42.3697672&start_longitude=-71.077356 HTTP/1.1\r\n' +
+                'Accept: application/json, text/plain, */*\r\n' +
+                'Authorization: Token We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh\r\n' +
+                'Accept-Language: en_US\r\n' +
+                'User-Agent: axios/0.18.1\r\n' +
+                'Host: api.uber.com\r\n' +
+                'Connection: close\r\n' +
+                '\r\n',
+            _keepAliveTimeout: 0,
+            _onPendingData: [Function: nop],
+            agent: [Agent],
+            socketPath: undefined,
+            method: 'GET',
+            maxHeaderSize: undefined,
+            insecureHTTPParser: undefined,
+            path: '/v1.2/estimates/time?start_latitude=42.3697672&start_longitude=-71.077356',
+            _ended: true,
+            res: [IncomingMessage],
+            aborted: false,
+            timeoutCb: null,
+            upgradeOrConnect: false,
+            parser: null,
+            maxHeadersCount: null,
+            reusedSocket: false,
+            host: 'api.uber.com',
+            protocol: 'https:',
+            _redirectable: [Writable],
+            [Symbol(kCapture)]: false,
+            [Symbol(kNeedDrain)]: false,
+            [Symbol(corked)]: 0,
+            [Symbol(kOutHeaders)]: [Object: null prototype]
+        },
+        data: {
+            code: 'unauthorized',
+            message: 'Invalid OAuth 2.0 credentials provided.'
+        }
+    }
 }
-
-// Fonts for Displaying Program Code in LATEX
-// Adrian P. Robson, nepsweb.co.uk
-// 8 October 2012
-// http://nepsweb.co.uk/docs/progfonts.pdf
-
 \end{lstlisting}
 
-\lstinputlisting[language=Java, caption=MyCode.java]{./Lampiran/MyCode.java} 
+%\lstinputlisting[language=Java, caption=MyCode.java]{./Lampiran/MyCode.java} 
 

@@ -4,12 +4,12 @@
 \section{Analisis Aplikasi Sejenis}
 \label{sec:analysis-similarapps}
 
-Untuk pembuatan perangkat lunak dalam skripsi ini, ada dua buah perkakas \cl yang akan diamati sebagai aplikasi sejenis, yaitu \chromewebstorecli dan \textit{iTunes Search API}.
+Untuk pembuatan perangkat lunak dalam skripsi ini, ada empat buah perkakas \cl yang akan diamati sebagai aplikasi sejenis. Dua dari empat aplikasi pertama adalah \chromewebstorecli dan \textit{iTunes Search API}.
 
 \subsection{\chromewebstorecli\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property-cli}{https://github.com/pandawing/node-chrome-web-store-item-property-cli}}}
 \label{sec:similarapps-chromewebstore}
 
-Perkakas \cl ini merupakan ekstensi dari sebuah aplikasi lain yang memiliki fungsi yang sama, yaitu \textit{Chrome Web Store Item Property}\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property}{https://github.com/pandawing/node-chrome-web-store-item-property}}. Perangkat lunak \textit{Chrome Web Store Item Property} ini merupakan perangkat lunak yang akan memanggil fungsi API untuk mendapatkan metadata dari sebuah ekstensi pada \textit{web store} peramban Google Chrome. Perbedaan dari perkakas ini dengan aplikasi dasarnya adalah bahwa perkakas ini dapat digunakan sebagai perkakas \textit{command line}, sedangkan aplikasi dasarnya hanya bisa digunakan dalam perangkat lunak lainnya sebagai pemanggil fungsi API.
+Perkakas \cl ini merupakan ekstensi dari sebuah aplikasi lain yang memiliki fungsi yang sama, yaitu Chrome \textit{Web Store Item Property}.\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property}{https://github.com/pandawing/node-chrome-web-store-item-property}} Perangkat lunak \chromewebstorecli ini merupakan perangkat lunak yang akan memanggil fungsi API untuk mendapatkan metadata dari sebuah ekstensi pada \textit{web store} peramban Google Chrome. Perbedaan dari perkakas ini dengan aplikasi dasarnya adalah bahwa perkakas ini dapat digunakan sebagai perkakas \textit{command line}, sedangkan aplikasi dasarnya hanya bisa digunakan dalam perangkat lunak lainnya sebagai pemanggil fungsi API.
 
 \subsubsection{Penggunaan}
 \label{sec:similarapps-chromewebstore-usage}
@@ -101,6 +101,82 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
     \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi. Gambar hanya memuat satu objek untuk menghemat tempat.}
     \label{fig:similarapps-itunesapi}
 \end{figure}
+
+Selain dua perkakas \cl tadi, ada dua perkakas lainnya yang bisa digunakan sebagai referensi, tetapi tidak dapat dieksplorasi, dikarenakan kedua aplikasi tersebut tidak berhasil dijalankan dengan sempurna. Adapun perkakas-perkakas tersebut adalah sebagai berikut.
+
+\subsection{\ubercli\footnote{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}}
+\label{sec:similarapps-ubercli}
+
+\ubercli merupakan sebuah perkakas \cl yang dapat digunakan untuk dua fungsi utama. Fungsi pertama dari perkakas ini adalah untuk mendapatkan estimasi untuk seberapa lama waktu yang diperlukan untuk servis taksi \textit{online} dari Uber untuk mencapai lokasi yang ingin dituju, sedangkan fungsi keduanya adalah untuk mengestimasi berapa harga yang harus dibayarkan untuk memakai servis tersebut. 
+\newline\newline\noindent
+Fungsi yang pertama dapat dilakukan memanggil perintah dengan format sebagai berikut.
+
+\begin{verbatim}
+                              uber time <alamat>
+\end{verbatim}
+
+\verb|uber| merupakan perintah dasar dari perkakas ini. \verb|time| merupakan parameter yang menandakan bahwa pengguna ingin menggunakan servis prediksi waktu dari perkakas ini. Selain itu, pengguna harus memasukkan alamat yang ingin dituju sebagai parameter akhir dari perintah yang akan digunakan sebagai masukan. Jika sintaksnya sudah benar, perintah tersebut akan bisa diproses oleh perkakas dengan cara mengirimkan pesan hasil konversi perintah tersebut ke API Uber. Setelah pemrosesan pesan tersebut berhasil, perkakas ini akan menampilkan sebuah keluaran dengan format yang dapat dilihat di gambar \ref{fig:similarapps-ubercli-time}. Perlu diperhatikan juga bahwa keluaran yang dihasilkan oleh perkakas ini akan meliputi seluruh jenis servis yang disediakan oleh Uber.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.425\linewidth]{ubercli-time}
+    \caption[Contoh penggunaan perkakas \ubercli (\textit{time})]{Contoh penggunaan fitur prediksi waktu perjalanan untuk perkakas \ubercli.\protect\footnotemark}
+    \label{fig:similarapps-ubercli-time}
+\end{figure}
+\footnotetext{Gambar diambil dari sumber yang sama dengan \textit{footnote} 5.}
+\newpage\noindent % prevent code below from hanging off the very end of page
+Sedangkan, untuk memanggil fungsi kedua dari perkakas ini, pengguna dapat dilakukan dengan memanggil perintah dengan format berikut.
+
+\begin{verbatim}
+                  uber price -s <alamat awal> -e <alamat akhir>
+\end{verbatim}
+
+Untuk sintaks ini, \verb|uber| memiliki fungsi yang sama dengan sintaks untuk fungsi pertama dari perkakas. \verb|price| merupakan penanda untuk perkakas bahwa pengguna ingin menggunakan servis untuk mengetahui perkiraan harga layanan Uber. Selanjutnya, perkakas akan meminta dua buah opsi beserta parameternya masing-masing. Pertama, opsi \verb|-s|, berarti \textit{start}, yang akan meminta sebuah parameter berupa lokasi yang ingin dipakai sebagai lokasi awal perkiraan harga layanan Uber. Sedangkan opsi \verb|-e|, berarti \textit{end}, akan meminta sebuah parameter berupa lokasi yang ingin dipakai sebagai lokasi akhir jasa perkiraan harga.
+\newline\newline\noindent
+Adapun keluaran dari fungsi kedua ini dapat dilihat di gambar \ref{fig:similarapps-ubercli-price}. Sama seperti keluaran untuk fungsi pertamanya, keluaran untuk fungsi kedua perkakas ini juga meliputi seluruh jasa yang disediakan oleh Uber.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{ubercli-price}
+    \caption[Contoh penggunaan perkakas \ubercli (\textit{price})]{Contoh penggunaan fitur prediksi harga perjalanan untuk perkakas \ubercli.\protect\footnotemark}
+    \label{fig:similarapps-ubercli-price}
+\end{figure}
+\footnotetext{Gambar diambil dari \href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}
+
+\subsubsection{Permasalahan}
+\label{sec:similarapps-ubercli-problem}
+
+Seperti telah dijelaskan di awal bab ini, perkakas ini tidak dapat digunakan. Kesimpulan yang diambil oleh penulis mengenai alasan perkakas ini tidak dapat dijalankan adalah dikarenakan oleh penggunaan API dan modul-modul yang telah usang (\textit{deprecated}). Kesimpulan ini diambil oleh penulis karena dua alasan utama. Pertama, pada awalnya, perkakas ini tidak dapat dijalankan karena API Google \textit{Maps} yang dipakai mengandung baris kode berikut didalamnya.
+
+\begin{verbatim}
+           exports.placesAutoCompleteSessionToken = require('uuid/v4');
+\end{verbatim}
+
+Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket \verb|uuid|, tetapi penggunaannya sudah berubah untuk versi yang lebih barunya. Akan tetapi, setelah diganti baris tersebut ke penggunaan versi barunya pun, perkakas ini masih tetap tidak dapat dijalankan\textemdash sekarang perkakas ini justru mengembalikan kode error seperti dapat dilihat di bagian lampiran \ref{lamp:A}. Singkatnya (seperti tertera di akhir pesan error dalam lampiran tersebut), ini berarti perkakas mencoba untuk mengakses API Uber dengan menggunakan kredensial OAuth 2.0 yang berlaku untuk versi sebelumnya dari API tersebut. Permasalahan ini merupakan permasalahan yang juga ditemukan oleh beberapa pengguna lain, seperti tertera di halaman \textit{GitHub Issues} dari repositori ini.\footnote{\href{https://github.com/jaebradley/uber-cli/issues/87}{https://github.com/jaebradley/uber-cli/issues/87}} Oleh karena hal ini tidak lagi merupakan masalah kode perangkat lunak, maka perkakas ini dianggap tidak dapat dipakai.
+
+\subsection{\googlemapscli\footnote{\href{https://github.com/yujinlim/google-maps-direction-cli}{https://github.com/yujinlim/google-maps-direction-cli}}}
+\label{sec:similarapps-googlemapscli}
+
+\googlemapscli merupakan sebuah perkakas \cl yang memiliki kegunaan yang mirip dengan KIRI, hanya saja perkakas ini tidak secara spesifik mengharuskan penggunaan angkot, atau transportasi umum lainnya. Singkatnya, perkakas ini memiliki fungsi seperti sebuah GPS. Untuk menggunakannya, pengguna harus memasukkan perintah dengan bentuk sebagai berikut.
+
+\begin{verbatim}
+                      direction <lokasi awal> <lokasi akhir>
+\end{verbatim}
+
+Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan mengirim permintaan ke API Google \textit{Maps}, di mana jika prosesnya berhasil, keluarannya akan berupa langkah-langkah yang harus ditempuh untuk sampai ke lokasi akhir, beserta di jarak berapa langkah tersebut harus diambil, relatif terhadap langkah sebelumnya. Adapun penggunaan dari perkakas ini dapat dilihat di gambar \ref{fig:similarapps-googlemapscli}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.66667\linewidth]{googlemapscli}
+    \caption[Contoh penggunaan perkakas \googlemapscli]{Contoh penggunaan perkakas \googlemapscli.\protect\footnotemark}
+    \label{fig:similarapps-googlemapscli}
+\end{figure}
+\footnotetext{Gambar diambil dari \href{https://github.com/yujinlim/google-maps-direction-cli}{https://github.com/yujinlim/google-maps-direction-cli}}
+
+\subsubsection{Permasalahan}
+\label{sec:similarapps-googlemapscli-problem}
+
+Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan perkakas ini tidak dapat digunakan lagi-lagi merupakan masalah teknikal, yaitu diperbaruinya API Google \textit{Maps}. Lebih spesifiknya, semenjak 2018, \textit{Google} tidak lagi memperbolehkan penggunaan API Google \textit{Maps} tanpa kunci API, yang sayangnya tidak hanya mendasari perkakas ini, tetapi juga kunci API ini tidak bisa didapatkan tanpa membayarkan biaya tertentu. Oleh karena itu, perkakas ini dianggap tidak bisa lagi dijalankan.
 
 \section{Analisis API KIRI\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}}
 \label{sec:analysis-kiri}
