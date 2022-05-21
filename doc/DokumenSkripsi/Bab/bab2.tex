@@ -228,12 +228,67 @@ Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memas
     \label{fig:kiri-example}
 \end{figure}
 
-\subsection{API}
+\newpage
+\subsection{API\protect\footnotemark}
 \label{sec:kiri-api}
+\footnotetext{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
 
-KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. Seluruh permintaan (\textit{request}) yang dilakukan melalui API KIRI harus dilakukan sebagai permintaan tipe GET ke \href{https://projectkiri.id/api}{https://projectkiri.id/api}, beserta parameter-parameter yang dibutuhkan. 
-\newline\newline
-Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
+KIRI juga memiliki sKIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. API ini menyediakan tiga buah jenis layanan web (\textit{webservice}), yang ketiganya dapat dilakukan dengan mengirim pemintaan (\textit{request}) tipe GET melalui API tersebut. Isi dari permintaan yang perlu dikirimkan serta respon dari API yang akan dikembalikan berbeda tergantung dari jenis layanan yang digunakan. Adapun ketiga jenis layanan tersebut adalah pencarian tempat (\textit{search place}), pencarian rute (\textit{routing}), dan \textit{smart direction}.
+ 
+\subsubsection{\textit{Search Place}}
+\label{sec:kiri-api-searchplace}
+
+Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIRI yang berfungsi untuk mencari suatu lokasi berdasarkan kata kunci yang diberikan oleh pengguna. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
+
+\begin{itemize}
+	\item \verb|version|\\
+	\textbf{Kemungkinan nilai:} \verb|2|\\
+	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
+	\item \verb|mode|\\
+	\textbf{Kemungkinan nilai:} \verb|searchplace|\\
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk pengunaan layanan pencarian lokasi, variabel ini harus diisi dengan \verb|searchplace|.
+	\item \verb|region|\\
+	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
+	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
+	\item \verb|querystring|\\
+	\textbf{Kemungkinan nilai:} \textit{string} apapun dengan panjang minimal satu karakter\\
+	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
+	\item \verb|apikey|\\
+	\textbf{Kemungkinan nilai:} angka heksadesimal 16-digit\\
+	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
+\end{itemize}
+\vspace{\baselineskip}
+\textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respon API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Adapun respon yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
+
+\begin{itemize}
+	\item \verb|status|\\
+	\textbf{Kemungkinan nilai:} \verb|ok| atau \verb|error|\\
+	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	\item \verb|searchresult|\\
+	Variabel ini merupakan hasil pencarian yang ditemukan oleh layanan API ini. Isi dari variabel ini merupakan objek \textit{array} yang masing-masing memiliki variabel berikut:
+	
+	\begin{itemize}
+		\item \verb|placename|\\
+		Variabel ini berisi nama lokasi yang ditemukan berdasarkan kata kunci yang diberikan oleh pengguna.
+		\item \verb|location|\\
+		Variabel ini berisi nilai \latlon dari lokasi yang ditemukan dalam pencarian.
+	\end{itemize}
+	
+\end{itemize}
+\vspace{\baselineskip}\noindent
+Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di gambar \ref{fig:kiri-api-searchplace-usage}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-searchplace}
+    \caption[Penggunaan API KIRI untuk layanan pencarian lokasi]{Penggunaan API KIRI untuk layanan pencarian lokasi menggunakan Postman. Gambar ini menunjukkan hasil pencarian lokasi ``unpar'' di daerah Bandung.}
+    \label{fig:kiri-api-searchplace-usage}
+\end{figure}
+
+\subsubsection{\textit{Routing}}
+\label{sec:kiri-api-routing}
+
+Layanan pencarian rute (\textit{routing}) adalah layanan web pada API KIRI yang memiliki fungsi yang sama dengan fungsi utama dari perangkat lunak KIRI sendiri, yaitu menunjukkan rute serta langkah-langkah yang harus ditempuh untuk pergi dari satu lokasi ke lokasi lainnya, dengan menggunakan angkot yang tersedia. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
 
 \begin{itemize}
 	\item \verb|version|\\
@@ -241,7 +296,7 @@ Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah
 	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
 	\item \verb|mode|\\
 	\textbf{Kemungkinan nilai:} \verb|findroute|\\
-	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk mode \verb|findroute|, jasa yang akan digunakan adalah jasa pencarian rute dengan angkot.
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk pengunaan layanan pencarian rute dengan angkot, variabel ini diisi dengan \verb|findroute|.
 	\item \verb|locale|\\
 	\textbf{Kemungkinan nilai:} \verb|en| atau \verb|id|\\
 	Parameter ini mengatur bahasa apa yang akan digunakan dalam keluaran API nantinya\textemdash\verb|en| berarti keluaran akan menggunakan bahasa Inggris, dan \verb|id| berarti keluaran akan menggunakan bahasa Indonesia.
@@ -250,8 +305,7 @@ Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah
 	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna.
 	\item \verb|finish|\\
 	\textbf{Kemungkinan nilai:} \verb|lat|, \verb|lng|; dalam bentuk desimal\\
-	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
-	\newpage % Preventing widow
+	Parameter ini berisi nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
 	\item \verb|presentation|\\
 	\textbf{Kemungkinan nilai:} \verb|desktop|\\
 	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}.
@@ -260,7 +314,7 @@ Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
 \vspace{\baselineskip}
-Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel,\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}} yaitu:
+Sedangkan, respon yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
 
 \begin{itemize}
 	\item \verb|status|\\
@@ -286,7 +340,7 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 			\item URL untuk mendapatkan tiket kendaraan\\
 			Tautan untuk mendapatkan tiket angkutan umum, jika diperlukan. Jika transportasi pada langkah tersebut tidak memerlukan tiket, variabel ini akan berisi \verb|null|.
 			\item URL editor rute\\
-			Tautan untuk meng-edit rute, jika situasinya memungkinkan. Jika tidak, variabel ini akan berisi \verb|null|.
+			Tautan untuk melakukan modifikasi rute, jika dimungkinkan. Jika rute tidak bisa dimodifikasi, variabel ini akan berisi \verb|null|.
 		\end{itemize}
 		
 		\item \verb|traveltime|\\
@@ -295,3 +349,52 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 	\end{itemize}
 	
 \end{itemize}
+\vspace{\baselineskip}\noindent
+Adapun gambar \ref{fig:kiri-api-routing-usage} menunjukkan penggunaan API KIRI untuk layanan pencarian rute dari Cihampelas Walk ke Universitas Katolik Parahyangan.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-searchplace}
+    \caption[Penggunaan API KIRI untuk layanan pencarian rute]{Penggunaan API KIRI untuk layanan pencarian rute menggunakan Postman. Gambar ini menunjukkan hasil pencarian rute dari Cihampelas Walk ke UNPAR.}
+    \label{fig:kiri-api-routing-usage}
+\end{figure}
+
+\subsubsection{\textit{Smart Direction}}
+\label{sec:kiri-api-routing}
+
+Layanan terakhir dari API ini adalah layanan \textit{smart direction}, yang merupakan gabungan dari kedua layanan sebelumnya. Berbeda dengan kedua layanan tadi, yang harus mengakses API secara manual (dengan mengirimkan permintaan GET), layanan ini tidak memerlukan pengguna untuk mengirim permintaan tersebut secara manual\textemdash layanan ini sudah otomatis mengirimkan permintaan tersebut. Berbeda dengan kedua layanan sebelumnya pula, layanan ini tidak memerlukan dibuatnya kunci API terlebih dahulu.
+
+Layanan ini bekerja dengan menyuruh peramban pengguna untuk langsung mengakses halaman web KIRI yang sudah langsung menunjukkan rute yang perlu ditempuh untuk pergi dari lokasi satu ke lokasi lainnya. Untuk melakukan hal ini, layanan ini memerlukan sebuah URL, yang memiliki format sebagai berikut:
+
+\begin{verbatim}
+ https://projectkiri.id?start=<lokasi awal>&finish=<lokasi akhir>&locale=<locale>
+\end{verbatim}
+\noindent
+Dapat dilihat bahwa URL tersebut memiliki tiga buah parameter, yaitu:
+
+\begin{itemize}
+	\item \verb|start|\\
+	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
+	Parameter ini berisi lokasi yang ingin digunakan sebagai lokasi mulainya pencarian rute.
+	\item \verb|finish|\\
+	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
+	Parameter ini berisi lokasi yang merupakan tujuan akhir yang ingin dicapai dalam pencarian rute.
+	\item \verb|locale| (opsional)\\
+	\textbf{Kemungkinan nilai:} \verb|id| atau \verb|en|\\
+	Menentukan dalam bahasa apa hasil pencarian rutenya akan ditampilkan (bahasa Indonesia atau bahasa Inggris). Jika parameter ini tidak diberikan oleh pengguna, maka bahasa yang akan digunakan adalah bahasa yang terakhir dipakai di halaman web KIRI sendiri.
+\end{itemize}
+\vspace{\baselineskip}\noindent
+Misalkan pengguna ingin mencari rute dari Cihampelas Walk ke Universitas Katolik Parahyangan, dan menampilkan langkah-langkah yang harus ditempuh dalam rutenya dalam bahasa Indonesia. Pengguna dapat memasukkan URL berikut ke peramban mereka.
+
+\begin{verbatim}
+            https://projectkiri.id?start=ciwalk&finish=unpar&locale=id
+\end{verbatim}
+\noindent
+Jika URL tersebut sudah dimasukkan ke kotak \textit{link} pada peramban, halaman yang akan ditampilkan akan terlihat seperti pada gambar \ref{fig:kiri-api-smartdirections-usage}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-smartdirections}
+    \caption[Penggunaan API KIRI untuk layanan \textit{smart direction}]{Penggunaan API KIRI untuk layanan \textit{smart direction}, dari Cihampelas Walk ke UNPAR.}
+    \label{fig:kiri-api-smartdirections-usage}
+\end{figure}
