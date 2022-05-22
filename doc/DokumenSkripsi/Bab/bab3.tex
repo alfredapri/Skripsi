@@ -178,9 +178,54 @@ Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan me
 
 Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan perkakas ini tidak dapat digunakan lagi-lagi merupakan masalah teknikal, yaitu diperbaruinya API Google \textit{Maps}. Lebih spesifiknya, semenjak 2018, \textit{Google} tidak lagi memperbolehkan penggunaan API Google \textit{Maps} tanpa kunci API, yang sayangnya tidak hanya mendasari perkakas ini, tetapi juga kunci API ini tidak bisa didapatkan tanpa membayarkan biaya tertentu. Oleh karena itu, perkakas ini dianggap tidak bisa lagi dijalankan.
 
-\section{Analisis API KIRI\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}}
+\section{Analisis API KIRI}
 \label{sec:analysis-kiri}
 
+API KIRI memiliki tiga buah layanan, yaitu \textit{search place}, \textit{routing}, dan \textit{smart direction}. Diantara ketiga layanan ini, perlu diingat bahwa \textit{smart direction} merupakan sebuah layanan yang bekerja dengan langsung membuka halaman web KIRI sendiri, sehingga layanan ini tidak akan digunakan dalam pembuatan perkakas \cl untuk skripsi ini.
+
+\subsection{\textit{Search Place}}
+\label{sec:analysis-kiri-searchplace}
+
+Layanan pertama dari dua layanan yang tersisa merupakan layanan \textit{search place.} Layanan ini merupakan layanan API KIRI yang berfungsi untuk mencari sebuah lokasi, beserta nilai \textit{latitude} dan \textit{longitude}-nya, berdasarkan kata kunci yang diberikan oleh pengguna. Untuk memanfaatkan layanan ini, sebuah permintaan GET harus dikirimkan ke alamat API KIRI. Adapun permintaan tersebut akan memiliki parameter-parameter sebagai berikut.
+
+\begin{itemize}
+	\item \verb|version|\\
+	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2. Karena kemungkinan nilai untuk parameter ini hanya satu, maka parameter ini pasti bernilai \verb|2|.
+	\item \verb|mode|\\
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk pengunaan layanan \textit{search place}, parameter ini diisi dengan \verb|searchplace|.
+	\item \verb|region|\\
+	Parameter ini mengatur daerah mana tempat lokasi yang ingin dicari berada. Isi dari parameter ini akan diberikan oleh pengguna pada saat pemakaian perkakas.
+	\item \verb|querystring|\\
+	Parameter ini akan berisi kata kunci yang diberikan oleh pengguna untuk mencari lokasi yang ingin ditemukan.
+	\item \verb|apikey|\\
+	Parameter ini akan berisi sebuah nilai kunci API yang sudah digenerasikan sebelumnya, yaitu \verb|68CD281C8A8EE97C|.
+\end{itemize}
+
+\subsection{\textit{Routing}}
+\label{sec:analysis-kiri-searchplace}
+
+Layanan kedua dari API ini merupakan fungsi utama dari KIRI sendiri, yaitu pencarian rute dengan menggunakan angkot. Layanan ini akan menerima dua buah lokasi yang ingin dijadikan lokasi awal dan lokasi akhir, dan menunjukkan langkah-langkah yang harus ditempuh untuk menempuh perjalanan tersebut, dengan memanfaatkan jasa angkot yang ada. Sama seperti layanan \textit{search place}, layanan ini juga digunakan dengan mengirimkan permintaan GET ke alamat API KIRI.
+
+\begin{itemize}
+	\item \verb|version|\\
+	Sama seperti pada layanan \textit{search place}, parameter ini hanya dapat diisi dengan nilai \verb|2|.
+	\item \verb|mode|\\
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk pengunaan layanan \textit{routing}, parameter ini diisi dengan \verb|findroute|.
+	\item \verb|locale|\\
+	Isi dari parameter ini akan ditentukan pada saat pemakaian perkakas.
+	\item \verb|start|\\
+	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna, yang akan diberikan sebagai masukan pada saat pemakaian perkakas.
+	\item \verb|finish|\\
+	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna, yang akan diberikan sebagai masukan pada saat pemakaian perkakas.
+	\item \verb|presentation|\\
+	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}. Jika parameter ini ingin digunakan, maka isi dari parameter ini hanya ada satu kemungkinan, yaitu \verb|desktop|. Jika parameter ini tidak dipakai
+	\item \verb|apikey|\\
+	Parameter ini akan berisi sebuah nilai kunci API yang sudah digenerasikan sebelumnya, yaitu \verb|68CD281C8A8EE97C|.
+\end{itemize}
+\vspace{\baselineskip}\noindent
+Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place}, terutama karena fitur pencarian rute hanya menerima nilai \latlon dari lokasi-lokasi yang akan digunakan sebagai masukan, yang tidak hanya akan menyusahkan pengguna dalam memakai perkakas \cl ini, tetapi juga kedua nilai tersebut juga merupakan salah satu dari keluaran layanan pencarian lokasi. Jadi, dengan menggunakan kedua layanan tersebut secara berlangsungan, maka pengguna hanya perlu mencari lokasi tersebut dengan kata-kata kunci, dan pada akhirnya pengguna akan dapat menerima langkah-langkah yang harus ditempuh dalam rute sebagai keluaran akhir dari perkakas.
+
+\begin{comment} %oldver
 API KIRI dapat digunakan dengan mengirim sebuah permintaan GET ke alamat API\footnote{\href{https://projectkiri.id/api}{https://projectkiri.id/api}} dari KIRI. Permintaan tersebut harus memiliki parameter-parameter sebagai berikut.
 
 \begin{itemize}
@@ -199,17 +244,6 @@ API KIRI dapat digunakan dengan mengirim sebuah permintaan GET ke alamat API\foo
 	\item \verb|apikey|\\
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
-
-Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.75\linewidth]{projectkiri-apikey}
-    \caption[Halaman web \textit{API Keys} KIRI.]{Halaman web \textit{API Keys} KIRI.}
-    \label{fig:kiri-apikeypage}
-\end{figure}
-
-Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
 
 Ketika seluruh parameter sudah valid dan berhasil diproses oleh API, sebuah keluaran berupa objek JSON akan dikirim kembali ke user. Adapun keluaran tersebut memiliki variabel-variabel sebagai berikut.
 
@@ -243,6 +277,7 @@ Ketika seluruh parameter sudah valid dan berhasil diproses oleh API, sebuah kelu
 	\textbf{Tipe:} string\\
 	Variabel ini berisi estimasi jangka waktu yang diperlukan untuk menyelesaikan langkah tersebut.
 \end{itemize}
+\end{comment}
 
 \section{Analisis Fungsi dan \textit{Library} Bahasa C}
 \label{sec:cmodules}
@@ -319,5 +354,3 @@ Untuk mulai melakukan transfer berkas, diperlukan juga sebuah ``\textit{easy han
 
 \subsection{CMake}
 \label{sec:cmodules-CMake}
-	
-\end{itemize}
