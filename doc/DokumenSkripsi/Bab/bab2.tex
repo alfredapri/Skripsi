@@ -391,14 +391,6 @@ Dapat dilihat bahwa URL tersebut memiliki tiga buah parameter, yaitu:
 	\item \verb|finish|\\
 	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
 	Parameter ini berisi lokasi yang merupakan tujuan akhir yang ingin dicapai dalam pencarian rute.
-	%image put here to prevent single page containing only the image
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.74\linewidth]{apikiri-smartdirections}
-    \caption[Penggunaan API KIRI untuk layanan \textit{smart direction}]{Penggunaan API KIRI untuk layanan \textit{smart direction}, dari Cihampelas Walk ke UNPAR.}
-    \label{fig:kiri-api-smartdirections-usage}
-\end{figure}
-	\newpage
 	\item \verb|locale| (opsional)\\
 	\textbf{Kemungkinan nilai:} \verb|id| atau \verb|en|\\
 	Menentukan dalam bahasa apa hasil pencarian rutenya akan ditampilkan (bahasa Indonesia atau bahasa Inggris). Jika parameter ini tidak diberikan oleh pengguna, maka bahasa yang akan digunakan adalah bahasa yang terakhir dipakai di halaman web KIRI sendiri.
@@ -411,3 +403,80 @@ Misalkan pengguna ingin mencari rute dari Cihampelas Walk ke Universitas Katolik
 \end{verbatim}
 \noindent
 Jika URL tersebut sudah dimasukkan ke kotak \textit{link} pada peramban, halaman yang akan ditampilkan akan terlihat seperti pada gambar \ref{fig:kiri-api-smartdirections-usage}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-smartdirections}
+    \caption[Penggunaan API KIRI untuk layanan \textit{smart direction}]{Penggunaan API KIRI untuk layanan \textit{smart direction}, dari Cihampelas Walk ke UNPAR.}
+    \label{fig:kiri-api-smartdirections-usage}
+\end{figure}
+
+\section{Fungsi dan \textit{Library} Bahasa C}
+\label{sec:cmodules}
+
+Di bagian ini akan dilakukan analisis terhadap seluruh fungsi bawaan, serta \textit{library-library} bahasa pemrograman C yang akan digunakan dalam pebuatan perkakas ini.
+
+\subsection{getopt \cite{gnulibrary:2022:getopt}}
+\label{sec:cmodules-getopt}
+
+\verb|getopt| merupakan sebuah fungsi yang dapat mengautomasi pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl berbasis UNIX.
+\newline\newline\noindent
+Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
+
+\begin{verbatim}
+                         getopt (argc, argv, <options>)
+\end{verbatim}
+
+Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
+\newline\newline
+Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
+\begin{itemize}
+	\item \verb|opterr|\\
+	Isi dari variabel ini akan memberi signal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
+	\item \verb|optopt|\\
+	Ketika \verb|getopt| menemukan sebuah karakter yang tidak didefinisikan dalam kumpulan opsi, atau sebuah opsi yang tidak disertai argumen yang diperlukan, karakter tersebut akan disimpan di variabel ini.
+	\item \verb|optind|\\
+	Variabel ini digunakan oleh \verb|getopt| sebagai indeks untuk \textit{array} \verb|argv|. Jika seluruh argumen sudah diproses, nilai variabel ini dapat digunakan untuk menentukan argumen mana yang merupakan arguman tambahan yang tidak terpakai. Nilai dari variabel ini dimulai dari 1.
+	\item \verb|optarg|\\
+	Jika opsi yang sedang diproses memerlukan argumen, variabel ini adalah tempat dimana argumen tersebut akan disimpan.
+	\item \verb|<options>|\\
+	Variabel ini berupa \textit{string} yang menandakan karakter-karakter apa saja yang menjadi opsi yang mungkin dalam perkakas tersebut, beserta tipenya. Jika karakter opsi:
+	
+	\begin{itemize}
+		\item Diikuti dengan titik dua (\verb|:|), maka opsi tersebut memiliki argumen yang bersifat wajib.
+		\item Diikuti dengan titik dua ganda (\verb|::|), maka opsi tersebut memiliki argumen yang bersifat opsional.
+		\item Tidak diikuti apa-apa, maka opsi tersebut merupakan opsi tidak berarguman.
+	\end{itemize}
+	
+\end{itemize}
+
+\subsubsection{getopt-long}
+\label{sec:cmodules-getopt-long}
+
+Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata.
+
+\verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
+
+\begin{itemize}
+	\item \verb|name|\\
+	Variabel ini merupakan nama panjang dari opsi.
+	\item \verb|has_arg|\\
+	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai yang mungkin dalam variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
+	\item \verb|flag| \& \verb|val|\\ 
+	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt-long|. Variabel \verb|flag| dapat diisi dengan penunjuk ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt-long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt-long| akan mengembalikan isi dari variabel \verb|val|.
+\end{itemize}
+\noindent
+Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
+
+\subsection{libcurl \cite{stenberg:2022:everythingcurl}}
+\label{sec:cmodules-libcurl}
+
+libcurl merupakan sebuah \textit{library} yang berisi fungsi-fungsi yang disediakan dalam bentuk API bahasa C, untuk digunakan oleh aplikasi-aplikasi bahasa C. Libcurl didesain dengan berorientasi transfer (biasanya transfer berkas), tanpa memerlukan para penggunanya untuk mengerti protokol-protokol yang digunakan dalam proses pentransferan tersebut. Fitur transfer ini dapat dibuat sesederhana mungkin, dan seluruh aturan dan opsi seputar pemindahan berkas tersebut dapat diatur nantinya secara manual melalui opsi-opsi yang ada.
+
+Untuk mulai melakukan transfer berkas, diperlukan juga sebuah ``\textit{easy handle}'' yang dapat digunakan untuk satu orang individu/pihak, dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
+
+\subsection{cJSON}
+\label{sec:cmodules-cJSON}
+
+\subsection{CMake}
+\label{sec:cmodules-CMake}
