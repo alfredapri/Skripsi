@@ -698,5 +698,121 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
 \end{itemize}
 
-\subsection{CMake}
+\subsection{CMake \cite{kitware:2022:masteringcmake}}
 \label{sec:cmodules-CMake}
+
+CMake merupakan sebuah perkakas generator \textit{build system} yang memungkinkan pengembang perangkat lunak untuk menentukan parameter-parameter pembangunan perangkat di sebuah file yang berupa teks biasa. File ini kemudian dipakai oleh CMake untuk membuat perkakas-perkakas pembangunan perangkat lunak yang dapat dibaca oleh IDE-IDE tertentu, seperti Microsoft Visual Studio, Apple Xcode, Linux, dan sebagainya. Selain itu, CMake juga menangani aspek-aspek rumit dari pembangunan perangkat lunak, seperti pembangunan perangkat lunak \textit{cross-platform}, introspeksi sistem, dan juga pembangunan perangkat lunak yang dapat disesuaikan berdasarkan penggunanya.
+
+Untuk proyek-proyek yang dibangun di satu platform, CMake memiliki fungsi sebagai berikut.
+
+\begin{itemize}
+	\item Memberikan kemampuan untuk melakukan pencarian seluruh perangkat lunak, file-file \textit{library}, dan file-file \textit{header} yang dibutuhkan untuk proses pembangunan perangkat lunak. Pencarian ini juga dapat dilakukan sampai ke dalam \textit{registry} sistem.
+	\item Memungkinkan pembangunan perangkat lunak diluar folder tempat \textit{source code} perangkat lunak tersebut sendiri.
+	\item Memberikan kemampuan untuk membuat perintah-perintah khusus untuk file-file yang dibuat secara otomatis, seperti \verb|moc()| dari Qt, atau generator pembungkus dari SWIG. Perintah-perintah ini dapat mengatur pembuatan file \textit{source} baru yang nantinya akan diintegrasikan langsung ke dalam perangkat lunak akhirnya.
+	\item Memberikan kemampuan untuk memilihkan file-file opsional dari \textit{library} yang digunakan.
+	\item Memungkinkan pengaturan pembuatan proyek dari sebuah file \verb|.txt| sederhana.
+	\item Kemampuan untuk dengan mudah beralih dari \textit{static build} dan \textit{shared build}.
+	\item Membuat ketentuan keperluan (\textit{dependency}) secara otomatis.
+\end{itemize}
+
+Sedangkan, untuk perangkat-perangkat lunak yang dibuat \textit{cross-platform}, CMake memberikan fungsi-fungsi tambahan sebagai berikut.
+
+\begin{itemize}
+	\item Memberikan kemampuan mengetes urutan \textit{machine byte} dan karakteristik-karakteristik lainnya yang spesifik untuk suatu sistem operasi.
+	\item File konfigurasi yang dibuat dapat berlaku untuk seluruh \textit{platform}.
+	\item Memberikan dukungan untuk membangun \textit{shared build} untuk seluruh \textit{platform} yang mendukungnya.
+	\item Memberikan kemampuan untuk mengatur opsi-opsi yang spesifik untuk suatu sistem operasi, seperti misalnya lokasi file-file data utama.
+\end{itemize}
+
+\subsubsection{Penggunaan Dasar}
+\label{sec:cmodules-CMake-basicusage}
+
+CMake mengambil satu (atau lebih) file-file CMakeLists sebagai masukan, dan sebagai keluaran akan menghasilkan file-file proyek atau Makefile yang dapat digunakan dengan dan oleh perkakas-perkakas pembangunan perangkat lunak lain yang ada.
+
+Proses CMake umumnya terdiri atas langkah-langkah berikut.
+
+\begin{enumerate}
+	\item Proyek yang ingin dibangun didefinisikan di salah satu file CMakeLists.\\
+	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Di bawah ini merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, untuk menggambarkan hal-hal apa saja yang minimal harus ada di dalam file tersebut.
+	
+	\begin{lstlisting}
+cmake_minimum_required(VERSION 3.20)
+project(Hello)
+add_executable(Hello Hello.c)
+	\end{lstlisting}
+	
+	Penjelasan dari baris-baris berikut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item Baris pertama harus selalu merupakan \verb|cmake_minimum_required|. Hal ini mengharuskan proyek untuk menggunakan versi dari CMake yang dispesifikasi, dan juga memungkinkan \textit{backwards compatibility}.
+		\item Baris selanjutnya merupakan perintah \verb|project|. Perintah ini mengatur nama proyek, dan juga bisa digunakan untuk mengatur aturan-aturan lainnya, seperti versi, atau bahasa dari proyek.
+		Untuk setiap direktori yang memiliki file CMakeLists, CMake akan membuat sebuah Makefile atau file proyek untuk IDE. Proyek ini, nantinya, akan mengikutkan seluruh direktori yang memiliki file CMakeLists ini serta seluruh subdirektori yang diikutkan dalam perintah \verb|add_subdirectory|.
+		\item Terakhir, perintah \verb|add_executable| merupakan sebuah perintah yang akan menambahkan sebuah file \textit{executable} untuk menjalankan proyek yang sudah dibangun tersebut.
+	\end{itemize}
+	\item CMake membuat dan mengkonfigurasi proyek tersebut.\\
+	Setelah file-file CMakeLists selesai dibuat, CMake akan memproses file-file tersebut dan membuat entri-entri dalam sebuah file \textit{cache}. Pengembang perangkat lunak dapat mengedit file CMakeLists atau mengatur isi dari file \textit{cache} tadi dengan GUI CMake, ccmake, atau untuk proyek-proyek skala kecil, langsung dari \cl.
+	
+	\begin{itemize}
+		\item GUI CMake\\
+		CMake memiliki perangkat lunak GUI berbasis Qt yang bisa digunakan di sebagian besar sistem operasi, seperti UNIX, Mac OS X, dan Windows. Perangkat lunak ini, \verb|cmake-gui|, sudah terinstal bersama dengan CMake, tetapi membutuhkan instalasi Qt untuk dijalankan. Adapun tampilan dari perangkat lunak ini dapat dilihat di gambar \ref{fig:cmake-gui}.
+		
+		\begin{figure}[ht]
+		    \centering
+		    \includegraphics[width=0.66667\linewidth]{cmake-gui}
+		    \caption[Tampilan aplikasi cmake-gui]{Tampilan aplikasi cmake-gui.\protect\footnotemark}
+		    \label{fig:cmake-gui}
+		\end{figure}
+		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
+		
+		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
+		\item ccmake\\
+		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
+		
+		\begin{figure}[ht]
+		    \centering
+		    \includegraphics[width=0.75\linewidth]{cmake-ccmake}
+		    \caption[Tampilan aplikasi ccmake]{Tampilan aplikasi ccmake.\protect\footnotemark}
+		    \label{fig:cmake-ccmake}
+		\end{figure}
+		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
+		
+		\item Langsung dari \cl\\
+		CMake juga dapat dijalankan melalui \textit{command line}. Untuk menjalankan CMake dari \textit{command line}, direktori tempat terminal berada lagi-lagi harus diatur ke direktori tempat file-file \textit{binary} akan disimpan. Kemudian jalankan perintah \verb|cmake| dengan opsi \verb|-D|, diikuti dengan direktori tempat \textit{source code} dari perangkat lunak yang ingin dibangun berada. Walaupun begitu, perlu diingat bahwa metode ini direkomendasikan untuk digunakan hanya untuk proyek-proyek yang memiliki sedikit, atau bahkan tidak ada opsi sama sekali.
+	\end{itemize}
+	
+	\item Pengguna membangun proyek tersebut dengan perkakas pembangunan masing-masing.\\
+	CMake dapat memberikan beberapa opsi dalam pembangunan perangkat lunak yang dapat diatur oleh penggunanya masing-masing. Adapun dua opsi utama dari seluruh opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item Menspesifikasi \textit{compiler} yang akan digunakan\\
+		Di beberapa sistem, bisa jadi terdapat lebih dari satu \textit{compiler}, atau \textit{compiler} yang ada tidak berada di tempat \textit{compiler} tersebut biasa diinstal. Di kasus-kasus ini, CMake perlu diberitahu secara manual dimana letak \textit{compiler} yang ingin digunakan. Ada tiga cara untuk melakukan ini, yaitu dengan:
+		
+		\begin{itemize}
+			\item menspesifikasikan \textit{compiler} yang ingin dipakai ke generator,
+			\item mengatur variabel \textit{environment}, atau
+			\item membuat entri \textit{cache}.
+		\end{itemize}
+		
+		Jika pengaturan \textit{compiler} sudah selesai dan \verb|cmake| sudah dijalankan setidaknya sekali, jika pengguna ingin mengganti \textit{compiler}, pengguna harus memulai ulang dengan folder file \textit{binary} yang kosong.
+		\item Mengatur konfigurasi pembangunan perangkat\\
+		Konfigurasi pembangunan perangkat memungkinkan sebuah proyek untuk dibangun dalam beberapa cara dengan tujuan \textit{debugging}, optimisasi, atau tujuan-tujuan sejenis lainnya. Secara \textit{default}, CMake mendukung mode-mode berikut:
+		
+		\begin{itemize}
+			\item \verb|Debug|\textemdash Opsi-opsi \textit{debug} dasar dinyalakan.
+			\item \verb|Release|\textemdash Fungsi optimisasi dasar dinayalakan.
+			\item \verb|MinSizeRel|\textemdash Ukuran kode akhir diusahakan sekecil mungkin.
+			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi untuk \textit{debugging}.
+		\end{itemize}
+		
+		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
+		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode berikut.
+		
+		\begin{lstlisting}
+ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
+ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
+		\end{lstlisting}
+		
+	\end{itemize}
+	
+	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
+\end{enumerate}
