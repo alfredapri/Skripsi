@@ -606,9 +606,9 @@ Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan me
 \subsubsection{Struktur Data}
 \label{sec:cmodules-cJSON-datastruct}
 
-cJSON merepresentasikan sebuah nilai JSON dengan struktur data \verb|cJSON|, yang dapat dilihat di potongan kode berikut:
+cJSON merepresentasikan sebuah nilai JSON dengan struktur data \verb|cJSON|, yang dapat dilihat di potongan kode \ref{code:cjson-struct}.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption=Struktur data cJSON, label=code:cjson-struct]
 typedef struct cJSON
 {
     struct cJSON *next;
@@ -733,9 +733,9 @@ Proses CMake umumnya terdiri atas langkah-langkah berikut.
 
 \begin{enumerate}
 	\item Proyek yang ingin dibangun didefinisikan di salah satu file CMakeLists.\\
-	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Di bawah ini merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, untuk menggambarkan hal-hal apa saja yang minimal harus ada di dalam file tersebut.
+	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Tertera di kode \ref{code:cmake-basecode} merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, sebagai gambaran mengenai hal-hal apa saja yang minimal harus ada di dalam file CMakeLists.
 	
-	\begin{lstlisting}
+	\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-basecode]
 cmake_minimum_required(VERSION 3.20)
 project(Hello)
 add_executable(Hello Hello.c)
@@ -770,7 +770,7 @@ add_executable(Hello Hello.c)
 		
 		\begin{figure}[ht]
 		    \centering
-		    \includegraphics[width=0.75\linewidth]{cmake-ccmake}
+		    \includegraphics[width=0.66667\linewidth]{cmake-ccmake}
 		    \caption[Tampilan aplikasi ccmake]{Tampilan aplikasi ccmake.\protect\footnotemark}
 		    \label{fig:cmake-ccmake}
 		\end{figure}
@@ -805,9 +805,9 @@ add_executable(Hello Hello.c)
 		\end{itemize}
 		
 		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
-		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode berikut.
+		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
 		
-		\begin{lstlisting}
+		\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-multibuild]
 ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
 ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
 		\end{lstlisting}
