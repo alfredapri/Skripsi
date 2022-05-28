@@ -225,56 +225,50 @@ Layanan kedua dari API ini merupakan fungsi utama dari KIRI sendiri, yaitu penca
 \vspace{\baselineskip}\noindent
 Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place}, terutama karena fitur pencarian rute hanya menerima nilai \latlon dari lokasi-lokasi yang akan digunakan sebagai masukan, yang tidak hanya akan menyusahkan pengguna dalam memakai perkakas \cl ini, tetapi juga kedua nilai tersebut juga merupakan salah satu dari keluaran layanan pencarian lokasi. Jadi, dengan menggunakan kedua layanan tersebut secara berlangsungan, maka pengguna hanya perlu mencari lokasi tersebut dengan kata-kata kunci, dan pada akhirnya pengguna akan dapat menerima langkah-langkah yang harus ditempuh dalam rute sebagai keluaran akhir dari perkakas.
 
-\begin{comment} %oldver
-API KIRI dapat digunakan dengan mengirim sebuah permintaan GET ke alamat API\footnote{\href{https://projectkiri.id/api}{https://projectkiri.id/api}} dari KIRI. Permintaan tersebut harus memiliki parameter-parameter sebagai berikut.
+\section{Analisis Perkakas yang Akan Dibuat}
+\label{sec:analysis-thesisapp}
+
+Di bagian ini akan dibahas analisis hal-hal yang berhubungan dengan perkakas yang akan dibangun sebagai proyek skripsi ini.
+
+\subsection{Analisis Fitur Perkakas}
+\label{sec:analysis-thesisapp-functions}
+
+Pada skripsi ini, akan dibangun sebuah aplikasi berupa perkakas \cl yang merupakan ekstensi dari sebuah aplikasi berbasis web lain, yaitu KIRI. Perkakas ini akan menjadi ekstensi KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
+
+Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan satu sama lain, yaitu pencarian lokasi, dan penunjukkan rute dengan angkot.
 
 \begin{itemize}
-	\item \verb|version|\\
-	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
-	\item \verb|mode|\\
-	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna.
-	\item \verb|locale|\\
-	Parameter ini mengatur bahasa apa yang akan digunakan dalam keluaran API.
-	\item \verb|start|\\
-	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna.
-	\item \verb|finish|\\
-	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
-	\item \verb|presentation|\\
-	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}.
-	\item \verb|apikey|\\
-	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
+	\item Pencarian lokasi\\
+	Pencarian lokasi merupakan fungsi utama pertama dari perkakas ini. Untuk fungsi ini, masukan langsung dari pengguna yang akan diterima oleh perkakas adalah kata kunci dari sebuah lokasi yang ingin dicari. Kemudian, perkakas akan memprosesnya melalui API KIRI, lalu mengembalikan nama lokasi tersebut, serta nilai \textit{latitude} dan \textit{longitude}-nya, sebagai keluaran akhir dari proses tersebut.
+	\item Pencarian rute\\
+	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
 \end{itemize}
 
-Ketika seluruh parameter sudah valid dan berhasil diproses oleh API, sebuah keluaran berupa objek JSON akan dikirim kembali ke user. Adapun keluaran tersebut memiliki variabel-variabel sebagai berikut.
+Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
 
 \begin{itemize}
-	\item \verb|status|\\
-	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
-	\item \verb|message|/\verb|routingresults|\\
-	Isi utama dari respon API. Jika permintaan dari user tidak berhasil diproses, variabel ini akan bernama \verb|message| dan berisi pesan \textit{error} beserta alasan spesifik mengapa \textit{error} tersebut terjadi. Jika permintaan dari user berhasil diproses, nama variabel ini akan menjadi \verb|routingresults|, dan isi dari variabel ini adalah sebuah \textit{array} JSON yang merupakan data keluaran dari API KIRI. \textit{Array} JSON ini sendiri terbagi menjadi beberapa variabel lainnya, yang dapat dilihat di daftar di bawah ini.
-
-\begin{itemize}
-	\item \verb|steps|\\
-	Variabel ini merupakan array yang tiap-tiap elemennya merepresentasikan satu buah langkah yang harus ditempuh oleh pengguna. Adapun tiap elemen ini sendiri berisi variabel-variabel berikut:
+	\item \verb|--help|\\
+	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|--help| ini.
+	\item \verb|--search|\\
+	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
 	
 	\begin{itemize}
-		\item Tipe transportasi\\
-		Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
-		\newpage % prevent widow
-		\item Kode angkot\\
-		Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
-		\item \textit{Array} \latlon lokasi\\
-		\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
-		\item Deskripsi langkah\\
-		Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa yang digunakan tergantung parameter \verb|locale| yang diatur dalam masukan.
-		\item URL untuk mendapatkan tiket kendaraan\\
-		Tautan untuk mendapatkan tiket angkutan umum, jika diperlukan. Jika transportasi pada langkah tersebut tidak memerlukan tiket, variabel ini akan berisi \verb|null|.
-		\item URL editor rute\\
-		Tautan untuk meng-edit rute, jika situasinya memungkinkan. Jika tidak, variabel ini akan berisi \verb|null|.
+		\item \verb|--region <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa kota dari lokasi yang ingin dicari.
+		\item \verb|--querystring <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
 	\end{itemize}
-		
-	\item \verb|traveltime|\\
-	\textbf{Tipe:} string\\
-	Variabel ini berisi estimasi jangka waktu yang diperlukan untuk menyelesaikan langkah tersebut.
+	
+	\item \verb|--route|\\
+	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|--start <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
+		\item \verb|--finish <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
+		\item \verb|--locale <parameter>|\\
+		Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
+	\end{itemize}
+	
 \end{itemize}
-\end{comment}
