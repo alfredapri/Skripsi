@@ -5,44 +5,49 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: compj.bst
 Reallocating 'name_of_file' (item size: 1) to 10 items.
 Database file #1: referensi.bib
-You've used 1 entry,
+Warning--empty publisher in stenberg:2022:everythingcurl
+Warning--empty address in stenberg:2022:everythingcurl
+Warning--empty publisher in kitware:2022:masteringcmake
+Warning--empty address in kitware:2022:masteringcmake
+You've used 4 entries,
             1957 wiz_defined-function locations,
-            535 strings with 4657 characters,
-and the built_in function-call counts, 164 in all, are:
-= -- 13
-> -- 3
+            550 strings with 5012 characters,
+and the built_in function-call counts, 580 in all, are:
+= -- 44
+> -- 12
 < -- 0
-+ -- 1
-- -- 1
-* -- 12
-:= -- 28
-add.period$ -- 2
-call.type$ -- 1
-change.case$ -- 1
++ -- 4
+- -- 4
+* -- 40
+:= -- 90
+add.period$ -- 9
+call.type$ -- 4
+change.case$ -- 2
 chr.to.int$ -- 0
-cite$ -- 1
-duplicate$ -- 10
-empty$ -- 22
-format.name$ -- 1
-if$ -- 38
+cite$ -- 8
+duplicate$ -- 35
+empty$ -- 81
+format.name$ -- 4
+if$ -- 135
 int.to.chr$ -- 0
 int.to.str$ -- 0
-missing$ -- 2
-newline$ -- 6
-num.names$ -- 1
-pop$ -- 5
+missing$ -- 6
+newline$ -- 19
+num.names$ -- 4
+pop$ -- 24
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 1
+skip$ -- 2
 stack$ -- 0
 substring$ -- 0
-swap$ -- 1
+swap$ -- 3
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 0
-while$ -- 1
+warning$ -- 4
+while$ -- 4
 width$ -- 0
-write$ -- 12
+write$ -- 41
+(There were 4 warnings)

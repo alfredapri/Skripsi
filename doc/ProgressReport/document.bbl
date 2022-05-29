@@ -4,4 +4,18 @@
 Marsh, N. (2010) {\em Introduction to the Command Line: The Fat-Free Guide to
   Unix and Linux Commands},  2nd edition. CreateSpace,  South Carolina.
 
+\bibitem{gnulibrary:2022:getopt}
+The{\ }GNU{\ }C{\ }Library (2022) cd.
+\newblock
+  \url{https://www.gnu.org/software/libc/manual/html\_node/Getopt.html}.
+\newblock versi 2.3.5.
+
+\bibitem{stenberg:2022:everythingcurl}
+Stenberg, D. (2022) {\em Everything curl}.
+\newblock \url{https://everything.curl.dev/}.
+
+\bibitem{kitware:2022:masteringcmake}
+Kitware (2022) {\em Mastering CMake}.
+\newblock \url{https://cmake.org/cmake/help/book/mastering-cmake/}.
+
 \end{thebibliography}

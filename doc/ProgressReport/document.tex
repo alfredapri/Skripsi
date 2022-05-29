@@ -13,8 +13,9 @@
 % Custom packages
 \usepackage[]{hyperref} % links
 \usepackage{subcaption} % subfigure
-\usepackage{verbatim} % block comment
+\usepackage{verbatim} % inline comments
 \usepackage{xspace} % force space
+\usepackage{listings} % block comments
 
 \setlength{\headsep}{30pt}
 \usepackage[inner=2cm,outer=2.5cm,top=2.5cm,bottom=2cm]{geometry} %margin
@@ -134,21 +135,84 @@ Detail bagian pekerjaan skripsi sesuai dengan rencan kerja/laporan perkembangan 
 	\begin{enumerate}
 		\item \textbf{Melakukan eksplorasi fungsi-fungsi perangkat lunak KIRI serta eksplorasi cara \mbox{implementasi} API KIRI.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :} KIRI merupakan sebuah perangkat lunak berbasis web yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh \mbox{transportasi} umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
+		{\bf Hasil :} KIRI merupakan sebuah perangkat lunak berbasis web yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun begitu, banyak masyarakat lokal sendiri yang seringkali masih segan untuk menaiki transportasi publik, umumnya karena transportasi publik dianggap lebih rumit persiapannya dibandingkan dengan metode-metode transportasi privat, seperti menaiki kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
 
 Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot. Keluaran ini sudah meliputi kode angkot mana saja yang harus dinaiki, dan juga seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi rute angkot berikutnya.
 
-KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. Seluruh permintaan (\textit{request}) yang dilakukan melalui API KIRI harus dilakukan sebagai \mbox{permintaan} tipe GET ke \href{https://projectkiri.id/api}{https://projectkiri.id/api}, beserta parameter-parameter yang dibutuhkan. 
-\newline\newline
-Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
+KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. API ini menyediakan tiga buah jenis layanan web (\textit{webservice}), yang ketiganya dapat dilakukan dengan mengirim pemintaan (\textit{request}) tipe GET melalui API tersebut. Isi dari permintaan yang perlu dikirimkan serta respon dari API yang akan dikembalikan berbeda tergantung dari jenis layanan yang digunakan. Adapun ketiga jenis layanan tersebut adalah pencarian tempat (\textit{search place}), pencarian rute (\textit{routing}), dan \textit{smart direction}.
+ 
+\textbf{\textit{Search Place}}
+
+Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIRI yang berfungsi untuk mencari suatu lokasi berdasarkan kata kunci yang diberikan oleh pengguna. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
 
 \begin{itemize}
 	\item \verb|version|\\
 	\textbf{Kemungkinan nilai:} \verb|2|\\
 	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
 	\item \verb|mode|\\
+	\textbf{Kemungkinan nilai:} \verb|searchplace|\\
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk pengunaan layanan pencarian lokasi, variabel ini harus diisi dengan \verb|searchplace|.
+	\item \verb|region|\\
+	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
+	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
+	\newpage %prevent widow
+	\item \verb|querystring|\\
+	\textbf{Kemungkinan nilai:} \textit{string} apapun dengan panjang minimal satu karakter\\
+	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
+	\item \verb|apikey|\\
+	\textbf{Kemungkinan nilai:} angka heksadesimal 16-digit\\
+	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
+\end{itemize}
+\vspace{\baselineskip}
+Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.75\linewidth]{projectkiri-apikey}
+    \caption[Halaman web \textit{API Keys} KIRI.]{Halaman web \textit{API Keys} KIRI.}
+    \label{fig:kiri-apikeypage}
+\end{figure}
+
+Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
+
+Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa definisi dari nilai \latlon suatu lokasi. \textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respon API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Adapun respon yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
+
+\begin{itemize}
+	\item \verb|status|\\
+	\textbf{Kemungkinan nilai:} \verb|ok| atau \verb|error|\\
+	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	\item \verb|searchresult|\\
+	Variabel ini merupakan hasil pencarian yang ditemukan oleh layanan API ini. Isi dari variabel ini merupakan objek \textit{array} yang masing-masing memiliki variabel berikut:
+	
+	\begin{itemize}
+		\item \verb|placename|\\
+		Variabel ini berisi nama lokasi yang ditemukan berdasarkan kata kunci yang diberikan oleh pengguna.
+		\item \verb|location|\\
+		Variabel ini berisi nilai \latlon dari lokasi yang ditemukan dalam pencarian.
+	\end{itemize}
+	
+\end{itemize}
+\vspace{\baselineskip}\noindent
+Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di gambar \ref{fig:kiri-api-searchplace-usage}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-searchplace}
+    \caption[Penggunaan API KIRI untuk layanan pencarian lokasi]{Penggunaan API KIRI untuk layanan pencarian lokasi menggunakan Postman. Gambar ini menunjukkan hasil pencarian lokasi ``unpar'' di daerah Bandung.}
+    \label{fig:kiri-api-searchplace-usage}
+\end{figure}
+
+\textbf{\textit{Routing}}
+
+Layanan pencarian rute (\textit{routing}) adalah layanan web pada API KIRI yang memiliki fungsi yang sama dengan fungsi utama dari perangkat lunak KIRI sendiri, yaitu menunjukkan rute serta langkah-langkah yang harus ditempuh untuk pergi dari satu lokasi ke lokasi lainnya, dengan menggunakan angkot yang tersedia. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
+\newpage %prevent widow
+\begin{itemize}
+	\item \verb|version|\\
+	\textbf{Kemungkinan nilai:} \verb|2|\\
+	Parameter ini merupakan tanda bagi API untuk menggunakan protokol versi 2.
+	\item \verb|mode|\\
 	\textbf{Kemungkinan nilai:} \verb|findroute|\\
-	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk mode \verb|findroute|, jasa yang akan digunakan adalah jasa pencarian rute dengan angkot.
+	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk pengunaan layanan pencarian rute dengan angkot, variabel ini diisi dengan \verb|findroute|.
 	\item \verb|locale|\\
 	\textbf{Kemungkinan nilai:} \verb|en| atau \verb|id|\\
 	Parameter ini mengatur bahasa apa yang akan digunakan dalam keluaran API nantinya\textemdash\verb|en| berarti keluaran akan menggunakan bahasa Inggris, dan \verb|id| berarti keluaran akan menggunakan bahasa Indonesia.
@@ -157,16 +221,16 @@ Permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah
 	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna.
 	\item \verb|finish|\\
 	\textbf{Kemungkinan nilai:} \verb|lat|, \verb|lng|; dalam bentuk desimal\\
-	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
-	\item \verb|presentation|\\
+	Parameter ini berisi nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
+	\item \verb|presentation| (opsional)\\
 	\textbf{Kemungkinan nilai:} \verb|desktop|\\
 	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}.
 	\item \verb|apikey|\\
 	\textbf{Kemungkinan nilai:} angka heksadesimal 16-digit\\
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
-% \vspace{\baselineskip}
-Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:\footnote{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
+\vspace{\baselineskip}
+Sedangkan, respon yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
 
 \begin{itemize}
 	\item \verb|status|\\
@@ -177,7 +241,7 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 	
 	\begin{itemize}
 		\item \verb|steps|\\
-		\textbf{Tipe:} array\\
+		\textbf{Tipe:} \textit{array}\\
 		Variabel ini merepresentasikan satu buah langkah yang harus ditempuh oleh pengguna. Adapun \textit{array} ini sendiri berisi variabel-variabel berikut:
 		
 		\begin{itemize}
@@ -185,14 +249,14 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 			Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
 			\item Kode angkot\\
 			Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
-			\item Array \latlon lokasi\\
+			\item \textit{Array} \latlon lokasi\\
 			\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
 			\item Deskripsi langkah\\
 			Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa yang digunakan tergantung parameter \verb|locale| yang diatur dalam masukan.
 			\item URL untuk mendapatkan tiket kendaraan\\
 			Tautan untuk mendapatkan tiket angkutan umum, jika diperlukan. Jika transportasi pada langkah tersebut tidak memerlukan tiket, variabel ini akan berisi \verb|null|.
 			\item URL editor rute\\
-			Tautan untuk meng-edit rute, jika situasinya memungkinkan. Jika tidak, variabel ini akan berisi \verb|null|.
+			Tautan untuk melakukan modifikasi rute, jika dimungkinkan. Jika rute tidak bisa dimodifikasi, variabel ini akan berisi \verb|null|.
 		\end{itemize}
 		
 		\item \verb|traveltime|\\
@@ -201,6 +265,54 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 	\end{itemize}
 	
 \end{itemize}
+\vspace{\baselineskip}\noindent
+Adapun gambar \ref{fig:kiri-api-routing-usage} menunjukkan penggunaan API KIRI untuk layanan pencarian rute dari Cihampelas Walk ke Universitas Katolik Parahyangan.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-routing}
+    \caption[Penggunaan API KIRI untuk layanan pencarian rute]{Penggunaan API KIRI untuk layanan pencarian rute menggunakan Postman. Gambar ini menunjukkan hasil pencarian rute dari Cihampelas Walk ke UNPAR.}
+    \label{fig:kiri-api-routing-usage}
+\end{figure}
+
+\textbf{\textit{Smart Direction}}
+
+Layanan terakhir dari API ini adalah layanan \textit{smart direction}, yang merupakan gabungan dari kedua layanan sebelumnya. Berbeda dengan kedua layanan tadi, yang harus mengakses API secara manual (dengan mengirimkan permintaan GET), layanan ini tidak memerlukan pengguna untuk mengirim permintaan tersebut secara manual\textemdash layanan ini sudah otomatis mengirimkan permintaan tersebut. Berbeda dengan kedua layanan sebelumnya pula, layanan ini tidak memerlukan dibuatnya kunci API terlebih dahulu.
+
+Layanan ini bekerja dengan menyuruh peramban pengguna untuk langsung mengakses halaman web KIRI yang sudah langsung menunjukkan rute yang perlu ditempuh untuk pergi dari lokasi satu ke lokasi lainnya. Untuk melakukan hal ini, layanan ini memerlukan sebuah URL, yang memiliki format sebagai berikut:
+
+\begin{verbatim}
+ https://projectkiri.id?start=<lokasi awal>&finish=<lokasi akhir>&locale=<locale>
+\end{verbatim}
+\noindent
+Dapat dilihat bahwa URL tersebut memiliki tiga buah parameter, yaitu:
+
+\begin{itemize}
+	\item \verb|start|\\
+	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
+	Parameter ini berisi lokasi yang ingin digunakan sebagai lokasi mulainya pencarian rute.
+	\item \verb|finish|\\
+	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
+	Parameter ini berisi lokasi yang merupakan tujuan akhir yang ingin dicapai dalam pencarian rute.
+	\item \verb|locale| (opsional)\\
+	\textbf{Kemungkinan nilai:} \verb|id| atau \verb|en|\\
+	Menentukan dalam bahasa apa hasil pencarian rutenya akan ditampilkan (bahasa Indonesia atau bahasa Inggris). Jika parameter ini tidak diberikan oleh pengguna, maka bahasa yang akan digunakan adalah bahasa yang terakhir dipakai di halaman web KIRI sendiri.
+\end{itemize}
+\vspace{\baselineskip}\noindent
+Misalkan pengguna ingin mencari rute dari Cihampelas Walk ke Universitas Katolik Parahyangan, dan menampilkan langkah-langkah yang harus ditempuh dalam rutenya dalam bahasa Indonesia. Pengguna dapat memasukkan URL berikut ke peramban mereka.
+
+\begin{verbatim}
+            https://projectkiri.id?start=ciwalk&finish=unpar&locale=id
+\end{verbatim}
+\noindent
+Jika URL tersebut sudah dimasukkan ke kotak \textit{link} pada peramban, halaman yang akan ditampilkan akan terlihat seperti pada gambar \ref{fig:kiri-api-smartdirections-usage}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.74\linewidth]{apikiri-smartdirections}
+    \caption[Penggunaan API KIRI untuk layanan \textit{smart direction}]{Penggunaan API KIRI untuk layanan \textit{smart direction}, dari Cihampelas Walk ke UNPAR.}
+    \label{fig:kiri-api-smartdirections-usage}
+\end{figure}
 		
 		\item \textbf{Mempelajari perkakas-perkakas \cl sejenis.}\\
 		{\bf Status :} Ditambahkan pada Skripsi 1.\\
@@ -298,9 +410,435 @@ Sedangkan, respon yang diberikan oleh API berupa sebuah objek JSON yang selalu m
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :} Ada beberapa modul/fungsi bawaan dari bahasa C yang akan digunakan dalam pembuatan perkakas \cl ini. Salah satu dari fungsi tersebut adalah fungsi \verb|getopt|
 
+\textbf{getopt \cite{gnulibrary:2022:getopt}}
+
+\verb|getopt| merupakan sebuah fungsi yang dapat mengautomasi pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl berbasis UNIX.
+\newline\newline\noindent
+Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
+
+\begin{verbatim}
+                         getopt (argc, argv, <options>)
+\end{verbatim}
+
+Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
+\newline\newline
+Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
+\begin{itemize}
+	\item \verb|opterr|\\
+	Isi dari variabel ini akan memberi signal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
+	\item \verb|optopt|\\
+	Ketika \verb|getopt| menemukan sebuah karakter yang tidak didefinisikan dalam kumpulan opsi, atau sebuah opsi yang tidak disertai argumen yang diperlukan, karakter tersebut akan disimpan di variabel ini.
+	\item \verb|optind|\\
+	Variabel ini digunakan oleh \verb|getopt| sebagai indeks untuk \textit{array} \verb|argv|. Jika seluruh argumen sudah diproses, nilai variabel ini dapat digunakan untuk menentukan argumen mana yang merupakan arguman tambahan yang tidak terpakai. Nilai dari variabel ini dimulai dari 1.
+	\item \verb|optarg|\\
+	Jika opsi yang sedang diproses memerlukan argumen, variabel ini adalah tempat dimana argumen tersebut akan disimpan.
+	\item \verb|<options>|\\
+	Variabel ini berupa \textit{string} yang menandakan karakter-karakter apa saja yang menjadi opsi yang mungkin dalam perkakas tersebut, beserta tipenya. Jika karakter opsi:
+	
+	\begin{itemize}
+		\item Diikuti dengan titik dua (\verb|:|), maka opsi tersebut memiliki argumen yang bersifat wajib.
+		\item Diikuti dengan titik dua ganda (\verb|::|), maka opsi tersebut memiliki argumen yang bersifat opsional.
+		\item Tidak diikuti apa-apa, maka opsi tersebut merupakan opsi tidak berarguman.
+	\end{itemize}
+	
+\end{itemize}
+
+\textbf{getopt-long}
+
+Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata.
+
+\verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
+
+\begin{itemize}
+	\item \verb|name|\\
+	Variabel ini merupakan nama panjang dari opsi.
+	\item \verb|has_arg|\\
+	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai yang mungkin dalam variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
+	\item \verb|flag| \& \verb|val|\\ 
+	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt-long|. Variabel \verb|flag| dapat diisi dengan penunjuk (\textit{pointer}) ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt-long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt-long| akan mengembalikan isi dari variabel \verb|val|.
+\end{itemize}
+\noindent
+Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
+
+\textbf{libcurl \cite{stenberg:2022:everythingcurl}}
+
+libcurl merupakan sebuah \textit{library} yang berisi fungsi-fungsi yang disediakan dalam bentuk API bahasa C, untuk digunakan oleh aplikasi-aplikasi bahasa C. Libcurl didesain dengan berorientasi transfer (biasanya transfer berkas), tanpa memerlukan para penggunanya untuk mengerti protokol-protokol yang digunakan dalam proses pentransferan tersebut. Fitur transfer ini dapat dibuat sesederhana mungkin, dan seluruh aturan dan opsi seputar pemindahan berkas tersebut dapat diatur nantinya secara manual melalui opsi-opsi yang ada.
+
+Untuk mulai melakukan transfer berkas, diperlukan juga sebuah \textit{handle} yang perlu diinisialisasi terlebih dahulu. Adapun cURL memiliki dua jenis \textit{handle}, yaitu \textit{easy handle} dan \textit{multi handle}. 
+
+\textbf{\textit{Easy Handle}}
+
+\textit{Easy handle} dari cURL dapat diinisialisasi dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} ini berhasil diatur opsinya apabila fungsi \verb|curl_easy_setopt()| tadi mengembalikan \verb|CURLE_OK|. Terakhir, untuk menjalankan transfernya, fungsi yang perlu dipanggil adalah \verb|curl_easy_perform(<easy handle>)|, dengan variabel \verb|<easy handle>| diisi dengan nama dari \textit{easy handle} yang ingin dimulai transfernya.
+
+\textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
+
+\textbf{\textit{Multi Handle}}
+
+
+\textit{Multi handle} merupakan sebuah \textit{handle} yang dapat memfasilitasi beberapa transfer yang dilakukan secara paralel. Metode pentransferan filenya masih sama dengan \textit{easy handle}, hanya saja untuk \textit{multi handle}, diperlukan sebuah \textit{handle} tambahan yang dapat menampung seluruh \textit{easy handle} yang akan digunakan. Adapun \textit{handle} tipe ini dapat diinisialisasi dengan memanggil fungsi \verb|curl_multi_init()|, dan untuk mengatur opsi-opsi seputar \textit{multi handle} tersebut, pengguna dapat memanggil fungsi \verb|curl_multi_setopt()|.
+
+Untuk memulai transfer paralel, tentunya perlu diinisialisasi dulu masing-masing \textit{easy handle}-nya. Setelah \textit{handle-handle} tersebut diinisialisasi, \textit{handle} tersebut dapat dimasukkan ke dalam sebuah \textit{multi handle} dengan memanggil fungsi berikut.
+
+\begin{verbatim}
+              curl_multi_add_handle(<multi handle>, <easy handle>);
+\end{verbatim}
+\noindent
+Dengan \verb|<easy handle>| merupakan nama dari \textit{easy handle} yang ingin dimasukkan ke dalam \textit{multi handle} tertentu dan \verb|<multi handle>| merupakan nama dari \textit{multi handle}-nya sendiri. Sedangkan, untuk menghapus sebuah \textit{easy handle} dari dari dalam \textit{multi handle}, dapat dipanggil fungsi berikut.
+
+\begin{verbatim}
+             curl_multi_remove_handle(<multi handle>, <easy handle>);
+\end{verbatim}
+
+Setelah seluruh \textit{easy handle} yang ingin dijalankan dimasukkan ke dalam \textit{multi handle}, \textit{multi handle} tersebut dapat dijalankan dengan menggunakan sebuah \textit{loop} transfer. Adapun isi dari loop ini meliputi tiga langkah utama, yaitu:
+
+\begin{enumerate}
+	\item Inisialisasi variabel \verb|transfers_running|\\
+	\verb|transfers_running| merupakan sebuah variabel \textit{integer} yang menjadi penanda bagi pengguna mengenai berapa banyak \textit{handle} yang sedang melakukan proses transfer di suatu waktu. Selama nilai variabel ini bukan 0, artinya ada \textit{easy handle} yang belum selesai melakukan proses transfer berkas.
+	\item Menjalankan transfer dalam \textit{multi handle}\\
+	Langkah selanjutnya adalah menjalankan transfer dalam \textit{mutli handle}, dengan memanggil fungsi \verb|curl_multi_perform|. Adapun fungsi tersebut harus dipanggil dengan format berikut, yaitu:
+
+\begin{verbatim}
+           curl_multi_perform(<multi handle>, <transfers_running>)
+\end{verbatim}
+
+	\item Menunggu transfer untuk selesai sebelum data diekstraksi\\
+	Tentunya sebelum data hasil transfer dapat diekstraksi untuk dipakai, proses transfernya sendiri harus selesai terlebih dahulu\textemdash untuk kasus dalam \textit{multi handle} libcurl, seluruh \textit{handle} di dalam \textit{multi handle} harus selesai melakukan transfer terlebih dahulu, atau sampai terjadi \textit{timeout}. Adapun langkah ini dapat diselesaikan entah dengan menggunakan \verb|curl_multi_wait()| atau \verb|curl_multi_poll()|, atau dengan cara manual, yaitu dengan memasukkan deskriptor-deskriptor file serta nilai \textit{timeout} secara manual, dan kemudian menggunakan \verb|select()|, walaupun metode ini tidak dianjurkan karena keterbatasan jumlah deskriptor yang dapat digunakan.\footnote{\href{https://curl.se/libcurl/c/curl\_multi\_poll.html}{https://curl.se/libcurl/c/curl\_multi\_poll.html}}
+\end{enumerate}
+
+\textbf{\textit{Multi Socket Handle}}
+
+Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Bedanya dengan \textit{multi handle} biasa adalah \textit{multi socket handle} memperhatikan \textit{socket-socket} yang ada dan memberitahu \textit{handle-handle} jika ada \textit{socket} yang sudah siap untuk digunakan dalam proses \textit{read/write}. Cara operasinya hampir sama dengan \textit{multi handle}\textemdash hal utama yang berbeda adalah dengan \textit{multi socket handle}, diperlukan satu buah parameter tambahan, yaitu kumpulan \textit{socket} yang ingin diperhatikan.
+
+\textit{Socket} ini, beserta apa aksi yang ingin ditunggu dalam socket tersebut, diperhatikan dengan implementasi sebuah fungsi \textit{callback}, yaitu \verb|socket_callback()|. Handle mana yang ingin digunakan, socket mana yang ingin diperhatikan, serta aksi apa yang ditunggu diatur dalam fungsi ini. Jika ada beberapa \textit{socket} yang ingin diperhatikan, fungsi ini harus dipanggil lagi untuk setiap \textit{socket}-nya. Selain itu, perlu juga dipanggil fungsi \verb|timer_callback()|, yang berfungsi untuk mengatur seberapa lama aplikasi akan menunggu \textit{socket}, sebelum terjadi \textit{timeout}. Kedua \textit{callback} ini dapat diatur ke dalam suatu \textit{multi handle} dengan menggunakan fungsi \verb|curl_multi_setopt()| biasa\textemdash untuk \textit{callback socket}, fungsi ini ditandai dengan menggunakan paramter \verb|CURLMOPT_TIMERFUNCTION|, sedangkan untuk \textit{callback timer}, fungsi tersebut ditandai dengan parameter \verb|CURLMOPT_TIMERFUNCTION|.
+
+Adapun seluruh \textit{handle} ini dapat dipanggil dengan memanggil fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa.
+
+\textbf{cJSON \footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}
+
+cJSON merupakan sebuah \textit{library} yang berfungsi sebagai \textit{parser} JSON untuk perangkat-perangkat lunak bahasa C. \textit{Library} ini sendiri terdiri atas sebuah file C dan sebuah file header.
+
+\textbf{Instalasi}
+
+cJSON dapat diinstal dengan beberapa cara, yaitu:
+
+\begin{itemize}
+	\item Manual\\
+	Instalasi manual hanya membutuhkan pengembang perangkat lunak untuk menyalin kedua file \textit{library} cJSON ke dalam direktori perangkat lunak tersebut.
+	\item CMake\\
+	Untuk penggunaan cJSON dengan CMake, perlu dibuat sebuah direktori bernama \verb|build|, dan kemudian CMake harus dijalankan di dalam direktori tersebut, dengan mengeksekusi perintah \verb|cmake|. Dengan melakukan ini, Makefile akan dibuat di dalam direktori tersebut, yang nantinya akan dapat di-\textit{compile} dan diinstal dengan perintah \verb|make install|.
+	
+	Proses ini akan menginstal file-file \textit{header} ke direktori \verb|/usr/local/include/cjson|, dan file-file \textit{library} ke dalam direktori \verb|usr/local/lib|. Selain itu, file-file untuk \verb|pkg-config| juga akan diinstal untuk memudahkan deteksi instalasi CMake sebelumnya.
+	
+	Proses pembuatan CMake juga memiliki beberapa opsi yang dapat diatur sedemikian rupa sesuai dengan kebutuhan pembuat perangkat lunak. Adapun opsi-opsi yang dapat diatur dapat dilihat di daftar berikut.
+
+	\begin{itemize}
+		\item \verb|-DENABLE_CJSON_TEST|\\
+		\textbf{Nilai awal:} On\\
+		Jika opsi ini dinyalakan (diberi nilai ``On``), maka tes-tes cJSON akan dibuat dan dijalankan bersamaan dengan instalasi.
+		\item \verb|-DENABLE_CJSON_UTILS|\\
+		\textbf{Nilai awal:} Off\\
+		Jika opsi ini dinyalakan (diberi nilai ``On``), maka file-file utilitas cJSON akan diinstal  bersamaan dengan instalasi.
+		\item \verb|-DENABLE_TARGET_EXPORT|\\
+		\textbf{Nilai awal:} On\\
+		Mengekspor target-target ekspor cJSON. Opsi ini dapat dimatikan jika terjadi masalah saat instalasi.
+		\item \verb|-DENABLE_CUSTOM_COMPILER_FLAGS|\\
+		\textbf{Nilai awal:} On\\
+		Mengaktifkan properti-properti untuk \textit{compiler} non-standar (Clang, GCC, MSVC). Opsi ini dapat dimatikan jika terjadi masalah saat instalasi.
+		\item \verb|-DENABLE_VALGRIND|\\
+		\textbf{Nilai awal:} Off\\
+		Menjalankan tes-tes yang ada menggunakan \mbox{Valgrind}.
+		\item \verb|-DENABLE_SANITIZERS|\\
+		\textbf{Nilai awal:} Off\\
+		Meng-compile cJSON dengan menyalakan \mbox{AddressSanitizer} dan \mbox{UndefinedBehaviorSanitizer}, jika mungkin.
+		\item \verb|-DENABLE_SAFE_STACK|\\
+		\textbf{Nilai awal:} Off\\
+		Menyalakan SafeStack. Pada saat skripsi ini dibuat, fitur ini hanya didukung untuk \textit{compiler} Clang.
+		\item \verb|-DBUILD_SHARED_LIBS|\\
+		\textbf{Nilai awal:} Off\\
+		Membangun \textit{library-library} umum yang tersedia.
+		\item \verb|-DBUILD_SHARED_AND_STATIC_LIBS|\\
+		\textbf{Nilai awal:} On\\
+		Membangun \textit{library} umum dan \textit{library} statik yang tersedia.
+		\item \verb|-DCMAKE_INSTALL_PREFIX|\\
+		\textbf{Nilai awal:} -\\
+		Mengatur \textit{prefix} direktori tempat instalasi cJSON.
+		\item \verb|-DENABLE_LOCALES|\\
+		\textbf{Nilai awal:} On\\
+		Memungkinkan penggunaan metode \verb|localeconv|.
+		\item \verb|-DCJSON_OVERRIDE_BUILD_SHARED_LIBS|\\
+		\textbf{Nilai awal:} On\\
+		Memungkinkan penimpaan nilai dari opsi \verb|-BUILD_SHARED_LIBS| menggunakan nilai dari opsi \verb|-DCJSON_BUILD_SHARED_LIBS|.
+		\item \verb|-DENABLE_CJSON_VERSION_SO|\\
+		\textbf{Nilai awal:} On\\
+		Menyalakan versi so dari cJSON.
+	\end{itemize}
+
+	\item Makefile\\
+	Jika CMake tidak tersedia, cJSON juga dapat dibangun dengan menggunakan GNU Make, dengan menggunakan perintah \verb|make all|, dan menginstal \textit{library-library} yang sudah ter-\textit{compile} dengan perintah \verb|make install|. Akan tetapi, perlu diingat bahwa metode instalasi ini sudah tidak lagi diperbarui (\textit{deprecated}), dan dukungannya hanya sebatas pembetulan \textit{bug}.
+	
+	\item vcpkg\\
+	Melalui vcpkg, cJSON dapat diunduh dan diinstal secara langsung. \textit{Port} dari cJSON di vcpkg terus diperbarui oleh tim Microsoft dan kontributor-kontributor dari komunitas publik, jadi versi dari cJSON yang diinstal melalui vcpkg kemungkinan besar akan selalu versi terbarunya.
+\end{itemize}
+
+\textbf{Penggunaan}
+
+Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan mengikutkan baris ini dalam kode program:
+
+\begin{verbatim}
+                           #include <cjson/cJSON.h>
+\end{verbatim}
+
+\textbf{Struktur Data}
+
+cJSON merepresentasikan sebuah nilai JSON dengan struktur data \verb|cJSON|, yang dapat dilihat di potongan kode \ref{code:cjson-struct}.
+
+\begin{lstlisting}[caption=Struktur data cJSON, label=code:cjson-struct]
+typedef struct cJSON
+{
+    struct cJSON *next;
+    struct cJSON *prev;
+    struct cJSON *child;
+    int type;
+    char *valuestring;
+    int valueint;
+    double valuedouble;
+    char *string;
+} cJSON;
+\end{lstlisting}
+\noindent
+Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
+
+\begin{itemize}
+	\item \verb|next| dan \verb|prev|\\
+	Variabel ini merupakan penunjuk ke struktur cJSON lainnya yang merupakan nilai JSON selanjutnya (untuk \verb|next|) dan sebelumnya (untuk \verb|prev|).
+	\item \verb|child|\\
+	Variabel ini merupakan penunjuk ke struktur cJSON lainnya yang merupakan elemen JSON di dalam struktur cJSON tersebut.
+	\item \verb|type|\\
+	Variabel ini menandakan tipe dari nilai JSON yang terdapat di dalam struktur cJSON tersebut. Adapun tipe-tipe yang mungkin adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|cJSON_Invalid|\\
+		Merepresentasikan sebuah objek yang tidak valid dan tidak bernilai. Jika seluruh \textit{field} diatur sehingga berisi 0 \textit{byte}, maka variabel \verb|type| akan otomatis berisi tipe ini.
+		\item \verb|cJSON_True|\\
+		Merepresentasikan nilai booolean \textit{true}.
+		\item \verb|cJSON_False|\\
+		Merepresentasikan nilai booolean \textit{false}.
+		\item \verb|cJSON_Number|\\
+		Merepresentasikan nilai numerik apapun. Jika nilainya merupakan nilai \textit{double}, maka nilai tersebut akan disimpan di dalam variabel \verb|valuedouble|. Sedangkan jika nilainya merupakan nilai \textit{integer}, maka nilai tersebut akan disimpan di dalam variabel \verb|valueint|.
+		\item \verb|cJSON_String|\\
+		Merepresentasikan nilai \textit{string} apapun. Nilainya disimpan sebagai \textit{string} yang dipisah dengan \textit{null terminator} (\verb|'\0'| atau \verb|\u0000|).
+		\item \verb|cJSON_Array|\\
+		Merepresentasikan nilai \textit{array}. \textit{Array} dalam cJSON diimplementasikan dengan menunjukkan isi dari variabel \verb|child| tadi ke sebuah \textit{linked list} dari objek-objek cJSON. Jika objek cJSON ini merupakan elemen dalam sebuah \textit{array}, maka isi dari variabel \verb|prev| dan \verb|next| merupakan salah satu dari elemen-elemen lain dalam \textit{array} yang menjadi elemen sebelum dan sesudah elemen ini.
+		\item \verb|cJSON_Object|\\
+		Merepresentasikan nilai objek general. Implementasinya sama dengan \textit{array}, hanya saja untuk objek general, kuncinya diletakkan di dalam variabel \verb|string|.
+		\item \verb|cJSON_Raw|\\
+		Merepresentasikan objek JSON apapun yang disimpan dalam bentuk \textit{array} yang diterminasi/dipisah oleh \textit{null terminator}.
+		\item \verb|cJSON_NULL|\\
+		Merepresentasikan sebuah nilai \textit{null}.
+	\end{itemize}
+	
+	\item \verb|valuestring|/\verb|valuestring|/\verb|valuestring|/\verb|string|\\	
+	Merupakan variabel-variabel yang menyimpan nilai dari struktur cJSON. Variabel apa yang diisi dan apa isinya tergantung dari tipe data yang disimpan.
+\end{itemize}
+
+\textbf{Fungsi-Fungsi Dasar}
+
+\begin{itemize}
+	\item Tipe-tipe data dasar\\
+	Untuk setiap tipe data cJSON, ada sebuah fungsi \verb|cJSON_Create...|. Semua fungsi tersebut akan mengalokasikan sebuah struktur cJSON yang nantinya dapat dihapus dengan \verb|cJSON_Delete|. Perlu diingat juga bahwa seluruh struktur yang dibuat harus dihapus agar tidak terjadi kebocoran memori. Adapun fungsi-fungsi \verb|cJSON_Create| yang dapat digunakan untuk tipe-tipe data yang tersedia adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \textit{null} dibuat dengan \verb|cJSON_CreateNull|.
+		\item \textit{boolean} dibuat dengan \verb|cJSON_CreateBool|, atau jika ingin membuat data \textit{boolean} langsung dengan nilainya, dapat menggunakan \verb|cJSON_CreateTrue| atau \verb|cJSON_CreateFalse|.
+		\item Bilangan apapun dibuat dengan \verb|cJSON_CreateNumber|. Penggunaan fungsi ini akan langsung mengisi nilai variabel \verb|valueint| dan \verb|valuedouble|.
+		\item \textit{string} apapun dibuat dengan \verb|cJSON_CreateString| (membuat sebuah string langsung sebagai nilai data JSON), atau \verb|cJSON_CreateStringReference| (mereferensikan \textit{string} yang sudah ada sebagai nilai data JSON).
+	\end{itemize}
+	
+	\item \textit{Array}\\
+	Sebuah \textit{array} kosong dapat dibuat dengan menggunakan fungsi \verb|cJSON_CreateArray|. Selain fungsi tersebut, pembuatan \textit{array} juga dapat dilakukan dengan memanggil sebuah fungsi alternatif, yaitu \verb|cJSON_CreateArrayReference|. Bedanya adalah dengan fungsi alternatif ini, \textit{array} yang dibuat tidak secara langsung ``mengandung" nilai-nilainya, jadi ketika \textit{array} tersebut dihapus dengan \verb|cJSON_Delete|, nilai-nilai di dalamnya tidak terhapus juga. Hal yang sama juga dapat dilakukan dengan objek-objek di dalam \textit{array} tersebut, dimana objek ini dapat ditambahkan dengan fungsi \verb|cJSON_AddItemToArray|, yang akan langsung menambahkan objek tersebut ke dalam \textit{array}-nya, atau dengan menggunakan \verb|cJSON_AddItemReferenceToArray|, yang hanya akan menambahkan referensi dari objek yang ingin ditambahkan ke dalam \textit{array}.
+	Jika ada sebuah objek yang ingin dihapus dari \textit{array} tertentu, perangkat lunak dapat memanggil fungsi \verb|cJSON_DetachItemFromArray|. Fungsi ini akan mengembalikan objek yang dihapus dari \textit{array} tadi, jadi objek ini harus diberikan ke sebuah penunjuk lainnya (dimasukkan ke dalam variabel lain) agar tidak terjadi kebocoran memori. Selain fungsi tersebut, fungsi \verb|cJSON_DeleteItemFromArray| juga dapat digunakan\textemdash bedanya adalah objek yang dihapus dari \textit{array} tadi, jika dihapus menggunakan fungsi ini, akan langsung dihapus, seakan-akan fungsi \verb|cJSON_Delete| dipanggil untuk objek tersebut.
+	Untuk menimpa/mengganti nilai suatu objek di dalam \textit{array}, fungsi \verb|cJSON_ReplaceItemIn|\linebreak \verb|Array| dapat dipanggil dengan indeks dari objek yang ingin diganti sebagai parameternya. Selain fungsi tersebut, fungsi \verb|cJSON_ReplaceItemViaPointer| juga dapat digunakan\textemdash fungsi ini bekerja dengan memutuskan (\textit{detach}) objek lama yang ingin diganti, menghapus objek tersebut, dan menyisipkan objek yang baru ke tempat objek lama yang sudah dihapus tadi.
+	Terakhir, untuk mendapatkan objek tertentu dalam \textit{array} berdasarkan indeksnya, perangkat lunak dapat memanggil fungsi \verb|cJSON_GetArrayItem|. Ukuran dari \textit{array}-nya sendiri juga dapat dilihat dengan fungsi \verb|cJSON_GetArraySize|.
+	\item Objek\\	
+	Sama seperti \textit{array}, ada dua jenis fungsi pembuatan objek. Yang pertama adalah \verb|cJSON_CreateObject| untuk membuat objek biasa, dan \verb|cJSON_CreateObjectReference| untuk membuat objek yang nilai-nilainya terdiri atas kumpulan referensi ke variabel-variabel lain.
+	Untuk menambahkan sebuah objek ke dalam suatu objek lainnya, pengguna dapat memanggil fungsi \verb|cJSON_AddItemToObject|. Jika objek ingin ditambahkan ke suatu objek lain yang memiliki sebuah variabel konstan sebagai nama, atau sebuah referensi, prosesnya harus menggunakan fungsi \verb|cJSON_AddItemToObjectCS|.
+	Fungsi \verb|cJSON_DetachItemFromObjectCaseSensitive| dapat dipanggil ketika ada sebuah objek ingin dibuang dari objek lain. Sama seperti fungsi \textit{detach} di \textit{array} tadi, fungsi ini akan mengembalikan objek yang dibuang tadi, dan objek tersebut harus dimasukkan ke variabel lain untuk menghindari kebocoran memori. Selain itu, ada juga fungsi \verb|cJSON_DeleteItemFromObjectCaseSensitive|, yang bekerja dengan cara yang sama seperti fungsi penghapusan objek untuk \textit{array}.
+	Untuk pengeditan/penggantian nilai objek, lagi-lagi cara kerjanya sama dengan \textit{array}. Untuk penggantian nilai objek berdasarkan kuncinya, fungsi \verb|cJSON_ReplaceItemInObjectCaseSensitive| dapat digunakan, sedangkan untuk penggantian objek langsung dengan penunjuk ke elemen lainnya, fungsi \verb|cJSON_ReplaceItemViaPointer| dapat digunakan.
+	Terakhir, untuk mengakses sebuah benda di dalam objek, pengguna dapat memanggil fungsi \verb|cJSON_GetObjectItemCaseSensitive|, dan untuk mengetahui ukuran dari objek tersebut, fungsi yang dapat digunakan sama dengan fungsi yang dapat digunakan untuk \textit{array}, yaitu \verb|cJSON_GetArraySize|.
+	\item \textit{Parsing}\\
+	Objek JSON yang dibatasi/diterminasi dengan \textit{null terminator} dapat di-\textit{parse} dengan menggunakan fungsi berikut.
+	
+	\begin{verbatim}
+                               cJSON_Parse(<JSON>)
+	\end{verbatim}
+	
+	Sedangkan, jika objek JSON tersebut tidak (atau belum tentu) dibatasi oleh \textit{null terminator}, objek tersebut dapat di-\textit{parse} dengan fungsi berikut.
+	
+	\begin{verbatim}
+              cJSON_Parse(<JSON>, <ukuran JSON yang ingin di-parse>)
+	\end{verbatim}
+	
+	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
+\end{itemize}
+
+\textbf{CMake \cite{kitware:2022:masteringcmake}}
+
+CMake merupakan sebuah perkakas generator \textit{build system} yang memungkinkan pengembang perangkat lunak untuk menentukan parameter-parameter pembangunan perangkat di sebuah file yang berupa teks biasa. File ini kemudian dipakai oleh CMake untuk membuat perkakas-perkakas pembangunan perangkat lunak yang dapat dibaca oleh IDE-IDE tertentu, seperti Microsoft Visual Studio, Apple Xcode, Linux, dan sebagainya. Selain itu, CMake juga menangani aspek-aspek rumit dari pembangunan perangkat lunak, seperti pembangunan perangkat lunak \textit{cross-platform}, introspeksi sistem, dan juga pembangunan perangkat lunak yang dapat disesuaikan berdasarkan penggunanya.
+
+Untuk proyek-proyek yang dibangun di satu platform, CMake memiliki fungsi sebagai berikut.
+
+\begin{itemize}
+	\item Memberikan kemampuan untuk melakukan pencarian seluruh perangkat lunak, file-file \textit{library}, dan file-file \textit{header} yang dibutuhkan untuk proses pembangunan perangkat lunak. Pencarian ini juga dapat dilakukan sampai ke dalam \textit{registry} sistem.
+	\item Memungkinkan pembangunan perangkat lunak diluar folder tempat \textit{source code} perangkat lunak tersebut sendiri.
+	\item Memberikan kemampuan untuk membuat perintah-perintah khusus untuk file-file yang dibuat secara otomatis, seperti \verb|moc()| dari Qt, atau generator pembungkus dari SWIG. Perintah-perintah ini dapat mengatur pembuatan file \textit{source} baru yang nantinya akan diintegrasikan langsung ke dalam perangkat lunak akhirnya.
+	\item Memberikan kemampuan untuk memilihkan file-file opsional dari \textit{library} yang digunakan.
+	\item Memungkinkan pengaturan pembuatan proyek dari sebuah file \verb|.txt| sederhana.
+	\item Kemampuan untuk dengan mudah beralih dari \textit{static build} dan \textit{shared build}.
+	\item Membuat ketentuan keperluan (\textit{dependency}) secara otomatis.
+\end{itemize}
+
+Sedangkan, untuk perangkat-perangkat lunak yang dibuat \textit{cross-platform}, CMake memberikan fungsi-fungsi tambahan sebagai berikut.
+
+\begin{itemize}
+	\item Memberikan kemampuan mengetes urutan \textit{machine byte} dan karakteristik-karakteristik lainnya yang spesifik untuk suatu sistem operasi.
+	\item File konfigurasi yang dibuat dapat berlaku untuk seluruh \textit{platform}.
+	\item Memberikan dukungan untuk membangun \textit{shared build} untuk seluruh \textit{platform} yang mendukungnya.
+	\item Memberikan kemampuan untuk mengatur opsi-opsi yang spesifik untuk suatu sistem operasi, seperti misalnya lokasi file-file data utama.
+\end{itemize}
+
+\textbf{Penggunaan Dasar}
+
+CMake mengambil satu (atau lebih) file-file CMakeLists sebagai masukan, dan sebagai keluaran akan menghasilkan file-file proyek atau Makefile yang dapat digunakan dengan dan oleh perkakas-perkakas pembangunan perangkat lunak lain yang ada.
+
+Proses CMake umumnya terdiri atas langkah-langkah berikut.
+
+\begin{enumerate}
+	\item Proyek yang ingin dibangun didefinisikan di salah satu file CMakeLists.\\
+	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Tertera di kode \ref{code:cmake-basecode} merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, sebagai gambaran mengenai hal-hal apa saja yang minimal harus ada di dalam file CMakeLists.
+	
+	\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-basecode]
+cmake_minimum_required(VERSION 3.20)
+project(Hello)
+add_executable(Hello Hello.c)
+	\end{lstlisting}
+	
+	Penjelasan dari baris-baris berikut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item Baris pertama harus selalu merupakan \verb|cmake_minimum_required|. Hal ini mengharuskan proyek untuk menggunakan versi dari CMake yang dispesifikasi, dan juga memungkinkan \textit{backwards compatibility}.
+		\item Baris selanjutnya merupakan perintah \verb|project|. Perintah ini mengatur nama proyek, dan juga bisa digunakan untuk mengatur aturan-aturan lainnya, seperti versi, atau bahasa dari proyek.
+		Untuk setiap direktori yang memiliki file CMakeLists, CMake akan membuat sebuah Makefile atau file proyek untuk IDE. Proyek ini, nantinya, akan mengikutkan seluruh direktori yang memiliki file CMakeLists ini serta seluruh subdirektori yang diikutkan dalam perintah \verb|add_subdirectory|.
+		\item Terakhir, perintah \verb|add_executable| merupakan sebuah perintah yang akan menambahkan sebuah file \textit{executable} untuk menjalankan proyek yang sudah dibangun tersebut.
+	\end{itemize}
+	\item CMake membuat dan mengkonfigurasi proyek tersebut.\\
+	Setelah file-file CMakeLists selesai dibuat, CMake akan memproses file-file tersebut dan membuat entri-entri dalam sebuah file \textit{cache}. Pengembang perangkat lunak dapat mengedit file CMakeLists atau mengatur isi dari file \textit{cache} tadi dengan GUI CMake, ccmake, atau untuk proyek-proyek skala kecil, langsung dari \cl.
+	
+	\begin{itemize}
+		\item GUI CMake\\
+		CMake memiliki perangkat lunak GUI berbasis Qt yang bisa digunakan di sebagian besar sistem operasi, seperti UNIX, Mac OS X, dan Windows. Perangkat lunak ini, \verb|cmake-gui|, sudah terinstal bersama dengan CMake, tetapi membutuhkan instalasi Qt untuk dijalankan. Adapun tampilan dari perangkat lunak ini dapat dilihat di gambar \ref{fig:cmake-gui}.
+		
+		\begin{figure}[ht]
+		    \centering
+		    \includegraphics[width=0.66667\linewidth]{cmake-gui}
+		    \caption[Tampilan aplikasi cmake-gui]{Tampilan aplikasi cmake-gui.\protect\footnotemark}
+		    \label{fig:cmake-gui}
+		\end{figure}
+		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
+		
+		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
+		\item ccmake\\
+		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
+		
+		\begin{figure}[ht]
+		    \centering
+		    \includegraphics[width=0.66667\linewidth]{cmake-ccmake}
+		    \caption[Tampilan aplikasi ccmake]{Tampilan aplikasi ccmake.\protect\footnotemark}
+		    \label{fig:cmake-ccmake}
+		\end{figure}
+		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
+		
+		\item Langsung dari \cl\\
+		CMake juga dapat dijalankan melalui \textit{command line}. Untuk menjalankan CMake dari \textit{command line}, direktori tempat terminal berada lagi-lagi harus diatur ke direktori tempat file-file \textit{binary} akan disimpan. Kemudian jalankan perintah \verb|cmake| dengan opsi \verb|-D|, diikuti dengan direktori tempat \textit{source code} dari perangkat lunak yang ingin dibangun berada. Walaupun begitu, perlu diingat bahwa metode ini direkomendasikan untuk digunakan hanya untuk proyek-proyek yang memiliki sedikit, atau bahkan tidak ada opsi sama sekali.
+	\end{itemize}
+	
+	\item Pengguna membangun proyek tersebut dengan perkakas pembangunan masing-masing.\\
+	CMake dapat memberikan beberapa opsi dalam pembangunan perangkat lunak yang dapat diatur oleh penggunanya masing-masing. Adapun dua opsi utama dari seluruh opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item Menspesifikasi \textit{compiler} yang akan digunakan\\
+		Di beberapa sistem, bisa jadi terdapat lebih dari satu \textit{compiler}, atau \textit{compiler} yang ada tidak berada di tempat \textit{compiler} tersebut biasa diinstal. Di kasus-kasus ini, CMake perlu diberitahu secara manual dimana letak \textit{compiler} yang ingin digunakan. Ada tiga cara untuk melakukan ini, yaitu dengan:
+		
+		\begin{itemize}
+			\item menspesifikasikan \textit{compiler} yang ingin dipakai ke generator,
+			\item mengatur variabel \textit{environment}, atau
+			\item membuat entri \textit{cache}.
+		\end{itemize}
+		
+		Jika pengaturan \textit{compiler} sudah selesai dan \verb|cmake| sudah dijalankan setidaknya sekali, jika pengguna ingin mengganti \textit{compiler}, pengguna harus memulai ulang dengan folder file \textit{binary} yang kosong.
+		\item Mengatur konfigurasi pembangunan perangkat\\
+		Konfigurasi pembangunan perangkat memungkinkan sebuah proyek untuk dibangun dalam beberapa cara dengan tujuan \textit{debugging}, optimisasi, atau tujuan-tujuan sejenis lainnya. Secara \textit{default}, CMake mendukung mode-mode berikut:
+		
+		\begin{itemize}
+			\item \verb|Debug|\textemdash Opsi-opsi \textit{debug} dasar dinyalakan.
+			\item \verb|Release|\textemdash Fungsi optimisasi dasar dinayalakan.
+			\item \verb|MinSizeRel|\textemdash Ukuran kode akhir diusahakan sekecil mungkin.
+			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi untuk \textit{debugging}.
+		\end{itemize}
+		
+		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
+		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
+		
+		\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-multibuild]
+ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
+ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
+		\end{lstlisting}
+		
+	\end{itemize}
+	
+	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
+\end{enumerate}
+
 		\item \textbf{Melakukan analisis dan desain perangkat lunak yang akan dibangun.}\\
-		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :}
+		{\bf Status :} Ada sejak rencana kerja skripsi\textemdash desain akan dilakukan di Skripsi 2.\\
+		{\bf Hasil :} Pada skripsi ini, akan dibangun sebuah aplikasi berupa perkakas \cl yang merupakan ekstensi dari sebuah aplikasi berbasis web lain, yaitu KIRI. Perkakas ini akan menjadi ekstensi KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
+
+Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan satu sama lain, yaitu pencarian lokasi, dan penunjukkan rute dengan angkot.
+
+\begin{itemize}
+	\item Pencarian lokasi\\
+	Pencarian lokasi merupakan fungsi utama pertama dari perkakas ini. Untuk fungsi ini, masukan langsung dari pengguna yang akan diterima oleh perkakas adalah kata kunci dari sebuah lokasi yang ingin dicari. Kemudian, perkakas akan memprosesnya melalui API KIRI, lalu mengembalikan nama lokasi tersebut, serta nilai \textit{latitude} dan \textit{longitude}-nya, sebagai keluaran akhir dari proses tersebut.
+	\item Pencarian rute\\
+	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
+\end{itemize}
+
+Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
+
+\begin{itemize}
+	\item \verb|--help|\\
+	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|--help| ini.
+	\item \verb|--search|\\
+	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|--region <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa kota dari lokasi yang ingin dicari.
+		\item \verb|--querystring <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
+	\end{itemize}
+	
+	\item \verb|--route|\\
+	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|--start <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
+		\item \verb|--finish <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
+		\item \verb|--locale <parameter>|\\
+		Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
+	\end{itemize}
+	
+\end{itemize}
 
 		\item \textbf{Melakukan analisis kebutuhan fitur-fitur perangkat lunak dan melakukan eksplorasi \textit{library} yang dapat digunakan dan memenuhi spesifikasi dalam pembuatan perangkat lunak.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
