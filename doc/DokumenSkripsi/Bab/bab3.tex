@@ -202,7 +202,7 @@ Layanan pertama dari dua layanan yang tersisa merupakan layanan \textit{search p
 \end{itemize}
 
 \subsection{\textit{Routing}}
-\label{sec:analysis-kiri-searchplace}
+\label{sec:analysis-kiri-findroute}
 
 Layanan kedua dari API ini merupakan fungsi utama dari KIRI sendiri, yaitu pencarian rute dengan menggunakan angkot. Layanan ini akan menerima dua buah lokasi yang ingin dijadikan lokasi awal dan lokasi akhir, dan menunjukkan langkah-langkah yang harus ditempuh untuk menempuh perjalanan tersebut, dengan memanfaatkan jasa angkot yang ada. Sama seperti layanan \textit{search place}, layanan ini juga digunakan dengan mengirimkan permintaan GET ke alamat API KIRI.
 
@@ -272,3 +272,73 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 	\end{itemize}
 	
 \end{itemize}
+
+\subsection{Analisis \textit{Use Case}}
+\label{sec:analysis-thesisapp-usecases}
+
+Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian rute dengan angkot. Oleh karena itu, diagram \textit{use case} dari aplikasi ini akan mengandung dua \textit{use case}, yang dapat dilihat di gambar \ref{fig:thesisapp-uml}. Adapun penjelasan dari tiap-tiap \textit{use case} tersebut dapat dilihat di tabel \ref{tab:thesisapp-scenariocase-searchplace} dan tabel \ref{tab:thesisapp-scenariocase-findroute}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{thesisapp-uml}
+    \caption[Diagram \textit{use case} perkakas yang akan dibangun]{Diagram \textit{use case} dari perkakas yang akan dibangun.}
+    \label{fig:thesisapp-uml}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+    \hline
+        Nama & Mencari lokasi\\
+    \hline
+    \hline
+        Deskripsi & Fitur untuk mencari lokasi di area tertentu berdasarkan kata kunci\\
+    \hline
+		Aktor & Pengguna aplikasi\\
+	\hline
+		Pre-kondisi & -\\
+    \hline
+		Pos-kondisi & Nama dari lokasi serta koordinat \textit{latitude} dan \textit{longitude}-nya ditampilkan kepada pengguna.\\
+    \hline
+		Skenario utama & 
+		\begin{enumerate}
+			\item Perkakas membaca masukan dari argumen dalam perintah \cl.
+			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
+			\item Perkakas menerima keluaran dari API KIRI dan  meneruskannya kembali kepada pengguna.
+        \end{enumerate}\\
+    \hline
+		Skenario eksepsi & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter.\\
+	\hline
+    \end{tabular}
+    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot.}
+    \label{tab:thesisapp-scenariocase-searchplace}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+    \hline
+        Nama & Mencari rute dengan angkot\\
+    \hline
+    \hline
+        Deskripsi & Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot\\
+    \hline
+		Aktor & Pengguna aplikasi\\
+	\hline
+		Pre-kondisi & Pengguna menyiapkan lokasi awal dan lokasi akhir berupa koordinat \textit{latitude} dan \textit{longitude}.\\
+    \hline
+		Pos-kondisi & Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.\\
+    \hline
+		Skenario utama & 
+		\begin{enumerate}
+			\item Perkakas membaca masukan dari argumen dalam perintah \cl.
+			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
+			\item Perkakas menerima keluaran dari API KIRI dan meneruskannya kembali kepada pengguna.
+        \end{enumerate}\\
+	\hline
+		Skenario eksepsi & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter.\\
+    \hline
+    \end{tabular}
+    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot.}
+    \label{tab:thesisapp-scenariocase-findroute}
+\end{table}
