@@ -460,6 +460,59 @@ Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima du
 \noindent
 Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
 
+		\item \textbf{Melakukan analisis dan desain perangkat lunak yang akan dibangun.}\\
+		{\bf Status :} Ada sejak rencana kerja skripsi\textemdash desain akan dilakukan di Skripsi 2.\\
+		{\bf Hasil :} Pada skripsi ini, akan dibangun sebuah aplikasi berupa perkakas \cl yang merupakan ekstensi dari sebuah aplikasi berbasis web lain, yaitu KIRI. Perkakas ini akan menjadi ekstensi KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
+
+Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan satu sama lain, yaitu pencarian lokasi, dan penunjukkan rute dengan angkot.
+
+\begin{itemize}
+	\item Pencarian lokasi\\
+	Pencarian lokasi merupakan fungsi utama pertama dari perkakas ini. Untuk fungsi ini, masukan langsung dari pengguna yang akan diterima oleh perkakas adalah kata kunci dari sebuah lokasi yang ingin dicari. Kemudian, perkakas akan memprosesnya melalui API KIRI, lalu mengembalikan nama lokasi tersebut, serta nilai \textit{latitude} dan \textit{longitude}-nya, sebagai keluaran akhir dari proses tersebut.
+	\item Pencarian rute\\
+	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
+\end{itemize}
+
+Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
+
+\begin{itemize}
+	\item \verb|--help|\\
+	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|--help| ini.
+	\item \verb|--search|\\
+	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|--region <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa kota dari lokasi yang ingin dicari.
+		\item \verb|--querystring <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
+	\end{itemize}
+	
+	\item \verb|--route|\\
+	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|--start <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
+		\item \verb|--finish <parameter>|\\
+		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
+		\item \verb|--locale <parameter>|\\
+		Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
+	\end{itemize}
+	
+\end{itemize}
+		
+		\item \textbf{Melakukan analisis kebutuhan fitur-fitur perangkat lunak.}		
+		\label{sec:num5} \newline
+		{\bf Status :} Dipisah dua bersama dengan \hyperref[sec:num6]{nomor 6} di Skripsi 1\textemdash tidak dikerjakan.\\
+		{\bf Hasil :} Perangkat lunak hasil skripsi ini merupakan ekstensi dari perangkat lunak lainnya, yaitu KIRI. Oleh karena itu, fitur-fitur yang dimiliki oleh perangkat lunak ini akan sama seperti fitur-fitur yang disediakan oleh KIRI.
+		
+		
+		\item \textbf{Melakukan eksplorasi \textit{library} yang dapat digunakan dan memenuhi spesifikasi dalam pembuatan perangkat lunak.}
+		\label{sec:num6} \newline
+		{\bf Status :} Dipisah dua bersama dengan \hyperref[sec:num5]{nomor 5} di Skripsi 1.\\
+		{\bf Hasil :} Adapun \textit{library-library} yang dapat digunakan berdasarkan spesifikasi perangkat lunak adalah sebagai berikut.
+		
 \textbf{libcurl \cite{stenberg:2022:everythingcurl}}
 
 libcurl merupakan sebuah \textit{library} yang berisi fungsi-fungsi yang disediakan dalam bentuk API bahasa C, untuk digunakan oleh aplikasi-aplikasi bahasa C. Libcurl didesain dengan berorientasi transfer (biasanya transfer berkas), tanpa memerlukan para penggunanya untuk mengerti protokol-protokol yang digunakan dalam proses pentransferan tersebut. Fitur transfer ini dapat dibuat sesederhana mungkin, dan seluruh aturan dan opsi seputar pemindahan berkas tersebut dapat diatur nantinya secara manual melalui opsi-opsi yang ada.
@@ -473,7 +526,6 @@ Untuk mulai melakukan transfer berkas, diperlukan juga sebuah \textit{handle} ya
 \textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
 
 \textbf{\textit{Multi Handle}}
-
 
 \textit{Multi handle} merupakan sebuah \textit{handle} yang dapat memfasilitasi beberapa transfer yang dilakukan secara paralel. Metode pentransferan filenya masih sama dengan \textit{easy handle}, hanya saja untuk \textit{multi handle}, diperlukan sebuah \textit{handle} tambahan yang dapat menampung seluruh \textit{easy handle} yang akan digunakan. Adapun \textit{handle} tipe ini dapat diinisialisasi dengan memanggil fungsi \verb|curl_multi_init()|, dan untuk mengatur opsi-opsi seputar \textit{multi handle} tersebut, pengguna dapat memanggil fungsi \verb|curl_multi_setopt()|.
 
@@ -513,7 +565,7 @@ Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Be
 
 Adapun seluruh \textit{handle} ini dapat dipanggil dengan memanggil fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa.
 
-\textbf{cJSON \footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}
+\textbf{cJSON\footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}
 
 cJSON merupakan sebuah \textit{library} yang berfungsi sebagai \textit{parser} JSON untuk perangkat-perangkat lunak bahasa C. \textit{Library} ini sendiri terdiri atas sebuah file C dan sebuah file header.
 
@@ -529,7 +581,7 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 	
 	Proses ini akan menginstal file-file \textit{header} ke direktori \verb|/usr/local/include/cjson|, dan file-file \textit{library} ke dalam direktori \verb|usr/local/lib|. Selain itu, file-file untuk \verb|pkg-config| juga akan diinstal untuk memudahkan deteksi instalasi CMake sebelumnya.
 	
-	Proses pembuatan CMake juga memiliki beberapa opsi yang dapat diatur sedemikian rupa sesuai dengan kebutuhan pembuat perangkat lunak. Adapun opsi-opsi yang dapat diatur dapat dilihat di daftar berikut.
+	Proses pembangunan cJSON juga memiliki beberapa opsi yang dapat diatur sedemikian rupa sesuai dengan kebutuhan pembuat perangkat lunak. Adapun opsi-opsi yang dapat diatur dapat dilihat di daftar berikut.
 
 	\begin{itemize}
 		\item \verb|-DENABLE_CJSON_TEST|\\
@@ -797,52 +849,7 @@ ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
 	
 	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
 \end{enumerate}
-
-		\item \textbf{Melakukan analisis dan desain perangkat lunak yang akan dibangun.}\\
-		{\bf Status :} Ada sejak rencana kerja skripsi\textemdash desain akan dilakukan di Skripsi 2.\\
-		{\bf Hasil :} Pada skripsi ini, akan dibangun sebuah aplikasi berupa perkakas \cl yang merupakan ekstensi dari sebuah aplikasi berbasis web lain, yaitu KIRI. Perkakas ini akan menjadi ekstensi KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
-
-Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan satu sama lain, yaitu pencarian lokasi, dan penunjukkan rute dengan angkot.
-
-\begin{itemize}
-	\item Pencarian lokasi\\
-	Pencarian lokasi merupakan fungsi utama pertama dari perkakas ini. Untuk fungsi ini, masukan langsung dari pengguna yang akan diterima oleh perkakas adalah kata kunci dari sebuah lokasi yang ingin dicari. Kemudian, perkakas akan memprosesnya melalui API KIRI, lalu mengembalikan nama lokasi tersebut, serta nilai \textit{latitude} dan \textit{longitude}-nya, sebagai keluaran akhir dari proses tersebut.
-	\item Pencarian rute\\
-	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
-\end{itemize}
-
-Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
-
-\begin{itemize}
-	\item \verb|--help|\\
-	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|--help| ini.
-	\item \verb|--search|\\
-	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
-	
-	\begin{itemize}
-		\item \verb|--region <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima parameter berupa kota dari lokasi yang ingin dicari.
-		\item \verb|--querystring <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
-	\end{itemize}
-	
-	\item \verb|--route|\\
-	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
-	
-	\begin{itemize}
-		\item \verb|--start <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
-		\item \verb|--finish <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
-		\item \verb|--locale <parameter>|\\
-		Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
-	\end{itemize}
-	
-\end{itemize}
-
-		\item \textbf{Melakukan analisis kebutuhan fitur-fitur perangkat lunak dan melakukan eksplorasi \textit{library} yang dapat digunakan dan memenuhi spesifikasi dalam pembuatan perangkat lunak.}\\
-		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :}
+		
 
 		\item \textbf{Membangun perangkat lunak berdasarkan rancangan yang sudah dibuat, dengan megimplementasikan seluruh modul dan \textit{library} yang telah ditentukan di tahap sebelumnya dalam bahasa C.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
