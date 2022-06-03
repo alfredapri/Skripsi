@@ -4,7 +4,7 @@
 \section{Analisis Aplikasi Sejenis}
 \label{sec:analysis-similarapps}
 
-Untuk pembuatan perangkat lunak dalam skripsi ini, ada empat buah perkakas \cl yang akan diamati sebagai aplikasi sejenis. Dua dari empat aplikasi pertama adalah \chromewebstorecli dan \textit{iTunes Search API}.
+Untuk pembuatan perangkat lunak dalam skripsi ini, ada empat buah perkakas \cl yang akan diamati sebagai aplikasi sejenis. Dua dari empat aplikasi pertama adalah \chromewebstorecli dan \textit{iTunes Search API}. Selain dua perkakas tersebut, ada dua perkakas lainnya yang bisa digunakan sebagai referensi, tetapi tidak dapat dieksplorasi, karena kedua aplikasi tersebut tidak berhasil dijalankan dengan sempurna, yaitu \ubercli dan \googlemapscli
 
 \subsection{\chromewebstorecli\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property-cli}{https://github.com/pandawing/node-chrome-web-store-item-property-cli}}}
 \label{sec:similarapps-chromewebstore}
@@ -102,8 +102,6 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
     \label{fig:similarapps-itunesapi}
 \end{figure}
 
-Selain dua perkakas \cl tadi, ada dua perkakas lainnya yang bisa digunakan sebagai referensi, tetapi tidak dapat dieksplorasi, dikarenakan kedua aplikasi tersebut tidak berhasil dijalankan dengan sempurna. Adapun perkakas-perkakas tersebut adalah sebagai berikut.
-
 \subsection{\ubercli\footnote{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}}
 \label{sec:similarapps-ubercli}
 
@@ -123,7 +121,7 @@ Fungsi yang pertama dapat dilakukan memanggil perintah dengan format sebagai ber
     \caption[Contoh penggunaan perkakas \ubercli (\textit{time})]{Contoh penggunaan fitur prediksi waktu perjalanan untuk perkakas \ubercli.\protect\footnotemark}
     \label{fig:similarapps-ubercli-time}
 \end{figure}
-\footnotetext{Gambar diambil dari sumber yang sama dengan \textit{footnote} 5.}
+\footnotetext{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}
 \newpage\noindent % prevent code below from hanging off the very end of page
 Sedangkan, untuk memanggil fungsi kedua dari perkakas ini, pengguna dapat dilakukan dengan memanggil perintah dengan format berikut.
 
@@ -181,7 +179,7 @@ Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan
 \section{Analisis API KIRI}
 \label{sec:analysis-kiri}
 
-API KIRI memiliki tiga buah layanan, yaitu \textit{search place}, \textit{routing}, dan \textit{smart direction}. Diantara ketiga layanan ini, perlu diingat bahwa \textit{smart direction} merupakan sebuah layanan yang bekerja dengan langsung membuka halaman web KIRI sendiri, sehingga layanan ini tidak akan digunakan dalam pembuatan perkakas \cl untuk skripsi ini.
+API KIRI memiliki tiga buah layanan, yaitu \textit{search place}, \textit{routing}, dan \textit{smart direction}. Di antara ketiga layanan ini, perlu diingat bahwa \textit{smart direction} merupakan sebuah layanan yang bekerja dengan langsung membuka halaman web KIRI sendiri, sehingga layanan ini tidak akan digunakan dalam pembuatan perkakas \cl untuk skripsi ini.
 
 \subsection{\textit{Search Place}}
 \label{sec:analysis-kiri-searchplace}
@@ -198,7 +196,7 @@ Layanan pertama dari dua layanan yang tersisa merupakan layanan \textit{search p
 	\item \verb|querystring|\\
 	Parameter ini akan berisi kata kunci yang diberikan oleh pengguna untuk mencari lokasi yang ingin ditemukan.
 	\item \verb|apikey|\\
-	Parameter ini akan berisi sebuah nilai kunci API yang sudah digenerasikan sebelumnya, yaitu \verb|68CD281C8A8EE97C|.
+	Parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, seperti dijelaskan di subbab \ref{sec:kiri-api}, Parameter ini akan bernilai \verb|68CD281C8A8EE97C|.
 \end{itemize}
 
 \subsection{\textit{Routing}}

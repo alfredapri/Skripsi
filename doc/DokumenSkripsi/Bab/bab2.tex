@@ -132,7 +132,7 @@ Di sistem operasi Windows, ada dua jenis antarmuka \cl, yaitu cmd (\textit{Comma
 Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai ketika pengguna sedang berurusan dengan file-file dan navigasi dalam direktori sistem. Kedua perintah tersebut adalah \verb|cd| dan \verb|dir|.
 
 \begin{itemize}
-	\item \verb|cd| (\verb|chdir|) \cite{microsoftdocs:2021:cd}\\
+	\item \verb|cd| (\verb|chdir|) \cite{microsoftdocs:2021:windowscommands}\\
 	\verb|cd| merupakan sebuah perintah yang memiliki tiga fungsi utama, yaitu menampilkan \textit{drive} tempat sedang \cl berada (jika pengguna hanya memasukkan \verb|cd| tanpa parameter apapun), menampilkan direktori tempat \cl sedang berada (jika pengguna hanya memasukkan \textit{drive} sebagai parameter, atau fungsi yang paling umumnya, untuk mengganti \textit{working directory} dari \cl.
 	\newline\newline
 	Adapun format dari perintah \verb|dir| adalah sebagai berikut.
@@ -154,7 +154,7 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 	\end{itemize}
 	
 	\item \verb|dir|\\
-	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apapun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}).\cite{microsoftdocs:2021:dir}
+	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apapun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}).\cite{microsoftdocs:2021:windowscommands}
 	\newline\newline
 	Adapun format dari perintah \verb|dir| adalah sebagai berikut.\cite{mueller:2007:windowscommandline}
 	
@@ -414,7 +414,7 @@ Jika URL tersebut sudah dimasukkan ke kotak \textit{link} pada peramban, halaman
 \section{Fungsi dan \textit{Library} Bahasa C}
 \label{sec:cmodules}
 
-Di bagian ini akan dilakukan analisis terhadap seluruh fungsi bawaan, serta \textit{library-library} bahasa pemrograman C yang akan digunakan dalam pebuatan perkakas ini.
+Di bagian ini akan dilakukan studi literatur terhadap seluruh fungsi bawaan serta \textit{library-library} bahasa pemrograman C yang akan digunakan dalam pebuatan perkakas ini.
 
 \subsection{getopt \cite{gnulibrary:2022:getopt}}
 \label{sec:cmodules-getopt}
@@ -432,7 +432,7 @@ Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang 
 Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
 \begin{itemize}
 	\item \verb|opterr|\\
-	Isi dari variabel ini akan memberi signal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
+	Isi dari variabel ini akan memberi sinyal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
 	\item \verb|optopt|\\
 	Ketika \verb|getopt| menemukan sebuah karakter yang tidak didefinisikan dalam kumpulan opsi, atau sebuah opsi yang tidak disertai argumen yang diperlukan, karakter tersebut akan disimpan di variabel ini.
 	\item \verb|optind|\\
