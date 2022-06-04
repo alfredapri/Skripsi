@@ -150,7 +150,7 @@ Seperti telah dijelaskan di awal bab ini, perkakas ini tidak dapat digunakan. Ke
            exports.placesAutoCompleteSessionToken = require('uuid/v4');
 \end{verbatim}
 
-Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket \verb|uuid|, tetapi penggunaannya sudah berubah untuk versi yang lebih barunya. Akan tetapi, setelah diganti baris tersebut ke penggunaan versi barunya pun, perkakas ini masih tetap tidak dapat dijalankan\textemdash sekarang perkakas ini justru mengembalikan sebuah error. Singkatnya, error tersebut menunjukkan bahwa perkakas mencoba untuk mengakses API Uber dengan menggunakan kredensial OAuth 2.0 yang berlaku untuk versi sebelumnya dari API tersebut. Permasalahan ini merupakan permasalahan yang juga ditemukan oleh beberapa pengguna lain, seperti tertera di halaman \textit{GitHub Issues} dari repositori ini.\footnote{\href{https://github.com/jaebradley/uber-cli/issues/87}{https://github.com/jaebradley/uber-cli/issues/87}} Oleh karena hal ini tidak lagi merupakan masalah kode perangkat lunak, maka perkakas ini dianggap tidak dapat dipakai.
+Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket \verb|uuid|, tetapi penggunaannya sudah berubah untuk versi yang lebih barunya. Akan tetapi, setelah diganti baris tersebut ke penggunaan versi barunya pun, perkakas ini masih tetap tidak dapat dijalankan\textemdash sekarang perkakas ini justru mengembalikan sebuah error. Singkatnya, error tersebut menunjukkan bahwa perkakas mencoba untuk mengakses API Uber dengan menggunakan kredensial OAuth 2.0 yang hanya berlaku untuk versi sebelumnya dari API tersebut. Permasalahan ini merupakan permasalahan yang juga ditemukan oleh beberapa pengguna lain, seperti tertera di halaman \textit{GitHub Issues} dari repositori ini.\footnote{\href{https://github.com/jaebradley/uber-cli/issues/87}{https://github.com/jaebradley/uber-cli/issues/87}} Oleh karena hal ini tidak lagi merupakan masalah kode perangkat lunak, maka perkakas ini dianggap tidak dapat dipakai.
 
 \subsection{\googlemapscli\footnote{\href{https://github.com/yujinlim/google-maps-direction-cli}{https://github.com/yujinlim/google-maps-direction-cli}}}
 \label{sec:similarapps-googlemapscli}
@@ -196,7 +196,7 @@ Layanan pertama dari dua layanan yang tersisa merupakan layanan \textit{search p
 	\item \verb|querystring|\\
 	Parameter ini akan berisi kata kunci yang diberikan oleh pengguna untuk mencari lokasi yang ingin ditemukan.
 	\item \verb|apikey|\\
-	Parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, seperti dijelaskan di subbab \ref{sec:kiri-api}, Parameter ini akan bernilai \verb|68CD281C8A8EE97C|.
+	Parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, seperti dijelaskan di subbab \ref{sec:kiri-api}, parameter ini akan bernilai \verb|68C|\apikeycensor \verb|97C|.\footnote{Kunci API ditutupi untuk alasan keamanan.}
 \end{itemize}
 
 \subsection{\textit{Routing}}
@@ -218,7 +218,7 @@ Layanan kedua dari API ini merupakan fungsi utama dari KIRI sendiri, yaitu penca
 	\item \verb|presentation|\\
 	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}. Jika parameter ini ingin digunakan, maka isi dari parameter ini hanya ada satu kemungkinan, yaitu \verb|desktop|. Jika parameter ini tidak dipakai
 	\item \verb|apikey|\\
-	Parameter ini akan berisi sebuah nilai kunci API yang sudah digenerasikan sebelumnya, yaitu \verb|68CD281C8A8EE97C|.
+	Sama seperti pada layanan \textit{search place}, parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, yaitu \verb|68C|\apikeycensor \verb|97C|.
 \end{itemize}
 \vspace{\baselineskip}\noindent
 Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place}, terutama karena fitur pencarian rute hanya menerima nilai \latlon dari lokasi-lokasi yang akan digunakan sebagai masukan, yang tidak hanya akan menyusahkan pengguna dalam memakai perkakas \cl ini, tetapi juga kedua nilai tersebut juga merupakan salah satu dari keluaran layanan pencarian lokasi. Jadi, dengan menggunakan kedua layanan tersebut secara berlangsungan, maka pengguna hanya perlu mencari lokasi tersebut dengan kata-kata kunci, dan pada akhirnya pengguna akan dapat menerima langkah-langkah yang harus ditempuh dalam rute sebagai keluaran akhir dari perkakas.
