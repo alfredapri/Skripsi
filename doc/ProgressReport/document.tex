@@ -15,6 +15,7 @@
 \usepackage[]{hyperref} % links
 \usepackage{listings} % block comments
 \usepackage{subcaption} % subfigure
+\usepackage[table]{xcolor} % program codes
 \usepackage{verbatim} % inline comments
 \usepackage{xspace} % force space
 
@@ -78,6 +79,12 @@
 
 % Custom commands
 \renewcommand{\refname}{\centering DAFTAR REFERENSI}
+\lstset{numbers=left,stepnumber=1, numbersep=5pt, frame=single,frameround={tttt},
+	tabsize=4, breaklines=true, basicstyle=\fontfamily{fvm}\selectfont\tiny, 
+	commentstyle=\itshape\color{gray}, keywordstyle=\bfseries\color{blue}, 
+	identifierstyle=\color{black}, stringstyle=\color{orange},
+	literate={-}{-}1{-\,-}{--}1
+} % lstlisting formatting
 
 % Dokumen hasil template ini harus dicetak bolak-balik !!!!
 
