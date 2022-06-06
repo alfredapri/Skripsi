@@ -698,32 +698,65 @@ Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan sa
 	\item Pencarian rute\\
 	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
 \end{itemize}
-
+\vspace{\baselineskip}\noindent
 Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
 
 \begin{itemize}
-	\item \verb|--help|\\
+	\item \verb|-h|\\
 	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|--help| ini.
-	\item \verb|--search|\\
-	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
 	
-	\begin{itemize}
-		\item \verb|--region <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima parameter berupa kota dari lokasi yang ingin dicari.
-		\item \verb|--querystring <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
-	\end{itemize}
+	\item \verb|-m <mode>|\\
+	Opsi ini merupakan opsi berparameter yang menentukan fitur mana yang ingin digunakan oleh pengguna. Adapun isi dari parameter \verb|mode| yang dapat digunakan adalah sebagai berikut:
 	
-	\item \verb|--route|\\
-	Opsi ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+	\begin{itemize}	
+		\item \verb|search|\\
+		Parameter ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+			
+		\begin{itemize}
+			\item \verb|-r <region>|\\
+			Opsi ini merupakan opsi yang akan menerima parameter berupa kode area dari lokasi yang ingin dicari.
+			\item \verb|-q <kata kunci>|\\
+			Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
+		\end{itemize}
 	
-	\begin{itemize}
-		\item \verb|--start <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
-		\item \verb|--finish <parameter>|\\
-		Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
-		\item \verb|--locale <parameter>|\\
-		Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
+		\item \verb|route|\\
+		Parameter ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
+		
+		\begin{itemize}
+			\item \verb|-s <lokasi awal>|\\
+			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
+			\item \verb|-f <lokasi akhir>|\\
+			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
+			\item \verb|-l <kode bahasa>|\\
+			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
+		\end{itemize}
+		
+		\item \verb|routedirect|\\
+		Parameter ini merupakan tambahan fitur spesifik untuk perkakas ini, yang merupakan gabungan dari fitur pencarian lokasi dan pencarian rute. Fitur ini akan menggabungkan kedua fitur tersebut dengan langkah-langkah berikut.
+		
+		\begin{enumerate}
+			\item Perkakas akan menerima lokasi awal dan akhir berupa kata kunci dari pengguna yang dimasukkan kedalam parameter dari opsi masing-masing.
+			\item Hasil pencarian kedua lokasi akan dikonfirmasi terlebih dahulu, apakah lokasi yang ditemukan benar merupakan lokasi yang ingin digunakan oleh pengguna atau bukan.
+			\item Jika hasil tersebut benar, maka koordinat \latlon dari kedua lokasi tersebut akan disimpan.
+			\item Koordinat \latlon dari kedua lokasi tersebut kemudian akan digunakan sebagai masukan untuk langkah kedua dari fitur ini, yaitu pencarian rute.
+			\item Hasil dari pencarian rute akan ditampilkan sebagai keluaran akhir dari fitur ini.
+		\end{enumerate}
+		\noindent
+		Adapun parameter yang diperlukan untuk fitur ini merupakan gabungan dari opsi-opsi kedua fitur sebelumnya, yaitu:
+		
+		\begin{itemize}
+			\item \verb|-I <region tempat lokasi awal berada>|\\
+			Opsi ini akan menerima parameter berupa kode area dari lokasi awal yang akan digunakan.
+			\item \verb|-E <region tempat lokasi akhir berada>|\\
+			Opsi ini akan menerima parameter berupa kode area dari lokasi akhir yang akan digunakan.
+			\item \verb|-S <kata kunci untuk lokasi awal>|\\
+			Opsi ini akan menerima parameter berupa kata kunci untuk pencarian lokasi awal yang akan digunakan.
+			\item \verb|-F <kata kunci untuk lokasi akhir>|\\
+			Opsi ini akan menerima parameter berupa kata kunci untuk pencarian lokasi akhir yang akan digunakan.
+			\item \verb|-l <kode bahasa>|\\
+			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti. Opsi ini merupakan opsi yang sama dengan opsi yang digunakan dalam mode \verb|route|.
+		\end{itemize}
+		
 	\end{itemize}
 	
 \end{itemize}
