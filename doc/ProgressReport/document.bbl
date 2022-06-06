@@ -4,6 +4,10 @@
 Marsh, N. (2010) {\em Introduction to the Command Line: The Fat-Free Guide to
   Unix and Linux Commands},  2nd edition. CreateSpace,  South Carolina.
 
+\bibitem{loosemore:2022:gnuclibrary}
+Loosemore, S. dkk. (2022) {\em The GNU C Library Reference Manual},  2.35
+  edition. Free Software Foundation, Inc.,  Massachusetts.
+
 \bibitem{stenberg:2022:everythingcurl}
 Stenberg, D. (2022) {\em Everything curl}. GitBook,  Rhone-Alpes.
 

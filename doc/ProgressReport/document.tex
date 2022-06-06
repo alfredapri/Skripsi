@@ -507,7 +507,8 @@ Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :} Ada beberapa modul/fungsi bawaan dari bahasa C yang akan digunakan dalam pembuatan perkakas \cl ini. Salah satu dari fungsi tersebut adalah fungsi \verb|getopt|
 
-\textbf{getopt \cite{gnulibrary:2022:getopt}}
+\large{\textbf{getopt \cite{loosemore:2022:gnuclibrary}}}
+\label{sec:cmodules-getopt}
 
 \verb|getopt| merupakan sebuah fungsi yang dapat mengautomasi pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl berbasis UNIX.
 \newline\newline\noindent
@@ -519,10 +520,10 @@ Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
 
 Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
 \newline\newline
-Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabel tertentu, yang dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
+Selain itu, penggunaan \verb|getopt| juga akan memakai variabel-variabel tertentu, yang nilainya akan diisi oleh fungsi \verb|getopt| tersebut sendiri. Variabel-variabel ini beserta penjelasannya dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
 \begin{itemize}
 	\item \verb|opterr|\\
-	Isi dari variabel ini akan memberi signal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
+	Isi dari variabel ini akan memberi sinyal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
 	\item \verb|optopt|\\
 	Ketika \verb|getopt| menemukan sebuah karakter yang tidak didefinisikan dalam kumpulan opsi, atau sebuah opsi yang tidak disertai argumen yang diperlukan, karakter tersebut akan disimpan di variabel ini.
 	\item \verb|optind|\\
@@ -530,7 +531,7 @@ Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabe
 	\item \verb|optarg|\\
 	Jika opsi yang sedang diproses memerlukan argumen, variabel ini adalah tempat dimana argumen tersebut akan disimpan.
 	\item \verb|<options>|\\
-	Variabel ini berupa \textit{string} yang menandakan karakter-karakter apa saja yang menjadi opsi yang mungkin dalam perkakas tersebut, beserta tipenya. Jika karakter opsi:
+	Variabel ini merupakan salah satu variabel yang tertera di format pemanggilan \verb|getopt| diatas. Variabel ini berupa \textit{string} yang menandakan karakter-karakter apa saja yang menjadi opsi yang mungkin dalam perkakas tersebut, beserta tipenya. Jika karakter opsi:
 	
 	\begin{itemize}
 		\item Diikuti dengan titik dua (\verb|:|), maka opsi tersebut memiliki argumen yang bersifat wajib.
@@ -539,8 +540,56 @@ Selain itu, penggunaan \verb|getopt| juga memerlukan penggunaan variabel-variabe
 	\end{itemize}
 	
 \end{itemize}
+\noindent
+Untuk memberikan gambaran yang lebih baik mengenai penggunaan fungsi \verb|getopt|, berikut merupakan contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Perangkat lunak ini akan menerima masukan berupa opsi tidak berparameter \verb|-a| dan/atau opsi berparameter \verb|-b|. Untuk opsi \verb|-a|, perangkat lunak ini akan mengeluarkan nilai 0 jika opsi \verb|-a| tidak dipakai, dan 1 jika opsi tersebut dipakai. Sebagai keluaran keduanya, perangkat lunak ini akan mengeluarkan isi parameter dari opsi \verb|-b|, atau \verb|NULL| jika opsi \verb|-b| tidak dipakai.
+
+\begin{lstlisting}[language=C, caption=Contoh sederhana penggunaan getopt, label=code:getopt-usage]
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(int argc, char **argv) {
+    int aflag = 0;
+    char *bvalue = NULL;
+    int index;
+    int args;
+
+    opterr = 0;
+
+    while ((args = getopt(argc, argv, ":ab:")) != -1)
+        switch (args) {
+	        case 'a':
+	            aflag = 1;
+	            break;
+	        case 'b':
+	            bvalue = optarg;
+	            break;
+	        case ':':
+    	        if (optopt == 'b') {
+	                fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+	            }
+	            return 1;
+	        case '?':
+	            if (isprint(optopt)) {
+	                fprintf(stderr, "Unknown option `-%c'.\n", optopt);
+	            }
+	            else fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
+	            return 1;
+	        default:
+	            abort();
+        }
+
+    printf("aflag = %d, bvalue = %s\n", aflag, bvalue);
+    for (index = optind; index < argc; index++)
+        printf("Non-option argument %s\n", argv[index]);
+
+    return 0;
+}
+\end{lstlisting}
 
 \textbf{getopt-long}
+\label{sec:cmodules-getopt-long}
 
 Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata.
 
@@ -556,6 +605,86 @@ Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima du
 \end{itemize}
 \noindent
 Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
+\newline\newline
+Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, berikut merupakan contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Adapun perangkat lunak ini memiliki spesifikasi sebagai berikut:
+
+\begin{itemize}
+	\item Perangkat lunak ini akan menerima masukan dari penggunaan opsi-opsi serta parameternya.
+	\item Keluaran dari perangkat lunak ini adalah opsi apa saja yang dipilih, serta parameter yang diberikan (jika ada).
+	\item Opsi pertama yang disediakan adalah \verb|-a| atau \verb|--args| yang merupakan opsi tidak berargumen.
+	\item Opsi kedua yang disediakan adalah \verb|-n| atau \verb|--noargs|, yang merupakan opsi yang membutuhkan sebuah arguman.
+	\item Opsi ketiga dan keempat merupakan penanda mode keluaran, yaitu \verb|--short| dan \verb|--long|. Jika opsi \verb|--long| digunakan, maka perangkat lunak ini akan mengeluarkan versi panjang dari keluaran, sedangkan jika opsi \verb|--short| digunakan, maka perangkat akan mengeluarkan versi pendek dari keluaran.
+\end{itemize}
+
+\begin{lstlisting}[language=C, caption=Contoh sederhana penggunaan getopt-long, label=code:getopt-usage-long]
+#include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+
+int main(int argc, char **argv) {
+    int option;
+    static int verbose;
+
+    while (1) {
+        static struct option long_options[] = {
+                {"long", 0, &verbose, 1},
+                {"short", 0, &verbose, 0},
+                {"noargs", 0, 0, 'n'},
+                {"args", 1, 0, 'a'},
+                {0, 0, 0, 0}};
+        int option_index = 0;
+        option = getopt_long(argc, argv, "na:", long_options, &option_index);
+
+        if (option == -1)
+            break;
+        switch (option) {
+	        case 0:
+    	        if (verbose) {
+	                printf("Print mode is set to: %s", long_options[option_index].name);
+	            }
+	            else
+	                printf("Print mode is set to: %s", long_options[option_index].name);
+	            putchar('\n');
+	            break;
+
+    	    case 'n':
+	            if (verbose == 1) {
+	                printf("Option '%s' was picked. This option does not require any arguments.", long_options[option_index].name);
+    	        }
+	            else
+	                printf("Argumentless option '%s' was picked.", long_options[option_index].name);
+	            putchar('\n');
+	            break;
+
+    	    case 'a':
+	            if (verbose == 1) {
+	                printf("Option '%s' was picked with argument '%s'.", long_options[option_index].name, optarg);
+	            }
+	            else
+	                printf("a = %s", optarg);
+	            putchar('\n');
+	            break;
+
+    	    case '?':
+	            break;
+	
+	        default:
+	            abort();
+        }
+    }
+
+    if (optind < argc)
+    {
+        printf("Arguments passed without a corresponding option (argv): ");
+        while (optind < argc) {
+            printf("%s ", argv[optind++]);
+        }
+        putchar('\n');
+    }
+
+    exit(0);
+}
+\end{lstlisting}
 
 		\item \textbf{Melakukan analisis dan desain perangkat lunak yang akan dibangun.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi\textemdash desain akan dilakukan di Skripsi 2.\\
