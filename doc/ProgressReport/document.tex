@@ -41,6 +41,7 @@
 \hyphenation{me-nam-pil-kan}
 \hyphenation{pe-rang-kat}
 \hyphenation{kom-pu-ter}
+\hyphenation{per-ka-kas}
  
 \begin{document}
 
@@ -111,7 +112,7 @@ Tipe Laporan : {\bf \tipePR} -
 \section{Latar Belakang}
 \label{sec:label}
 Project KIRI\footnote{\href{https://projectkiri.id}{https://projectkiri.id}} (akan disingkat sebagai KIRI dalam dokumen ini) adalah sebuah perangkat lunak berbasis web yang dibuat untuk \mbox{membantu} mengurangi efek dari kemacetan. KIRI mengurangi dampak kemacetan dengan membantu penggunanya, baik \mbox{masyarakat} maupun turis, dalam menggunakan salah satu sarana transportasi umum yang ada di Indonesia, yaitu angkutan kota (angkot). Cara KIRI \mbox{mempermudah} penggunaan angkot adalah dengan menunjukkan rute yang akan ditempuh, beserta langkah-langkah yang harus dilakukan oleh pengguna yang ingin berpergian dari satu titik ke titik lain, mulai dari seberapa jauh pengguna harus berjalan untuk menaiki angkot yang bersangkutan, di mana pengguna harus naik atau turun, seberapa jauh lagi pengguna harus berjalan sampai ke titik tujuan, dan seberapa lama estimasi waktu perjalanan yang akan ditempuh. Untuk kebutuhan pembuatan perangkat lunak yang memanfaatkan fitur dari KIRI, tersedia juga REST API KIRI yang dapat digunakan secara praktis. Adapun tampilan dari halaman web ini dapat dilihat di gambar \ref{fig:kiri-page}. 
-
+\vspace{\baselineskip}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.74\linewidth]{projectkiri-example}
@@ -119,6 +120,7 @@ Project KIRI\footnote{\href{https://projectkiri.id}{https://projectkiri.id}} (ak
     \label{fig:kiri-page}
 \end{figure}
 
+\vfill\newpage
 Sementara itu, dalam komputer, salah satu dari sekian banyak tipe perangkat lunak adalah perangkat lunak \textit{command line}. \textit{\mbox{Command} line} (\cl \textit{interpreter}, atau \cl \textit{interface}) adalah sebuah perangkat lunak berupa sebuah kotak/\textit{window} yang memuat teks berupa perintah-perintah,\footnote{\href{https://ubuntu.com/tutorials/command-line-for-beginners\#3-opening-a-terminal}{Ubuntu Tutorials - The Linux command line for beginners: 3. Opening a Terminal}} yang menerima masukan dari pengguna dan  menjalankannya.\cite{marsh:2010:fatfreeintrotocommandline} Perintah-perintah ini hanya berupa gabungan dari teks and simbol-simbol berupa karakter, tanpa ada tambahan gambar grafis apapun. Singkatnya, tipe perangkat lunak ini bukan merupakan tipe yang paling indah untuk dilihat oleh para pengguna, tetapi jika digunakan dengan tepat, maka \mbox{jenis} \mbox{perangkat} lunak ini bisa menyuruh komputer untuk melakukan banyak sekali perintah-perintah dengan sangat cepat dan sangat efektif.
 
 Pada skripsi ini akan dibuat sebuah perangkat lunak berupa perkakas \cl (\textit{command line tool}) yang dapat menjalankan fungsi-fungsi API dari KIRI. Perangkat lunak ini, seperti jenisnya, akan dibuat murni sebagai perkakas yang dijalankan dari \cl (terminal, cmd, PowerShell, dll.), dan tampilan akhir dari perangkat lunak akan berupa \cli tanpa tambahan \textit{graphical user interface}. Keseluruhan dari perangkat lunak ini akan dibangun dalam bahasa C.
@@ -154,13 +156,14 @@ Detail bagian pekerjaan skripsi sesuai dengan rencan kerja/laporan perkembangan 
 	\begin{enumerate}
 		\item \textbf{Melakukan eksplorasi fungsi-fungsi perangkat lunak KIRI serta eksplorasi cara \mbox{implementasi} API KIRI.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :} KIRI merupakan sebuah perangkat lunak berbasis web yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun begitu, banyak masyarakat lokal sendiri yang seringkali masih segan untuk menaiki transportasi publik, umumnya karena transportasi publik dianggap lebih rumit persiapannya dibandingkan dengan metode-metode transportasi privat, seperti menaiki kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
+		{\bf Hasil :} KIRI merupakan sebuah perangkat lunak berbasis web yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh \mbox{transportasi} umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. \mbox{Selain} itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis \mbox{sarana} transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang \mbox{mudah} kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun \mbox{begitu}, \mbox{banyak} masyarakat lokal sendiri yang seringkali masih segan untuk menaiki transportasi publik, umumnya karena transportasi publik dianggap lebih rumit persiapannya dibandingkan dengan metode-metode transportasi privat, seperti menaiki kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
 
 Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot. Keluaran ini sudah meliputi kode angkot mana saja yang harus dinaiki, dan juga seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi rute angkot berikutnya.
 
-KIRI memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. API ini menyediakan tiga buah jenis layanan web (\textit{webservice}), yang ketiganya dapat dilakukan dengan mengirim pemintaan (\textit{request}) tipe GET melalui API tersebut. Isi dari permintaan yang perlu dikirimkan serta respon dari API yang akan dikembalikan berbeda tergantung dari jenis layanan yang digunakan. Adapun ketiga jenis layanan tersebut adalah pencarian tempat (\textit{search place}), pencarian rute (\textit{routing}), dan \textit{smart direction}.
- 
-\large{\textbf{\textit{Search Place}}}
+KIRI memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat \mbox{lunak}. API ini menyediakan tiga buah jenis layanan web (\textit{webservice}), yang ketiganya dapat dilakukan \mbox{dengan} mengirim pemintaan (\textit{request}) tipe GET melalui API tersebut. Isi dari permintaan yang perlu \mbox{dikirimkan} serta respon dari API yang akan dikembalikan berbeda tergantung dari jenis layanan yang digunakan. Adapun ketiga jenis layanan tersebut adalah pencarian tempat (\textit{search place}), pencarian rute (\textit{routing}), dan \textit{smart direction}.
+
+\vspace{\baselineskip}
+\textbf{\textit{\large{Search Place}}}
 \label{sec:kiri-api-searchplace}
 
 Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIRI yang berfungsi untuk mencari suatu lokasi berdasarkan kata kunci yang diberikan oleh pengguna. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
@@ -175,7 +178,6 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	\item \verb|region|\\
 	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
 	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
-	\newpage %prevent widow
 	\item \verb|querystring|\\
 	\textbf{Kemungkinan nilai:} \textit{string} apapun dengan panjang minimal satu karakter\\
 	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
@@ -183,7 +185,7 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	\textbf{Kemungkinan nilai:} angka heksadesimal 16-digit\\
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
-\vspace{\baselineskip}
+
 Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
 
 \begin{figure}[t]
@@ -196,11 +198,11 @@ Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pe
 Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
 
 Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa definisi dari nilai \latlon suatu lokasi. \textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respon API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Adapun respon yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
-
+\vfill\newpage % prevent widow
 \begin{itemize}
 	\item \verb|status|\\
 	\textbf{Kemungkinan nilai:} \verb|ok| atau \verb|error|\\
-	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan \mbox{berhasil} diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
 	\item \verb|searchresult|\\
 	Variabel ini merupakan hasil pencarian yang ditemukan oleh layanan API ini. Isi dari variabel ini merupakan objek \textit{array} yang masing-masing memiliki variabel berikut:
 	
@@ -212,7 +214,7 @@ Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa defini
 	\end{itemize}
 	
 \end{itemize}
-\vspace{\baselineskip}\noindent
+\noindent
 Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di gambar \ref{fig:kiri-api-searchplace-usage}.
 
 \begin{figure}[t]
@@ -222,11 +224,12 @@ Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di gambar \ref{f
     \label{fig:kiri-api-searchplace-usage}
 \end{figure}
 
-\large{\textbf{\textit{Routing}}}
+\vspace{\baselineskip}
+\textbf{\textit{\large{Routing}}}
 \label{sec:kiri-api-routing}
 
 Layanan pencarian rute (\textit{routing}) adalah layanan web pada API KIRI yang memiliki fungsi yang sama dengan fungsi utama dari perangkat lunak KIRI sendiri, yaitu menunjukkan rute serta langkah-langkah yang harus ditempuh untuk pergi dari satu lokasi ke lokasi lainnya, dengan menggunakan angkot yang tersedia. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
-\newpage %prevent widow
+
 \begin{itemize}
 	\item \verb|version|\\
 	\textbf{Kemungkinan nilai:} \verb|2|\\
@@ -256,7 +259,7 @@ Sedangkan, respon yang diberikan oleh API akan berupa sebuah objek JSON yang sel
 \begin{itemize}
 	\item \verb|status|\\
 	\textbf{Kemungkinan nilai:} \verb|ok| atau \verb|error|\\
-	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan \mbox{berhasil} diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
 	\item \verb|message|\\
 	Variabel ini bisa berisi dua macam objek. Jika permintaan dari user tidak berhasil diproses, atau dalam kata lain, terjadi sebuah \textit{error}, maka variabel ini akan berisi string yang merupakan pesan \textit{error} serta alasan spesifik mengapa \textit{error} tersebut terjadi. Di lain sisi, jika permintaan dari user berhasil diproses, variabel ini akan mengalami dua perubahan utama. Pertama, nama variabel ini akan berubah menjadi \verb|routingresults|, dan kedua, isi dari variabel ini akan menjadi sebuah \textit{array} JSON yang merupakan respon dari API KIRI berupa keluaran yang akan dilihat oleh pengguna. \textit{Array} JSON ini sendiri terbagi menjadi beberapa variabel lainnya, yang dapat dilihat di daftar di bawah ini.
 	
@@ -282,11 +285,11 @@ Sedangkan, respon yang diberikan oleh API akan berupa sebuah objek JSON yang sel
 		
 		\item \verb|traveltime|\\
 		\textbf{Tipe:} string\\
-		Variabel ini berisi estimasi jangka waktu yang diperlukan untuk menyelesaikan langkah tersebut.
+		Variabel ini berisi estimasi jangka waktu yang diperlukan untuk menyelesaikan langkah \mbox{tersebut}.
 	\end{itemize}
 	
 \end{itemize}
-\vspace{\baselineskip}\noindent
+\noindent
 Adapun gambar \ref{fig:kiri-api-routing-usage} menunjukkan penggunaan API KIRI untuk layanan pencarian rute dari Cihampelas Walk ke Universitas Katolik Parahyangan.
 
 \begin{figure}[t]
@@ -296,7 +299,8 @@ Adapun gambar \ref{fig:kiri-api-routing-usage} menunjukkan penggunaan API KIRI u
     \label{fig:kiri-api-routing-usage}
 \end{figure}
 
-\large{\textbf{\textit{Smart Direction}}}
+\vspace{\baselineskip}
+\textbf{\textit{\large{Smart Direction}}}
 \label{sec:kiri-api-smartdir}
 
 Layanan terakhir dari API ini adalah layanan \textit{smart direction}, yang merupakan gabungan dari kedua layanan sebelumnya. Berbeda dengan kedua layanan tadi, yang harus mengakses API secara manual (dengan mengirimkan permintaan GET), layanan ini tidak memerlukan pengguna untuk mengirim permintaan tersebut secara manual\textemdash layanan ini sudah otomatis mengirimkan permintaan tersebut. Berbeda dengan kedua layanan sebelumnya pula, layanan ini tidak memerlukan dibuatnya kunci API terlebih dahulu.
@@ -304,7 +308,7 @@ Layanan terakhir dari API ini adalah layanan \textit{smart direction}, yang meru
 Layanan ini bekerja dengan menyuruh peramban pengguna untuk langsung mengakses halaman web KIRI yang sudah langsung menunjukkan rute yang perlu ditempuh untuk pergi dari lokasi satu ke lokasi lainnya. Untuk melakukan hal ini, layanan ini memerlukan sebuah URL, yang memiliki format sebagai berikut:
 
 \begin{verbatim}
- https://projectkiri.id?start=<lokasi awal>&finish=<lokasi akhir>&locale=<locale>
+  https://projectkiri.id?start=<lokasi awal>&finish=<lokasi akhir>&locale=<locale>
 \end{verbatim}
 \noindent
 Dapat dilihat bahwa URL tersebut memiliki tiga buah parameter, yaitu:
@@ -340,10 +344,10 @@ Jika URL tersebut sudah dimasukkan ke kotak \textit{link} pada peramban, halaman
 		{\bf Status :} Ditambahkan pada Skripsi 1.\\
 		{\bf Hasil :} Untuk pembuatan perangkat lunak dalam skripsi ini, ada empat buah perkakas \cl yang akan diamati sebagai aplikasi sejenis. Dua dari empat aplikasi pertama adalah \chromewebstorecli dan \textit{iTunes Search API}. Selain dua perkakas tersebut, ada dua perkakas lainnya yang bisa digunakan sebagai referensi, tetapi tidak dapat dieksplorasi, karena kedua aplikasi tersebut tidak berhasil dijalankan dengan sempurna. Kedua perkakas tersebut adalah \ubercli dan \googlemapscli .
 
-\large{\textbf{\chromewebstorecli\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property-cli}{https://github.com/pandawing/node-chrome-web-store-item-property-cli}}}}
+\textbf{\large{\chromewebstorecli}\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property-cli}{https://github.com/pandawing/node-chrome-web-store-item-property-cli}}}
 \label{sec:similarapps-chromewebstore}
 
-Perkakas \cl ini merupakan ekstensi dari sebuah aplikasi lain yang memiliki fungsi yang sama, yaitu Chrome \textit{Web Store Item Property}.\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property}{https://github.com/pandawing/node-chrome-web-store-item-property}} Perangkat lunak \chromewebstorecli ini merupakan perangkat lunak yang akan memanggil fungsi API untuk mendapatkan metadata dari sebuah ekstensi pada \textit{web store} peramban Google Chrome. Perbedaan dari perkakas ini dengan aplikasi dasarnya adalah bahwa perkakas ini dapat digunakan sebagai perkakas \textit{command line}, sedangkan aplikasi dasarnya hanya bisa digunakan dalam perangkat lunak lainnya sebagai pemanggil fungsi API.
+Perkakas \cl ini merupakan ekstensi dari sebuah aplikasi lain yang memiliki fungsi yang \mbox{sama}, yaitu Chrome \textit{Web Store Item Property}.\footnote{\href{https://github.com/pandawing/node-chrome-web-store-item-property}{https://github.com/pandawing/node-chrome-web-store-item-property}} Perangkat lunak \chromewebstorecli ini merupakan perangkat lunak yang akan memanggil fungsi API untuk mendapatkan metadata dari sebuah ekstensi pada \textit{web store} peramban Google Chrome. Perbedaan dari perkakas ini dengan aplikasi dasarnya adalah bahwa perkakas ini dapat digunakan sebagai perkakas \textit{command line}, sedangkan aplikasi dasarnya hanya bisa digunakan dalam perangkat lunak lainnya sebagai pemanggil fungsi API.
 
 \textbf{Penggunaan}
 \label{sec:similarapps-chromewebstore-usage}
@@ -351,10 +355,10 @@ Perkakas \cl ini merupakan ekstensi dari sebuah aplikasi lain yang memiliki fung
 Perkakas ini dapat digunakan melalui \textit{command prompt} dengan cara mengetikkan perintah sebagai berikut.
 
 \begin{verbatim}
-                     chrome-web-store-item-property <identifier>
+                   chrome-web-store-item-property <identifier>
 \end{verbatim}
 
-Dengan \verb|identifier| berupa ID dari ekstensi yang diinginkan. Jadi, misalkan pengguna memasukkan \verb|gighmmpiobklfepjocnamgkkbiglidom| sebagai ID yang akan digunakan sebagai \textit{identifier}, maka perkakas ini akan mengembalikan metadata dari ekstensi ``AdBlock'' sebagai keluarannya. Contoh penggunaan perkakas ini dapat dilihat di gambar \ref{fig:similarapps-chromewebstorecli}.
+Dengan \verb|identifier| berupa ID dari ekstensi yang diinginkan. Jadi, misal pengguna \mbox{memasukkan} \verb|gighmmpiobklfepjocnamgkkbiglidom| sebagai ID yang akan digunakan sebagai \textit{identifier}, maka perkakas ini akan mengembalikan metadata dari ekstensi ``AdBlock'' sebagai keluarannya. Contoh \mbox{penggunaan} perkakas ini dapat dilihat di gambar \ref{fig:similarapps-chromewebstorecli}.
 
 \begin{figure}[ht]
     \centering
@@ -389,8 +393,9 @@ Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON dengan propert
 	\item \verb|id|\\
 	Properti ini mengandung ID dari ekstensi tersebut. Nilai dari properti ini akan sama dengan ID yang digunakan sebagai parameter masukan perkakas.
 \end{itemize}
-\vfill
-\large{\textbf{\itunesapi\footnote{\href{https://github.com/awcross/itunes-search-api}{https://github.com/awcross/itunes-search-api}}}}
+
+\vspace{\baselineskip}
+\textbf{\large{\itunesapi}\footnote{\href{https://github.com/awcross/itunes-search-api}{https://github.com/awcross/itunes-search-api}}}
 \label{sec:similarapps-itunesapi}
 
 Perkakas \cl ini berfungsi untuk melakukan pencarian melalui API iTunes, sehingga seakan-akan pengguna langsung melakukan pencarian di iTunes sendiri. Hasil pencarian yang dilakukan termasuk judul lagu, nama artis, ataupun nama album, dan pengguna dapat memilih secara spesifik objek apa yang ingin dicari.
@@ -401,7 +406,7 @@ Perkakas \cl ini berfungsi untuk melakukan pencarian melalui API iTunes, sehingg
 Perkakas ini dapat digunakan melalui \textit{command prompt} dengan cara mengetikkan perintah sebagai berikut.
 
 \begin{verbatim}
-                      itunes-search-api <input> [<options>]
+                       itunes-search-api <input> [<options>]
 \end{verbatim}
 
 Dengan \verb|input| berupa nama dari objek yang dicari. Perkakas ini juga memiliki opsi yang masing-masing memiliki parameter tersendiri untuk mempersempit hasil pencarian. Adapun opsi-opsi tersebut dapat dilihat di daftar di bawah ini.
@@ -417,7 +422,7 @@ Dengan \verb|input| berupa nama dari objek yang dicari. Perkakas ini juga memili
 	\textbf{Kemungkinan nilai:} Bilangan bulat positif\footnote{Opsi ini juga menerima bilangan bulat negatif, tetapi menggunakan sebuah bilangan bulat negatif akan menghilangkan pengaruh opsi ini terhadap hasil keluaran.}\\
 	Jumlah hasil pencarian maksimal yang ingin ditampilkan dalam keluaran.
 \end{itemize}
-\vspace{\baselineskip}
+
 Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON yang memiliki dua properti utama, yaitu:
 
 \begin{itemize}
@@ -426,7 +431,7 @@ Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON yang memiliki 
 	\item \verb|results|\\
 	\textit{Array} yang berisi kumpulan objek yang terdapat di dalam hasil pencarian. Objek-objek ini akan dikembalikan berupa sebuah \textit{array} lain yang berisi seluruh properti dari masing-masing objek. Apa saja properti yang diikutkan dalam \textit{array} tersebut tergantung tipe dari objek dalam hasil pencarian.
 \end{itemize}
-\vspace{\baselineskip}
+
 Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar \ref{fig:similarapps-itunesapi}.
 
 \begin{figure}[ht]
@@ -436,15 +441,15 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
     \label{fig:similarapps-itunesapi}
 \end{figure}
 
-\large{\textbf{\ubercli\footnote{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}}}
+\textbf{\large{\ubercli}\footnote{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}}
 \label{sec:similarapps-ubercli}
 
-\ubercli merupakan sebuah perkakas \cl yang dapat digunakan untuk dua fungsi utama. Fungsi pertama dari perkakas ini adalah untuk mendapatkan estimasi untuk seberapa lama waktu yang diperlukan untuk servis taksi \textit{online} dari Uber untuk mencapai lokasi yang ingin dituju, sedangkan fungsi keduanya adalah untuk mengestimasi berapa harga yang harus dibayarkan untuk memakai servis tersebut. 
+\ubercli merupakan sebuah perkakas \cl yang dapat digunakan untuk dua fungsi utama. Fungsi pertama dari perkakas ini adalah untuk mendapatkan estimasi untuk seberapa lama waktu yang diperlukan untuk servis taksi \textit{online} dari Uber untuk mencapai lokasi yang ingin dituju, sedangkan fungsi keduanya adalah untuk mengestimasi berapa harga yang harus dibayarkan untuk memakai \mbox{servis} tersebut. 
 \newline\newline\noindent
 Fungsi yang pertama dapat dilakukan memanggil perintah dengan format sebagai berikut.
 
 \begin{verbatim}
-                              uber time <alamat>
+                               uber time <alamat>
 \end{verbatim}
 
 \verb|uber| merupakan perintah dasar dari perkakas ini. \verb|time| merupakan parameter yang menandakan bahwa pengguna ingin menggunakan servis prediksi waktu dari perkakas ini. Selain itu, pengguna harus memasukkan alamat yang ingin dituju sebagai parameter akhir dari perintah yang akan digunakan sebagai masukan. Jika sintaksnya sudah benar, perintah tersebut akan bisa diproses oleh perkakas dengan cara mengirimkan pesan hasil konversi perintah tersebut ke API Uber. Setelah pemrosesan pesan tersebut berhasil, perkakas ini akan menampilkan sebuah keluaran dengan format yang dapat dilihat di gambar \ref{fig:similarapps-ubercli-time}. Perlu diperhatikan juga bahwa keluaran yang dihasilkan oleh perkakas ini akan meliputi seluruh jenis servis yang disediakan oleh Uber.
@@ -456,14 +461,14 @@ Fungsi yang pertama dapat dilakukan memanggil perintah dengan format sebagai ber
     \label{fig:similarapps-ubercli-time}
 \end{figure}
 \footnotetext{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}
-\newpage\noindent % prevent code below from hanging off the very end of page
-Sedangkan, untuk memanggil fungsi kedua dari perkakas ini, pengguna dapat dilakukan dengan memanggil perintah dengan format berikut.
+
+Sedangkan, untuk memanggil fungsi kedua dari perkakas ini, pengguna dapat dilakukan dengan \linebreak memanggil perintah dengan format berikut.
 
 \begin{verbatim}
                   uber price -s <alamat awal> -e <alamat akhir>
 \end{verbatim}
 
-Untuk sintaks ini, \verb|uber| memiliki fungsi yang sama dengan sintaks untuk fungsi pertama dari perkakas. \verb|price| merupakan penanda untuk perkakas bahwa pengguna ingin menggunakan servis untuk mengetahui perkiraan harga layanan Uber. Selanjutnya, perkakas akan meminta dua buah opsi beserta parameternya masing-masing. Pertama, opsi \verb|-s|, berarti \textit{start}, yang akan meminta sebuah parameter berupa lokasi yang ingin dipakai sebagai lokasi awal perkiraan harga layanan Uber. Sedangkan opsi \verb|-e|, berarti \textit{end}, akan meminta sebuah parameter berupa lokasi yang ingin dipakai sebagai lokasi akhir jasa perkiraan harga.
+Untuk sintaks ini, \verb|uber| memiliki fungsi yang sama dengan sintaks untuk fungsi pertama dari perkakas. \verb|price| merupakan penanda untuk perkakas bahwa pengguna ingin menggunakan servis untuk \linebreak mengetahui perkiraan harga layanan Uber. Selanjutnya, perkakas akan meminta dua buah opsi beserta parameternya masing-masing. Pertama, opsi \verb|-s|, berarti \textit{start}, yang akan meminta sebuah parameter berupa lokasi yang ingin dipakai sebagai lokasi awal perkiraan harga layanan Uber. Sedangkan opsi \verb|-e|, berarti \textit{end}, akan meminta sebuah parameter berupa lokasi yang ingin dipakai sebagai lokasi akhir jasa perkiraan harga.
 \newline\newline\noindent
 Adapun keluaran dari fungsi kedua ini dapat dilihat di gambar \ref{fig:similarapps-ubercli-price}. Sama seperti keluaran untuk fungsi pertamanya, keluaran untuk fungsi kedua perkakas ini juga meliputi seluruh jasa yang disediakan oleh Uber.
 
@@ -483,10 +488,11 @@ Seperti telah dijelaskan di awal bab ini, perkakas ini tidak dapat digunakan. Ke
 \begin{verbatim}
            exports.placesAutoCompleteSessionToken = require('uuid/v4');
 \end{verbatim}
+\vfill\newpage % prevent widow
+Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket \verb|uuid|, tetapi penggunaannya sudah berubah untuk versi yang lebih barunya. Akan tetapi, setelah diganti baris tersebut ke penggunaan versi barunya pun, perkakas ini masih tetap tidak dapat dijalankan\textemdash sekarang perkakas ini justru mengembalikan sebuah error. Singkatnya, error tersebut menunjukkan bahwa perkakas \mbox{mencoba} untuk mengakses API Uber dengan menggunakan kredensial OAuth 2.0 yang hanya berlaku untuk versi sebelumnya dari API tersebut. Permasalahan ini merupakan permasalahan yang juga ditemukan oleh beberapa pengguna lain, seperti tertera di halaman \textit{GitHub Issues} dari repositori ini.\footnote{\href{https://github.com/jaebradley/uber-cli/issues/87}{https://github.com/jaebradley/uber-cli/issues/87}} Oleh karena hal ini tidak lagi merupakan masalah kode perangkat lunak, maka perkakas ini dianggap tidak dapat dipakai.
 
-Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket \verb|uuid|, tetapi penggunaannya sudah berubah untuk versi yang lebih barunya. Akan tetapi, setelah diganti baris tersebut ke penggunaan versi barunya pun, perkakas ini masih tetap tidak dapat dijalankan\textemdash sekarang perkakas ini justru mengembalikan sebuah error. Singkatnya, error tersebut menunjukkan bahwa perkakas mencoba untuk mengakses API Uber dengan menggunakan kredensial OAuth 2.0 yang hanya berlaku untuk versi sebelumnya dari API tersebut. Permasalahan ini merupakan permasalahan yang juga ditemukan oleh beberapa pengguna lain, seperti tertera di halaman \textit{GitHub Issues} dari repositori ini.\footnote{\href{https://github.com/jaebradley/uber-cli/issues/87}{https://github.com/jaebradley/uber-cli/issues/87}} Oleh karena hal ini tidak lagi merupakan masalah kode perangkat lunak, maka perkakas ini dianggap tidak dapat dipakai.
-
-\large{\textbf{\googlemapscli\footnote{\href{https://github.com/yujinlim/google-maps-direction-cli}{https://github.com/yujinlim/google-maps-direction-cli}}}}
+\vspace{\baselineskip}
+\textbf{\large{\googlemapscli}\footnote{\href{https://github.com/yujinlim/google-maps-direction-cli}{https://github.com/yujinlim/google-maps-direction-cli}}}
 \label{sec:similarapps-googlemapscli}
 
 \googlemapscli merupakan sebuah perkakas \cl yang memiliki kegunaan yang mirip dengan KIRI, hanya saja perkakas ini tidak secara spesifik mengharuskan penggunaan angkot, atau transportasi umum lainnya. Singkatnya, perkakas ini memiliki fungsi seperti sebuah GPS. Untuk menggunakannya, pengguna harus memasukkan perintah dengan bentuk sebagai berikut.
@@ -512,9 +518,10 @@ Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan
 		
 		\item \textbf{Mempelajari bahasa pemrograman C serta mempelajari dokumentasi-dokumentasi dari seluruh modul yang dibutuhkan untuk pembuatan perangkat lunak.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
-		{\bf Hasil :} Ada beberapa modul/fungsi bawaan dari bahasa C yang akan digunakan dalam pembuatan perkakas \cl ini. Salah satu dari fungsi tersebut adalah fungsi \verb|getopt|
+		{\bf Hasil :} Fungsi bawaan dari bahasa C yang akan digunakan dalam pembuatan perangkat lunak dalam skripsi ini adalah fungsi \verb|getopt|.
 
-\large{\textbf{getopt \cite{loosemore:2022:gnuclibrary}}}
+\vspace{\baselineskip}
+\textbf{\large{getopt} \cite{loosemore:2022:gnuclibrary}}
 \label{sec:cmodules-getopt}
 
 \verb|getopt| merupakan sebuah fungsi yang dapat mengautomasi pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl berbasis UNIX.
@@ -522,10 +529,10 @@ Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan
 Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
 
 \begin{verbatim}
-                         getopt (argc, argv, <options>)
+                           getopt (argc, argv, <options>)
 \end{verbatim}
 
-Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
+Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, \linebreak sedangkan argv merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
 \newline\newline
 Selain itu, penggunaan \verb|getopt| juga akan memakai variabel-variabel tertentu, yang nilainya akan diisi oleh fungsi \verb|getopt| tersebut sendiri. Variabel-variabel ini beserta penjelasannya dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
 \begin{itemize}
@@ -600,24 +607,24 @@ int main(int argc, char **argv) {
 
 Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata.
 
-\verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
+\verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \linebreak \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
 
 \begin{itemize}
 	\item \verb|name|\\
 	Variabel ini merupakan nama panjang dari opsi.
 	\item \verb|has_arg|\\
-	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai yang mungkin dalam variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
+	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai yang \linebreak mungkin dalam variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
 	\item \verb|flag| \& \verb|val|\\ 
 	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt-long|. Variabel \verb|flag| dapat diisi dengan penunjuk (\textit{pointer}) ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt-long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt-long| akan mengembalikan isi dari variabel \verb|val|.
 \end{itemize}
 \noindent
 Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
 \newline\newline
-Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, berikut merupakan contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Adapun perangkat lunak ini memiliki spesifikasi sebagai berikut:
+Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, berikut merupakan \linebreak contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Adapun perangkat lunak ini memiliki spesifikasi sebagai berikut:
 
 \begin{itemize}
 	\item Perangkat lunak ini akan menerima masukan dari penggunaan opsi-opsi serta parameternya.
-	\item Keluaran dari perangkat lunak ini adalah opsi apa saja yang dipilih, serta parameter yang diberikan (jika ada).
+	\item Keluaran dari perangkat lunak ini adalah opsi apa saja yang dipilih, serta parameter yang \linebreak diberikan (jika ada).
 	\item Opsi pertama yang disediakan adalah \verb|-a| atau \verb|--args| yang merupakan opsi tidak berargumen.
 	\item Opsi kedua yang disediakan adalah \verb|-n| atau \verb|--noargs|, yang merupakan opsi yang membutuhkan sebuah arguman.
 	\item Opsi ketiga dan keempat merupakan penanda mode keluaran, yaitu \verb|--short| dan \verb|--long|. Jika opsi \verb|--long| digunakan, maka perangkat lunak ini akan mengeluarkan versi panjang dari keluaran, sedangkan jika opsi \verb|--short| digunakan, maka perangkat akan mengeluarkan versi pendek dari keluaran.
@@ -701,11 +708,11 @@ Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan sa
 
 \begin{itemize}
 	\item Pencarian lokasi\\
-	Pencarian lokasi merupakan fungsi utama pertama dari perkakas ini. Untuk fungsi ini, masukan langsung dari pengguna yang akan diterima oleh perkakas adalah kata kunci dari sebuah lokasi yang ingin dicari. Kemudian, perkakas akan memprosesnya melalui API KIRI, lalu mengembalikan nama lokasi tersebut, serta nilai \textit{latitude} dan \textit{longitude}-nya, sebagai keluaran akhir dari proses tersebut.
+	Pencarian lokasi merupakan fungsi utama pertama dari perkakas ini. Untuk fungsi ini, masukan langsung dari pengguna yang akan diterima oleh perkakas adalah kata kunci dari sebuah lokasi yang ingin dicari. Kemudian, perkakas akan memprosesnya melalui API KIRI, lalu \linebreak mengembalikan nama lokasi tersebut, serta nilai \textit{latitude} dan \textit{longitude}-nya, sebagai keluaran akhir dari proses tersebut.
 	\item Pencarian rute\\
-	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
+	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari \linebreak perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
 \end{itemize}
-\vspace{\baselineskip}\noindent
+\noindent
 Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
 
 \begin{itemize}
@@ -739,11 +746,11 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 		\end{itemize}
 		
 		\item \verb|routedirect|\\
-		Parameter ini merupakan tambahan fitur spesifik untuk perkakas ini, yang merupakan gabungan dari fitur pencarian lokasi dan pencarian rute. Fitur ini akan menggabungkan kedua fitur tersebut dengan langkah-langkah berikut.
+		Parameter ini merupakan tambahan fitur spesifik untuk perkakas ini, yang merupakan \linebreak gabungan dari fitur pencarian lokasi dan pencarian rute. Fitur ini akan menggabungkan kedua fitur tersebut dengan langkah-langkah berikut.
 		
 		\begin{enumerate}
 			\item Perkakas akan menerima lokasi awal dan akhir berupa kata kunci dari pengguna yang dimasukkan kedalam parameter dari opsi masing-masing.
-			\item Hasil pencarian kedua lokasi akan dikonfirmasi terlebih dahulu, apakah lokasi yang ditemukan benar merupakan lokasi yang ingin digunakan oleh pengguna atau bukan.
+			\item Hasil pencarian kedua lokasi akan dikonfirmasi terlebih dahulu, apakah lokasi yang \linebreak ditemukan benar merupakan lokasi yang ingin digunakan oleh pengguna atau bukan.
 			\item Jika hasil tersebut benar, maka koordinat \latlon dari kedua lokasi tersebut akan disimpan.
 			\item Koordinat \latlon dari kedua lokasi tersebut kemudian akan digunakan sebagai masukan untuk langkah kedua dari fitur ini, yaitu pencarian rute.
 			\item Hasil dari pencarian rute akan ditampilkan sebagai keluaran akhir dari fitur ini.
@@ -753,9 +760,9 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 		
 		\begin{itemize}
 			\item \verb|-I <region tempat lokasi awal berada>|\\
-			Opsi ini akan menerima parameter berupa kode area dari lokasi awal yang akan digunakan.
+			Opsi ini akan menerima parameter berupa kode area lokasi awal yang akan digunakan.
 			\item \verb|-E <region tempat lokasi akhir berada>|\\
-			Opsi ini akan menerima parameter berupa kode area dari lokasi akhir yang akan digunakan.
+			Opsi ini akan menerima parameter berupa kode area lokasi akhir yang akan digunakan.
 			\item \verb|-S <kata kunci untuk lokasi awal>|\\
 			Opsi ini akan menerima parameter berupa kata kunci untuk pencarian lokasi awal yang akan digunakan.
 			\item \verb|-F <kata kunci untuk lokasi akhir>|\\
@@ -778,36 +785,38 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 		\label{sec:num6} \newline
 		{\bf Status :} Dipisah dua menjadi nomor ini dan \hyperref[sec:num5]{nomor 5} di Skripsi 1.\\
 		{\bf Hasil :} Adapun \textit{library-library} yang dapat digunakan berdasarkan spesifikasi perangkat lunak adalah sebagai berikut.
-		
-\large{\textbf{libcurl \cite{stenberg:2022:everythingcurl}}}
+
+\textbf{\large{libcurl} \cite{stenberg:2022:everythingcurl}}
 \label{sec:cmodules-libcurl}
 
 libcurl merupakan sebuah \textit{library} yang berisi fungsi-fungsi yang disediakan dalam bentuk API bahasa C, untuk digunakan oleh aplikasi-aplikasi bahasa C. Libcurl didesain dengan berorientasi transfer (biasanya transfer berkas), tanpa memerlukan para penggunanya untuk mengerti protokol-protokol yang digunakan dalam proses pentransferan tersebut. Fitur transfer ini dapat dibuat sesederhana mungkin, dan seluruh aturan dan opsi seputar pemindahan berkas tersebut dapat diatur nantinya secara manual melalui opsi-opsi yang ada.
 
 Untuk mulai melakukan transfer berkas, diperlukan juga sebuah \textit{handle} yang perlu diinisialisasi terlebih dahulu. Adapun cURL memiliki dua jenis \textit{handle}, yaitu \textit{easy handle} dan \textit{multi handle}. 
 
+\vspace{\baselineskip}
 \textbf{\textit{Easy Handle}}
 \label{sec:cmodules-libcurl-handleeasy}
 
-\textit{Easy handle} dari cURL dapat diinisialisasi dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} ini berhasil diatur opsinya apabila fungsi \verb|curl_easy_setopt()| tadi mengembalikan \verb|CURLE_OK|. Terakhir, untuk menjalankan transfernya, fungsi yang perlu dipanggil adalah \verb|curl_easy_perform(<easy handle>)|, dengan variabel \verb|<easy handle>| diisi dengan nama dari \textit{easy handle} yang ingin dimulai transfernya.
+\textit{Easy handle} dari cURL dapat diinisialisasi dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, \linebreak protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} ini berhasil diatur opsinya apabila fungsi \verb|curl_easy_| \linebreak \verb|setopt()| tadi mengembalikan \verb|CURLE_OK|. Terakhir, untuk menjalankan transfernya, fungsi yang perlu dipanggil adalah \verb|curl_easy_perform(<easy handle>)|, dengan variabel \verb|<easy handle>| diisi dengan nama dari \textit{easy handle} yang ingin dimulai transfernya.
 
 \textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
 
+\vspace{\baselineskip}
 \textbf{\textit{Multi Handle}}
 \label{sec:cmodules-libcurl-handlemulti}
 
-\textit{Multi handle} merupakan sebuah \textit{handle} yang dapat memfasilitasi beberapa transfer yang dilakukan secara paralel. Metode pentransferan filenya masih sama dengan \textit{easy handle}, hanya saja untuk \textit{multi handle}, diperlukan sebuah \textit{handle} tambahan yang dapat menampung seluruh \textit{easy handle} yang akan digunakan. Adapun \textit{handle} tipe ini dapat diinisialisasi dengan memanggil fungsi \verb|curl_multi_init()|, dan untuk mengatur opsi-opsi seputar \textit{multi handle} tersebut, pengguna dapat memanggil fungsi \verb|curl_multi_setopt()|.
+\textit{Multi handle} merupakan sebuah \textit{handle} yang dapat memfasilitasi beberapa transfer yang \mbox{dilakukan} secara paralel. Metode pentransferan filenya masih sama dengan \textit{easy handle}, hanya saja untuk \textit{multi handle}, diperlukan sebuah \textit{handle} tambahan yang dapat menampung seluruh \textit{easy handle} yang akan digunakan. Adapun \textit{handle} tipe ini dapat diinisialisasi dengan memanggil fungsi \verb|curl_multi_init()|, dan untuk mengatur opsi-opsi seputar \textit{multi handle} tersebut, pengguna dapat memanggil fungsi \verb|curl_| \linebreak \verb|multi_setopt()|.
 
 Untuk memulai transfer paralel, tentunya perlu diinisialisasi dulu masing-masing \textit{easy handle}-nya. Setelah \textit{handle-handle} tersebut diinisialisasi, \textit{handle} tersebut dapat dimasukkan ke dalam sebuah \textit{multi handle} dengan memanggil fungsi berikut.
 
 \begin{verbatim}
-              curl_multi_add_handle(<multi handle>, <easy handle>);
+                curl_multi_add_handle(<multi handle>, <easy handle>);
 \end{verbatim}
 \noindent
 Dengan \verb|<easy handle>| merupakan nama dari \textit{easy handle} yang ingin dimasukkan ke dalam \textit{multi handle} tertentu dan \verb|<multi handle>| merupakan nama dari \textit{multi handle}-nya sendiri. Sedangkan, untuk menghapus sebuah \textit{easy handle} dari dari dalam \textit{multi handle}, dapat dipanggil fungsi berikut.
 
 \begin{verbatim}
-             curl_multi_remove_handle(<multi handle>, <easy handle>);
+              curl_multi_remove_handle(<multi handle>, <easy handle>);
 \end{verbatim}
 
 Setelah seluruh \textit{easy handle} yang ingin dijalankan dimasukkan ke dalam \textit{multi handle}, \textit{multi handle} tersebut dapat dijalankan dengan menggunakan sebuah \textit{loop} transfer. Adapun isi dari loop ini meliputi tiga langkah utama, yaitu:
@@ -823,7 +832,7 @@ Setelah seluruh \textit{easy handle} yang ingin dijalankan dimasukkan ke dalam \
 \end{verbatim}
 
 	\item Menunggu transfer untuk selesai sebelum data diekstraksi\\
-	Tentunya sebelum data hasil transfer dapat diekstraksi untuk dipakai, proses transfernya sendiri harus selesai terlebih dahulu\textemdash untuk kasus dalam \textit{multi handle} libcurl, seluruh \textit{handle} di dalam \textit{multi handle} harus selesai melakukan transfer terlebih dahulu, atau sampai terjadi \textit{timeout}. Adapun langkah ini dapat diselesaikan entah dengan menggunakan \verb|curl_multi_wait()| atau \verb|curl_multi_poll()|, atau dengan cara manual, yaitu dengan memasukkan deskriptor-deskriptor file serta nilai \textit{timeout} secara manual, dan kemudian menggunakan \verb|select()|, walaupun metode ini tidak dianjurkan karena keterbatasan jumlah deskriptor yang dapat digunakan.\footnote{\href{https://curl.se/libcurl/c/curl\_multi\_poll.html}{https://curl.se/libcurl/c/curl\_multi\_poll.html}}
+	Tentunya sebelum data hasil transfer dapat diekstraksi untuk dipakai, proses transfernya \linebreak sendiri harus selesai terlebih dahulu\textemdash untuk kasus dalam \textit{multi handle} libcurl, seluruh \textit{handle} di dalam \textit{multi handle} harus selesai melakukan transfer terlebih dahulu, atau sampai terjadi \textit{timeout}. Adapun langkah ini dapat diselesaikan entah dengan menggunakan \verb|curl_multi_wait()| atau \verb|curl_multi_poll()|, atau dengan cara manual, yaitu dengan memasukkan deskriptor-deskriptor file serta nilai \textit{timeout} secara manual, dan kemudian menggunakan \verb|select()|, walaupun metode ini tidak dianjurkan karena keterbatasan jumlah deskriptor yang dapat digunakan.\footnote{\href{https://curl.se/libcurl/c/curl\_multi\_poll.html}{https://curl.se/libcurl/c/curl\_multi\_poll.html}}
 \end{enumerate}
 \noindent
 Implementasi singkat dari ketiga langkah ini dapat dilihat di potongan kode berikut.
@@ -840,12 +849,13 @@ do {
 
 Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Bedanya dengan \textit{multi handle} biasa adalah \textit{multi socket handle} memperhatikan \textit{socket-socket} yang ada dan memberitahu \textit{handle-handle} jika ada \textit{socket} yang sudah siap untuk digunakan dalam proses \textit{read/write}. Cara operasinya hampir sama dengan \textit{multi handle}\textemdash hal utama yang berbeda adalah dengan \textit{multi socket handle}, diperlukan satu buah parameter tambahan, yaitu kumpulan \textit{socket} yang ingin diperhatikan.
 
-\textit{Socket} ini, beserta apa aksi yang ingin ditunggu dalam socket tersebut, diperhatikan dengan implementasi sebuah fungsi \textit{callback}, yaitu \verb|socket_callback()|. Handle mana yang ingin digunakan, socket mana yang ingin diperhatikan, serta aksi apa yang ditunggu diatur dalam fungsi ini. Jika ada beberapa \textit{socket} yang ingin diperhatikan, fungsi ini harus dipanggil lagi untuk setiap \textit{socket}-nya. Selain itu, perlu juga dipanggil fungsi \verb|timer_callback()|, yang berfungsi untuk mengatur seberapa lama aplikasi akan menunggu \textit{socket}, sebelum terjadi \textit{timeout}. Kedua \textit{callback} ini dapat diatur ke dalam suatu \textit{multi handle} dengan menggunakan fungsi \verb|curl_multi_setopt()| biasa\textemdash untuk \textit{callback socket}, fungsi ini ditandai dengan menggunakan paramter \verb|CURLMOPT_TIMERFUNCTION|, sedangkan untuk \textit{callback timer}, fungsi tersebut ditandai dengan parameter \verb|CURLMOPT_TIMERFUNCTION|.
+\textit{Socket} ini, beserta apa aksi yang ingin ditunggu dalam socket tersebut, diperhatikan dengan implementasi sebuah fungsi \textit{callback}, yaitu \verb|socket_callback()|. Handle mana yang ingin digunakan, socket mana yang ingin diperhatikan, serta aksi apa yang ditunggu diatur dalam fungsi ini. Jika ada \mbox{beberapa} \textit{socket} yang ingin diperhatikan, fungsi ini harus dipanggil lagi untuk setiap \textit{socket}-nya. Selain itu, \linebreak perlu juga dipanggil fungsi \verb|timer_callback()|, yang berfungsi untuk mengatur seberapa lama aplikasi akan menunggu \textit{socket}, sebelum terjadi \textit{timeout}. Kedua \textit{callback} ini dapat diatur ke dalam suatu \textit{\mbox{multi} handle} dengan menggunakan fungsi \verb|curl_multi_setopt()| biasa\textemdash untuk \textit{callback socket}, fungsi ini ditandai dengan menggunakan paramter \verb|CURLMOPT_TIMERFUNCTION|, sedangkan untuk \textit{callback timer}, fungsi tersebut ditandai dengan parameter \verb|CURLMOPT_TIMERFUNCTION|.
 
 Adapun seluruh \textit{handle} ini dapat dipanggil dengan memanggil fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa.
 
 Contoh implementasi singkat dari seluruh fungsi-fungsi tersebut dapat dilihat di potongan kode berikut.
 
+\vspace{0.5\baselineskip}
 \begin{lstlisting}[language=C, caption=Kumpulan implementasi pengunaan \textit{multi socket handle} curl, label=code:curl-usage-multisocket]
 /* socket callback */
 int socket_callback(CURL *easy,      /* easy handle */
@@ -867,7 +877,7 @@ curl_multi_setopt(multi_handle, CURLMOPT_TIMERFUNCTION, timer_callback);
 curl_multi_socket_action(multi, CURL_SOCKET_TIMEOUT, 0, &running);
 \end{lstlisting}
 
-\large{\textbf{cJSON\footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}}
+\textbf{\large{cJSON}\footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}
 \label{sec:cmodules-cJSON}
 
 cJSON merupakan sebuah \textit{library} yang berfungsi sebagai \textit{parser} JSON untuk perangkat-perangkat lunak bahasa C. \textit{Library} ini sendiri terdiri atas sebuah file C dan sebuah file header.
@@ -942,7 +952,7 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan mengikutkan baris ini dalam kode program:
 
 \begin{verbatim}
-                           #include <cjson/cJSON.h>
+                               #include <cjson/cJSON.h>
 \end{verbatim}
 
 \textbf{Struktur Data}
@@ -968,7 +978,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 
 \begin{itemize}
 	\item \verb|next| dan \verb|prev|\\
-	Variabel ini merupakan penunjuk ke struktur cJSON lainnya yang merupakan nilai JSON selanjutnya (untuk \verb|next|) dan sebelumnya (untuk \verb|prev|).
+	Variabel ini merupakan penunjuk ke struktur cJSON lainnya yang merupakan nilai JSON \linebreak selanjutnya (untuk \verb|next|) dan sebelumnya (untuk \verb|prev|).
 	\item \verb|child|\\
 	Variabel ini merupakan penunjuk ke struktur cJSON lainnya yang merupakan elemen JSON di dalam struktur cJSON tersebut.
 	\item \verb|type|\\
@@ -990,7 +1000,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 		\item \verb|cJSON_Object|\\
 		Merepresentasikan nilai objek general. Implementasinya sama dengan \textit{array}, hanya saja untuk objek general, kuncinya diletakkan di dalam variabel \verb|string|.
 		\item \verb|cJSON_Raw|\\
-		Merepresentasikan objek JSON apapun yang disimpan dalam bentuk \textit{array} yang diterminasi/dipisah oleh \textit{null terminator}.
+		Merepresentasikan objek JSON apapun yang disimpan dalam bentuk \textit{array} yang dipisah oleh \textit{null terminator}.
 		\item \verb|cJSON_NULL|\\
 		Merepresentasikan sebuah nilai \textit{null}.
 	\end{itemize}
@@ -1014,18 +1024,27 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	\end{itemize}
 	
 	\item \textit{Array}\\
-	Sebuah \textit{array} kosong dapat dibuat dengan menggunakan fungsi \verb|cJSON_CreateArray|. Selain fungsi tersebut, pembuatan \textit{array} juga dapat dilakukan dengan memanggil sebuah fungsi alternatif, yaitu \verb|cJSON_CreateArrayReference|. Bedanya adalah dengan fungsi alternatif ini, \textit{array} yang dibuat tidak secara langsung ``mengandung" nilai-nilainya, jadi ketika \textit{array} tersebut dihapus dengan \verb|cJSON_Delete|, nilai-nilai di dalamnya tidak terhapus juga. Hal yang sama juga dapat dilakukan dengan objek-objek di dalam \textit{array} tersebut, dimana objek ini dapat ditambahkan dengan fungsi \verb|cJSON_AddItemToArray|, yang akan langsung menambahkan objek tersebut ke dalam \textit{array}-nya, atau dengan menggunakan \verb|cJSON_AddItemReferenceToArray|, yang hanya akan menambahkan referensi dari objek yang ingin ditambahkan ke dalam \textit{array}.
-	Jika ada sebuah objek yang ingin dihapus dari \textit{array} tertentu, perangkat lunak dapat memanggil fungsi \verb|cJSON_DetachItemFromArray|. Fungsi ini akan mengembalikan objek yang dihapus dari \textit{array} tadi, jadi objek ini harus diberikan ke sebuah penunjuk lainnya (dimasukkan ke dalam variabel lain) agar tidak terjadi kebocoran memori. Selain fungsi tersebut, fungsi \verb|cJSON_DeleteItemFromArray| juga dapat digunakan\textemdash bedanya adalah objek yang dihapus dari \textit{array} tadi, jika dihapus menggunakan fungsi ini, akan langsung dihapus, seakan-akan fungsi \verb|cJSON_Delete| dipanggil untuk objek tersebut.
-	Untuk menimpa/mengganti nilai suatu objek di dalam \textit{array}, fungsi \verb|cJSON_ReplaceItemIn|\linebreak \verb|Array| dapat dipanggil dengan indeks dari objek yang ingin diganti sebagai parameternya. Selain fungsi tersebut, fungsi \verb|cJSON_ReplaceItemViaPointer| juga dapat digunakan\textemdash fungsi ini bekerja dengan memutuskan (\textit{detach}) objek lama yang ingin diganti, menghapus objek tersebut, dan menyisipkan objek yang baru ke tempat objek lama yang sudah dihapus tadi.
-	Terakhir, untuk mendapatkan objek tertentu dalam \textit{array} berdasarkan indeksnya, perangkat lunak dapat memanggil fungsi \verb|cJSON_GetArrayItem|. Ukuran dari \textit{array}-nya sendiri juga dapat dilihat dengan fungsi \verb|cJSON_GetArraySize|.
+	Sebuah \textit{array} kosong dapat dibuat dengan menggunakan fungsi \verb|cJSON_CreateArray|. Selain \mbox{fungsi} tersebut, pembuatan \textit{array} juga dapat dilakukan dengan memanggil sebuah fungsi alternatif, yaitu \verb|cJSON_CreateArrayReference|. Bedanya adalah dengan fungsi alternatif ini, \textit{array} yang dibuat tidak secara langsung ``mengandung" nilai-nilainya, jadi ketika \textit{array} tersebut dihapus dengan \verb|cJSON_Delete|, nilai-nilai di dalamnya tidak terhapus juga. Hal yang sama juga dapat dilakukan dengan objek-objek di dalam \textit{array} tersebut, dimana objek ini dapat ditambahkan dengan fungsi \verb|cJSON_AddItemToArray|, yang akan langsung menambahkan objek tersebut ke dalam \textit{array}-nya, atau dengan menggunakan \verb|cJSON_AddItemReferenceToArray|, yang hanya akan menambahkan referensi dari objek yang ingin ditambahkan ke dalam \textit{array}.
+	
+	Jika ada sebuah objek yang ingin dihapus dari \textit{array} tertentu, perangkat lunak dapat memanggil fungsi \verb|cJSON_DetachItemFromArray|. Fungsi ini akan mengembalikan objek yang dihapus dari \linebreak \textit{array} tadi, jadi objek ini harus diberikan ke sebuah penunjuk lainnya (dimasukkan ke dalam \mbox{variabel} lain) agar tidak terjadi kebocoran memori. Selain fungsi tersebut, fungsi \verb|cJSON_Delete| \linebreak \verb|ItemFromArray| juga dapat digunakan\textemdash bedanya adalah objek yang dihapus dari \textit{array} tadi, \mbox{jika} dihapus menggunakan fungsi ini, akan langsung dihapus, seakan-akan fungsi \verb|cJSON_Delete| \linebreak dipanggil untuk objek tersebut.
+	
+	Untuk menimpa/mengganti nilai suatu objek di dalam \textit{array}, fungsi \verb|cJSON_ReplaceItemIn|\linebreak \verb|Array| dapat dipanggil dengan indeks dari objek yang ingin diganti sebagai parameternya. Selain fungsi tersebut, fungsi \verb|cJSON_ReplaceItemViaPointer| juga dapat digunakan\textemdash fungsi ini \mbox{bekerja} dengan memutuskan (\textit{detach}) objek lama yang ingin diganti, menghapus objek tersebut, dan menyisipkan objek yang baru ke tempat objek lama yang sudah dihapus tadi.
+	
+	Terakhir, untuk mendapatkan objek tertentu dalam \textit{array} berdasarkan indeksnya, perangkat \linebreak lunak dapat memanggil fungsi \verb|cJSON_GetArrayItem|. Ukuran dari \textit{array}-nya sendiri juga \linebreak dapat dilihat dengan fungsi \verb|cJSON_GetArraySize|.
+	\vfill\newpage % prevent widow
 	\item Objek\\	
-	Sama seperti \textit{array}, ada dua jenis fungsi pembuatan objek. Yang pertama adalah \verb|cJSON_CreateObject| untuk membuat objek biasa, dan \verb|cJSON_CreateObjectReference| untuk membuat objek yang nilai-nilainya terdiri atas kumpulan referensi ke variabel-variabel lain.
+	Sama seperti \textit{array}, ada dua jenis fungsi pembuatan objek. Yang pertama adalah \verb|cJSON_Create| \linebreak \verb|Object| untuk membuat objek biasa, dan \verb|cJSON_CreateObjectReference| untuk membuat objek yang nilai-nilainya terdiri atas kumpulan referensi ke variabel-variabel lain.
+	
 	Untuk menambahkan sebuah objek ke dalam suatu objek lainnya, pengguna dapat memanggil fungsi \verb|cJSON_AddItemToObject|. Jika objek ingin ditambahkan ke suatu objek lain yang memiliki sebuah variabel konstan sebagai nama, atau sebuah referensi, prosesnya harus menggunakan fungsi \verb|cJSON_AddItemToObjectCS|.
-	Fungsi \verb|cJSON_DetachItemFromObjectCaseSensitive| dapat dipanggil ketika ada sebuah objek ingin dibuang dari objek lain. Sama seperti fungsi \textit{detach} di \textit{array} tadi, fungsi ini akan mengembalikan objek yang dibuang tadi, dan objek tersebut harus dimasukkan ke variabel lain untuk menghindari kebocoran memori. Selain itu, ada juga fungsi \verb|cJSON_DeleteItemFromObjectCaseSensitive|, yang bekerja dengan cara yang sama seperti fungsi penghapusan objek untuk \textit{array}.
-	Untuk pengeditan/penggantian nilai objek, lagi-lagi cara kerjanya sama dengan \textit{array}. Untuk penggantian nilai objek berdasarkan kuncinya, fungsi \verb|cJSON_ReplaceItemInObjectCaseSensitive| dapat digunakan, sedangkan untuk penggantian objek langsung dengan penunjuk ke elemen lainnya, fungsi \verb|cJSON_ReplaceItemViaPointer| dapat digunakan.
-	Terakhir, untuk mengakses sebuah benda di dalam objek, pengguna dapat memanggil fungsi \verb|cJSON_GetObjectItemCaseSensitive|, dan untuk mengetahui ukuran dari objek tersebut, fungsi yang dapat digunakan sama dengan fungsi yang dapat digunakan untuk \textit{array}, yaitu \verb|cJSON_GetArraySize|.
+	
+	Fungsi \verb|cJSON_DetachItemFromObjectCaseSensitive| dapat dipanggil ketika ada sebuah objek ingin dibuang dari objek lain. Sama seperti fungsi \textit{detach} di \textit{array} tadi, fungsi ini akan mengembalikan objek yang dibuang tadi, dan objek tersebut harus dimasukkan ke variabel lain untuk menghindari kebocoran memori. Selain itu, ada juga fungsi \verb|cJSON_DeleteItemFromObjectCase| \linebreak \verb|Sensitive|, yang bekerja dengan cara yang sama seperti fungsi penghapusan objek untuk \textit{array}.
+	
+	Untuk pengeditan/penggantian nilai objek, lagi-lagi cara kerjanya sama dengan \textit{array}. Untuk penggantian nilai objek berdasarkan kuncinya, fungsi \verb|cJSON_ReplaceItemInObjectCase| \linebreak \verb|Sensitive| dapat digunakan, sedangkan untuk penggantian objek langsung dengan penunjuk ke elemen lainnya, fungsi \verb|cJSON_ReplaceItemViaPointer| dapat digunakan.
+	
+	Terakhir, untuk mengakses sebuah benda di dalam objek, pengguna dapat memanggil \mbox{fungsi} \verb|cJSON_GetObjectItemCaseSensitive|, dan untuk mengetahui ukuran dari objek tersebut, fungsi yang dapat digunakan sama dengan fungsi yang dapat digunakan untuk \textit{array}, yaitu \linebreak \verb|cJSON_GetArraySize|.
+	
 	\item \textit{Parsing}\\
-	Objek JSON yang dibatasi/diterminasi dengan \textit{null terminator} dapat di-\textit{parse} dengan menggunakan fungsi berikut.
+	Objek JSON yang dibatasi/diterminasi dengan \textit{null terminator} dapat di-\textit{parse} dengan \linebreak menggunakan fungsi berikut.
 	
 	\begin{verbatim}
                                cJSON_Parse(<JSON>)
@@ -1037,13 +1056,14 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
               cJSON_Parse(<JSON>, <ukuran JSON yang ingin di-parse>)
 	\end{verbatim}
 	
-	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
+	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang \linebreak merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
 \end{itemize}
 
-\large{\textbf{CMake \cite{kitware:2022:masteringcmake}}}
+\vspace{\baselineskip}
+\textbf{\large{CMake} \cite{kitware:2022:masteringcmake}}
 \label{sec:cmodules-CMake}
 
-CMake merupakan sebuah perkakas generator \textit{build system} yang memungkinkan pengembang perangkat lunak untuk menentukan parameter-parameter pembangunan perangkat di sebuah file yang berupa teks biasa. File ini kemudian dipakai oleh CMake untuk membuat perkakas-perkakas pembangunan perangkat lunak yang dapat dibaca oleh IDE-IDE tertentu, seperti Microsoft Visual Studio, Apple Xcode, Linux, dan sebagainya. Selain itu, CMake juga menangani aspek-aspek rumit dari pembangunan perangkat lunak, seperti pembangunan perangkat lunak \textit{cross-platform}, introspeksi sistem, dan juga pembangunan perangkat lunak yang dapat disesuaikan berdasarkan penggunanya.
+CMake merupakan sebuah perkakas generator \textit{build system} yang memungkinkan pengembang \mbox{perangkat} lunak untuk menentukan parameter-parameter pembangunan perangkat di sebuah file yang berupa teks biasa. File ini kemudian dipakai oleh CMake untuk membuat perkakas-perkakas pembangunan \mbox{perangkat} lunak yang dapat dibaca oleh IDE-IDE tertentu, seperti Microsoft Visual Studio, Apple \mbox{Xcode}, Linux, dan sebagainya. Selain itu, CMake juga menangani aspek-aspek rumit dari pembangunan perangkat lunak, seperti pembangunan perangkat lunak \textit{cross-platform}, introspeksi sistem, dan juga pembangunan perangkat lunak yang dapat disesuaikan berdasarkan penggunanya.
 
 Untuk proyek-proyek yang dibangun di satu platform, CMake memiliki fungsi sebagai berikut.
 
@@ -1062,7 +1082,7 @@ Sedangkan, untuk perangkat-perangkat lunak yang dibuat \textit{cross-platform}, 
 \begin{itemize}
 	\item Memberikan kemampuan mengetes urutan \textit{machine byte} dan karakteristik-karakteristik lainnya yang spesifik untuk suatu sistem operasi.
 	\item File konfigurasi yang dibuat dapat berlaku untuk seluruh \textit{platform}.
-	\item Memberikan dukungan untuk membangun \textit{shared build} untuk seluruh \textit{platform} yang mendukungnya.
+	\item Mendukung pembangunan \textit{shared build} untuk seluruh \textit{platform} yang mendukungnya.
 	\item Memberikan kemampuan untuk mengatur opsi-opsi yang spesifik untuk suatu sistem operasi, seperti misalnya lokasi file-file data utama.
 \end{itemize}
 
@@ -1108,7 +1128,7 @@ add_executable(Hello Hello.c)
 		
 		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
 		\item ccmake\\
-		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
+		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake \linebreak memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk \linebreak menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
 		
 		\begin{figure}[ht]
 		    \centering
@@ -1119,7 +1139,7 @@ add_executable(Hello Hello.c)
 		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
 		
 		\item Langsung dari \cl\\
-		CMake juga dapat dijalankan melalui \textit{command line}. Untuk menjalankan CMake dari \textit{command line}, direktori tempat terminal berada lagi-lagi harus diatur ke direktori tempat file-file \textit{binary} akan disimpan. Kemudian jalankan perintah \verb|cmake| dengan opsi \verb|-D|, diikuti dengan direktori tempat \textit{source code} dari perangkat lunak yang ingin dibangun berada. Walaupun begitu, perlu diingat bahwa metode ini direkomendasikan untuk digunakan hanya untuk proyek-proyek yang memiliki sedikit, atau bahkan tidak ada opsi sama sekali.
+		CMake juga dapat dijalankan melalui \textit{command line}. Untuk menjalankan CMake dari \linebreak \textit{command line}, direktori tempat terminal berada lagi-lagi harus diatur ke direktori tempat file-file \textit{binary} akan disimpan. Kemudian jalankan perintah \verb|cmake| dengan opsi \verb|-D|, \mbox{diikuti} dengan direktori tempat \textit{source code} dari perangkat lunak yang ingin dibangun berada. Walaupun begitu, perlu diingat bahwa metode ini direkomendasikan untuk digunakan hanya untuk proyek-proyek yang memiliki sedikit, atau bahkan tidak ada opsi sama sekali.
 	\end{itemize}
 	
 	\item Pengguna membangun proyek tersebut dengan perkakas pembangunan masing-masing.\\
@@ -1137,16 +1157,16 @@ add_executable(Hello Hello.c)
 		
 		Jika pengaturan \textit{compiler} sudah selesai dan \verb|cmake| sudah dijalankan setidaknya sekali, jika pengguna ingin mengganti \textit{compiler}, pengguna harus memulai ulang dengan folder file \textit{binary} yang kosong.
 		\item Mengatur konfigurasi pembangunan perangkat\\
-		Konfigurasi pembangunan perangkat memungkinkan sebuah proyek untuk dibangun dalam beberapa cara dengan tujuan \textit{debugging}, optimisasi, atau tujuan-tujuan sejenis lainnya. Secara \textit{default}, CMake mendukung mode-mode berikut:
+		Konfigurasi pembangunan perangkat memungkinkan sebuah proyek untuk dibangun dalam beberapa cara dengan tujuan \textit{debugging}, optimisasi, atau tujuan-tujuan sejenis lainnya. \linebreak Secara \textit{default}, CMake mendukung mode-mode berikut:
 		
 		\begin{itemize}
 			\item \verb|Debug|\textemdash Opsi-opsi \textit{debug} dasar dinyalakan.
 			\item \verb|Release|\textemdash Fungsi optimisasi dasar dinayalakan.
 			\item \verb|MinSizeRel|\textemdash Ukuran kode akhir diusahakan sekecil mungkin.
-			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi untuk \textit{debugging}.
+			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi \linebreak untuk \textit{debugging}.
 		\end{itemize}
 		
-		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
+		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_| \linebreak \verb|TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
 		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
 		
 		\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-multibuild]
@@ -1156,10 +1176,10 @@ ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
 		
 	\end{itemize}
 	
-	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
+	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih \linebreak merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan \linebreak mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
 \end{enumerate}
 		
-		\item \textbf{Membangun perangkat lunak berdasarkan rancangan yang sudah dibuat, dengan megimplementasikan seluruh modul dan \textit{library} yang telah ditentukan di tahap sebelumnya dalam bahasa C.}\\
+		\item \textbf{Membangun perangkat lunak berdasarkan rancangan yang sudah dibuat, dengan \linebreak mengimplementasikan seluruh modul dan \textit{library} yang telah ditentukan di tahap sebelumnya dalam bahasa C.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :} Poin ini akan dikerjakan di Skripsi 2.
 
