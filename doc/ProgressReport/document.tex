@@ -763,28 +763,31 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 		
 		\item \textbf{Melakukan analisis kebutuhan fitur-fitur perangkat lunak.}		
 		\label{sec:num5} \newline
-		{\bf Status :} Dipisah dua bersama dengan \hyperref[sec:num6]{nomor 6} di Skripsi 1\textemdash tidak dikerjakan.\\
+		{\bf Status :} Dipisah dua menjadi nomor ini dan \hyperref[sec:num6]{nomor 6} di Skripsi 1\textemdash tidak dikerjakan.\\
 		{\bf Hasil :} Perangkat lunak hasil skripsi ini merupakan ekstensi dari perangkat lunak lainnya, yaitu KIRI. Oleh karena itu, fitur-fitur yang dimiliki oleh perangkat lunak ini akan sama seperti fitur-fitur yang disediakan oleh KIRI.
 		
 		
 		\item \textbf{Melakukan eksplorasi \textit{library} yang dapat digunakan dan memenuhi spesifikasi dalam pembuatan perangkat lunak.}
 		\label{sec:num6} \newline
-		{\bf Status :} Dipisah dua bersama dengan \hyperref[sec:num5]{nomor 5} di Skripsi 1.\\
+		{\bf Status :} Dipisah dua menjadi nomor ini dan \hyperref[sec:num5]{nomor 5} di Skripsi 1.\\
 		{\bf Hasil :} Adapun \textit{library-library} yang dapat digunakan berdasarkan spesifikasi perangkat lunak adalah sebagai berikut.
 		
-\textbf{libcurl \cite{stenberg:2022:everythingcurl}}
+\large{\textbf{libcurl \cite{stenberg:2022:everythingcurl}}}
+\label{sec:cmodules-libcurl}
 
 libcurl merupakan sebuah \textit{library} yang berisi fungsi-fungsi yang disediakan dalam bentuk API bahasa C, untuk digunakan oleh aplikasi-aplikasi bahasa C. Libcurl didesain dengan berorientasi transfer (biasanya transfer berkas), tanpa memerlukan para penggunanya untuk mengerti protokol-protokol yang digunakan dalam proses pentransferan tersebut. Fitur transfer ini dapat dibuat sesederhana mungkin, dan seluruh aturan dan opsi seputar pemindahan berkas tersebut dapat diatur nantinya secara manual melalui opsi-opsi yang ada.
 
 Untuk mulai melakukan transfer berkas, diperlukan juga sebuah \textit{handle} yang perlu diinisialisasi terlebih dahulu. Adapun cURL memiliki dua jenis \textit{handle}, yaitu \textit{easy handle} dan \textit{multi handle}. 
 
 \textbf{\textit{Easy Handle}}
+\label{sec:cmodules-libcurl-handleeasy}
 
 \textit{Easy handle} dari cURL dapat diinisialisasi dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} ini berhasil diatur opsinya apabila fungsi \verb|curl_easy_setopt()| tadi mengembalikan \verb|CURLE_OK|. Terakhir, untuk menjalankan transfernya, fungsi yang perlu dipanggil adalah \verb|curl_easy_perform(<easy handle>)|, dengan variabel \verb|<easy handle>| diisi dengan nama dari \textit{easy handle} yang ingin dimulai transfernya.
 
 \textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
 
 \textbf{\textit{Multi Handle}}
+\label{sec:cmodules-libcurl-handlemulti}
 
 \textit{Multi handle} merupakan sebuah \textit{handle} yang dapat memfasilitasi beberapa transfer yang dilakukan secara paralel. Metode pentransferan filenya masih sama dengan \textit{easy handle}, hanya saja untuk \textit{multi handle}, diperlukan sebuah \textit{handle} tambahan yang dapat menampung seluruh \textit{easy handle} yang akan digunakan. Adapun \textit{handle} tipe ini dapat diinisialisasi dengan memanggil fungsi \verb|curl_multi_init()|, dan untuk mengatur opsi-opsi seputar \textit{multi handle} tersebut, pengguna dapat memanggil fungsi \verb|curl_multi_setopt()|.
 
@@ -815,8 +818,18 @@ Setelah seluruh \textit{easy handle} yang ingin dijalankan dimasukkan ke dalam \
 	\item Menunggu transfer untuk selesai sebelum data diekstraksi\\
 	Tentunya sebelum data hasil transfer dapat diekstraksi untuk dipakai, proses transfernya sendiri harus selesai terlebih dahulu\textemdash untuk kasus dalam \textit{multi handle} libcurl, seluruh \textit{handle} di dalam \textit{multi handle} harus selesai melakukan transfer terlebih dahulu, atau sampai terjadi \textit{timeout}. Adapun langkah ini dapat diselesaikan entah dengan menggunakan \verb|curl_multi_wait()| atau \verb|curl_multi_poll()|, atau dengan cara manual, yaitu dengan memasukkan deskriptor-deskriptor file serta nilai \textit{timeout} secara manual, dan kemudian menggunakan \verb|select()|, walaupun metode ini tidak dianjurkan karena keterbatasan jumlah deskriptor yang dapat digunakan.\footnote{\href{https://curl.se/libcurl/c/curl\_multi\_poll.html}{https://curl.se/libcurl/c/curl\_multi\_poll.html}}
 \end{enumerate}
+\noindent
+Implementasi singkat dari ketiga langkah ini dapat dilihat di potongan kode berikut.
+
+\begin{lstlisting}[language=C, caption=Loop sederhana dari pengunaan \textit{multi handle} curl, label=code:curl-usage-multi]
+do {
+   curl_multi_wait (multi_handle, NULL, 0, 1000, NULL);
+   curl_multi_perform (multi_handle, &transfers_running);
+} while (transfers_running);
+\end{lstlisting}
 
 \textbf{\textit{Multi Socket Handle}}
+\label{sec:cmodules-libcurl-handlemultisocket}
 
 Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Bedanya dengan \textit{multi handle} biasa adalah \textit{multi socket handle} memperhatikan \textit{socket-socket} yang ada dan memberitahu \textit{handle-handle} jika ada \textit{socket} yang sudah siap untuk digunakan dalam proses \textit{read/write}. Cara operasinya hampir sama dengan \textit{multi handle}\textemdash hal utama yang berbeda adalah dengan \textit{multi socket handle}, diperlukan satu buah parameter tambahan, yaitu kumpulan \textit{socket} yang ingin diperhatikan.
 
@@ -824,11 +837,36 @@ Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Be
 
 Adapun seluruh \textit{handle} ini dapat dipanggil dengan memanggil fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa.
 
-\textbf{cJSON\footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}
+Contoh implementasi singkat dari seluruh fungsi-fungsi tersebut dapat dilihat di potongan kode berikut.
+
+\begin{lstlisting}[language=C, caption=Kumpulan implementasi pengunaan \textit{multi socket handle} curl, label=code:curl-usage-multisocket]
+/* socket callback */
+int socket_callback(CURL *easy,      /* easy handle */
+                    curl_socket_t s, /* socket */
+                    int what,        /* aksi apa yang ditunggu */
+                    void *userp,     /* penunjuk callback privat */
+                    void *socketp)   /* penunjuk socket privat */
+
+curl_multi_setopt(multi_handle, CURLMOPT_SOCKETFUNCTION, socket_callback);
+
+/* timer callback */
+int timer_callback(multi_handle,   /* multi handle */
+                   timeout_ms,     /* waktu tunggu dalam milidetik */
+                   userp)          /* penunjuk callback privat */
+
+curl_multi_setopt(multi_handle, CURLMOPT_TIMERFUNCTION, timer_callback);
+
+/* multi socket action */
+curl_multi_socket_action(multi, CURL_SOCKET_TIMEOUT, 0, &running);
+\end{lstlisting}
+
+\large{\textbf{cJSON\footnote{\href{https://github.com/DaveGamble/cJSON}{https://github.com/DaveGamble/cJSON}}}}
+\label{sec:cmodules-cJSON}
 
 cJSON merupakan sebuah \textit{library} yang berfungsi sebagai \textit{parser} JSON untuk perangkat-perangkat lunak bahasa C. \textit{Library} ini sendiri terdiri atas sebuah file C dan sebuah file header.
 
 \textbf{Instalasi}
+\label{sec:cmodules-cJSON-instalation}
 
 cJSON dapat diinstal dengan beberapa cara, yaitu:
 
@@ -892,6 +930,7 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 \end{itemize}
 
 \textbf{Penggunaan}
+\label{sec:cmodules-cJSON-usage}
 
 Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan mengikutkan baris ini dalam kode program:
 
@@ -900,6 +939,7 @@ Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan me
 \end{verbatim}
 
 \textbf{Struktur Data}
+\label{sec:cmodules-cJSON-datastruct}
 
 cJSON merepresentasikan sebuah nilai JSON dengan struktur data \verb|cJSON|, yang dapat dilihat di potongan kode \ref{code:cjson-struct}.
 
@@ -953,6 +993,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 \end{itemize}
 
 \textbf{Fungsi-Fungsi Dasar}
+\label{sec:cmodules-cJSON-basicfuncts}
 
 \begin{itemize}
 	\item Tipe-tipe data dasar\\
@@ -992,7 +1033,8 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
 \end{itemize}
 
-\textbf{CMake \cite{kitware:2022:masteringcmake}}
+\large{\textbf{CMake \cite{kitware:2022:masteringcmake}}}
+\label{sec:cmodules-CMake}
 
 CMake merupakan sebuah perkakas generator \textit{build system} yang memungkinkan pengembang perangkat lunak untuk menentukan parameter-parameter pembangunan perangkat di sebuah file yang berupa teks biasa. File ini kemudian dipakai oleh CMake untuk membuat perkakas-perkakas pembangunan perangkat lunak yang dapat dibaca oleh IDE-IDE tertentu, seperti Microsoft Visual Studio, Apple Xcode, Linux, dan sebagainya. Selain itu, CMake juga menangani aspek-aspek rumit dari pembangunan perangkat lunak, seperti pembangunan perangkat lunak \textit{cross-platform}, introspeksi sistem, dan juga pembangunan perangkat lunak yang dapat disesuaikan berdasarkan penggunanya.
 
@@ -1018,6 +1060,7 @@ Sedangkan, untuk perangkat-perangkat lunak yang dibuat \textit{cross-platform}, 
 \end{itemize}
 
 \textbf{Penggunaan Dasar}
+\label{sec:cmodules-CMake-basicusage}
 
 CMake mengambil satu (atau lebih) file-file CMakeLists sebagai masukan, dan sebagai keluaran akan menghasilkan file-file proyek atau Makefile yang dapat digunakan dengan dan oleh perkakas-perkakas pembangunan perangkat lunak lain yang ada.
 
@@ -1109,7 +1152,6 @@ ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
 	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
 \end{enumerate}
 		
-
 		\item \textbf{Membangun perangkat lunak berdasarkan rancangan yang sudah dibuat, dengan megimplementasikan seluruh modul dan \textit{library} yang telah ditentukan di tahap sebelumnya dalam bahasa C.}\\
 		{\bf Status :} Ada sejak rencana kerja skripsi.\\
 		{\bf Hasil :} Poin ini akan dikerjakan di Skripsi 2.
