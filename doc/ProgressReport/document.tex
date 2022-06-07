@@ -187,7 +187,7 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	Parameter ini berisi kunci API pribadi yang harus digenerasi terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
 
-Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
+Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus dibuat terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}. Untuk perkakas ini, kunci API ini akan bernilai \verb|68C|\apikeycensor \verb|97C|.\footnote{Kunci API ditutupi untuk alasan keamanan.}
 
 \begin{figure}[t]
     \centering
@@ -1162,7 +1162,7 @@ add_executable(Hello Hello.c)
 		
 		\begin{itemize}
 			\item \verb|Debug|\textemdash Opsi-opsi \textit{debug} dasar dinyalakan.
-			\item \verb|Release|\textemdash Fungsi optimisasi dasar dinayalakan.
+			\item \verb|Release|\textemdash Fungsi optimisasi dasar dinyalakan.
 			\item \verb|MinSizeRel|\textemdash Ukuran kode akhir diusahakan sekecil mungkin.
 			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi \linebreak untuk \textit{debugging}.
 		\end{itemize}
@@ -1177,7 +1177,7 @@ ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
 		
 	\end{itemize}
 	
-	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih \linebreak merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan \linebreak mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
+	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih \linebreak merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan \linebreak mengganti \textit{working directory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
 \end{enumerate}
 		
 		\item \textbf{Membangun perangkat lunak berdasarkan rancangan yang sudah dibuat, dengan \linebreak mengimplementasikan seluruh modul dan \textit{library} yang telah ditentukan di tahap sebelumnya dalam bahasa C.}\\
