@@ -196,7 +196,7 @@ Layanan pertama dari dua layanan yang tersisa merupakan layanan \textit{search p
 	\item \verb|querystring|\\
 	Parameter ini akan berisi kata kunci yang diberikan oleh pengguna untuk mencari lokasi yang ingin ditemukan.
 	\item \verb|apikey|\\
-	Parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, seperti dijelaskan di subbab \ref{sec:kiri-api}, parameter ini akan bernilai \verb|68C|\apikeycensor \verb|97C|.\footnote{Kunci API ditutupi untuk alasan keamanan.}
+	Parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, seperti dijelaskan di subbab \ref{sec:kiri-api}, parameter ini akan bernilai \verb|68C...97C|.\footnote{Bagian tengah dari kunci API diganti dengan "..." untuk alasan keamanan.}
 \end{itemize}
 
 \subsection{\textit{Routing}}
@@ -218,7 +218,7 @@ Layanan kedua dari API ini merupakan fungsi utama dari KIRI sendiri, yaitu penca
 	\item \verb|presentation|\\
 	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}. Jika parameter ini ingin digunakan, maka isi dari parameter ini hanya ada satu kemungkinan, yaitu \verb|desktop|. Jika parameter ini tidak dipakai
 	\item \verb|apikey|\\
-	Sama seperti pada layanan \textit{search place}, parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, yaitu \verb|68C|\apikeycensor \verb|97C|.
+	Sama seperti pada layanan \textit{search place}, parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, yaitu \verb|68C...97C|.
 \end{itemize}
 \vspace{\baselineskip}\noindent
 Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place}, terutama karena fitur pencarian rute hanya menerima nilai \latlon dari lokasi-lokasi yang akan digunakan sebagai masukan, yang tidak hanya akan menyusahkan pengguna dalam memakai perkakas \cl ini, tetapi juga kedua nilai tersebut juga merupakan salah satu dari keluaran layanan pencarian lokasi. Jadi, dengan menggunakan kedua layanan tersebut secara berlangsungan, maka pengguna hanya perlu mencari lokasi tersebut dengan kata-kata kunci, dan pada akhirnya pengguna akan dapat menerima langkah-langkah yang harus ditempuh dalam rute sebagai keluaran akhir dari perkakas.
