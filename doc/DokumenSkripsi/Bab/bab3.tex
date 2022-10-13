@@ -307,7 +307,7 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 \subsection{Analisis \textit{Use Case}}
 \label{sec:analysis-thesisapp-usecases}
 
-Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian rute dengan angkot. Oleh karena itu, diagram \textit{use case} dari aplikasi ini akan mengandung dua \textit{use case}, yang dapat dilihat di gambar \ref{fig:thesisapp-uml}. Adapun penjelasan dari tiap-tiap \textit{use case} tersebut dapat dilihat di tabel \ref{tab:thesisapp-scenariocase-searchplace}, tabel \ref{tab:thesisapp-scenariocase-findroute}, dan tabel \ref{tab:thesisapp-scenariocase-findroutedirect}.
+Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata kunci, pencarian rute dengan koordinat \latlon lokasi, dan pencarian rute dengan kata kunci pencarian lokasi. Oleh karena itu, diagram \textit{use case} dari aplikasi ini akan mengandung dua \textit{use case}, yang dapat dilihat di gambar \ref{fig:thesisapp-uml}. Adapun penjelasan dari tiap-tiap \textit{use case} tersebut dapat dilihat di tabel \ref{tab:thesisapp-scenariocase-searchplace}, tabel \ref{tab:thesisapp-scenariocase-findroute}, dan tabel \ref{tab:thesisapp-scenariocase-findroutedirect}.
 
 \begin{figure}[ht]
     \centering
@@ -320,7 +320,7 @@ Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian r
     \centering
     \begin{tabular}{|p{3cm}|p{10cm}|}
     \hline
-        Nama & Mencari lokasi\\
+        Nama & Mencari lokasi menggunakan kata kunci pencarian\\
     \hline
     \hline
         Deskripsi & Fitur untuk mencari lokasi di area tertentu berdasarkan kata kunci\\
@@ -333,15 +333,20 @@ Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian r
     \hline
 		Skenario utama & 
 		\begin{enumerate}
-			\item Perkakas membaca masukan dari argumen dalam perintah \cl.
+			\item Perkakas membaca masukan berupa kata kunci pencarian lokasi dari argumen dalam perintah \cl.
 			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran dari API KIRI dan  meneruskannya kembali kepada pengguna.
+			\item Perkakas menerima keluaran berupa nama serta koordinat \latlon dari lokasi yang ditemukan.
+			\item Perkakas menampilkan kembali keluaran tersebut kepada pengguna.
         \end{enumerate}\\
     \hline
-		Skenario eksepsi & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter.\\
+		Skenario eksepsi & 
+		\begin{itemize}
+			\item Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian.
+			\item Lokasi tidak berhasil ditemukan.
+        \end{itemize}\\
 	\hline
     \end{tabular}
-    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot.}
+    \caption{\textit{Scenario case} untuk fitur pencarian lokasi dengan kata kunci.}
     \label{tab:thesisapp-scenariocase-searchplace}
 \end{table}
 
@@ -362,12 +367,17 @@ Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian r
     \hline
 		Skenario utama & 
 		\begin{enumerate}
-			\item Perkakas membaca masukan dari argumen dalam perintah \cl, berupa nilai \latlon dari lokasi.
+			\item Perkakas membaca masukan berupa nilai \latlon lokasi awal dan akhir dari argumen dalam perintah \cl.
 			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran dari API KIRI dan meneruskannya kembali kepada pengguna.
+			\item Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh.
+			\item Perkakas menampilkan kembali keluaran tersebut kepada pengguna.
         \end{enumerate}\\
 	\hline
-		Skenario eksepsi & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter.\\
+		Skenario eksepsi &
+		\begin{itemize}
+			\item Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian.
+			\item Rute tidak berhasil ditemukan/tidak tersedia.
+        \end{itemize}\\
     \hline
     \end{tabular}
     \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan nilai \latlon kedua lokasi sebagai masukan.}
@@ -378,7 +388,7 @@ Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian r
     \centering
     \begin{tabular}{|p{3cm}|p{10cm}|}
     \hline
-        Nama & Mencari rute dengan angkot menggunakan kata kunci lokasi\\
+        Nama & Mencari rute dengan angkot menggunakan kata kunci pencarian lokasi\\
     \hline
     \hline
         Deskripsi & Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.\\
@@ -391,26 +401,30 @@ Perkakas \cl ini akan memiliki dua fitur, yaitu pencarian lokasi dan pencarian r
     \hline
 		Skenario utama & 
 		\begin{enumerate}
-			\item Perkakas membaca masukan dari argumen dalam perintah \cl, berupa kata kunci pencarian lokasi.
-			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran dari API KIRI berupa hasil pencarian lokasi dan meneruskannya kembali ke pengguna untuk dikonfirmasi kebenarannya.
-			\item Jika lokasi-lokasi tersebut...
-			
-			\begin{itemize}
-				\item ...benar, maka perkakas akan meneruskan nilai \latlon yang didapatkan ke API KIRI lagi untuk diproses lebih lanjut.
-				\item ...salah, maka proses akan diulangi dari langkah 1.
-			\end{itemize}						
-			
+			\item Perkakas membaca masukan berupa kata kunci pencarian lokasi awal dan akhir dari argumen dalam perintah \cl.
+			\item Perkakas memproses kata kunci pencarian lokasi awal dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
+			\item Perkakas menerima keluaran berupa koordinat \latlon lokasi awal dari API KIRI.
+			\item Perkakas memproses kata kunci pencarian lokasi akhir dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
+			\item Perkakas menerima keluaran berupa koordinat \latlon lokasi akhir dari API KIRI.
+			\item Perkakas mengirimkan kedua nilai \latlon lokasi ke API KIRI sebagai masukan dari proses pencarian rute.
 			\item Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh.
+			\item Perkakas menampilkan kembali keluaran tersebut kepada pengguna.
         \end{enumerate}\\
 	\hline
 		Skenario eksepsi & 
 		\begin{itemize}
 			\item Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter.
-			\item Lokasi yang dicari dalam langkah 2 tidak ditemukan.
+			\item Lokasi yang dicari dalam langkah 2 atau langkah 4 tidak ditemukan.
+			\item Rute tidak berhasil ditemukan/tidak tersedia.
 		\end{itemize}\\
     \hline
     \end{tabular}
-    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan kata kunci kedua lokasi sebagai masukan.}
+    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan kata kunci pencarian lokasi awal dan akhir sebagai masukan.}
     \label{tab:thesisapp-scenariocase-findroutedirect}
 \end{table}
+
+\subsection{\textit{Activity Diagram}}
+\label{sec:analysis-diagrams-activity}
+
+\subsection{\textit{Sequence Diagram}}
+\label{sec:analysis-diagrams-sequence}
