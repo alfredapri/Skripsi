@@ -29,12 +29,12 @@ Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan p
 	\item OS: Windows 10 Home Single Language (64-bit)
 	\item Editor: Visual Studio Code
 	\item Bahasa pemrograman: C
-	\item \textit{Compiler}: gcc (versi 12.1.0)
+	\item \textit{Compiler}: MinGW (versi 12.1.0)
 	\item \textit{Library}:
 	
 	\begin{itemize}
-		\item libcurl:
-		\item cmake:
+		\item libcurl (versi xx)
+		\item cmake (versi 3.24.1)
 	\end{itemize}
 	
 \end{itemize}
@@ -48,6 +48,25 @@ Di subbab ini akan dijelaskan berbagai hal terkait dengan implementasi, seperti 
 
 \subsection{Instalasi}
 \label{sec:testing-implementation-installation}
+
+Untuk dapat menjalankan perkakas ini, pengguna harus menginstal sebuah \textit{compiler} bahasa C, serta dua buah \textit{library} yang telah didaftarkan di subbab \ref{sec:testing-specs-software}, yaitu \textbf{libcurl} dan \textbf{cmake}.
+
+Untuk pemakaian perkakasnya sendiri, berikut merupakan langkah-langkah yang perlu diambil untuk dapat menggunakan perkakas \cl ini.
+
+\begin{enumerate}
+	\item Buat folder "build".
+	\item Buka \textit{terminal/command prompt} di dalam folder tersebut.
+	\item Ketik dan jalankan perintah berikut:
+	\begin{verbatim}
+cmake -G "<compiler>" ../src
+	\end{verbatim}
+	Untuk apa yang harus menggantikan variabel \verb|<compiler>| dapat dilihat dengan perintah \verb|cmake --help|. Daftar \textit{compiler} yang didukung oleh cmake dapat dilihat di bagian \mbox{"Generators"}, dan pengguna tinggal menyesuaikan dengan \textit{compiler} yang telah diinstal sebelumnya.
+	\item Ketik dan jalankan perintah berikut:
+	\begin{verbatim}
+cmake --build .
+	\end{verbatim}
+	\item File \textit{executable} akan ada di dalam folder "build", dan siap dijalankan.
+\end{enumerate}
 
 \subsection{Implementasi kode}
 \label{sec:testing-implementation-code}
