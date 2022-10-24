@@ -1,3 +1,0 @@
-D:/Alfred/Studies/College/Skripsi/repo/source/build/CMakeFiles/KiriTool.dir
-D:/Alfred/Studies/College/Skripsi/repo/source/build/CMakeFiles/edit_cache.dir
-D:/Alfred/Studies/College/Skripsi/repo/source/build/CMakeFiles/rebuild_cache.dir
