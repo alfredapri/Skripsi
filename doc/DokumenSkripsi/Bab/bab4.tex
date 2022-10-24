@@ -120,8 +120,8 @@ Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
 Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
 
 \begin{enumerate}
-	\item Perkakas akan meminta masukan dari pengguna berupa kata kunci dari lokasi awal yang ingin dicari.
-	\item Masukan akan dicek oleh perkakas validitasnya. Dalam kasus ini, masukan hanya akan dianggap tidak valid apabila pengguna tidak memasukkan apapun sebagai masukan perkakas (masukan kosong).
+	\item Perkakas akan meminta masukan dari pengguna berupa kata kunci dari lokasi awal dan lokasi akhir yang ingin dicari.
+	\item Masukan untuk lokasi awal akan dicek oleh perkakas validitasnya. Dalam kasus ini, masukan hanya akan dianggap tidak valid apabila pengguna tidak memasukkan apapun sebagai masukan perkakas (masukan kosong).
 	\item Jika kata kunci masukan:
 	
 	\begin{itemize}
@@ -137,7 +137,7 @@ Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
 		\item ditemukan, maka nama dan koordinat \latlon lokasi awal akan disimpan sebagai variabel untuk dipakai di langkah selanjutnya.
 	\end{itemize}
 	
-	\item Langkah 1 sampai 5 akan diulang kembali untuk lokasi akhir.
+	\item Langkah 2 sampai 5 akan diulang kembali untuk lokasi akhir.
 	\item Jika kata kunci kedua lokasi berhasil diproses, perkakas akan mengirim kembali koordinat \latlon dari kedua lokasi tersebut ke API sebagai masukan untuk proses kedua, yaitu mencari rute angkot dengan koordinat \latlon lokasi.
 	\item Setelah selesai diproses, keluaran berupa rute dari API akan dikembalikan ke perkakas.
 	\item Perkakas akan mengecek keluaran yang diterimanya. Apabila rute:
