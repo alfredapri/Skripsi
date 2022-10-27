@@ -54,18 +54,19 @@ Untuk dapat menjalankan perkakas ini, pengguna harus menginstal sebuah \textit{c
 Untuk pemakaian perkakasnya sendiri, berikut merupakan langkah-langkah yang perlu diambil untuk dapat menggunakan perkakas \cl ini.
 
 \begin{enumerate}
-	\item Buat folder "build".
-	\item Buka \textit{terminal/command prompt} di dalam folder tersebut.
+	\item Buat \textit{folder} "build" di dalam \textit{folder} perkakas.
+	\item Buka \textit{terminal/command prompt} di dalam \textit{folder} tersebut.
 	\item Ketik dan jalankan perintah berikut:
 	\begin{verbatim}
-cmake -G "<compiler>" ../src
+cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/
+scripts/buildsystems/vcpkg.cmake" -G "<compiler>" ../
 	\end{verbatim}
 	Untuk apa yang harus menggantikan variabel \verb|<compiler>| dapat dilihat dengan perintah \verb|cmake --help|. Daftar \textit{compiler} yang didukung oleh cmake dapat dilihat di bagian \mbox{"Generators"}, dan pengguna tinggal menyesuaikan dengan \textit{compiler} yang telah diinstal sebelumnya.
 	\item Ketik dan jalankan perintah berikut:
 	\begin{verbatim}
 cmake --build .
 	\end{verbatim}
-	\item File \textit{executable} akan ada di dalam folder "build", dan siap dijalankan.
+	\item File \textit{executable} akan ada di dalam \textit{folder} "build", dan siap dijalankan.
 \end{enumerate}
 
 \subsection{Implementasi kode}
