@@ -3,10 +3,6 @@
 #include <getopt.h>
 #include <include/curl/curl.h>
 
-// Terminal text color
-#define RESET   "\033[0m"   /* Reset color */
-#define RED     "\033[31m"  /* Red for error messages */
-
 /* Flag set by ‘--verbose’. */
 static int verbose_flag;
 
@@ -48,7 +44,7 @@ int main (int argc, char **argv) {
                 break;
 
             case 'a':
-                fprintf (stderr, RED "option -asda\n" RESET );
+                fprintf (stderr, "option -asda\n");
                 break;
 
             case 'b':
@@ -124,7 +120,7 @@ int main (int argc, char **argv) {
 
                 switch (c) {
                     case 'a':
-                    fprintf (stderr, RED "option -asda\n" RESET );
+                    fprintf (stderr, "option -asda\n");
                     break;
                 }
                 break;
