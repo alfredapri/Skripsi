@@ -3,12 +3,17 @@
 #include <getopt.h>
 #include <include/curl/curl.h>
 
-/* Flag set by ‘--verbose’. */
-// static int verbose_flag;
+int mode; // 0 = undefined, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
+int region; // 0 = undefined, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+char query[100];
+char start[100];
+char finish[100];
+int regstart; // 0 = undefined, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+int regfinish; // 0 = undefined, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+int locale; // 0 = id, 1 = en, 2 = invalid
 
 int main (int argc, char **argv) {
-    int mode;
-    int variables;
+    int funct;
     extern int opterr;
     opterr = 0;
 
@@ -28,126 +33,168 @@ int main (int argc, char **argv) {
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        mode = getopt_long (argc, argv, "hm:", long_options, &option_index);
+        funct = getopt_long (argc, argv, ":hm:r:q:s:S:f:F:l:", long_options, &option_index);
 
         /* Detect the end of the options. */
-        if (mode == -1)
-        break;
+        if (funct == -1) {
+            break;
+        }
 
-        switch (mode) {
+        // Parse all inputs
+        switch (funct) {
             case 'h':
                 // Program help
-                puts ("help goes here\n");
+                mode = 1;
                 break;
 
             case 'm':
                 // Program mode
-                // printf ("You picked the mode: %s\n", optarg);
-                if (strcmp(optarg, "search") == 0) {
-                    printf ("You picked the mode: search");
-                    // variables = getopt_long (argc, argv, "hm:", long_options, &option_index);
+                if (strcmp(optarg, "searchplace") == 0) {
+                    mode = 2;
                 }
-                if (strcmp(optarg, "route") == 0) {
-                    printf ("You picked the mode: route");
-                    // variables = getopt_long (argc, argv, "hm:", long_options, &option_index);
+                else if (strcmp(optarg, "findroute") == 0) {
+                    mode = 3;
                 }
-                if (strcmp(optarg, "routedirect") == 0) {
-                    printf ("You picked the mode: routedirect");
-                    // variables = getopt_long (argc, argv, "hm:", long_options, &option_index);
+                else if (strcmp(optarg, "direct") == 0) {
+                    mode = 4;
                 }
-
+                // else {
+                //     puts("Anda telah memasukkan mode yang tidak valid.");
+                //     puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
+                //     abort ();
+                // }
+                break;
+            
+            case 'r':
+                // Location regions
+                if (strcmp(optarg, "cgk") == 0) {
+                    region = 1;
+                }
+                else if (strcmp(optarg, "bdo") == 0) {
+                    region = 2;
+                }
+                else if (strcmp(optarg, "mlg") == 0) {
+                    region = 3;
+                }
+                else if (strcmp(optarg, "sub") == 0) {
+                    region = 4;
+                }
+                // else {
+                    // puts("Anda telah memasukkan region yang tidak valid.");
+                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
+                    // abort ();
+                // }
                 break;
 
-            // case 'c':
-            //     CURL *curl;
-            //     CURLcode res;
-            //     char URL[1000] = "https://projectkiri.id/api";
-            //     char strext[1000] = "?version=2&mode=searchplace&region=bdo&querystring=unpar&apikey=68CD281C8A8EE97C";
+            case 'q':
+                // General location search keyword
+                if (optarg[0] == '\0') {
+                    // puts("Anda telah memasukkan kata kunci yang tidak valid.");
+                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
+                    // abort ();
+                }
+                else {
+                    strcpy(query, optarg);
+                }
+                break;
+            
+            case 's':
+                // General location search keyword
+                if (optarg[0] == '\0') {
+                    // puts("Anda telah memasukkan kata kunci yang tidak valid.");
+                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
+                    // abort ();
+                }
+                else {
+                    strcpy(start, optarg);
+                }
+                break;
+            
+            case 'f':
+                // General location search keyword
+                if (optarg[0] == '\0') {
+                    // puts("Anda telah memasukkan kata kunci yang tidak valid.");
+                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
+                    // abort ();
+                }
+                else {
+                    strcpy(finish, optarg);
+                }
+                break;
+            
+            case 'S':
+                // Starting location regions
+                if (strcmp(optarg, "cgk") == 0) {
+                    regstart = 1;
+                }
+                else if (strcmp(optarg, "bdo") == 0) {
+                    regstart = 2;
+                }
+                else if (strcmp(optarg, "mlg") == 0) {
+                    regstart = 3;
+                }
+                else if (strcmp(optarg, "sub") == 0) {
+                    regstart = 4;
+                }
+                break;
+            
+            case 'F':
+                // Finish location regions
+                if (strcmp(optarg, "cgk") == 0) {
+                    regfinish = 1;
+                }
+                else if (strcmp(optarg, "bdo") == 0) {
+                    regfinish = 2;
+                }
+                else if (strcmp(optarg, "mlg") == 0) {
+                    regfinish = 3;
+                }
+                else if (strcmp(optarg, "sub") == 0) {
+                    regfinish = 4;
+                }
+                break;
+            
+            case 'l':
+                // Locale
+                if (strcmp(optarg, "id") == 0) {
+                    locale = 0;
+                }
+                else if (strcmp(optarg, "en") == 0) {
+                    locale = 1;
+                }
+                else {
+                    locale = 2;
+                }
+                break;
 
-            //     strcat(URL, strext);
-            //     printf("%sa\n", URL);
-
-            //     curl_global_init(CURL_GLOBAL_DEFAULT);
-
-            //     curl = curl_easy_init();
-            //     if(curl) {
-            //         curl_easy_setopt(curl, CURLOPT_URL, URL);
-
-            //         #ifdef SKIP_PEER_VERIFICATION
-            //         /*
-            //         * If you want to connect to a site who is not using a certificate that is
-            //         * signed by one of the certs in the CA bundle you have, you can skip the
-            //         * verification of the server's certificate. This makes the connection
-            //         * A LOT LESS SECURE.
-            //         *
-            //         * If you have a CA cert for the server stored someplace else than in the
-            //         * default bundle, then the CURLOPT_CAPATH option might come handy for
-            //         * you.
-            //         */
-            //         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-            //         #endif
-
-            //         #ifdef SKIP_HOSTNAME_VERIFICATION
-            //         /*
-            //         * If the site you are connecting to uses a different host name that what
-            //         * they have mentioned in their server certificate's commonName (or
-            //         * subjectAltName) fields, libcurl will refuse to connect. You can skip
-            //         * this check, but this will make the connection less secure.
-            //         */
-            //         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-            //         #endif
-
-            //         /* Perform the request, res will get the return code */
-            //         res = curl_easy_perform(curl);
-            //         /* Check for errors */
-            //         if(res != CURLE_OK) {
-            //             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            //             printf("\nPogn't\n");
-            //         }
-
-            //         /* always cleanup */
-            //         curl_easy_cleanup(curl);
-            //     }
-
-            //     curl_global_cleanup();
-            //     break;
-
-            // case 'd':
-            //     printf ("option -d with value `%s'\n", optarg);
-            //     break;
-
-            // case 'f':
-            //     // printf ("option -f with value `%s'\n", optarg);
-                
-            //     c = getopt_long (argc, argv, "a", long_options, &option_index);
-
-            //     /* Detect the end of the options. */
-            //     if (c == -1)
-            //     break;
-
-            //     switch (c) {
-            //         case 'a':
-            //         fprintf (stderr, "option -asda\n");
-            //         break;
-            //     }
-            //     break;
+            case ':':
+                // Error: missing arguments
+                puts("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.");
+                puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
+                abort();
 
             case '?':
-                /* getopt_long already printed an error message. */
-                puts ("invalid option message goes here\n");
-                break;
+                // Error: unknown options
+                puts("Anda telah memasukkan opsi yang tidak valid.");
+                puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
+                abort();
 
             default:
-                abort ();
+                abort();
         }
     }
 
-    /* Print any remaining command line arguments (not options). */
+    // Error: extra arguments
     if (optind < argc) {
-        printf ("non-option ARGV-elements: ");
-        while (optind < argc)
-        printf ("%s ", argv[optind++]);
-        putchar ('\n');
+        printf("Anda telah memasukkan kelebihan argumen: ");
+        while (optind < argc) {
+            printf("%s ", argv[optind++]);
+        }
+        putchar('\n');
+        puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
+    }
+    else {
+        // process goes here
     }
 
     exit (0);
