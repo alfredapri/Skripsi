@@ -62,7 +62,7 @@ void execute_curl() {
     curl_global_cleanup();
 }
 
-void searchplace() {
+void build_url_searchplace() {
     strcat(URL, "&mode=searchplace");
 
     // Region check
@@ -70,7 +70,7 @@ void searchplace() {
         puts("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.");
         puts("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.");
         puts("Pilihan region: cgk, bdo, mlg, sub");
-        abort ();
+        abort();
     }
     else if (region == 1) {
         strcat(URL, "&region=cgk");
@@ -88,14 +88,14 @@ void searchplace() {
         puts("Anda telah memasukkan region yang tidak valid.");
         puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.");
         puts("Pilihan region: cgk, bdo, mlg, sub");
-        abort ();
+        abort();
     }
 
     // Query check
     if (strcmp(query, "\0") == 0) {
         puts("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.");
         puts("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.");
-        abort ();
+        abort();
     }
     else {
         strcat(URL, "&querystring=");
@@ -103,7 +103,8 @@ void searchplace() {
     }
 }
 
-void findroute() {
+void build_url_findroute() {
+    URL = "https://projectkiri.id/api?version=2";
     strcat(URL, "&mode=findroute");
 
     // Locale check
@@ -114,21 +115,75 @@ void findroute() {
         puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
         puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
         puts("Pilihan locale: id, en");
-        abort ();
+        abort();
     }
     else {
         strcat(URL, "&locale=id");
     }
 
-    // Query check
+    // Starting location check
     if (strcmp(start, "\0") == 0) {
-        puts("Anda telah memasukkan kata kunci.");
-        puts("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.");
-        abort ();
+        puts("Anda belum memasukkan sebuah koordinat untuk lokasi awal.");
+        puts("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.");
+        abort();
     }
     else {
-        strcat(URL, "&querystring=");
-        strcat(URL, query);
+        strcat(URL, "&start=");
+        strcat(URL, start);
+    }
+
+    // End location check
+    if (strcmp(finish, "\0") == 0) {
+        puts("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.");
+        puts("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.");
+        abort();
+    }
+    else {
+        strcat(URL, "&finish=");
+        strcat(URL, finish);
+    }
+
+    strcat(URL, "&presentation=desktop");
+}
+
+void build_url_directroute() {
+    // Step 1: search starting place
+    strcat(URL, "&mode=searchplace");
+
+    // Locale check
+    if (locale == 1) {
+        strcat(URL, "&locale=en");
+    }
+    else if (locale == 2) {
+        puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
+        puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
+        puts("Pilihan locale: id, en");
+        abort();
+    }
+    else {
+        strcat(URL, "&locale=id");
+    }
+
+    // Starting location check
+    if (strcmp(start, "\0") == 0) {
+        puts("Anda belum memasukkan sebuah koordinat untuk lokasi awal.");
+        puts("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.");
+        abort();
+    }
+    else {
+        strcat(URL, "&start=");
+        strcat(URL, start);
+    }
+
+    // End location check
+    if (strcmp(finish, "\0") == 0) {
+        puts("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.");
+        puts("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.");
+        abort();
+    }
+    else {
+        strcat(URL, "&finish=");
+        strcat(URL, finish);
     }
 
     strcat(URL, "&presentation=desktop");
@@ -214,7 +269,7 @@ int main(int argc, char **argv) {
                 if (optarg[0] == '\0') {
                     // puts("Anda telah memasukkan kata kunci yang tidak valid.");
                     // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
-                    // abort ();
+                    // abort();
                 }
                 else {
                     strcpy(start, optarg);
@@ -226,7 +281,7 @@ int main(int argc, char **argv) {
                 if (optarg[0] == '\0') {
                     // puts("Anda telah memasukkan kata kunci yang tidak valid.");
                     // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
-                    // abort ();
+                    // abort();
                 }
                 else {
                     strcpy(finish, optarg);
@@ -313,16 +368,16 @@ int main(int argc, char **argv) {
     else {
         if (mode == -1) {
             puts("Mohon masukkan mode pengunaan perkakas.");
-            abort ();
+            abort();
         }
         if (mode == 1) {
             // help goes here
         }
         else if (mode == 2) {
-            searchplace();
+            build_url_searchplace();
         }
         else if (mode == 3) {
-            // findroute();
+            build_url_findroute();
         }
         else if (mode == 4) {
             
@@ -330,7 +385,7 @@ int main(int argc, char **argv) {
         else {
             puts("Anda telah memasukkan mode yang tidak valid.");
             puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
-            abort ();
+            abort();
         }
 
         // Append API key
