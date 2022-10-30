@@ -3,16 +3,138 @@
 #include <getopt.h>
 #include <include/curl/curl.h>
 
-int mode; // 0 = undefined, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
-int region; // 0 = undefined, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+char URL[1000] = "https://projectkiri.id/api?version=2";
+int mode = -1; // -1 = undefined, 0 = unknown, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
+int region = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
 char query[100];
 char start[100];
 char finish[100];
-int regstart; // 0 = undefined, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-int regfinish; // 0 = undefined, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-int locale; // 0 = id, 1 = en, 2 = invalid
+int regstart = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+int regfinish = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+int locale; // 0 = id, 1 = en, 2 = unknown
 
-int main (int argc, char **argv) {
+void execute_curl() {
+    // Send inputs to API
+    CURL *curl;
+    CURLcode res;
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    curl = curl_easy_init();
+
+    if(curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, URL);
+
+        #ifdef SKIP_PEER_VERIFICATION
+        /*
+        * If you want to connect to a site who is not using a certificate that is
+        * signed by one of the certs in the CA bundle you have, you can skip the
+        * verification of the server's certificate. This makes the connection
+        * A LOT LESS SECURE.
+        *
+        * If you have a CA cert for the server stored someplace else than in the
+        * default bundle, then the CURLOPT_CAPATH option might come handy for
+        * you.
+        */
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+        #endif
+
+        #ifdef SKIP_HOSTNAME_VERIFICATION
+        /*
+        * If the site you are connecting to uses a different host name that what
+        * they have mentioned in their server certificate's commonName (or
+        * subjectAltName) fields, libcurl will refuse to connect. You can skip
+        * this check, but this will make the connection less secure.
+        */
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+        #endif
+
+        /* Perform the request, res will get the return code */
+        res = curl_easy_perform(curl);
+        /* Check for errors */
+        if(res != CURLE_OK) {
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        }
+
+        /* always cleanup */
+        curl_easy_cleanup(curl);
+    }
+
+    curl_global_cleanup();
+}
+
+void searchplace() {
+    strcat(URL, "&mode=searchplace");
+
+    // Region check
+    if (region == -1) {
+        puts("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.");
+        puts("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.");
+        puts("Pilihan region: cgk, bdo, mlg, sub");
+        abort ();
+    }
+    else if (region == 1) {
+        strcat(URL, "&region=cgk");
+    }
+    else if (region == 2) {
+        strcat(URL, "&region=bdo");
+    }
+    else if (region == 3) {
+        strcat(URL, "&region=mlg");
+    }
+    else if (region == 4) {
+        strcat(URL, "&region=sub");
+    }
+    else {
+        puts("Anda telah memasukkan region yang tidak valid.");
+        puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.");
+        puts("Pilihan region: cgk, bdo, mlg, sub");
+        abort ();
+    }
+
+    // Query check
+    if (strcmp(query, "\0") == 0) {
+        puts("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.");
+        puts("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.");
+        abort ();
+    }
+    else {
+        strcat(URL, "&querystring=");
+        strcat(URL, query);
+    }
+}
+
+void findroute() {
+    strcat(URL, "&mode=findroute");
+
+    // Locale check
+    if (locale == 1) {
+        strcat(URL, "&locale=en");
+    }
+    else if (locale == 2) {
+        puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
+        puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
+        puts("Pilihan locale: id, en");
+        abort ();
+    }
+    else {
+        strcat(URL, "&locale=id");
+    }
+
+    // Query check
+    if (strcmp(start, "\0") == 0) {
+        puts("Anda telah memasukkan kata kunci.");
+        puts("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.");
+        abort ();
+    }
+    else {
+        strcat(URL, "&querystring=");
+        strcat(URL, query);
+    }
+
+    strcat(URL, "&presentation=desktop");
+}
+
+int main(int argc, char **argv) {
     int funct;
     extern int opterr;
     opterr = 0;
@@ -58,11 +180,9 @@ int main (int argc, char **argv) {
                 else if (strcmp(optarg, "direct") == 0) {
                     mode = 4;
                 }
-                // else {
-                //     puts("Anda telah memasukkan mode yang tidak valid.");
-                //     puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
-                //     abort ();
-                // }
+                else {
+                    mode = 0;
+                }
                 break;
             
             case 'r':
@@ -79,23 +199,14 @@ int main (int argc, char **argv) {
                 else if (strcmp(optarg, "sub") == 0) {
                     region = 4;
                 }
-                // else {
-                    // puts("Anda telah memasukkan region yang tidak valid.");
-                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
-                    // abort ();
-                // }
+                else {
+                    region = 0;
+                }
                 break;
 
             case 'q':
                 // General location search keyword
-                if (optarg[0] == '\0') {
-                    // puts("Anda telah memasukkan kata kunci yang tidak valid.");
-                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
-                    // abort ();
-                }
-                else {
-                    strcpy(query, optarg);
-                }
+                strcpy(query, optarg);
                 break;
             
             case 's':
@@ -136,6 +247,9 @@ int main (int argc, char **argv) {
                 else if (strcmp(optarg, "sub") == 0) {
                     regstart = 4;
                 }
+                else {
+                    regstart = 0;
+                }
                 break;
             
             case 'F':
@@ -151,6 +265,9 @@ int main (int argc, char **argv) {
                 }
                 else if (strcmp(optarg, "sub") == 0) {
                     regfinish = 4;
+                }
+                else {
+                    regfinish = 0;
                 }
                 break;
             
@@ -194,7 +311,34 @@ int main (int argc, char **argv) {
         puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
     }
     else {
-        // process goes here
+        if (mode == -1) {
+            puts("Mohon masukkan mode pengunaan perkakas.");
+            abort ();
+        }
+        if (mode == 1) {
+            // help goes here
+        }
+        else if (mode == 2) {
+            searchplace();
+        }
+        else if (mode == 3) {
+            // findroute();
+        }
+        else if (mode == 4) {
+            
+        }
+        else {
+            puts("Anda telah memasukkan mode yang tidak valid.");
+            puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
+            abort ();
+        }
+
+        // Append API key
+        strcat(URL, "&apikey=68CD281C8A8EE97C");
+
+        printf("%s", URL);
+
+        // execute_curl();
     }
 
     exit (0);
