@@ -100,6 +100,7 @@ void build_url_searchplace(int region, char* query) {
         strcat(URL, "&querystring=");
         strcat(URL, query);
     }
+    strcat(URL, "&apikey=68CD281C8A8EE97C");
 }
 
 void build_url_findroute(int locale, char* start, char* finish) {
@@ -146,6 +147,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
     }
 
     strcat(URL, "&presentation=desktop");
+    strcat(URL, "&apikey=68CD281C8A8EE97C");
 }
 
 void build_url_directroute() {
@@ -355,14 +357,23 @@ int main(int argc, char **argv) {
             
             case 2:
                 build_url_searchplace(region, query);
+                // execute_curl();
                 break;
             
             case 3:
                 build_url_findroute(locale, start, finish);
+                // execute_curl();
                 break;
             
             case 4:
-                // build_url_directroute();
+                build_url_searchplace(regstart, start);
+                // strcpy(start, execute_curl_with_return());
+                reset_url();
+                build_url_searchplace(regstart, finish);
+                // strcpy(finish, execute_curl_with_return());
+                reset_url();
+                build_url_findroute(locale, start, finish);
+                // execute_curl();
                 break;
 
             default:
@@ -372,12 +383,7 @@ int main(int argc, char **argv) {
                 break;
         }
 
-        // Append API key
-        strcat(URL, "&apikey=68CD281C8A8EE97C");
-
         printf("%s", URL);
-
-        // execute_curl();
     }
 
     exit (0);
