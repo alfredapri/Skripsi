@@ -4,14 +4,6 @@
 #include <include/curl/curl.h>
 
 char URL[1000] = "https://projectkiri.id/api?version=2";
-int mode = -1; // -1 = undefined, 0 = unknown, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
-int region = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-char query[100];
-char start[100];
-char finish[100];
-int regstart = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-int regfinish = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-int locale; // 0 = id, 1 = en, 2 = unknown
 
 void execute_curl() {
     // Send inputs to API
@@ -62,7 +54,7 @@ void execute_curl() {
     curl_global_cleanup();
 }
 
-void build_url_searchplace() {
+void build_url_searchplace(int region, char* query) {
     strcat(URL, "&mode=searchplace");
 
     // Region check
@@ -110,7 +102,7 @@ void build_url_searchplace() {
     }
 }
 
-void build_url_findroute() {
+void build_url_findroute(int locale, char* start, char* finish) {
     strcat(URL, "&mode=findroute");
 
     // Locale check
@@ -157,13 +149,27 @@ void build_url_findroute() {
 }
 
 void build_url_directroute() {
-    strcpy(URL, "test copy");
+    
+}
+
+void reset_url() {
+    // Reset URL for multiple API processes at once
+    strcpy(URL, "https://projectkiri.id/api?version=2");
 }
 
 int main(int argc, char **argv) {
     int funct;
     extern int opterr;
     opterr = 0;
+
+    int mode = -1; // -1 = undefined, 0 = unknown, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
+    int region = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+    char query[100];
+    char start[100];
+    char finish[100];
+    int regstart = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+    int regfinish = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
+    int locale = 0; // 0 = id, 1 = en, 2 = unknown
 
     while (1) {
         static struct option long_options[] = {
@@ -337,34 +343,33 @@ int main(int argc, char **argv) {
         puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
     }
     else {
-        switch (mode)
-        {
-        case -1:
-            puts("Mohon masukkan mode pengunaan perkakas.");
-            abort();
-            break;
+        switch (mode) {
+            case -1:
+                puts("Mohon masukkan mode pengunaan perkakas.");
+                abort();
+                break;
 
-        case 1:
-            // help goes here
-            break;
-        
-        case 2:
-            build_url_searchplace();
-            break;
-        
-        case 3:
-            build_url_findroute();
-            break;
-        
-        case 4:
-            build_url_directroute();
-            break;
+            case 1:
+                // help goes here
+                break;
+            
+            case 2:
+                build_url_searchplace(region, query);
+                break;
+            
+            case 3:
+                build_url_findroute(locale, start, finish);
+                break;
+            
+            case 4:
+                // build_url_directroute();
+                break;
 
-        default:
-            puts("Anda telah memasukkan mode yang tidak valid.");
-            puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
-            abort();
-            break;
+            default:
+                puts("Anda telah memasukkan mode yang tidak valid.");
+                puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
+                abort();
+                break;
         }
 
         // Append API key
