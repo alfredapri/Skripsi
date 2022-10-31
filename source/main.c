@@ -66,29 +66,36 @@ void build_url_searchplace() {
     strcat(URL, "&mode=searchplace");
 
     // Region check
-    if (region == -1) {
-        puts("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.");
-        puts("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.");
-        puts("Pilihan region: cgk, bdo, mlg, sub");
-        abort();
-    }
-    else if (region == 1) {
-        strcat(URL, "&region=cgk");
-    }
-    else if (region == 2) {
-        strcat(URL, "&region=bdo");
-    }
-    else if (region == 3) {
-        strcat(URL, "&region=mlg");
-    }
-    else if (region == 4) {
-        strcat(URL, "&region=sub");
-    }
-    else {
-        puts("Anda telah memasukkan region yang tidak valid.");
-        puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.");
-        puts("Pilihan region: cgk, bdo, mlg, sub");
-        abort();
+    switch (region) {
+        case -1:
+            puts("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.");
+            puts("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.");
+            puts("Pilihan region: cgk, bdo, mlg, sub");
+            abort();
+            break;
+        
+        case 1:
+            strcat(URL, "&region=cgk");
+            break;
+        
+        case 2:
+            strcat(URL, "&region=bdo");
+            break;
+        
+        case 3:
+            strcat(URL, "&region=mlg");
+            break;
+        
+        case 4:
+            strcat(URL, "&region=sub");
+            break;
+
+        default:
+            puts("Anda telah memasukkan region yang tidak valid.");
+            puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.");
+            puts("Pilihan region: cgk, bdo, mlg, sub");
+            abort();
+            break;
     }
 
     // Query check
@@ -108,17 +115,21 @@ void build_url_findroute() {
     strcat(URL, "&mode=findroute");
 
     // Locale check
-    if (locale == 1) {
-        strcat(URL, "&locale=en");
-    }
-    else if (locale == 2) {
-        puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
-        puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
-        puts("Pilihan locale: id, en");
-        abort();
-    }
-    else {
-        strcat(URL, "&locale=id");
+    switch (locale) {
+        case 1:
+            strcat(URL, "&locale=en");
+            break;
+        
+        case 2:
+            puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
+            puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
+            puts("Pilihan locale: id, en");
+            abort();
+            break;
+        
+        default:
+            strcat(URL, "&locale=id");
+            break;
     }
 
     // Starting location check
@@ -147,46 +158,7 @@ void build_url_findroute() {
 }
 
 void build_url_directroute() {
-    // Step 1: search starting place
-    strcat(URL, "&mode=searchplace");
-
-    // Locale check
-    if (locale == 1) {
-        strcat(URL, "&locale=en");
-    }
-    else if (locale == 2) {
-        puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
-        puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
-        puts("Pilihan locale: id, en");
-        abort();
-    }
-    else {
-        strcat(URL, "&locale=id");
-    }
-
-    // Starting location check
-    if (strcmp(start, "\0") == 0) {
-        puts("Anda belum memasukkan sebuah koordinat untuk lokasi awal.");
-        puts("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.");
-        abort();
-    }
-    else {
-        strcat(URL, "&start=");
-        strcat(URL, start);
-    }
-
-    // End location check
-    if (strcmp(finish, "\0") == 0) {
-        puts("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.");
-        puts("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.");
-        abort();
-    }
-    else {
-        strcat(URL, "&finish=");
-        strcat(URL, finish);
-    }
-
-    strcat(URL, "&presentation=desktop");
+    
 }
 
 int main(int argc, char **argv) {
