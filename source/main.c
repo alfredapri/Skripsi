@@ -111,7 +111,6 @@ void build_url_searchplace() {
 }
 
 void build_url_findroute() {
-    URL = "https://projectkiri.id/api?version=2";
     strcat(URL, "&mode=findroute");
 
     // Locale check
@@ -158,7 +157,7 @@ void build_url_findroute() {
 }
 
 void build_url_directroute() {
-    
+    strcpy(URL, "test copy");
 }
 
 int main(int argc, char **argv) {
@@ -338,26 +337,34 @@ int main(int argc, char **argv) {
         puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
     }
     else {
-        if (mode == -1) {
+        switch (mode)
+        {
+        case -1:
             puts("Mohon masukkan mode pengunaan perkakas.");
             abort();
-        }
-        if (mode == 1) {
+            break;
+
+        case 1:
             // help goes here
-        }
-        else if (mode == 2) {
+            break;
+        
+        case 2:
             build_url_searchplace();
-        }
-        else if (mode == 3) {
+            break;
+        
+        case 3:
             build_url_findroute();
-        }
-        else if (mode == 4) {
-            
-        }
-        else {
+            break;
+        
+        case 4:
+            build_url_directroute();
+            break;
+
+        default:
             puts("Anda telah memasukkan mode yang tidak valid.");
             puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
             abort();
+            break;
         }
 
         // Append API key
