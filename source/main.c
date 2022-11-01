@@ -5,6 +5,15 @@
 
 char URL[1000] = "https://projectkiri.id/api?version=2";
 
+size_t test(void *data, size_t size, size_t nmemb, void *userdata) {
+    // Function must return realsize
+    // This variable served no purpose nor is it needed to check for memory usage
+    // since the response size will always be smaller than the maximum allowed memory buffer
+    size_t realsize = size * nmemb;
+    // strcpy(URL, data);
+    return realsize;
+}
+
 void execute_curl() {
     // Send inputs to API
     CURL *curl;
@@ -15,6 +24,7 @@ void execute_curl() {
 
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_URL, URL);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, test);
 
         #ifdef SKIP_PEER_VERIFICATION
         /*
@@ -357,7 +367,7 @@ int main(int argc, char **argv) {
             
             case 2:
                 build_url_searchplace(region, query);
-                // execute_curl();
+                execute_curl();
                 break;
             
             case 3:
