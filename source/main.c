@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+
+#include <cJSON/cJSON.h>
 #include <include/curl/curl.h>
 
 char URL[1000] = "https://projectkiri.id/api?version=2";
+cJSON *response;
 
 size_t test(void *data, size_t size, size_t nmemb, void *userdata) {
     // Function must return realsize
@@ -11,6 +14,7 @@ size_t test(void *data, size_t size, size_t nmemb, void *userdata) {
     // since the response size will always be smaller than the maximum allowed memory buffer
     size_t realsize = size * nmemb;
     // strcpy(URL, data);
+    response = cJSON_Parse(data);
     return realsize;
 }
 
