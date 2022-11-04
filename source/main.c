@@ -5,8 +5,8 @@
 #include <cJSON/cJSON.h>
 #include <include/curl/curl.h>
 
-char URL[1000] = "https://projectkiri.id/api?version=2";
 cJSON *responseJSON;
+char URL[1000] = "https://projectkiri.id/api?version=2";
 
 size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) {
     // Function must return realsize
@@ -18,15 +18,26 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
     cJSON *resultitem;
     cJSON *resultitemname;
     cJSON *resultitemlocation;
+    int index = 1;
 
     responseJSON = cJSON_Parse(data);
     result = cJSON_GetObjectItem(responseJSON, "searchresult");
-    cJSON_ArrayForEach(resultitem, result) {
-        resultitemname = cJSON_GetObjectItem(resultitem, "placename");
-        resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
-        
-        printf("%s\n", resultitemname->valuestring);
-        printf("%s\n", resultitemlocation->valuestring);
+    if (cJSON_GetArraySize(result) == 0) {
+        puts("Lokasi tidak berhasil ditemukan.");
+        puts("Silahkan cek ulang apakah kata kunci pencarian sudah benar.");
+        puts("===============");
+    }
+    else {
+        cJSON_ArrayForEach(resultitem, result) {
+            printf("Lokasi %d:\n", index);
+            resultitemname = cJSON_GetObjectItem(resultitem, "placename");
+            resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
+
+            printf("Nama lokasi: %s\n", resultitemname -> valuestring);
+            printf("Koordinat: %s\n", resultitemlocation -> valuestring);
+            puts("===============");
+            index++;
+        }
     }
 
     return realsize;
@@ -393,7 +404,7 @@ int main(int argc, char **argv) {
         puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
     }
     else {
-        printf("%s", URL);
+        printf("%s\n", URL);
 
         // Which step the curl process is needed in.
         // Value is set to 0 for searchplace and findroute, since they are single step modes.
