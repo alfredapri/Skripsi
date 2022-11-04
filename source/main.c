@@ -14,6 +14,7 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
     // since the response size will always be smaller than the maximum allowed memory buffer
     size_t realsize = size * nmemb;
 
+    cJSON *status;
     cJSON *result;
     cJSON *resultitem;
     cJSON *resultitemname;
@@ -21,22 +22,32 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
     int index = 1;
 
     responseJSON = cJSON_Parse(data);
-    result = cJSON_GetObjectItem(responseJSON, "searchresult");
-    if (cJSON_GetArraySize(result) == 0) {
-        puts("Lokasi tidak berhasil ditemukan.");
-        puts("Silahkan cek ulang apakah kata kunci pencarian sudah benar.");
-        puts("===============");
+    status = cJSON_GetObjectItem(responseJSON, "status");
+    
+    // Check whether API returned an error
+    if (strcmp(status->valuestring, "ok") != 0) {
+        result = cJSON_GetObjectItem(responseJSON, "message");
+        printf("%s\n", result->valuestring);
     }
     else {
-        cJSON_ArrayForEach(resultitem, result) {
-            printf("Lokasi %d:\n", index);
-            resultitemname = cJSON_GetObjectItem(resultitem, "placename");
-            resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
-
-            printf("Nama lokasi: %s\n", resultitemname -> valuestring);
-            printf("Koordinat: %s\n", resultitemlocation -> valuestring);
+        result = cJSON_GetObjectItem(responseJSON, "searchresult");
+        // Check whether API managed to find a single result
+        if (cJSON_GetArraySize(result) == 0) {
+            puts("Lokasi tidak berhasil ditemukan.");
+            puts("Silahkan cek ulang apakah kata kunci pencarian sudah benar.");
             puts("===============");
-            index++;
+        }
+        else {
+            cJSON_ArrayForEach(resultitem, result) {
+                printf("Lokasi %d:\n", index);
+                resultitemname = cJSON_GetObjectItem(resultitem, "placename");
+                resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
+
+                printf("Nama lokasi: %s\n", resultitemname->valuestring);
+                printf("Koordinat: %s\n", resultitemlocation->valuestring);
+                puts("===============");
+                index++;
+            }
         }
     }
 
