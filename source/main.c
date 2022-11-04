@@ -6,29 +6,63 @@
 #include <include/curl/curl.h>
 
 char URL[1000] = "https://projectkiri.id/api?version=2";
-cJSON *response;
+cJSON *responseJSON;
 
-size_t test(void *data, size_t size, size_t nmemb, void *userdata) {
+size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) {
     // Function must return realsize
     // This variable served no purpose nor is it needed to check for memory usage
     // since the response size will always be smaller than the maximum allowed memory buffer
     size_t realsize = size * nmemb;
-    // strcpy(URL, data);
-    response = cJSON_Parse(data);
+
+    cJSON *result;
+    cJSON *resultitem;
+    cJSON *resultitemname;
+    cJSON *resultitemlocation;
+
+    responseJSON = cJSON_Parse(data);
+    result = cJSON_GetObjectItem(responseJSON, "searchresult");
+    cJSON_ArrayForEach(resultitem, result) {
+        resultitemname = cJSON_GetObjectItem(resultitem, "placename");
+        resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
+        
+        printf("%s\n", resultitemname->valuestring);
+        printf("%s\n", resultitemlocation->valuestring);
+    }
+
     return realsize;
 }
 
-void execute_curl() {
+void execute_curl(int mode, int step) {
     // Send inputs to API
     CURL *curl;
-    CURLcode res;
+    CURLcode response;
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
 
-    if(curl) {
+    if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, URL);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, test);
+        switch (mode) {
+            case 2: // searchplace
+                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_searchplace);
+                response = curl_easy_perform(curl);
+                /* Check for errors */
+                if (response != CURLE_OK) {
+                    fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+                }
+                break;
+            
+            case 3: // findroute
+                /* code */
+                break;
+
+            case 4: // directroute
+                /* code */
+                break;
+
+            default:
+                break;
+        }
 
         #ifdef SKIP_PEER_VERIFICATION
         /*
@@ -55,11 +89,11 @@ void execute_curl() {
         #endif
 
         /* Perform the request, res will get the return code */
-        res = curl_easy_perform(curl);
-        /* Check for errors */
-        if(res != CURLE_OK) {
-            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-        }
+        // response = curl_easy_perform(curl);
+        // /* Check for errors */
+        // if (response != CURLE_OK) {
+        //     fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+        // }
 
         /* always cleanup */
         curl_easy_cleanup(curl);
@@ -359,6 +393,11 @@ int main(int argc, char **argv) {
         puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
     }
     else {
+        printf("%s", URL);
+
+        // Which step the curl process is needed in.
+        // Value is set to 0 for searchplace and findroute, since they are single step modes.
+        int step; // 0 = search start, 1 = search finish, 2 = find route
         switch (mode) {
             case -1:
                 puts("Mohon masukkan mode pengunaan perkakas.");
@@ -371,23 +410,23 @@ int main(int argc, char **argv) {
             
             case 2:
                 build_url_searchplace(region, query);
-                execute_curl();
+                execute_curl(mode, 0);
                 break;
             
             case 3:
                 build_url_findroute(locale, start, finish);
-                // execute_curl();
+                // execute_curl(mode, 0);
                 break;
             
             case 4:
                 build_url_searchplace(regstart, start);
-                // strcpy(start, execute_curl_with_return());
+                // execute_curl(mode, 0);
                 reset_url();
                 build_url_searchplace(regstart, finish);
-                // strcpy(finish, execute_curl_with_return());
+                // execute_curl(mode, 1);
                 reset_url();
                 build_url_findroute(locale, start, finish);
-                // execute_curl();
+                // execute_curl(mode, 2);
                 break;
 
             default:
@@ -396,8 +435,6 @@ int main(int argc, char **argv) {
                 abort();
                 break;
         }
-
-        printf("%s", URL);
     }
 
     exit (0);
