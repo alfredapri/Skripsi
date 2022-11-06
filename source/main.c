@@ -233,6 +233,66 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
     return realsize;
 }
 
+void print_help() {
+    puts("KIRI Command Line Tool, version x.x.x");
+    puts("Use the KIRI tool through the command line.");
+    putchar('\n');
+    puts("USAGE:");
+    puts("    ./kiritool [COMMAND] [OPTIONS]");
+    putchar('\n');
+    puts("COMMAND:");
+    puts("    -h, --help          Display usage tutorial.");
+    puts("    -m, --mode <MODE>   Set the tool operation mode.\n");
+    puts("    You can only choose one mode per operation.");
+    putchar('\n');
+    puts("OPTIONS:");
+    puts("    -F, --regfinish <REGION>    Set region to search for finish location in.");
+    puts("    -f, --finish <FINISH>       Set finish location.");
+    puts("    -l, --locale <LANG>         Set tool output language.");
+    puts("    -S, --regstart <REGION>     Set region to search for starting location in.");
+    puts("    -s, --start <START>         Set starting location.");
+    puts("    -q, --query <KEYWORD>       Set keyword for searching.");
+    puts("    -r, --region <REGION>       Set region to search for location in.");
+    putchar('\n');
+    puts("ARGUMENTS:");
+    puts("    <FINISH>");
+    puts("        Route finish location.");
+    puts("        For 'findroute' mode, input the location's latitude and longitude coordinates.");
+    puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
+    puts("    <KEYWORD>");
+    puts("        Keyword used by the tool to search for the desired location.");
+    puts("    <LANG>");
+    puts("        Tool output language.");
+    puts("        Available languages: id, en");
+    puts("          - id (Indonesian - Default)");
+    puts("          - en (English)");
+    puts("    <MODE>");
+    puts("        Tool operation mode. Note that not all arguments are needed for all modes.");
+    puts("        Should the user input extra arguments, they will simply not be used.");
+    puts("        Available modes:");
+    puts("          - searchplace");   
+    puts("                Required arguments: --query, --region");
+    puts("                Optional arguments: --locale");
+    puts("          - findroute");   
+    puts("                Required arguments: --start, --finish");
+    puts("                Optional arguments: --locale");
+    puts("          - findroute");   
+    puts("                Required arguments: --regstart, --start, --regfinish, --finish");
+    puts("                Optional arguments: --locale");
+    puts("    <REGION>");
+    puts("        Region to search for locations in.");
+    puts("        Available regions:");
+    puts("          - cgk (Jakarta)");
+    puts("          - bdo (Bandung)");
+    puts("          - mlg (Malang)");
+    puts("          - sub (Surabaya)");
+    puts("    <START>");
+    puts("        Route starting location.");
+    puts("        For 'findroute' mode, input the location's latitude and longitude coordinates.");
+    puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
+    putchar('\n');
+}
+
 void execute_curl() {
     CURL *curl;
     CURLcode response;
@@ -576,7 +636,7 @@ int main(int argc, char **argv) {
                 break;
 
             case 1:
-                // help goes here
+                print_help();
                 break;
             
             case 2:
