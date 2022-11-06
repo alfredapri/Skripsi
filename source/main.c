@@ -12,6 +12,7 @@ int region = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = 
 char query[100];
 char start[100];
 char finish[100];
+char escape[100]; // Temporary variable for escaping string inputs
 int regstart = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
 int regfinish = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
 int locale = 0; // 0 = id, 1 = en, 2 = unknown
@@ -260,7 +261,8 @@ void print_help() {
     puts("        For 'findroute' mode, input the location's latitude and longitude coordinates.");
     puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
     puts("    <KEYWORD>");
-    puts("        Keyword used by the tool to search for the desired location.");
+    puts("        Keywords used by the tool to search for the desired location.");
+    puts("        For multiple words queries, encase the keywords with apostrophes (\" \").");
     puts("    <LANG>");
     puts("        Tool output language.");
     puts("        Available languages: id, en");
@@ -452,6 +454,29 @@ void reset_url() {
     strcpy(URL, "https://projectkiri.id/api?version=2");
 }
 
+void replace_space(char* string) {
+    // Escapes all whitespace characters in string
+    int i;
+    int j = 0;
+
+    for (i = 0; i < 100; i++) {
+        // printf("%c ", string[i]);
+        if (string[i] == '\0') {
+            break;
+        }
+
+        if (string[i] == ' ') {
+            escape[j] = '%';
+            escape[j + 1] = '2';
+            escape[j + 2] = '0';
+            j = j + 2;
+        }
+        else escape[j] = string[i];
+
+        j++;
+    }
+}
+
 int main(int argc, char **argv) {
     int funct;
     extern int opterr;
@@ -524,7 +549,8 @@ int main(int argc, char **argv) {
 
             case 'q':
                 // General location search keyword
-                strcpy(query, optarg);
+                replace_space(optarg);
+                strcpy(query, escape);
                 break;
             
             case 's':
@@ -535,7 +561,8 @@ int main(int argc, char **argv) {
                     // abort();
                 }
                 else {
-                    strcpy(start, optarg);
+                    replace_space(optarg);
+                    strcpy(start, escape);
                 }
                 break;
             
@@ -547,7 +574,8 @@ int main(int argc, char **argv) {
                     // abort();
                 }
                 else {
-                    strcpy(finish, optarg);
+                    replace_space(optarg);
+                    strcpy(finish, escape);
                 }
                 break;
             
@@ -641,13 +669,13 @@ int main(int argc, char **argv) {
             
             case 2:
                 build_url_searchplace(region, query);
-                printf("%s\n", URL);
+                // printf("%s\n", URL);
                 execute_curl();
                 break;
             
             case 3:
                 build_url_findroute(locale, start, finish);
-                printf("%s\n", URL);
+                // printf("%s\n", URL);
                 execute_curl();
                 break;
             
