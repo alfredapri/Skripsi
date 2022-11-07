@@ -17,7 +17,7 @@ Perkakas \cl ini merupakan ekstensi dari sebuah aplikasi lain yang memiliki fung
 Perkakas ini dapat digunakan melalui \textit{command prompt} dengan cara mengetikkan perintah sebagai berikut.
 
 \begin{verbatim}
-                     chrome-web-store-item-property <identifier>
+                    chrome-web-store-item-property <identifier>
 \end{verbatim}
 
 Dengan \verb|identifier| berupa ID dari ekstensi yang diinginkan. Jadi, misalkan pengguna memasukkan \verb|gighmmpiobklfepjocnamgkkbiglidom| sebagai ID yang akan digunakan sebagai \textit{identifier}, maka perkakas ini akan mengembalikan metadata dari ekstensi ``AdBlock'' sebagai keluarannya. Contoh penggunaan perkakas ini dapat dilihat di gambar \ref{fig:similarapps-chromewebstorecli}.
@@ -110,7 +110,7 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
 Fungsi yang pertama dapat dilakukan memanggil perintah dengan format sebagai berikut.
 
 \begin{verbatim}
-                              uber time <alamat>
+                                uber time <alamat>
 \end{verbatim}
 
 \verb|uber| merupakan perintah dasar dari perkakas ini. \verb|time| merupakan parameter yang menandakan bahwa pengguna ingin menggunakan servis prediksi waktu dari perkakas ini. Selain itu, pengguna harus memasukkan alamat yang ingin dituju sebagai parameter akhir dari perintah yang akan digunakan sebagai masukan. Jika sintaksnya sudah benar, perintah tersebut akan bisa diproses oleh perkakas dengan cara mengirimkan pesan hasil konversi perintah tersebut ke API Uber. Setelah pemrosesan pesan tersebut berhasil, perkakas ini akan menampilkan sebuah keluaran dengan format yang dapat dilihat di gambar \ref{fig:similarapps-ubercli-time}. Perlu diperhatikan juga bahwa keluaran yang dihasilkan oleh perkakas ini akan meliputi seluruh jenis servis yang disediakan oleh Uber.
@@ -158,7 +158,7 @@ Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket
 \googlemapscli merupakan sebuah perkakas \cl yang memiliki kegunaan yang mirip dengan KIRI, hanya saja perkakas ini tidak secara spesifik mengharuskan penggunaan angkot, atau transportasi umum lainnya. Singkatnya, perkakas ini memiliki fungsi seperti sebuah GPS. Untuk menggunakannya, pengguna harus memasukkan perintah dengan bentuk sebagai berikut.
 
 \begin{verbatim}
-                      direction <lokasi awal> <lokasi akhir>
+                     direction <lokasi awal> <lokasi akhir>
 \end{verbatim}
 
 Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan mengirim permintaan ke API Google \textit{Maps}, di mana jika prosesnya berhasil, keluarannya akan berupa langkah-langkah yang harus ditempuh untuk sampai ke lokasi akhir, beserta di jarak berapa langkah tersebut harus diambil, relatif terhadap langkah sebelumnya. Adapun penggunaan dari perkakas ini dapat dilihat di gambar \ref{fig:similarapps-googlemapscli}.

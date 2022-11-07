@@ -141,7 +141,7 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
                         cd [/d] [<drive>:][<path>]
 	\end{verbatim}
 	
-	\newpage % Preventing widow
+	\newpage % Prevent widow
 	Dengan fungsi dari semua opsi dan parameter yang ada sebagai berikut.
 	
 	\begin{itemize}
@@ -178,7 +178,7 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 		Seluruh teks dalam keluaran akan menggunakan huruf kecil. Jika opsi ini tidak digunakan, keluaran akan mengandung huruf besar dan huruf kecil \textit{mixed case}.
 		\item \verb|/N|\\
 		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
-		\newpage \enlargethispage{1.5\baselineskip} % Preventing widow
+		\newpage \enlargethispage{1.5\baselineskip} % Prevent widow
 		\item \verb|/O[[:]<sortorder>]|\\
 		Menampilkan daftar direktori yang terurut berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan terurut secara menaik.
 		\item \verb|/P|\\
@@ -250,7 +250,7 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	\item \verb|region|\\
 	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
 	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
-	\newpage %prevent widow
+	\newpage % Prevent widow
 	\item \verb|querystring|\\
 	\textbf{Kemungkinan nilai:} \textit{string} apapun dengan panjang minimal satu karakter\\
 	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
@@ -301,7 +301,7 @@ Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di gambar \ref{f
 \label{sec:kiri-api-routing}
 
 Layanan pencarian rute (\textit{routing}) adalah layanan web pada API KIRI yang memiliki fungsi yang sama dengan fungsi utama dari perangkat lunak KIRI sendiri, yaitu menunjukkan rute serta langkah-langkah yang harus ditempuh untuk pergi dari satu lokasi ke lokasi lainnya, dengan menggunakan angkot yang tersedia. Untuk menggunakan layanan ini, pengguna harus mengirim permintaan GET ke alamat \href{https://projectkiri.id/api}{https://projectkiri.id/api}. Adapun permintaan tersebut harus memiliki parameter-parameter seperti terlihat di bawah ini.
-\newpage %prevent widow
+\newpage % Prevent widow
 \begin{itemize}
 	\item \verb|version|\\
 	\textbf{Kemungkinan nilai:} \verb|2|\\
@@ -759,7 +759,7 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan mengikutkan baris ini dalam kode program:
 
 \begin{verbatim}
-                           #include <cjson/cJSON.h>
+                             #include <cjson/cJSON.h>
 \end{verbatim}
 
 \subsubsection{Struktur Data}
@@ -819,9 +819,9 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 \subsubsection{Fungsi-Fungsi Dasar}
 \label{sec:cmodules-cJSON-basicfuncts}
 
-\begin{itemize}
+\begin{itemize}[listparindent=\parindent]
 	\item Tipe-tipe data dasar\\
-	Untuk setiap tipe data cJSON, ada sebuah fungsi \verb|cJSON_Create...|. Semua fungsi tersebut akan mengalokasikan sebuah struktur cJSON yang nantinya dapat dihapus dengan \verb|cJSON_Delete|. Perlu diingat juga bahwa seluruh struktur yang dibuat harus dihapus agar tidak terjadi kebocoran memori. Adapun fungsi-fungsi \verb|cJSON_Create| yang dapat digunakan untuk tipe-tipe data yang tersedia adalah sebagai berikut.
+	Untuk setiap tipe data cJSON, ada sebuah fungsi \verb|cJSON_Create...|. Semua fungsi \mbox{tersebut} akan mengalokasikan sebuah struktur cJSON yang nantinya dapat dihapus dengan \verb|cJSON_Delete|. Perlu diingat juga bahwa seluruh struktur yang dibuat harus dihapus agar tidak terjadi kebocoran memori. Adapun fungsi-fungsi \verb|cJSON_Create| yang dapat digunakan untuk tipe-tipe data yang tersedia adalah sebagai berikut.
 	
 	\begin{itemize}
 		\item \textit{null} dibuat dengan \verb|cJSON_CreateNull|.
@@ -832,28 +832,37 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	
 	\item \textit{Array}\\
 	Sebuah \textit{array} kosong dapat dibuat dengan menggunakan fungsi \verb|cJSON_CreateArray|. Selain fungsi tersebut, pembuatan \textit{array} juga dapat dilakukan dengan memanggil sebuah fungsi alternatif, yaitu \verb|cJSON_CreateArrayReference|. Bedanya adalah dengan fungsi alternatif ini, \textit{array} yang dibuat tidak secara langsung ``mengandung" nilai-nilainya, jadi ketika \textit{array} tersebut dihapus dengan \verb|cJSON_Delete|, nilai-nilai di dalamnya tidak terhapus juga. Hal yang sama juga dapat dilakukan dengan objek-objek di dalam \textit{array} tersebut, dimana objek ini dapat ditambahkan dengan fungsi \verb|cJSON_AddItemToArray|, yang akan langsung menambahkan objek tersebut ke dalam \textit{array}-nya, atau dengan menggunakan \verb|cJSON_AddItemReferenceToArray|, yang hanya akan menambahkan referensi dari objek yang ingin ditambahkan ke dalam \textit{array}.
+	
 	Jika ada sebuah objek yang ingin dihapus dari \textit{array} tertentu, perangkat lunak dapat memanggil fungsi \verb|cJSON_DetachItemFromArray|. Fungsi ini akan mengembalikan objek yang dihapus dari \textit{array} tadi, jadi objek ini harus diberikan ke sebuah penunjuk lainnya (dimasukkan ke dalam variabel lain) agar tidak terjadi kebocoran memori. Selain fungsi tersebut, fungsi \verb|cJSON_DeleteItemFromArray| juga dapat digunakan\textemdash bedanya adalah objek yang dihapus dari \textit{array} tadi, jika dihapus menggunakan fungsi ini, akan langsung dihapus, seakan-akan fungsi \verb|cJSON_Delete| dipanggil untuk objek tersebut.
+	
 	Untuk menimpa/mengganti nilai suatu objek di dalam \textit{array}, fungsi \verb|cJSON_ReplaceItemIn|\linebreak \verb|Array| dapat dipanggil dengan indeks dari objek yang ingin diganti sebagai parameternya. Selain fungsi tersebut, fungsi \verb|cJSON_ReplaceItemViaPointer| juga dapat digunakan\textemdash fungsi ini bekerja dengan memutuskan (\textit{detach}) objek lama yang ingin diganti, menghapus objek tersebut, dan menyisipkan objek yang baru ke tempat objek lama yang sudah dihapus tadi.
-	Terakhir, untuk mendapatkan objek tertentu dalam \textit{array} berdasarkan indeksnya, perangkat lunak dapat memanggil fungsi \verb|cJSON_GetArrayItem|. Ukuran dari \textit{array}-nya sendiri juga dapat dilihat dengan fungsi \verb|cJSON_GetArraySize|.
+	
+	Terakhir, untuk mendapatkan objek tertentu dalam \textit{array} berdasarkan indeksnya, \mbox{perangkat} lunak dapat memanggil fungsi \verb|cJSON_GetArrayItem|. Ukuran dari \textit{array}-nya sendiri juga dapat dilihat dengan fungsi \verb|cJSON_GetArraySize|.
+	
 	\item Objek\\	
-	Sama seperti \textit{array}, ada dua jenis fungsi pembuatan objek. Yang pertama adalah \verb|cJSON_CreateObject| untuk membuat objek biasa, dan \verb|cJSON_CreateObjectReference| untuk membuat objek yang nilai-nilainya terdiri atas kumpulan referensi ke variabel-variabel lain.
-	Untuk menambahkan sebuah objek ke dalam suatu objek lainnya, pengguna dapat memanggil fungsi \verb|cJSON_AddItemToObject|. Jika objek ingin ditambahkan ke suatu objek lain yang memiliki sebuah variabel konstan sebagai nama, atau sebuah referensi, prosesnya harus menggunakan fungsi \verb|cJSON_AddItemToObjectCS|.
-	Fungsi \verb|cJSON_DetachItemFromObjectCaseSensitive| dapat dipanggil ketika ada sebuah objek ingin dibuang dari objek lain. Sama seperti fungsi \textit{detach} di \textit{array} tadi, fungsi ini akan mengembalikan objek yang dibuang tadi, dan objek tersebut harus dimasukkan ke variabel lain untuk menghindari kebocoran memori. Selain itu, ada juga fungsi \verb|cJSON_DeleteItemFromObjectCaseSensitive|, yang bekerja dengan cara yang sama seperti fungsi penghapusan objek untuk \textit{array}.
-	Untuk pengeditan/penggantian nilai objek, lagi-lagi cara kerjanya sama dengan \textit{array}. Untuk penggantian nilai objek berdasarkan kuncinya, fungsi \verb|cJSON_ReplaceItemInObjectCaseSensitive| dapat digunakan, sedangkan untuk penggantian objek langsung dengan penunjuk ke elemen lainnya, fungsi \verb|cJSON_ReplaceItemViaPointer| dapat digunakan.
+	Sama seperti \textit{array}, ada dua jenis fungsi pembuatan objek. Yang pertama adalah \verb|cJSON_Create|\linebreak \verb|Object| untuk membuat objek biasa, dan \verb|cJSON_CreateObjectReference| untuk membuat objek yang nilai-nilainya terdiri atas kumpulan referensi ke variabel-variabel lain.
+	
+	Untuk menambahkan sebuah objek ke dalam suatu objek lainnya, pengguna dapat \mbox{memanggil} fungsi \verb|cJSON_AddItemToObject|. Jika objek ingin ditambahkan ke suatu \mbox{objek} lain yang memiliki sebuah variabel konstan sebagai nama, atau sebuah referensi, prosesnya harus menggunakan fungsi \verb|cJSON_AddItemToObjectCS|.
+
+	Fungsi \verb|cJSON_DetachItemFromObjectCaseSensitive| dapat dipanggil ketika ada \mbox{sebuah} objek ingin dibuang dari objek lain. Sama seperti fungsi \textit{detach} di \textit{array} tadi, fungsi ini akan mengembalikan objek yang dibuang tadi, dan objek tersebut harus \mbox{dimasukkan} ke variabel lain untuk menghindari kebocoran memori. Selain itu, ada juga fungsi \verb|cJSON_DeleteItemFrom|\linebreak \verb|ObjectCaseSensitive|, yang bekerja dengan cara yang sama seperti fungsi penghapusan objek untuk \textit{array}.
+
+	Untuk pengeditan/penggantian nilai objek, lagi-lagi cara kerjanya sama dengan \textit{array}. \mbox{Untuk} penggantian nilai objek berdasarkan kuncinya, fungsi \verb|cJSON_ReplaceItemInObject|\linebreak \verb|CaseSensitive| dapat digunakan, sedangkan untuk penggantian objek langsung dengan penunjuk ke elemen lainnya, fungsi \verb|cJSON_ReplaceItemViaPointer| dapat digunakan.
+
 	Terakhir, untuk mengakses sebuah benda di dalam objek, pengguna dapat memanggil fungsi \verb|cJSON_GetObjectItemCaseSensitive|, dan untuk mengetahui ukuran dari objek tersebut, fungsi yang dapat digunakan sama dengan fungsi yang dapat digunakan untuk \textit{array}, yaitu \verb|cJSON_GetArraySize|.
+
 	\item \textit{Parsing}\\
-	Objek JSON yang dibatasi/diterminasi dengan \textit{null terminator} dapat di-\textit{parse} dengan menggunakan fungsi berikut.
+	Objek JSON yang dibatasi/diterminasi dengan \textit{null terminator} dapat di-\textit{parse} dengan \mbox{menggunakan} fungsi berikut.
 	
 	\begin{verbatim}
-                               cJSON_Parse(<JSON>)
+                            cJSON_Parse(<JSON>)
 	\end{verbatim}
-	
+	\noindent
 	Sedangkan, jika objek JSON tersebut tidak (atau belum tentu) dibatasi oleh \textit{null terminator}, objek tersebut dapat di-\textit{parse} dengan fungsi berikut.
 	
 	\begin{verbatim}
-              cJSON_Parse(<JSON>, <ukuran JSON yang ingin di-parse>)
+           cJSON_Parse(<JSON>, <ukuran JSON yang ingin di-parse>)
 	\end{verbatim}
-	
+	\noindent
 	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
 \end{itemize}
 
@@ -894,7 +903,7 @@ Proses CMake umumnya terdiri atas langkah-langkah berikut.
 	\item Proyek yang ingin dibangun didefinisikan di salah satu file CMakeLists.\\
 	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Tertera di kode \ref{code:cmake-basecode} merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, sebagai gambaran mengenai hal-hal apa saja yang minimal harus ada di dalam file CMakeLists.
 	
-	\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-basecode]
+	\begin{lstlisting}[caption=Kode utama operasional CMake, label=code:cmake-basecode]
 cmake_minimum_required(VERSION 3.20)
 project(Hello)
 add_executable(Hello Hello.c)
@@ -905,7 +914,6 @@ add_executable(Hello Hello.c)
 	\begin{itemize}
 		\item Baris pertama harus selalu merupakan \verb|cmake_minimum_required|. Hal ini mengharuskan proyek untuk menggunakan versi dari CMake yang dispesifikasi, dan juga memungkinkan \textit{backwards compatibility}.
 		\item Baris selanjutnya merupakan perintah \verb|project|. Perintah ini mengatur nama proyek, dan juga bisa digunakan untuk mengatur aturan-aturan lainnya, seperti versi, atau bahasa dari proyek.
-		Untuk setiap direktori yang memiliki file CMakeLists, CMake akan membuat sebuah Makefile atau file proyek untuk IDE. Proyek ini, nantinya, akan mengikutkan seluruh direktori yang memiliki file CMakeLists ini serta seluruh subdirektori yang diikutkan dalam perintah \verb|add_subdirectory|.
 		\item Terakhir, perintah \verb|add_executable| merupakan sebuah perintah yang akan menambahkan sebuah file \textit{executable} untuk menjalankan proyek yang sudah dibangun tersebut.
 	\end{itemize}
 	\item CMake membuat dan mengkonfigurasi proyek tersebut.\\
@@ -913,7 +921,7 @@ add_executable(Hello Hello.c)
 	
 	\begin{itemize}
 		\item GUI CMake\\
-		CMake memiliki perangkat lunak GUI berbasis Qt yang bisa digunakan di sebagian besar sistem operasi, seperti UNIX, Mac OS X, dan Windows. Perangkat lunak ini, \verb|cmake-gui|, sudah terinstal bersama dengan CMake, tetapi membutuhkan instalasi Qt untuk dijalankan. Adapun tampilan dari perangkat lunak ini dapat dilihat di gambar \ref{fig:cmake-gui}.
+		CMake memiliki perangkat lunak GUI berbasis Qt yang bisa digunakan di sebagian besar sistem operasi, seperti UNIX, Mac OS X, dan Windows. Perangkat lunak ini, \verb|cmake-gui|, sudah terinstal bersama dengan CMake, tetapi membutuhkan instalasi Qt untuk dijalankan. Tampilan dari perangkat lunak ini dapat dilihat di gambar \ref{fig:cmake-gui}.
 		
 		\begin{figure}[ht]
 		    \centering
@@ -924,6 +932,7 @@ add_executable(Hello Hello.c)
 		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
 		
 		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
+		\newpage % Prevent widow
 		\item ccmake\\
 		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
 		
@@ -965,8 +974,8 @@ add_executable(Hello Hello.c)
 		
 		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
 		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
-		
-		\begin{lstlisting}[caption=Kode utama operasional CMakeLists, label=code:cmake-multibuild]
+		\newpage % Prevent widow
+		\begin{lstlisting}[caption=Contoh kode pembangunan CMake lebih dari satu mode, label=code:cmake-multibuild]
 ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
 ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
 		\end{lstlisting}
