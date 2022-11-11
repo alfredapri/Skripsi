@@ -3,7 +3,7 @@
 #include <getopt.h>
 
 #include <cJSON/cJSON.h>
-#include <include/curl/curl.h>
+#include "curl/curl.h"
 
 cJSON *responseJSON;
 char URL[1000] = "https://projectkiri.id/api?version=2";

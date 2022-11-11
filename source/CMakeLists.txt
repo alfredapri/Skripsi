@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(kiritool VERSION 1.1.1 LANGUAGES C)
-
+set(PROJECT_NAME kiritool)
 set(SOURCES main.c includes/cJSON/cJSON.c includes/cJSON/cJSON.h)
-add_executable(kiritool ${SOURCES})
+
+cmake_minimum_required(VERSION 3.0.0)
+project(${PROJECT_NAME} VERSION 1.1.1 LANGUAGES C)
+
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 find_package(CURL CONFIG REQUIRED)
-# find_package(cJSON CONFIG REQUIRED)
 
 # libcurl
-target_include_directories(kiritool PUBLIC "C:/vcpkg/installed/x64-windows")
-target_link_libraries(kiritool PUBLIC CURL::libcurl)
+target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
 # cJSON
-target_include_directories(kiritool PRIVATE includes)
+target_include_directories(${PROJECT_NAME} PRIVATE includes)
