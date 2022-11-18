@@ -45,12 +45,12 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
             if (locale == 1) {
-                puts("Location not found.");
-                puts("Please recheck whether the search keyword was correct.");
+                fputs("Location not found.\n", stderr);
+                fputs("Please recheck whether the search keyword was correct.\n", stderr);
             }
             else {
-                puts("Lokasi tidak berhasil ditemukan.");
-                puts("Silahkan cek ulang apakah kata kunci pencarian sudah benar.");
+                fputs("Lokasi tidak berhasil ditemukan.\n", stderr);
+                fputs("Silahkan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
             }
             puts("====================");
         }
@@ -110,22 +110,22 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
         if (cJSON_GetArraySize(result) == 0) {
             if (step == 0) {
                 if (locale == 1) {
-                    puts("Starting location not found.");
-                    puts("Please recheck whether the search keyword was correct.");
+                    fputs("Starting location not found.\n", stderr);
+                    fputs("Please recheck whether the search keyword was correct.\n", stderr);
                 }
                 else {
-                    puts("Lokasi awal tidak berhasil ditemukan.");
-                    puts("Silahkan cek ulang apakah kata kunci pencarian sudah benar.");
+                    fputs("Lokasi awal tidak berhasil ditemukan.\n", stderr);
+                    fputs("Silahkan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
                 }
             }
             else if (step == 1) {
                 if (locale == 1) {
-                    puts("Finish location not found.");
-                    puts("Please recheck whether the search keyword was correct.");
+                    fputs("Finish location not found.\n", stderr);
+                    fputs("Please recheck whether the search keyword was correct.\n", stderr);
                 }
                 else {
-                    puts("Lokasi akhir tidak berhasil ditemukan.");
-                    puts("Silahkan cek ulang apakah kata kunci pencarian sudah benar.");
+                    fputs("Lokasi akhir tidak berhasil ditemukan.\n", stderr);
+                    fputs("Silahkan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
                 }
             }
         }
@@ -359,9 +359,9 @@ void build_url_searchplace(int region, char* query) {
     // Region check
     switch (region) {
         case -1:
-            puts("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.");
-            puts("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.");
-            puts("Pilihan region: cgk, bdo, mlg, sub");
+            fputs("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.\n", stderr);
+            fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
+            fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
             abort();
             break;
         
@@ -382,17 +382,17 @@ void build_url_searchplace(int region, char* query) {
             break;
 
         default:
-            puts("Anda telah memasukkan region yang tidak valid.");
-            puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.");
-            puts("Pilihan region: cgk, bdo, mlg, sub");
+            fputs("Anda telah memasukkan region yang tidak valid.\n", stderr);
+            fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
+            fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
             abort();
             break;
     }
 
     // Query check
     if (strcmp(query, "\0") == 0) {
-        puts("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.");
-        puts("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.");
+        fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
+        fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
         abort();
     }
     else {
@@ -412,9 +412,9 @@ void build_url_findroute(int locale, char* start, char* finish) {
             break;
         
         case 2:
-            puts("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.");
-            puts("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.");
-            puts("Pilihan locale: id, en");
+            fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
+            fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
+            fputs("Pilihan locale: id, en\n", stderr);
             abort();
             break;
         
@@ -425,8 +425,8 @@ void build_url_findroute(int locale, char* start, char* finish) {
 
     // Starting location check
     if (strcmp(start, "\0") == 0) {
-        puts("Anda belum memasukkan sebuah koordinat untuk lokasi awal.");
-        puts("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.");
+        fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
+        fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
         abort();
     }
     else {
@@ -436,8 +436,8 @@ void build_url_findroute(int locale, char* start, char* finish) {
 
     // End location check
     if (strcmp(finish, "\0") == 0) {
-        puts("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.");
-        puts("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.");
+        fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
+        fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
         abort();
     }
     else {
@@ -551,6 +551,7 @@ int main(int argc, char **argv) {
                 // General location search keyword
                 replace_space(optarg);
                 strcpy(query, escape);
+                memset(escape, 0, sizeof(escape));
                 break;
             
             case 's':
@@ -563,6 +564,7 @@ int main(int argc, char **argv) {
                 else {
                     replace_space(optarg);
                     strcpy(start, escape);
+                    memset(escape, 0, sizeof(escape));
                 }
                 break;
             
@@ -576,6 +578,7 @@ int main(int argc, char **argv) {
                 else {
                     replace_space(optarg);
                     strcpy(finish, escape);
+                    memset(escape, 0, sizeof(escape));
                 }
                 break;
             
@@ -632,14 +635,14 @@ int main(int argc, char **argv) {
 
             case ':':
                 // Error: missing arguments
-                puts("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.");
-                puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
+                fputs("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.\n", stderr);
+                fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
                 abort();
 
             case '?':
                 // Error: unknown options
-                puts("Anda telah memasukkan opsi yang tidak valid.");
-                puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
+                fputs("Anda telah memasukkan opsi yang tidak valid.\n", stderr);
+                fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
                 abort();
 
             default:
@@ -649,17 +652,16 @@ int main(int argc, char **argv) {
 
     // Error: extra arguments
     if (optind < argc) {
-        printf("Anda telah memasukkan kelebihan argumen: ");
+        fprintf(stderr, "Anda telah memasukkan kelebihan argumen: ");
         while (optind < argc) {
-            printf("%s ", argv[optind++]);
+            fprintf(stderr, "%s ", argv[optind++]);
         }
-        putchar('\n');
-        puts("Mohon periksa kembali penulisan perintah yang anda masukkan.");
+        fputs("\nMohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
     }
     else {
         switch (mode) {
             case -1:
-                puts("Mohon masukkan mode pengunaan perkakas.");
+                fputs("Mohon masukkan mode pengunaan perkakas.\n", stderr);
                 abort();
                 break;
 
@@ -697,8 +699,8 @@ int main(int argc, char **argv) {
                 break;
 
             default:
-                puts("Anda telah memasukkan mode yang tidak valid.");
-                puts("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.");
+                fputs("Anda telah memasukkan mode yang tidak valid.\n", stderr);
+                fputs("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.\n", stderr);
                 abort();
                 break;
         }
