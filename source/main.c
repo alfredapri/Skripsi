@@ -51,7 +51,7 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
             }
             else {
                 fputs("Lokasi tidak berhasil ditemukan.\n", stderr);
-                fputs("Silahkan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
+                fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
             }
             puts("====================");
         }
@@ -116,7 +116,7 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
                 }
                 else {
                     fputs("Lokasi awal tidak berhasil ditemukan.\n", stderr);
-                    fputs("Silahkan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
+                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
                 }
             }
             else if (step == 1) {
@@ -126,7 +126,7 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
                 }
                 else {
                     fputs("Lokasi akhir tidak berhasil ditemukan.\n", stderr);
-                    fputs("Silahkan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
+                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
                 }
             }
         }
