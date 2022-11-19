@@ -240,7 +240,7 @@ void print_help() {
     puts("Use the KIRI tool through the command line.");
     putchar('\n');
     puts("USAGE:");
-    puts("    ./kiritool [COMMAND] [OPTIONS]");
+    puts("    kiritool <COMMAND> [OPTIONS...] [<ARGUMENTS>]");
     putchar('\n');
     puts("COMMAND:");
     puts("    -h, --help          Display usage tutorial.");
@@ -263,7 +263,7 @@ void print_help() {
     puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
     puts("    <KEYWORD>");
     puts("        Keywords used by the tool to search for the desired location.");
-    puts("        For multiple words queries, encase the keywords with apostrophes (\" \").");
+    puts("        For multiple words queries, encase the keywords in quotation marks (\" \").");
     puts("    <LANG>");
     puts("        Tool output language.");
     puts("        Available languages: id, en");
@@ -279,7 +279,7 @@ void print_help() {
     puts("          - findroute");   
     puts("                Required arguments: --start, --finish");
     puts("                Optional arguments: --locale");
-    puts("          - findroute");   
+    puts("          - direct");   
     puts("                Required arguments: --regstart, --start, --regfinish, --finish");
     puts("                Optional arguments: --locale");
     puts("    <REGION>");
