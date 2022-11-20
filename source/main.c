@@ -251,10 +251,10 @@ void print_help() {
     puts("    -F, --regfinish <REGION>    Set region to search for finish location in.");
     puts("    -f, --finish <FINISH>       Set finish location.");
     puts("    -l, --locale <LANG>         Set tool output language.");
-    puts("    -S, --regstart <REGION>     Set region to search for starting location in.");
-    puts("    -s, --start <START>         Set starting location.");
     puts("    -q, --query <KEYWORD>       Set keyword for searching.");
     puts("    -r, --region <REGION>       Set region to search for location in.");
+    puts("    -S, --regstart <REGION>     Set region to search for starting location in.");
+    puts("    -s, --start <START>         Set starting location.");
     putchar('\n');
     puts("ARGUMENTS:");
     puts("    <FINISH>");
