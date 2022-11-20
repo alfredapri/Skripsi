@@ -12,3 +12,27 @@ find_package(CURL)
 target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
 # cJSON
 target_include_directories(${PROJECT_NAME} PRIVATE includes)
+
+# UNIX specific commands
+if (UNIX)
+    include(GNUInstallDirs)
+
+    file(ARCHIVE_CREATE OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/build/kiritool.1.gz
+        PATHS ${CMAKE_CURRENT_SOURCE_DIR}/additionals/linux/kiritool.1
+        FORMAT gnutar
+        COMPRESSION GZip
+    )
+    set(MANFILES build/kiritool.1.gz)
+
+    if (DEFINED CMAKE_INSTALL_MANDIR)
+    install(FILES ${MANFILES} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
+    else()
+    message(FATAL_ERROR "CMAKE_INSTALL_MANDIR is not defined. \n  ")
+    endif()
+
+    # if (DEFINED MANFILES)  
+    #     install(FILES ${MANFILES} DESTINATION /usr/share/man/man1)
+    # else()
+    #     message(FATAL_ERROR "'MANFILES' variable is not defined. \n  ")
+    # endif()
+endif()
