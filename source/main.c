@@ -18,6 +18,9 @@ int regstart = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 
 int regfinish = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
 int locale = 0; // 0 = id, 1 = en, 2 = unknown
 int step; // 0 = search starting location, 1 = search finish location, 2 = find route
+// Used only in multistep modes
+// 1 = an error has occurred, otherwise 0
+int error = 0; 
 
 size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) {
     // Function must return realsize
@@ -37,14 +40,24 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
     
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
-        result = cJSON_GetObjectItem(responseJSON, "message");
-        printf("%s\n", result->valuestring);
+        error = 1;
+
+        if (locale == 1) {
+            fputs("API returned an error as its output.\n", stderr);
+            fputs("Please recheck whether the query was formatted correctly.\n", stderr);
+        }
+        else {
+            fputs("API mengembalikan error sebagai keluarannya.\n", stderr);
+            fputs("Silakan cek ulang apakah kata kunci pencarian sudah diformat dengan benar.\n", stderr);
+        }
     }
     else {
         result = cJSON_GetObjectItem(responseJSON, "searchresult");
 
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
+            error = 1;
+
             if (locale == 1) {
                 fputs("Location not found.\n", stderr);
                 fputs("Please recheck whether the search keyword was correct.\n", stderr);
@@ -101,14 +114,36 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
     
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
-        result = cJSON_GetObjectItem(responseJSON, "message");
-        printf("%s\n", result->valuestring);
+        error = 1;
+        
+        if (step == 0) {
+            if (locale == 1) {
+                fputs("API returned an error as its start coordinates.\n", stderr);
+                fputs("Did you perhaps enter the location's coordinates instead of the query keywords?\n", stderr);
+            }
+            else {
+                fputs("API mengembalikan error sebagai koordinat lokasi awal.\n", stderr);
+                fputs("Apakah anda mungkin memasukkan koordinat lokasi dan bukan kata kunci pencariannya?\n", stderr);
+            }
+        }
+        else if (step == 1) {
+            if (locale == 1) {
+                fputs("API returned an error as its end coordinates.\n", stderr);
+                fputs("Did you perhaps enter the location's coordinates instead of the query keywords?\n", stderr);
+            }
+            else {
+                fputs("API mengembalikan error sebagai koordinat lokasi akhir.\n", stderr);
+                fputs("Apakah anda mungkin memasukkan koordinat lokasi dan bukan kata kunci pencariannya?\n", stderr);
+            }
+        }
     }
     else {
         result = cJSON_GetObjectItem(responseJSON, "searchresult");
 
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
+            error = 1;
+            
             if (step == 0) {
                 if (locale == 1) {
                     fputs("Starting location not found.\n", stderr);
@@ -174,8 +209,16 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
 
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
-        result = cJSON_GetObjectItem(responseJSON, "message");
-        printf("%s\n", result->valuestring);
+        error = 1;
+
+        if (locale == 1) {
+            fputs("API returned an error as its output.\n", stderr);
+            fputs("Did you perhaps enter the location's name instead of its coordinates?\n", stderr);
+        }
+        else {
+            fputs("API mengembalikan error sebagai keluarannya.\n", stderr);
+            fputs("Apakah anda mungkin memasukkan nama lokasi dan bukan koordinatnya?\n", stderr);
+        }
     }
     else {
         result = cJSON_GetObjectItem(responseJSON, "routingresults");
@@ -296,6 +339,17 @@ void print_help() {
     putchar('\n');
 }
 
+void print_error() {
+    if (locale == 1) {
+        fputs("A connection error has occurred.\n", stderr);
+        fputs("Please verify whether the internet connection is up and running.\n", stderr);
+    }
+    else {
+        fputs("Telah terjadi error koneksi.\n", stderr);
+        fputs("Mohon cek apakah koneksi internet aktif dan terhubung dengan baik.\n", stderr);
+    }
+}
+
 void execute_curl() {
     CURL *curl;
     CURLcode response;
@@ -311,7 +365,8 @@ void execute_curl() {
                 response = curl_easy_perform(curl);
                 // Check CURL response code for errors
                 if (response != CURLE_OK) {
-                    fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+                    // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+                    print_error();
                 }
                 break;
             
@@ -319,7 +374,7 @@ void execute_curl() {
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_findroute);
                 response = curl_easy_perform(curl);
                 if (response != CURLE_OK) {
-                    fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+                    print_error();
                 }
                 break;
 
@@ -332,14 +387,14 @@ void execute_curl() {
                     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_searchplace_noreturns);
                     response = curl_easy_perform(curl);
                     if (response != CURLE_OK) {
-                        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+                        print_error();
                     }
                 }
                 else if (step == 2) {
                     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_findroute);
                     response = curl_easy_perform(curl);
                     if (response != CURLE_OK) {
-                        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
+                        print_error();
                     }
                 }
                 break;
@@ -687,12 +742,20 @@ int main(int argc, char **argv) {
                 build_url_searchplace(regstart, start);
                 // printf("%s\n", URL);
                 execute_curl();
-                reset_url();
+                if (error == 1) {
+                    break;
+                }
+                else reset_url();
+
                 step = 1;
                 build_url_searchplace(regstart, finish);
                 // printf("%s\n", URL);
                 execute_curl();
-                reset_url();
+                if (error == 1) {
+                    break;
+                }
+                else reset_url();
+
                 step = 2;
                 build_url_findroute(locale, start, finish);
                 // printf("%s\n", URL);
