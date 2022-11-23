@@ -6,7 +6,7 @@ project(${PROJECT_NAME} VERSION 1.2.5 LANGUAGES C)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-find_package(CURL)
+find_package(CURL REQUIRED)
 
 # libcurl
 target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
