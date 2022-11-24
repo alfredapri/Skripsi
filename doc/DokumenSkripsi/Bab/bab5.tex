@@ -3,7 +3,7 @@
 
 Bab ini akan membahas pengujian perkakas yang telah dibangun, serta skenario-skenario pengujian yang akan digunakan untuk pengujian perkakas.
 
-\section{Lingkungan Implementasi}
+\section{Lingkungan Pengujian}
 \label{sec:testing-specs}
 
 Bagian ini akan memaparkan spesifikasi dari perangkat yang digunakan untuk pengujian perkakas yang telah dibuat. 
@@ -26,14 +26,32 @@ Berikut merupakan spesifikasi perangkat keras yang digunakan dalam pembangunan p
 Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan perkakas ini:
 
 \begin{itemize}
-	\item OS: Windows 10 Home Single Language (64-bit)
-	\item Bahasa pemrograman: C
-	\item \textit{Compiler}: MinGW (versi 12.1.0)
-	\item \textit{Library}:
+	\item Windows:
 	
 	\begin{itemize}
-		\item libcurl (versi 7.83.1)
-		\item cmake (versi 3.24.1)
+		\item OS: Windows 10 Home Single Language (64-bit)
+		\item \textit{Compiler}: MinGW (GNU\textemdash versi 12.1.0)
+		\item \textit{Library}:
+		
+		\begin{itemize}
+			\item curl (versi 7.83.1)
+			\item cmake (versi 3.24.1)
+		\end{itemize}
+		
+	\end{itemize}
+	
+	\item Linux:
+	
+	\begin{itemize}
+		\item OS: Ubuntu Jammy (22.04)
+		\item \textit{Compiler}: MinGW (GNU\textemdash versi 12.1.0)
+		\item \textit{Library}:
+		
+		\begin{itemize}
+			\item curl (versi 7.81.0)
+			\item cmake (versi 3.22.1)
+		\end{itemize}
+		
 	\end{itemize}
 	
 \end{itemize}
@@ -43,29 +61,116 @@ Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan p
 
 Di subbab ini akan dijelaskan berbagai hal terkait dengan implementasi, seperti implementasi kode perkakas. 
 % Uncomment jika perkakas tidak memiliki .exe langsung!
-% Karena perkakas ini bukan merupakan perangkat lunak biasa, dalam arti bahwa perkakas ini tidak memiliki sebuah file \textit{executable} yang dapat dijalankan langsung oleh pengguna, maka perlu dipaparkan bagaimana cara menggunakan perkakas ini.
+% Karena perkakas ini bukan merupakan perangkat lunak biasa, dalam arti bahwa perkakas ini tidak memiliki sebuah file \textit{executable} yang dapat dijalankan langsung oleh pengguna, maka perlu dipaparkan pula bagaimana cara membangun dan menggunakan perkakas ini.
 
-\subsection{Instalasi}
-\label{sec:testing-implementation-installation}
+\subsection{Instalasi dan Pembangunan}
+\label{sec:testing-implementation-usage}
 
-Untuk dapat menjalankan perkakas ini, pengguna harus menginstal sebuah \textit{compiler} bahasa C, serta dua buah \textit{library} yang telah didaftarkan di subbab \ref{sec:testing-specs-software}, yaitu \textbf{libcurl} dan \textbf{cmake}.
+\subsubsection{Instalasi}
+\label{sec:testing-implementation-usage-instalation}
 
-Untuk pemakaian perkakasnya sendiri, berikut merupakan langkah-langkah yang perlu diambil untuk dapat menggunakan perkakas \cl ini.
+Proses instalasi dari perkakas ini memiliki garis besar yang sama - instal \textit{compiler} C, kemudian instal \textit{library yang diperlukan}. Karena banyaknya perbedaan dari detil yang perlu dilakukan untuk setiap sistem operasi, maka bagian ini akan dibagi dua, menjadi satu bagian per sistem operasi.
+
+\begin{itemize}
+	\item Windows \\
+	Untuk sistem operasi Windows, pengguna perlu menginstal hal-hal berikut:
+	
+	\begin{itemize}
+		\item vcpkg
+		\item cURL
+		\item CMake
+	\end{itemize}
+	
+	Perlu diperhatikan bahwa cURL (di Windows) harus diinstal melalui vcpkg\textemdash cURL bawaan dari Windows tidak mengandung \textit{library-library development} sekunder yang dibutuhkan oleh perkakas ini. Di lain hal, instalasi cURL secara manual hanya memungkinkan perkakas cURL-nya sendiri untuk diakses dari mana saja (melalui variabel \textit{environment}), tetapi hal ini tidak berlaku untuk \textit{library development} sekundernya.
+	
+	\item Linux \\
+	Untuk sistem operasi berbasis Linux, pengguna perlu menginstal hal-hal berikut:
+	
+	\begin{itemize}
+		\item cURL
+		\item CMake
+		\item libcurl4-openssl-dev (\textit{library development} cURL)
+		\item GNU Make
+	\end{itemize}
+	
+\end{itemize}
+
+Ingat bahwa perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
+
+% Old version
+\begin{comment}
+Untuk dapat menjalankan perkakas ini, pengguna harus menginstal sebuah \textit{compiler} bahasa C, vcpkg (untuk Windows), serta dua buah \textit{library} umum yang telah didaftarkan di subbab \ref{sec:testing-specs-software}, yaitu:
+
+\begin{itemize}
+	\item cURL, dan
+	\item cmake.
+\end{itemize}
+\noindent
+Perlu diperhatikan bahwa \textit{library} cURL perlu diinstal melalui vcpkg, untuk menghindari masalah kompatibilitas akibat versi cURL yang tidak sesuai dengan yang dibutuhkan. Penggunaan vcpkg akan menghindari terjadinya masalah ini karena seluruh \textit{library} di vcpkg selalu diperbarui ke versi terbarunya.
+
+Adapun perkakas ini juga membutuhkan adanya \textit{package} tambahan yang spesifik untuk Linux, yaitu:
+
+\begin{itemize}
+	\item libcurl4-openssl-dev (\textit{library development} cURL), dan
+	\item GNU Make (opsional).
+\end{itemize}
+
+Perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
+\end{comment}
+
+\subsubsection{Pembangunan}
+\label{sec:testing-implementation-usage-instalation}
+
+Untuk memakai perkakasnya sendiri, perkakas ini perlu dibangun terlebih dahulu. Berikut merupakan langkah-langkah yang perlu diambil untuk proses tersebut.
 
 \begin{enumerate}
-	\item Buat \textit{folder} ``build'' di dalam \textit{folder} perkakas.
-	\item Buka \textit{terminal/command prompt} di dalam \textit{folder} ``build'' tersebut.
-	\item Ketik dan jalankan perintah berikut:
-	\begin{verbatim}
-cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/
-scripts/buildsystems/vcpkg.cmake" -G "<compiler>" ../
-	\end{verbatim}
-	Untuk apa yang harus menggantikan variabel \verb|<compiler>| dapat dilihat dengan perintah \verb|cmake --help|. Daftar \textit{compiler} yang didukung oleh cmake dapat dilihat di bagian \mbox{"Generators"}, dan pengguna tinggal menyesuaikan dengan \textit{compiler} yang telah diinstal sebelumnya.
+	\item Buka \textit{folder} ``build'' di dalam \textit{folder} perkakas.
+	\item Buka \textit{terminal/command prompt} di dalam \textit{folder} tersebut.
+	\item Sesuai dengan sistem operasi tempat perkakas akan digunakan, ketik dan jalankan perintah berikut di \textit{terminal}:
+	
+	\begin{itemize}
+		\item Windows:
+		\begin{verbatim}
+cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_TOOLCHAIN_FILE="<direktori
+file toolchain vcpkg>" -G "<compiler>" ../
+		\end{verbatim}
+	
+		\item Linux:
+		\begin{verbatim}
+cmake ../
+		\end{verbatim}
+	\end{itemize}		
+
+	Untuk apa yang harus menggantikan variabel \verb|<compiler>| dapat dilihat dengan perintah \verb|cmake --help|. Daftar \textit{compiler} yang didukung oleh cmake dapat dilihat di bagian \mbox{``Generators''}, dan pengguna tinggal menyesuaikan dengan \textit{compiler} yang telah diinstal sebelumnya.  Ada beberapa hal yang perlu dijelaskan/diperhatikan untuk langkah ini.
+	
+	\begin{itemize}
+		\item Windows
+			
+		\begin{itemize}
+			\item Opsi \verb|-DMAKE_TOOLCHAIN_FILE| merupakan metode pengintegrasian vcpkg untuk proyek CMake. Untuk direktori persisnya (dan sintaks lengkap dari opsi ini) dapat dilihat setelah langkah ``Using vcpkg with MSBuild/Visual Studio'' di halaman panduan instalasi vcpkg.\footnote{\href{https://vcpkg.io/en/getting-started.html}{Getting started with vcpkg}}
+			\item Direkomendasikan untuk menginstal \textit{compiler} \textbf{MinGW}, karena \textit{compiler} ini sudah mengikutkan salah satu file \textit{header} yang dibutuhkan oleh perkakas ini. Apabila pengguna menggunakan \textit{compiler} ini, variabel \verb|<compiler>| harus diisi dengan ``\verb|MinGW Makefiles|''.
+			\item \textbf{Jangan menggunakan \textit{compiler} Visual Studio}, karena \textit{compiler} ini tidak mengandung file \textit{header} C yang dibutuhkan di perkakas ini. Perlu diperhatikan juga bahwa compiler Visual Studio ini merupakan nilai \textit{default} dari \verb|<compiler>| untuk sistem operasi Windows, jadi pengguna juga tidak boleh menghilangkan opsi \verb|-G| tersebut begitu saja.
+		\end{itemize}
+			
+		\item Linux \\
+		Untuk sistem operasi berbasis Linux, tidak perlu mengatur \textit{compiler}, karena nilai \textit{default} dari variabel \verb|<compiler>| di sistem operasi berbasis Linux (\textbf{Unix Makefiles}) sudah ideal.
+	\end{itemize}
+	
 	\item Ketik dan jalankan perintah berikut:
 	\begin{verbatim}
 cmake --build .
 	\end{verbatim}
-	\item File \textit{executable} akan ada di dalam \textit{folder} ``build'', dan siap dijalankan.
+	Bagi pengguna sistem operasi berbasis Linux, perintah di langkah ini dapat digantikan dengan perintah berikut:
+	\begin{verbatim}
+make
+	\end{verbatim}
+	Walaupun pengguna dianjurkan untuk menggunakan perintah biasa dari CMake, perintah alternatif ini akan menghasilkan hasil yang sama. Perlu diperhatikan bahwa jika pengguna ingin menginstal perkakas melalui, pengguna perlu menginstal \textbf{GNU Make} terlebih dahulu.
+	
+	\item Khusus sistem operasi berbasis \textbf{Linux}, ketik dan jalankan perintah berikut pula untuk menginstal file-file tambahan:
+		\begin{verbatim}
+cmake --install .
+	\end{verbatim}
+	\item File \textit{executable} akan terletak di dalam \textit{folder} ``build'', dan siap dijalankan.
 \end{enumerate}
 
 \subsection{Implementasi kode}
