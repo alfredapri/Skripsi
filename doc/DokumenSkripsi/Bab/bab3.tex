@@ -43,7 +43,7 @@ Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON dengan propert
 	\item \verb|price|\\
 	Harga dari ekstensi. Jika ekstensi tidak memiliki harga yang perlu dibayarkan (gratis), properti ini akan bernilai \verb|0|.
 	\item \verb|priceCurrency|\\
-	Kode mata uang dari harga ekstensi. Jika ekstensi tidak memiliki harga yang perlu dibayarkan, properti ini akan berisi ``\verb|USD|``.
+	Kode mata uang dari harga ekstensi. Jika ekstensi tidak memiliki harga yang perlu dibayarkan, properti ini akan berisi ``\verb|USD|''.
 	\item \verb|interactionCount|\\
 	Properti ini berisi interaksi-interaksi pengguna yang tercatat sebagai data di halaman \textit{web store} ekstensi. Pada saat pembuatan skripsi ini, properti ini hanya memiliki satu buah subproperti, yaitu \verb|userDownloads|, yang menandakan berapa kali ekstensi ini telah diunduh oleh pengguna di manapun.
 	\item \verb|operatingSystems|\\
@@ -245,36 +245,38 @@ Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan sa
 Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
 
 \begin{itemize}
-	\item \verb|-h|\\
-	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|--help| ini.
+	\item \verb|-h (--help)|\\
+	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|-h| ini.
 	
-	\item \verb|-m <mode>|\\
-	Opsi ini merupakan opsi berparameter yang menentukan fitur mana yang ingin digunakan oleh pengguna. Adapun isi dari parameter \verb|mode| yang dapat digunakan adalah sebagai berikut:
+	\item \verb|-m <mode> (--mode)|\\
+	Opsi ini merupakan opsi berparameter yang menentukan fitur mana yang ingin digunakan oleh pengguna. Adapun isi dari parameter \verb|<mode>| yang dapat digunakan adalah sebagai berikut:
 	
 	\begin{itemize}	
-		\item \verb|search|\\
+		\item \verb|searchplace|\\
 		Parameter ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
 			
 		\begin{itemize}
-			\item \verb|-r <region>|\\
+			\item \verb|-r <region> (--region)|\\
 			Opsi ini merupakan opsi yang akan menerima parameter berupa kode area dari lokasi yang ingin dicari.
-			\item \verb|-q <kata kunci>|\\
+			\item \verb|-q <kata kunci> (--query)|\\
 			Opsi ini merupakan opsi yang akan menerima sebuah \textit{string} sebagai parameternya. \textit{String} ini akan digunakan oleh perkakas sebagai kata kunci untuk pencarian lokasi yang ingin ditemukan oleh pengguna.
+			\item \verb|-l <kode bahasa> (--locale)|\\
+			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti. Opsi ini merupakan tambahan spesifik dari perkakas ini, karena keluaran dari perkakas mengandung kata-kata yang bukan merupakan nama/koordinat lokasi hasil. Walaupun begitu, perlu diperhatikan bahwa opsi ini tidak akan mempengaruhi nama lokasi dalam keluaran.
 		\end{itemize}
 	
-		\item \verb|route|\\
+		\item \verb|findroute|\\
 		Parameter ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
 		
 		\begin{itemize}
-			\item \verb|-s <lokasi awal>|\\
+			\item \verb|-s <lokasi awal> (--start)|\\
 			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
-			\item \verb|-f <lokasi akhir>|\\
+			\item \verb|-f <lokasi akhir> (--finish)|\\
 			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
-			\item \verb|-l <kode bahasa>|\\
-			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti.
+			\item \verb|-l <kode bahasa> (--locale)|\\
+			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti. Opsi ini merupakan opsi yang sama dengan opsi yang digunakan dalam mode \verb|searchplace|.
 		\end{itemize}
 		
-		\item \verb|routedirect|\\
+		\item \verb|direct|\\
 		Parameter ini merupakan tambahan fitur spesifik untuk perkakas ini, yang merupakan gabungan dari fitur pencarian lokasi dan pencarian rute. Fitur ini akan menggabungkan kedua fitur tersebut dengan langkah-langkah berikut.
 		
 		\begin{enumerate}
@@ -288,16 +290,16 @@ Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibang
 		Adapun parameter yang diperlukan untuk fitur ini merupakan gabungan dari opsi-opsi kedua fitur sebelumnya, yaitu:
 		
 		\begin{itemize}
-			\item \verb|-S <region tempat lokasi awal berada>|\\
+			\item \verb|-S <region tempat lokasi awal berada> (--regstart)|\\
 			Opsi ini akan menerima parameter berupa kode area dari lokasi awal yang akan digunakan.
-			\item \verb|-F <region tempat lokasi akhir berada>|\\
+			\item \verb|-F <region tempat lokasi akhir berada> (--regfinish)|\\
 			Opsi ini akan menerima parameter berupa kode area dari lokasi akhir yang akan digunakan.
-			\item \verb|-s <kata kunci untuk lokasi awal>|\\
+			\item \verb|-s <kata kunci untuk lokasi awal> (--start)|\\
 			Opsi ini akan menerima parameter berupa kata kunci untuk pencarian lokasi awal yang akan digunakan.
-			\item \verb|-f <kata kunci untuk lokasi akhir>|\\
+			\item \verb|-f <kata kunci untuk lokasi akhir> (--finish)|\\
 			Opsi ini akan menerima parameter berupa kata kunci untuk pencarian lokasi akhir yang akan digunakan.
-			\item \verb|-l <kode bahasa>|\\
-			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti. Opsi ini merupakan opsi yang sama dengan opsi yang digunakan dalam mode \verb|route|.
+			\item \verb|-l <kode bahasa> (--locale)|\\
+			Opsi ini akan menerima parameter yang mengatur bahasa yang akan digunakan oleh perkakas di keluarannya nanti. Opsi ini merupakan opsi yang sama dengan opsi yang digunakan dalam kedua mode lainnya.
 		\end{itemize}
 		
 	\end{itemize}
@@ -316,109 +318,120 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
     \label{fig:thesisapp-uml}
 \end{figure}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-    \hline
-        Nama & Mencari lokasi menggunakan kata kunci pencarian\\
-    \hline
-    \hline
-        Deskripsi & Fitur untuk mencari lokasi di area tertentu berdasarkan kata kunci\\
-    \hline
-		Aktor & Pengguna aplikasi\\
+\begin{longtable}{|p{3cm} | c p{10cm}|}
+	\caption{\textit{Scenario case} untuk fitur pencarian lokasi dengan kata kunci.} 
+	\label{tab:thesisapp-scenariocase-searchplace} \\
+	
+	\hline 
+	\endfirsthead
+	
+	\multicolumn{3}{c}{\tablename\ \thetable{} -- Lanjutan dari halaman sebelumnya} \\
+	\hline 
+	\endhead
+	
+	\hline \multicolumn{3}{|r|}{{Lanjut di halaman selanjutnya...}} \\ \hline
+	\endfoot
+	
 	\hline
-		Pre-kondisi & -\\
-    \hline
-		Pos-kondisi & Nama dari lokasi serta koordinat \textit{latitude} dan \textit{longitude}-nya ditampilkan kepada pengguna.\\
-    \hline
-		Skenario utama & 
-		\begin{enumerate}
-			\item Perkakas membaca masukan berupa kata kunci pencarian lokasi dari argumen dalam perintah \cl.
-			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran berupa nama serta koordinat \latlon dari lokasi yang ditemukan.
-			\item Perkakas menampilkan kembali keluaran tersebut kepada pengguna.
-        \end{enumerate}\\
-    \hline
-		Skenario eksepsi & 
-		\begin{itemize}
-			\item Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian.
-			\item Lokasi tidak berhasil ditemukan.
-        \end{itemize}\\
-	\hline
-    \end{tabular}
-    \caption{\textit{Scenario case} untuk fitur pencarian lokasi dengan kata kunci.}
-    \label{tab:thesisapp-scenariocase-searchplace}
-\end{table}
+	\endlastfoot
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
+        Nama & \multicolumn{2}{p{10.5cm} |}{Mencari lokasi menggunakan kata kunci pencarian} \\
+    \hline \addlinespace[0.1cm]
     \hline
-        Nama & Mencari rute dengan angkot menggunakan \latlon lokasi\\
+        Deskripsi & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari lokasi di area tertentu berdasarkan kata kunci} \\
     \hline
-    \hline
-        Deskripsi & Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.\\
-    \hline
-		Aktor & Pengguna aplikasi\\
+		Aktor & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
 	\hline
-		Pre-kondisi & -\\
+		Pre-kondisi & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-		Pos-kondisi & Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.\\
+		Pos-kondisi & \multicolumn{2}{p{10.5cm} |}{Nama dari lokasi serta koordinat \textit{latitude} dan \textit{longitude}-nya ditampilkan kepada pengguna.} \\
     \hline
-		Skenario utama & 
-		\begin{enumerate}
-			\item Perkakas membaca masukan berupa nilai \latlon lokasi awal dan akhir dari argumen dalam perintah \cl.
-			\item Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh.
-			\item Perkakas menampilkan kembali keluaran tersebut kepada pengguna.
-        \end{enumerate}\\
-	\hline
-		Skenario eksepsi &
-		\begin{itemize}
-			\item Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian.
-			\item Rute tidak berhasil ditemukan/tidak tersedia.
-        \end{itemize}\\
+		Skenario utama & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi dari argumen dalam perintah \cl. \\
+		 & 2. & Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
+		 & 3. & Perkakas menerima keluaran berupa nama serta koordinat \latlon dari lokasi yang ditemukan. \\
+		 & 4. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
     \hline
-    \end{tabular}
-    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan nilai \latlon kedua lokasi sebagai masukan.}
-    \label{tab:thesisapp-scenariocase-findroute}
-\end{table}
+		Skenario eksepsi & - &  Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian. \\
+		 & - & Lokasi tidak berhasil ditemukan. \\
+\end{longtable}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-    \hline
-        Nama & Mencari rute dengan angkot menggunakan kata kunci pencarian lokasi\\
-    \hline
-    \hline
-        Deskripsi & Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.\\
-    \hline
-		Aktor & Pengguna aplikasi\\
+\vspace{-0.25cm}
+\begin{longtable}{|p{3cm} | c p{10cm}|}
+	\caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan nilai \latlon kedua lokasi sebagai masukan.}
+    \label{tab:thesisapp-scenariocase-findroute} \\
+	
+	\hline 
+	\endfirsthead
+	
+	\multicolumn{3}{c}{\tablename\ \thetable{} -- Lanjutan dari halaman sebelumnya} \\
+	\hline 
+	\endhead
+	
+	\hline \multicolumn{3}{|r|}{{Lanjut di halaman selanjutnya...}} \\ \hline
+	\endfoot
+	
 	\hline
-		Pre-kondisi & -\\
+	\endlastfoot
+
+        Nama & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan \latlon lokasi} \\
+    \hline \addlinespace[0.1cm]
     \hline
-		Pos-kondisi & Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.\\
+        Deskripsi & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.} \\
     \hline
-		Skenario utama & 
-		\begin{enumerate}
-			\item Perkakas membaca masukan berupa kata kunci pencarian lokasi awal dan akhir dari argumen dalam perintah \cl.
-			\item Perkakas memproses kata kunci pencarian lokasi awal dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran berupa koordinat \latlon lokasi awal dari API KIRI.
-			\item Perkakas memproses kata kunci pencarian lokasi akhir dan mengirimkannya ke API KIRI untuk diproses lebih lanjut.
-			\item Perkakas menerima keluaran berupa koordinat \latlon lokasi akhir dari API KIRI.
-			\item Perkakas mengirimkan kedua nilai \latlon lokasi ke API KIRI sebagai masukan dari proses pencarian rute.
-			\item Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh.
-			\item Perkakas menampilkan kembali keluaran tersebut kepada pengguna.
-        \end{enumerate}\\
+		Aktor & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
 	\hline
-		Skenario eksepsi & 
-		\begin{itemize}
-			\item Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter.
-			\item Lokasi yang dicari dalam langkah 2 atau langkah 4 tidak ditemukan.
-			\item Rute tidak berhasil ditemukan/tidak tersedia.
-		\end{itemize}\\
+		Pre-kondisi & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-    \end{tabular}
-    \caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan kata kunci pencarian lokasi awal dan akhir sebagai masukan.}
-    \label{tab:thesisapp-scenariocase-findroutedirect}
-\end{table}
+		Pos-kondisi & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
+    \hline
+		Skenario utama & 1. & Perkakas membaca masukan berupa nilai \latlon lokasi awal dan akhir dari argumen dalam perintah \cl. \\
+		 & 2. & Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
+		 & 3. & Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh. \\
+		 & 4. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
+	\hline
+		Skenario eksepsi & - & Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian. \\
+		 & - & Rute tidak berhasil ditemukan/tidak tersedia. \\
+\end{longtable}
+
+\vspace{-0.25cm}
+\begin{longtable}{|p{3cm} | c p{10cm}|}
+	\caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan kata kunci pencarian lokasi awal dan akhir sebagai masukan.}
+    \label{tab:thesisapp-scenariocase-findroutedirect} \\
+	
+	\hline 
+	\endfirsthead
+	
+	\multicolumn{3}{c}{\tablename\ \thetable{} -- Lanjutan dari halaman sebelumnya} \\
+	\hline 
+	\endhead
+	
+	\hline \multicolumn{3}{|r|}{{Lanjut di halaman selanjutnya...}} \\ \hline
+	\endfoot
+	
+	\hline
+	\endlastfoot
+
+        Nama & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan kata kunci pencarian lokasi} \\
+    \hline \addlinespace[0.1cm]
+    \hline
+        Deskripsi & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.} \\
+    \hline
+		Aktor & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
+	\hline
+		Pre-kondisi & \multicolumn{2}{p{10.5cm} |}{-} \\
+    \hline
+		Pos-kondisi & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
+    \hline
+		Skenario utama & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi awal dan akhir dari argumen dalam perintah \cl. \\
+		 & 2. & Perkakas memproses kata kunci pencarian lokasi awal dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
+		 & 3. & Perkakas menerima keluaran berupa koordinat \latlon lokasi awal dari API KIRI. \\
+		 & 4. & Perkakas memproses kata kunci pencarian lokasi akhir dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
+		 & 5. & Perkakas menerima keluaran berupa koordinat \latlon lokasi akhir dari API KIRI. \\
+		 & 6. & Perkakas mengirimkan kedua nilai \latlon lokasi ke API KIRI sebagai masukan dari proses pencarian rute. \\
+		 & 7. & Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh. \\
+		 & 8. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
+	\hline
+		Skenario eksepsi & - & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter. \\
+		 & - & Lokasi yang dicari dalam langkah 2 atau langkah 4 tidak ditemukan. \\
+		 & - & Rute tidak berhasil ditemukan/tidak tersedia. \\
+\end{longtable}
