@@ -1,17 +1,112 @@
-.\" Manpage for nuseradd.
-.\" Contact vivek@nixcraft.net.in to correct errors or typos.
-.TH man 8 "06 May 2010" "1.0" "nuseradd man page"
+.TH kiritool 1 "November 2022" "1.2.6" "kiritool Manual"
 .SH NAME
-nuseradd \- create a new LDAP user 
+kiritool \- search routes using angkot
 .SH SYNOPSIS
-nuseradd [USERNAME]
+\fBkiritool\fR \fIOPTIONS\fR... \fIARGUMENTS\fR
 .SH DESCRIPTION
-nuseradd is high level shell program for adding users to LDAP server.  On Debian, administrators should usually use nuseradd.debian(8) instead. aaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa aaaaaa aaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaa aaaaaaaaa aaaaaaa aaa aaa aaaaaaaa aaaaaaaa aaaaa aaaaaaa
+\fBkiritool\fR searches for available routes and shows steps needed to go from one location to another using angkot (angkutan kota). This tool will be utilizing the KIRI API in its processes.
+.TP
+This tool has three features:
+- Search location names from query
+.br
+- Find routes using angkot from starting and end locations' latitude and longitude coordinates
+.br
+- Find routes using angkot from starting and end locations' search query keywords
+.br
 .SH OPTIONS
-The nuseradd does not take any options. However, you can supply username.
-.SH SEE ALSO
-useradd(8), passwd(5), nuseradd.debian(8) 
+.SS "Basic Program Options"
+The user must select either one of these options per operation.
+.br
+.TP
+.B -h, --help
+Display concise help for tool usage.
+.TP
+.B -m, --mode
+Set tool operation mode.
+.br
+.SS "Tool Operation Modes"
+The user must select only one of these modes per operation.
+.TP
+.B searchplace
+Search location names from user-provided query (\fB-q\fR).
+Additionally, users must also provide the region (\fB-r\fR) to search the desired location in. 
+If at least one location was found, this mode will output their names, along with the latitude and longitude coordinates.
+.TP
+.B findroute
+Find routes utilizing angkot and display the steps required for the route. User must provide the latitude and longitude coordinates of both the starting (\fB-s\fR) and end (\fB-f\fR) locations.
+.br
+If a route was found, this mode will output the estimated time required to take the route, along with the steps to be taken in said route.
+.TP
+.B direct
+.br
+Find routes utilizing angkot and display the steps required for the route. This mode combines both \fBsearchplace\fR and \fBfindroute\fR modes, so user will only need to provide the queries for both the starting (\fB-s\fR) and end (\fB-f\fR) locations, along with the region (\fB-S\fR and \fB-F\fR) to search for each in.
+.br
+If a route was found, this mode will output the name of both START and FINISH, along with the estimated time required to take the route, and the steps to be taken in said route.
+.IP
+Note that this mode does not support vague queries - should either the search for starting or end locations return more than one results, this mode will only take the first ones.
+.SS "Required Options"
+Note that not all of these options are required for each of the operation modes. Should the user provide additional options than what the mode requires, they will simply be unused.
+.br
+For information on which options are required for certain modes, refer to the "\fBTool Operation Modes\fR" section.
+.TP
+\fB-F \fIREGION\fR, \fB--regfinish \fIREGION\fR
+Set the \fIREGION\fR to search for the finish location (\fB-f\fR) in. Only four options are available as regions: \fBcgk\fR (Jakarta), \fBbdo\fR (Bandung), \fBmlg\fR (Malang), or \fBsub\fR (Surabaya).
+.br
+This option is specifically used for the \fBdirect\fR mode. For the \fBsearchplace\fR mode alternative, see option \fB-r\fR.
+.TP
+\fB-f \fIFINISH\fR, \fB--finish \fIFINISH\fR
+Set where the desired \fIFINISH\fR should be.
+.br
+When this option is used in the \fBfindroute\fR mode, it will only accept latitude and longitude coordinates, formatted as \fILATITUDE\fR,\fILONGITUDE\fR.
+.br
+Alternatively, when this option is used in the \fBdirect\fR mode, it will only accept keywords as its argument.
+.TP
+\fB-l \fILANG\fR, \fB--locale \fILANG\fR
+Set the output language to \fILANG\fR. This tool only supports two languages: \fBid\fR (Indonesian) and \fBen\fR (English).
+.br
+If the user does not use this option, the tool will default to outputting in \fBid\fR.
+.TP
+\fB-q \fIKEYWORD\fR, \fB--query \fIKEYWORD\fR
+Search for the desired location using \fIKEYWORD\fR. If \fIKEYWORD\fR contained more than one words, it must be encased in quotation marks (" ").
+.br
+This option is only used in the \fBsearchplace\fR mode. For the \fBdirect\fR mode alternatives, see option \fB-s\fR and \fB-f\fR.
+.TP
+\fB-r \fIREGION\fR, \fB--region \fIREGION\fR
+Set the \fIREGION\fR to search for the desired location (\fB-s\fR) in. Only four options are available as regions: \fBcgk\fR (Jakarta), \fBbdo\fR (Bandung), \fBmlg\fR (Malang), or \fBsub\fR (Surabaya).
+.br
+This option is specifically used for the \fBsearchplace\fR mode. For the \fBdirect\fR mode alternative, see options \fB-s\fR and \fB-f\fR.
+.TP
+\fB-S \fIREGION\fR, \fB--regstart \fIREGION\fR
+Set the \fIREGION\fR to search for the start location (\fB-s\fR) in. Only four options are available as regions: \fBcgk\fR (Jakarta), \fBbdo\fR (Bandung), \fBmlg\fR (Malang), or \fBsub\fR (Surabaya).
+.br
+This option is specifically used for the \fBdirect\fR mode. For the \fBsearchplace\fR mode alternative, see option \fB-r\fR.
+.TP
+\fB-s \fISTART\fR, \fB--start \fISTART\fR
+Set where the desired \fISTART\fR should be.
+.br
+When this option is used in the \fBfindroute\fR mode, it will only accept latitude and longitude coordinates, formatted as \fILATITUDE\fR,\fILONGITUDE\fR.
+.br
+Alternatively, when this option is used in the \fBdirect\fR mode, it will only accept keywords as its argument.
+.SH OUTPUT
+.TP
+.B searchplace
+In this mode, the output will be the location name, along with its latitude and longitude coordinates for the user to use as the input for \fBfindroute\fR mode.
+.TP
+.B findroute
+In this mode, the output will be the steps needed to be taken within the determined route. 
+.br
+Should there be more than one possible routes, the tool will list all of them, starting from the one with the shortest ETA.
+.TP
+.B direct
+.br
+In this mode, the output will be the starting and end location names, and the steps needed to be taken within the determined route. 
+.br
+Should there be more than one possible routes, the tool will list all of them, starting from the one with the shortest ETA.
+.SH ERROR HANDLING
+Should there be an error occuring somewhere (most likely due to faulty inputs), the tool will output an error message.
+.br
+This message will be in either Indonesian or English language, depending on the \fB-l\fR option's input.
 .SH BUGS
 No known bugs.
 .SH AUTHOR
-Vivek Gite (vivek@nixcraft.net.in)
+Alfred Aprianto Liaunardi (aaliaunardi@gmail.com)
