@@ -10,9 +10,9 @@ Pada bab ini akan dipaparkan berbagai macam rancangan dari perkakas \cl yang aka
 Bagian ini akan membahas mengenai alur dari \textit{activity diagram} serta \textit{sequence diagram} dari perkakas yang akan dibuat. Perlu diingat bahwa perkakas yang akan dibuat memiliki tiga buah fitur, yaitu:
 
 \begin{itemize}
-	\item mencari lokasi menggunakan kata kunci pencarian (\verb|search|),
-	\item mencari rute dengan angkot menggunakan \latlon lokasi (\verb|route|), dan
-	\item mencari rute dengan angkot menggunakan kata kunci pencarian lokasi (\verb|routedirect|).
+	\item mencari lokasi menggunakan kata kunci pencarian (\verb|searchplace|),
+	\item mencari rute dengan angkot menggunakan \latlon lokasi (\verb|findroute|), dan
+	\item mencari rute dengan angkot menggunakan kata kunci pencarian lokasi (\verb|direct|).
 \end{itemize}
 
 \noindent
@@ -27,14 +27,14 @@ Oleh karena itu, tiap-tiap fitur akan memiliki satu dari setiap tipe diagram. Ad
     \centering
     \includegraphics[width=0.55\linewidth]{diagrams-activity-searchplace}
     \caption[Diagram \textit{use case} perkakas yang akan dibangun]{\textit{Activity diagram} dari fitur pencarian lokasi menggunakan kata kunci pencarian.}
-    \label{fig:diagrams-activity-direct}
+    \label{fig:diagrams-activity-searchplace}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\linewidth]{diagrams-sequence-searchplace}
     \caption[Diagram \textit{use case} perkakas yang akan dibangun]{\textit{Sequence diagram} dari fitur pencarian lokasi menggunakan kata kunci pencarian.}
-    \label{fig:diagrams-sequence-direct}
+    \label{fig:diagrams-sequence-searchplace}
 \end{figure}
 
 Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
@@ -68,14 +68,14 @@ Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
     \centering
     \includegraphics[width=0.55\linewidth]{diagrams-activity-findroute}
     \caption[Diagram \textit{use case} perkakas yang akan dibangun]{\textit{Activity diagram} dari fitur pencarian rute angkot menggunakan \latlon lokasi.}
-    \label{fig:diagrams-activity-direct}
+    \label{fig:diagrams-activity-findroute}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\linewidth]{diagrams-sequence-findroute}
     \caption[Diagram \textit{use case} perkakas yang akan dibangun]{\textit{Sequence diagram} dari fitur pencarian rute angkot menggunakan \latlon lokasi.}
-    \label{fig:diagrams-sequence-direct}
+    \label{fig:diagrams-sequence-findroute}
 \end{figure}
 
 Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
@@ -121,7 +121,7 @@ Detail dari alur diagram untuk fitur ini adalah sebagai berikut.
 
 \begin{enumerate}
 	\item Perkakas akan meminta masukan dari pengguna berupa kata kunci dari lokasi awal dan lokasi akhir yang ingin dicari.
-	\item Masukan untuk lokasi awal akan dicek oleh perkakas validitasnya. Dalam kasus ini, masukan hanya akan dianggap tidak valid apabila pengguna tidak memasukkan apapun sebagai masukan perkakas (masukan kosong).
+	\item Masukan untuk lokasi awal akan dicek oleh perkakas validitasnya. Dalam kasus ini, masukan hanya akan dianggap tidak valid apabila pengguna tidak memasukkan apapun (masukan kosong), atau memasukkan koordinat \latlon sebagai masukan perkakas.
 	\item Jika kata kunci masukan:
 	
 	\begin{itemize}
