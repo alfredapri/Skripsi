@@ -6,6 +6,13 @@
 #include <cJSON/cJSON.h>
 #include "curl/curl.h"
 
+// Incoming data chunks
+struct chunk {
+    char *response;
+    size_t size;
+};
+struct chunk responsedata = {0};
+
 cJSON *responseJSON;
 char URL[1000] = "https://projectkiri.id/api?version=2";
 int mode = -1; // -1 = undefined, 0 = unknown, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
@@ -21,6 +28,23 @@ int step; // 0 = search starting location, 1 = search finish location, 2 = find 
 // Used only in multistep modes
 // 1 = an error has occurred, otherwise 0
 int error = 0; 
+
+// Allocate the memory of incoming data
+size_t write_memalloc(void *data, size_t size, size_t nmemb, void *userdata) {
+    size_t realsize = size * nmemb;
+    struct chunk *memory = (struct chunk *)userdata;
+    char *ptr = realloc(memory->response, memory->size + realsize + 1);
+    if(ptr == NULL) {
+        fprintf(stderr, "Out of memory!\n");
+        return 0;
+    } 
+    memory->response = ptr;
+    memcpy(&(memory->response[memory->size]), data, realsize);
+    memory->size += realsize;
+    memory->response[memory->size] = 0;
+
+    return realsize;
+}
 
 size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) {
     // Function must return realsize
@@ -203,9 +227,8 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
     return realsize;
 }
 
-size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
-    size_t realsize = size * nmemb;
-
+void write_findroute() {
+    char *arrayresponse;
     cJSON *status;
     cJSON *result;
     cJSON *route;
@@ -219,7 +242,12 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
     int indexroute;
     int indexstep;
 
-    responseJSON = cJSON_Parse(data);
+    // strcpy(arrayresponse, responsedata.response);
+    fputs("a", stderr);
+    // fprintf(stderr, "%s\n", arrayresponse);
+    responseJSON = cJSON_Parse((char *)responsedata.response);
+    fputs("b", stderr);
+    // fprintf(stderr, "%s\n", cJSON_Print(responseJSON));
     status = cJSON_GetObjectItem(responseJSON, "status");
 
     // test = cJSON_Print(responseJSON);
@@ -328,8 +356,6 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
             indexroute++;
         }
     }
-
-    return realsize;
 }
 
 void print_help() {
@@ -425,11 +451,13 @@ void execute_curl() {
                 break;
             
             case 3: // findroute
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_findroute);
+                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
+                curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
                 response = curl_easy_perform(curl);
                 if (response != CURLE_OK) {
                     print_error();
                 }
+                write_findroute();
                 break;
 
             case 4: // directroute
@@ -445,11 +473,13 @@ void execute_curl() {
                     }
                 }
                 else if (step == 2) {
-                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_findroute);
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
                     response = curl_easy_perform(curl);
                     if (response != CURLE_OK) {
                         print_error();
                     }
+                    write_findroute();
                 }
                 break;
 
