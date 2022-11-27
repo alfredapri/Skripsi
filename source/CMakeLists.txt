@@ -2,7 +2,7 @@ set(PROJECT_NAME kiritool)
 set(SOURCES main.c includes/cJSON/cJSON.c includes/cJSON/cJSON.h)
 
 cmake_minimum_required(VERSION 3.15.0)
-project(${PROJECT_NAME} VERSION 1.2.8 LANGUAGES C)
+project(${PROJECT_NAME} VERSION 1.2.9 LANGUAGES C)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -19,7 +19,7 @@ if (UNIX)
 
     file(ARCHIVE_CREATE OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/build/kiritool.1.gz
         PATHS ${CMAKE_CURRENT_SOURCE_DIR}/additionals/linux/kiritool.1
-        FORMAT gnutar
+        FORMAT raw
         COMPRESSION GZip
     )
     set(MANFILES build/kiritool.1.gz)
