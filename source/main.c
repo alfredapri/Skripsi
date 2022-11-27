@@ -41,6 +41,7 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
         error = 1;
+        fputs("\nError:\n", stderr);
 
         if (locale == 1) {
             fputs("API returned an error as its output.\n", stderr);
@@ -57,6 +58,7 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
             error = 1;
+            fputs("\nError:\n", stderr);
 
             if (locale == 1) {
                 fputs("Location not found.\n", stderr);
@@ -66,12 +68,11 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
                 fputs("Lokasi tidak berhasil ditemukan.\n", stderr);
                 fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
             }
-            puts("====================");
+            // puts("--------------------");
         }
         else {
             indexitem = 1;
-
-            puts("====================");
+            
             cJSON_ArrayForEach(resultitem, result) {
                 resultitemname = cJSON_GetObjectItem(resultitem, "placename");
                 resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
@@ -83,6 +84,14 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
                     }
                     else printf("Lokasi %d:\n", indexitem);
                 }
+                else {
+                    if (locale == 1) {
+                        puts("Location:");
+                    }
+                    else puts("Lokasi:");
+                }
+                puts("--------------------");
+
                 if (locale == 1) {
                     printf("Name: %s\n", resultitemname->valuestring);
                     printf("Coordinates: %s\n", resultitemlocation->valuestring);
@@ -91,7 +100,8 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
                     printf("Nama: %s\n", resultitemname->valuestring);
                     printf("Koordinat: %s\n", resultitemlocation->valuestring);
                 }
-                puts("====================");
+                putchar('\n');
+
                 indexitem++;
             }
         }
@@ -115,6 +125,7 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
         error = 1;
+        fputs("\nError:\n", stderr);
         
         if (step == 0) {
             if (locale == 1) {
@@ -143,6 +154,7 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
             error = 1;
+            fputs("\nError:\n", stderr);
             
             if (step == 0) {
                 if (locale == 1) {
@@ -201,15 +213,22 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
     cJSON *routetime;
     cJSON *routestepitem;
     cJSON *routestepdetail;
+    char routetimestring[20]; // Store translated duration string
+    char *routetimetemp;
+    char *timearraytoken;
     int indexroute;
     int indexstep;
 
     responseJSON = cJSON_Parse(data);
     status = cJSON_GetObjectItem(responseJSON, "status");
 
+    // test = cJSON_Print(responseJSON);
+    // printf("%s", test);
+
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
         error = 1;
+        fputs("\nError:\n", stderr);
 
         if (locale == 1) {
             fputs("API returned an error as its output.\n", stderr);
@@ -229,18 +248,10 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
             routesteps = cJSON_GetObjectItem(route, "steps");
             routetime = cJSON_GetObjectItem(route, "traveltime");
 
-            // Print route index only if there were more than one found
-            if (cJSON_GetArraySize(result) > 1) {
-                if (indexroute > 1) {
-                    putchar('\n');
-                }
-                puts("====================");
-
-                if (locale == 1) {
-                    printf("Route %d:\n", indexroute);
-                }
-                else printf("Rute %d:\n", indexroute);
+            if (!(mode == 3 && indexroute == 1)) {
+                putchar('\n');
             }
+            // puts("--------------------");
 
             // Check whether API managed to find a single result
             if (cJSON_IsNull(routetime)) {
@@ -248,16 +259,58 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
                     puts("Sorry, we are unable to find a route for you.");
                 }
                 else puts("Maaf, rute tidak berhasil ditemukan.");
-                puts("====================");
+                // puts("--------------------");
+                putchar('\n');
             }
             else {
+                routetimetemp = routetime->valuestring;
+                memset(routetimestring, 0, sizeof(routetimestring));
+                // printf("test %s\n", routetimetemp);
                 indexstep = 1;
+
+                // Fix bug from KIRI API in which "minute" time unit is not translated in id
+                // Else skip whole process
+                if (locale != 1) {
+                    timearraytoken = strtok(routetimetemp, " ");
+
+                    while (timearraytoken != NULL) {
+                        if (strcmp(timearraytoken, "minutes") == 0) {
+                            strcpy(timearraytoken, "menit");
+                        }
+                        // puts("a");
+                        strcat(routetimestring, timearraytoken);
+                        strcat(routetimestring, " ");
+                        // printf("test %s\n", routetimestring);
+                        // puts("b");
+                        // printf("test %s\n", routetimestring);
+                        // puts("c");
+
+                        timearraytoken = strtok(NULL, " ");
+                    }
+                }
+                else strcpy(routetimestring, routetimetemp);
+
+                // Print route index only if there were more than one found
+                // Otherwise simply print "Route:"
+                if (cJSON_GetArraySize(result) > 1) {
+                    if (locale == 1) {
+                        printf("Route %d:\n", indexroute);
+                    }
+                    else printf("Rute %d:\n", indexroute);
+                }
+                else {
+                    if (locale == 1) {
+                        puts("Route:");
+                    }
+                    else puts("Rute:");
+                }
+                puts("--------------------");
                 
                 if (locale == 1) {
-                    printf("Estimated duration: %s\n", routetime->valuestring);
+                    printf("Estimated duration: %s\n", routetimestring);
                 }
-                else printf("Estimasi waktu: %s\n", routetime->valuestring);
-                puts("====================");
+                else printf("Estimasi waktu: %s\n", routetimestring);
+                puts("--------------------");
                 
                 cJSON_ArrayForEach(routestepitem, routesteps) {
                     routestepdetail = cJSON_GetArrayItem(routestepitem, 3);
@@ -269,7 +322,8 @@ size_t write_findroute(void *data, size_t size, size_t nmemb, void *userdata) {
                     printf("%s\n", routestepdetail->valuestring);
                     indexstep++;
                 }
-                puts("====================");
+                // puts("--------------------");
+                // putchar('\n');
             }
             indexroute++;
         }
@@ -740,7 +794,6 @@ int main(int argc, char **argv) {
             case 4:
                 step = 0;
                 build_url_searchplace(regstart, start);
-                // printf("%s\n", URL);
                 execute_curl();
                 if (error == 1) {
                     break;
