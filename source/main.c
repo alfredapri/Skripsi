@@ -6,12 +6,11 @@
 #include <cJSON/cJSON.h>
 #include "curl/curl.h"
 
-// Incoming data chunks
 struct chunk {
-    char *response;
+    char *data;
     size_t size;
 };
-struct chunk responsedata = {0};
+struct chunk responsedata = {0}; // Incoming data chunks
 
 cJSON *responseJSON;
 char URL[1000] = "https://projectkiri.id/api?version=2";
@@ -30,28 +29,24 @@ int step; // 0 = search starting location, 1 = search finish location, 2 = find 
 int error = 0; 
 
 // Allocate the memory of incoming data
-size_t write_memalloc(void *data, size_t size, size_t nmemb, void *userdata) {
+// If data size + original allocated size exceeds the memory capability, print an error.
+size_t write_memalloc(void *incomingdata, size_t size, size_t nmemb, void *userdata) {
     size_t realsize = size * nmemb;
     struct chunk *memory = (struct chunk *)userdata;
-    char *ptr = realloc(memory->response, memory->size + realsize + 1);
+    char *ptr = realloc(memory->data, memory->size + realsize + 1);
     if(ptr == NULL) {
         fprintf(stderr, "Out of memory!\n");
         return 0;
     } 
-    memory->response = ptr;
-    memcpy(&(memory->response[memory->size]), data, realsize);
+    memory->data = ptr;
+    memcpy(&(memory->data[memory->size]), incomingdata, realsize);
     memory->size += realsize;
-    memory->response[memory->size] = 0;
+    memory->data[memory->size] = 0;
 
     return realsize;
 }
 
-size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) {
-    // Function must return realsize
-    // This variable served no purpose nor is it needed to check for memory usage
-    // since the response size will always be smaller than the maximum allowed memory buffer
-    size_t realsize = size * nmemb;
-
+void write_searchplace() {
     cJSON *status;
     cJSON *result;
     cJSON *resultitem;
@@ -59,7 +54,7 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
     cJSON *resultitemlocation;
     int indexitem;
 
-    responseJSON = cJSON_Parse(data);
+    responseJSON = cJSON_Parse(responsedata.data);
     status = cJSON_GetObjectItem(responseJSON, "status");
     
     // Check whether API returned an error
@@ -130,20 +125,16 @@ size_t write_searchplace(void *data, size_t size, size_t nmemb, void *userdata) 
             }
         }
     }
-
-    return realsize;
 }
 
-size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *userdata) {
-    size_t realsize = size * nmemb;
-
+void write_searchplace_noreturns() {
     cJSON *status;
     cJSON *result;
     cJSON *resultitem;
     cJSON *resultitemname;
     cJSON *resultitemlocation;
 
-    responseJSON = cJSON_Parse(data);
+    responseJSON = cJSON_Parse(responsedata.data);
     status = cJSON_GetObjectItem(responseJSON, "status");
     
     // Check whether API returned an error
@@ -223,12 +214,9 @@ size_t write_searchplace_noreturns(void *data, size_t size, size_t nmemb, void *
             }
         }
     }
-
-    return realsize;
 }
 
 void write_findroute() {
-    char *arrayresponse;
     cJSON *status;
     cJSON *result;
     cJSON *route;
@@ -243,10 +231,10 @@ void write_findroute() {
     int indexstep;
 
     // strcpy(arrayresponse, responsedata.response);
-    fputs("a", stderr);
+    // fputs("a", stderr);
     // fprintf(stderr, "%s\n", arrayresponse);
-    responseJSON = cJSON_Parse((char *)responsedata.response);
-    fputs("b", stderr);
+    responseJSON = cJSON_Parse(responsedata.data);
+    // fputs("b", stderr);
     // fprintf(stderr, "%s\n", cJSON_Print(responseJSON));
     status = cJSON_GetObjectItem(responseJSON, "status");
 
@@ -441,13 +429,15 @@ void execute_curl() {
         curl_easy_setopt(curl, CURLOPT_URL, URL);
         switch (mode) {
             case 2: // searchplace
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_searchplace);
+                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
+                curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
                 response = curl_easy_perform(curl);
                 // Check CURL response code for errors
                 if (response != CURLE_OK) {
                     // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
                     print_error();
                 }
+                write_searchplace();
                 break;
             
             case 3: // findroute
@@ -462,15 +452,22 @@ void execute_curl() {
 
             case 4: // directroute
                 if (step == 0) {
-                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_searchplace_noreturns);
-                    response = curl_easy_perform(curl);
-                }
-                else if (step == 1) {
-                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_searchplace_noreturns);
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
                     response = curl_easy_perform(curl);
                     if (response != CURLE_OK) {
                         print_error();
                     }
+                    write_searchplace_noreturns();
+                }
+                else if (step == 1) {
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
+                    response = curl_easy_perform(curl);
+                    if (response != CURLE_OK) {
+                        print_error();
+                    }
+                    write_searchplace_noreturns();
                 }
                 else if (step == 2) {
                     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
