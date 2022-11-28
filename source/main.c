@@ -328,7 +328,7 @@ void write_findroute() {
 }
 
 void print_help() {
-    puts("KIRI Command Line Tool, version 1.2.10");
+    puts("KIRI Command Line Tool, version 1.2.11");
     puts("Use the KIRI tool through the command line.");
     putchar('\n');
     puts("USAGE:");
@@ -450,9 +450,16 @@ void build_url_searchplace(int region, char* query) {
     // Region check
     switch (region) {
         case -1:
-            fputs("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.\n", stderr);
-            fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
-            fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
+            if (locale == 1) {
+                fputs("Location searching requires a region to be set.\n", stderr);
+                fputs("Please make sure you have chosen between one of the four available regions.\n", stderr);
+                fputs("Regions available: cgk, bdo, mlg, sub\n", stderr);
+            }
+            else {
+                fputs("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.\n", stderr);
+                fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
+                fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
+            }
             exit(0);
             break;
         
@@ -473,17 +480,30 @@ void build_url_searchplace(int region, char* query) {
             break;
 
         default:
-            fputs("Anda telah memasukkan region yang tidak valid.\n", stderr);
-            fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
-            fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
+            if (locale == 1) {
+                fputs("You have inputted an invalid region.\n", stderr);
+                fputs("Please recheck whether the region code chosen was one of the four region codes supported.\n", stderr);
+                fputs("Regions available: cgk, bdo, mlg, sub\n", stderr);
+            }
+            else {
+                fputs("Anda telah memasukkan region yang tidak valid.\n", stderr);
+                fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
+                fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
+            }
             exit(0);
             break;
     }
 
     // Query check
     if (strcmp(query, "\0") == 0) {
-        fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
-        fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
+        if (locale == 1) {
+            fputs("Location searching requires a search query.\n", stderr);
+            fputs("Please make sure you have inputted a query to be used in the search.\n", stderr);
+        }
+        else {
+            fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
+            fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
+        }
         exit(0);
     }
     else {
@@ -506,6 +526,10 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
             fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
             fputs("Pilihan locale: id, en\n", stderr);
+            fputs("--------------------\n", stderr);
+            fputs("You have inputted an invalid language (locale) option.\n", stderr);
+            fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
+            fputs("Locale available: id, en\n", stderr);
             exit(0);
             break;
         
@@ -516,8 +540,14 @@ void build_url_findroute(int locale, char* start, char* finish) {
 
     // Starting location check
     if (strcmp(start, "\0") == 0) {
-        fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
-        fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
+        if (locale == 1) {
+            fputs("You did not input the coordinates of the starting location.\n", stderr);
+            fputs("Please input the coordinates of the starting location through the corresponding option.\n", stderr);
+        }
+        else {
+            fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
+            fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
+        }
         exit(0);
     }
     else {
@@ -527,8 +557,14 @@ void build_url_findroute(int locale, char* start, char* finish) {
 
     // End location check
     if (strcmp(finish, "\0") == 0) {
-        fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
-        fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
+        if (locale == 1) {
+            fputs("You did not input the coordinates of the end location.\n", stderr);
+            fputs("Please input the coordinates of the end location through the corresponding option.\n", stderr);
+        }
+        else {
+            fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
+            fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
+        }
         exit(0);
     }
     else {
@@ -712,14 +748,26 @@ int main(int argc, char **argv) {
 
             case ':':
                 // Error: missing arguments
-                fputs("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.\n", stderr);
-                fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
+                if (locale == 1) {
+                    fputs("One of the options inputted was missing its required argument.\n", stderr);
+                    fputs("Please recheck the input command's syntax.\n", stderr);
+                }
+                else {
+                    fputs("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.\n", stderr);
+                    fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
+                }
                 exit(0);
 
             case '?':
                 // Error: unknown options
-                fputs("Anda telah memasukkan opsi yang tidak valid.\n", stderr);
-                fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
+                if (locale == 1) {
+                    fputs("You have inputted an invalid option.\n", stderr);
+                    fputs("Please recheck the input command's syntax.\n", stderr);
+                }
+                else {
+                    fputs("Anda telah memasukkan opsi yang tidak valid.\n", stderr);
+                    fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
+                }
                 exit(0);
 
             default:
@@ -729,16 +777,30 @@ int main(int argc, char **argv) {
 
     // Error: extra arguments
     if (optind < argc) {
-        fprintf(stderr, "Anda telah memasukkan kelebihan argumen: ");
-        while (optind < argc) {
-            fprintf(stderr, "%s ", argv[optind++]);
+        if (locale == 1) {
+            fprintf(stderr, "You have inserted some extra arguments: ");
+            while (optind < argc) {
+                fprintf(stderr, "%s ", argv[optind++]);
+            }
+            fputs("\nPlease recheck the input command's syntax.\n", stderr);
         }
-        fputs("\nMohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
+        else {
+            fprintf(stderr, "Anda telah memasukkan kelebihan argumen: ");
+            while (optind < argc) {
+                fprintf(stderr, "%s ", argv[optind++]);
+            }
+            fputs("\nMohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
+        }
     }
     else {
         switch (mode) {
             case -1:
-                fputs("Mohon masukkan mode pengunaan perkakas.\n", stderr);
+                if (locale == 1) {
+                    fputs("Please enter tool operation mode.\n", stderr);
+                }
+                else {
+                    fputs("Mohon masukkan mode pengunaan perkakas.\n", stderr);   
+                }
                 exit(0);
                 break;
 
@@ -779,8 +841,14 @@ int main(int argc, char **argv) {
                 break;
 
             default:
-                fputs("Anda telah memasukkan mode yang tidak valid.\n", stderr);
-                fputs("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.\n", stderr);
+                if (locale == 1) {
+                    fputs("You have entered an invalid operation mode.\n", stderr);
+                    fputs("Please recheck whether the operation mode had been typed correctly.\n", stderr);
+                }
+                else {
+                    fputs("Anda telah memasukkan mode yang tidak valid.\n", stderr);
+                    fputs("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.\n", stderr);
+                }
                 exit(0);
                 break;
         }
