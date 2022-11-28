@@ -10,7 +10,7 @@ struct chunk {
     char *data;
     size_t size;
 };
-struct chunk responsedata = {0}; // Incoming data chunks
+struct chunk responsedata; // Incoming data chunks
 
 cJSON *responseJSON;
 char URL[1000] = "https://projectkiri.id/api?version=2";
@@ -421,6 +421,7 @@ void print_error() {
 void execute_curl() {
     CURL *curl;
     CURLcode response;
+    memset(&responsedata, 0, sizeof(responsedata));
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
