@@ -324,7 +324,9 @@ void write_findroute() {
                     indexstep++;
                 }
             }
-            putchar('\n');
+            if (error != 1) {
+                putchar('\n');
+            };
 
             indexroute++;
         }
