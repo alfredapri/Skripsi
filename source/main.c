@@ -77,7 +77,7 @@ void write_searchplace() {
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
             error = 1;
-            fputs("\nError:\n", stderr);
+            fputs("\n", stderr);
 
             if (locale == 1) {
                 fputs("Location not found.\n", stderr);
@@ -168,7 +168,7 @@ void write_searchplace_noreturns() {
         // Check whether API managed to find a single result
         if (cJSON_GetArraySize(result) == 0) {
             error = 1;
-            fputs("\nError:\n", stderr);
+            fputs("\n", stderr);
             
             if (step == 0) {
                 if (locale == 1) {
@@ -255,17 +255,19 @@ void write_findroute() {
             routesteps = cJSON_GetObjectItem(route, "steps");
             routetime = cJSON_GetObjectItem(route, "traveltime");
 
-            if (!(mode == 3 && indexroute == 1)) {
+            if (mode == 4 && indexroute == 1) {
                 putchar('\n');
             }
 
             // Check whether API managed to find a single result
             if (cJSON_IsNull(routetime)) {
+                error = 1;
+                fputs("\n", stderr);
+
                 if (locale == 1) {
-                    puts("Sorry, we are unable to find a route for you.");
+                    fputs("Sorry, we couldn't find a public transport route for your trip.\n", stderr);
                 }
-                else puts("Maaf, rute tidak berhasil ditemukan.");
-                putchar('\n');
+                else fputs("Maaf, kami tidak dapat menemukan rute transportasi publik untuk perjalanan anda.\n", stderr);
             }
             else {
                 routetimetemp = routetime->valuestring;
@@ -322,13 +324,15 @@ void write_findroute() {
                     indexstep++;
                 }
             }
+            putchar('\n');
+
             indexroute++;
         }
     }
 }
 
 void print_help() {
-    puts("KIRI Command Line Tool, version 1.2.11");
+    puts("KIRI Command Line Tool, version 1.2.12");
     puts("Use the KIRI tool through the command line.");
     putchar('\n');
     puts("USAGE:");
@@ -385,10 +389,12 @@ void print_help() {
     puts("        Route starting location.");
     puts("        For 'findroute' mode, input the location's latitude and longitude coordinates.");
     puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
-    putchar('\n');
 }
 
 void print_curl_error() {
+    error = 1;
+    fputs("\nError:\n", stderr);
+
     if (locale == 1) {
         fputs("A connection error has occurred.\n", stderr);
         fputs("Please verify whether the internet connection is up and running.\n", stderr);
@@ -447,9 +453,26 @@ void execute_curl() {
 void build_url_searchplace(int region, char* query) {
     strcat(URL, "&mode=searchplace");
 
+    // Locale check - tool adition
+    if (locale == 2) {
+        error = 1;
+        fputs("\nError:\n", stderr);
+        fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
+        fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
+        fputs("Pilihan locale: id, en\n", stderr);
+        fputs("--------------------\n", stderr);
+        fputs("You have inputted an invalid language (locale) option.\n", stderr);
+        fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
+        fputs("Locale available: id, en\n", stderr);
+        exit(0);
+    }
+
     // Region check
     switch (region) {
         case -1:
+            error = 1;
+            fputs("\nError:\n", stderr);
+
             if (locale == 1) {
                 fputs("Location searching requires a region to be set.\n", stderr);
                 fputs("Please make sure you have chosen between one of the four available regions.\n", stderr);
@@ -480,6 +503,9 @@ void build_url_searchplace(int region, char* query) {
             break;
 
         default:
+            error = 1;
+            fputs("\nError:\n", stderr);
+
             if (locale == 1) {
                 fputs("You have inputted an invalid region.\n", stderr);
                 fputs("Please recheck whether the region code chosen was one of the four region codes supported.\n", stderr);
@@ -496,6 +522,9 @@ void build_url_searchplace(int region, char* query) {
 
     // Query check
     if (strcmp(query, "\0") == 0) {
+        error = 1;
+        fputs("\nError:\n", stderr);
+
         if (locale == 1) {
             fputs("Location searching requires a search query.\n", stderr);
             fputs("Please make sure you have inputted a query to be used in the search.\n", stderr);
@@ -523,6 +552,8 @@ void build_url_findroute(int locale, char* start, char* finish) {
             break;
         
         case 2:
+            error = 1;
+            fputs("\nError:\n", stderr);
             fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
             fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
             fputs("Pilihan locale: id, en\n", stderr);
@@ -540,6 +571,9 @@ void build_url_findroute(int locale, char* start, char* finish) {
 
     // Starting location check
     if (strcmp(start, "\0") == 0) {
+        error = 1;
+        fputs("\nError:\n", stderr);
+
         if (locale == 1) {
             fputs("You did not input the coordinates of the starting location.\n", stderr);
             fputs("Please input the coordinates of the starting location through the corresponding option.\n", stderr);
@@ -557,6 +591,9 @@ void build_url_findroute(int locale, char* start, char* finish) {
 
     // End location check
     if (strcmp(finish, "\0") == 0) {
+        error = 1;
+        fputs("\nError:\n", stderr);
+
         if (locale == 1) {
             fputs("You did not input the coordinates of the end location.\n", stderr);
             fputs("Please input the coordinates of the end location through the corresponding option.\n", stderr);
@@ -672,9 +709,11 @@ int main(int argc, char **argv) {
 
             case 'q':
                 // General location search keyword
-                replace_space(optarg);
-                strcpy(query, escape);
-                memset(escape, 0, sizeof(escape));
+                if (optarg[0] != '\0') {
+                    replace_space(optarg);
+                    strcpy(query, escape);
+                    memset(escape, 0, sizeof(escape));
+                }
                 break;
             
             case 's':
@@ -748,6 +787,9 @@ int main(int argc, char **argv) {
 
             case ':':
                 // Error: missing arguments
+                error = 1;
+                fputs("\nError:\n", stderr);
+
                 if (locale == 1) {
                     fputs("One of the options inputted was missing its required argument.\n", stderr);
                     fputs("Please recheck the input command's syntax.\n", stderr);
@@ -760,6 +802,9 @@ int main(int argc, char **argv) {
 
             case '?':
                 // Error: unknown options
+                error = 1;
+                fputs("\nError:\n", stderr);
+
                 if (locale == 1) {
                     fputs("You have inputted an invalid option.\n", stderr);
                     fputs("Please recheck the input command's syntax.\n", stderr);
@@ -777,6 +822,9 @@ int main(int argc, char **argv) {
 
     // Error: extra arguments
     if (optind < argc) {
+        error = 1;
+        fputs("\nError:\n", stderr);
+
         if (locale == 1) {
             fprintf(stderr, "You have inserted some extra arguments: ");
             while (optind < argc) {
@@ -795,6 +843,9 @@ int main(int argc, char **argv) {
     else {
         switch (mode) {
             case -1:
+                error = 1;
+                fputs("\nError:\n", stderr);
+
                 if (locale == 1) {
                     fputs("Please enter tool operation mode.\n", stderr);
                 }
@@ -841,6 +892,9 @@ int main(int argc, char **argv) {
                 break;
 
             default:
+                error = 1;
+                fputs("\nError:\n", stderr);
+
                 if (locale == 1) {
                     fputs("You have entered an invalid operation mode.\n", stderr);
                     fputs("Please recheck whether the operation mode had been typed correctly.\n", stderr);
