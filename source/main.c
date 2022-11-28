@@ -81,13 +81,12 @@ void write_searchplace() {
 
             if (locale == 1) {
                 fputs("Location not found.\n", stderr);
-                fputs("Please recheck whether the search keyword was correct.\n", stderr);
+                fputs("Please recheck whether the search keyword was inputted correctly.\n", stderr);
             }
             else {
                 fputs("Lokasi tidak berhasil ditemukan.\n", stderr);
-                fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
+                fputs("Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.\n", stderr);
             }
-            // puts("--------------------");
         }
         else {
             indexitem = 1;
@@ -145,21 +144,21 @@ void write_searchplace_noreturns() {
         if (step == 0) {
             if (locale == 1) {
                 fputs("API returned an error as its start coordinates.\n", stderr);
-                fputs("Did you perhaps enter the location's coordinates instead of the query keywords?\n", stderr);
+                fputs("Please recheck whether the starting location coordinates were inputted correctly.\n", stderr);
             }
             else {
                 fputs("API mengembalikan error sebagai koordinat lokasi awal.\n", stderr);
-                fputs("Apakah anda mungkin memasukkan koordinat lokasi dan bukan kata kunci pencariannya?\n", stderr);
+                fputs("Silakan cek ulang apakah koordinat lokasi awal sudah dimasukkan dengan benar.\n", stderr);
             }
         }
         else if (step == 1) {
             if (locale == 1) {
                 fputs("API returned an error as its end coordinates.\n", stderr);
-                fputs("Did you perhaps enter the location's coordinates instead of the query keywords?\n", stderr);
+                fputs("Please recheck whether the end location coordinates were inputted correctly.\n", stderr);
             }
             else {
                 fputs("API mengembalikan error sebagai koordinat lokasi akhir.\n", stderr);
-                fputs("Apakah anda mungkin memasukkan koordinat lokasi dan bukan kata kunci pencariannya?\n", stderr);
+                fputs("Silakan cek ulang apakah koordinat lokasi akhir sudah dimasukkan dengan benar.\n", stderr);
             }
         }
     }
@@ -174,21 +173,21 @@ void write_searchplace_noreturns() {
             if (step == 0) {
                 if (locale == 1) {
                     fputs("Starting location not found.\n", stderr);
-                    fputs("Please recheck whether the search keyword was correct.\n", stderr);
+                    fputs("Please recheck whether the search keyword was inputted correctly.\n", stderr);
                 }
                 else {
                     fputs("Lokasi awal tidak berhasil ditemukan.\n", stderr);
-                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
+                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.\n", stderr);
                 }
             }
             else if (step == 1) {
                 if (locale == 1) {
                     fputs("Finish location not found.\n", stderr);
-                    fputs("Please recheck whether the search keyword was correct.\n", stderr);
+                    fputs("Please recheck whether the search keyword was inputted correctly.\n", stderr);
                 }
                 else {
                     fputs("Lokasi akhir tidak berhasil ditemukan.\n", stderr);
-                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah benar.\n", stderr);
+                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.\n", stderr);
                 }
             }
         }
@@ -230,16 +229,8 @@ void write_findroute() {
     int indexroute;
     int indexstep;
 
-    // strcpy(arrayresponse, responsedata.response);
-    // fputs("a", stderr);
-    // fprintf(stderr, "%s\n", arrayresponse);
     responseJSON = cJSON_Parse(responsedata.data);
-    // fputs("b", stderr);
-    // fprintf(stderr, "%s\n", cJSON_Print(responseJSON));
     status = cJSON_GetObjectItem(responseJSON, "status");
-
-    // test = cJSON_Print(responseJSON);
-    // printf("%s", test);
 
     // Check whether API returned an error
     if (strcmp(status->valuestring, "ok") != 0) {
@@ -248,11 +239,11 @@ void write_findroute() {
 
         if (locale == 1) {
             fputs("API returned an error as its output.\n", stderr);
-            fputs("Did you perhaps enter the location's name instead of its coordinates?\n", stderr);
+            fputs("Please recheck whether both location's coordinates were inputted correctly.\n", stderr);
         }
         else {
             fputs("API mengembalikan error sebagai keluarannya.\n", stderr);
-            fputs("Apakah anda mungkin memasukkan nama lokasi dan bukan koordinatnya?\n", stderr);
+            fputs("Silakan cek ulang apakah koordinat kedua lokasi sudah dimasukkan dengan benar.\n", stderr);
         }
     }
     else {
@@ -267,7 +258,6 @@ void write_findroute() {
             if (!(mode == 3 && indexroute == 1)) {
                 putchar('\n');
             }
-            // puts("--------------------");
 
             // Check whether API managed to find a single result
             if (cJSON_IsNull(routetime)) {
@@ -275,13 +265,11 @@ void write_findroute() {
                     puts("Sorry, we are unable to find a route for you.");
                 }
                 else puts("Maaf, rute tidak berhasil ditemukan.");
-                // puts("--------------------");
                 putchar('\n');
             }
             else {
                 routetimetemp = routetime->valuestring;
                 memset(routetimestring, 0, sizeof(routetimestring));
-                // printf("test %s\n", routetimetemp);
                 indexstep = 1;
 
                 // Fix bug from KIRI API in which "minute" time unit is not translated in id
@@ -293,13 +281,8 @@ void write_findroute() {
                         if (strcmp(timearraytoken, "minutes") == 0) {
                             strcpy(timearraytoken, "menit");
                         }
-                        // puts("a");
                         strcat(routetimestring, timearraytoken);
                         strcat(routetimestring, " ");
-                        // printf("test %s\n", routetimestring);
-                        // puts("b");
-                        // printf("test %s\n", routetimestring);
-                        // puts("c");
 
                         timearraytoken = strtok(NULL, " ");
                     }
@@ -338,8 +321,6 @@ void write_findroute() {
                     printf("%s\n", routestepdetail->valuestring);
                     indexstep++;
                 }
-                // puts("--------------------");
-                // putchar('\n');
             }
             indexroute++;
         }
@@ -347,7 +328,7 @@ void write_findroute() {
 }
 
 void print_help() {
-    puts("KIRI Command Line Tool, version x.x.x");
+    puts("KIRI Command Line Tool, version 1.2.10");
     puts("Use the KIRI tool through the command line.");
     putchar('\n');
     puts("USAGE:");
@@ -384,7 +365,7 @@ void print_help() {
     puts("        Tool operation mode. Note that not all options are needed for all modes.");
     puts("        Should the user input extra options, they will simply not be used.");
     puts("        Available modes:");
-    puts("          - searchplace");   
+    puts("          - searchplace");
     puts("                Required options: --query, --region");
     puts("                Optional options: --locale");
     puts("          - findroute");   
@@ -407,7 +388,7 @@ void print_help() {
     putchar('\n');
 }
 
-void print_error() {
+void print_curl_error() {
     if (locale == 1) {
         fputs("A connection error has occurred.\n", stderr);
         fputs("Please verify whether the internet connection is up and running.\n", stderr);
@@ -421,62 +402,34 @@ void print_error() {
 void execute_curl() {
     CURL *curl;
     CURLcode response;
-    memset(&responsedata, 0, sizeof(responsedata));
+    memset(&responsedata, 0, sizeof(responsedata)); // Empty response data chunk for multiprocess modes
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
 
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, URL);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
+        response = curl_easy_perform(curl);
+        if (response != CURLE_OK) {
+            print_curl_error();
+        }
+
         switch (mode) {
             case 2: // searchplace
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
-                curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
-                response = curl_easy_perform(curl);
-                // Check CURL response code for errors
-                if (response != CURLE_OK) {
-                    // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(response));
-                    print_error();
-                }
                 write_searchplace();
                 break;
             
             case 3: // findroute
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
-                curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
-                response = curl_easy_perform(curl);
-                if (response != CURLE_OK) {
-                    print_error();
-                }
                 write_findroute();
                 break;
 
             case 4: // directroute
-                if (step == 0) {
-                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
-                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
-                    response = curl_easy_perform(curl);
-                    if (response != CURLE_OK) {
-                        print_error();
-                    }
+                if (step == 0 || step == 1) { // search start and finish
                     write_searchplace_noreturns();
                 }
-                else if (step == 1) {
-                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
-                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
-                    response = curl_easy_perform(curl);
-                    if (response != CURLE_OK) {
-                        print_error();
-                    }
-                    write_searchplace_noreturns();
-                }
-                else if (step == 2) {
-                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
-                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
-                    response = curl_easy_perform(curl);
-                    if (response != CURLE_OK) {
-                        print_error();
-                    }
+                else if (step == 2) { // findroute
                     write_findroute();
                 }
                 break;
@@ -500,7 +453,7 @@ void build_url_searchplace(int region, char* query) {
             fputs("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.\n", stderr);
             fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
             fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
-            abort();
+            exit(0);
             break;
         
         case 1:
@@ -523,7 +476,7 @@ void build_url_searchplace(int region, char* query) {
             fputs("Anda telah memasukkan region yang tidak valid.\n", stderr);
             fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
             fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
-            abort();
+            exit(0);
             break;
     }
 
@@ -531,7 +484,7 @@ void build_url_searchplace(int region, char* query) {
     if (strcmp(query, "\0") == 0) {
         fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
         fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
-        abort();
+        exit(0);
     }
     else {
         strcat(URL, "&querystring=");
@@ -553,7 +506,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
             fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
             fputs("Pilihan locale: id, en\n", stderr);
-            abort();
+            exit(0);
             break;
         
         default:
@@ -565,7 +518,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
     if (strcmp(start, "\0") == 0) {
         fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
         fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
-        abort();
+        exit(0);
     }
     else {
         strcat(URL, "&start=");
@@ -576,7 +529,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
     if (strcmp(finish, "\0") == 0) {
         fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
         fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
-        abort();
+        exit(0);
     }
     else {
         strcat(URL, "&finish=");
@@ -598,7 +551,6 @@ void replace_space(char* string) {
     int j = 0;
 
     for (i = 0; i < 100; i++) {
-        // printf("%c ", string[i]);
         if (string[i] == '\0') {
             break;
         }
@@ -633,17 +585,14 @@ int main(int argc, char **argv) {
             {"locale",      required_argument,  0,  'l'},
             {0, 0, 0, 0}
         };
-        /* getopt_long stores the option index here. */
         int option_index = 0;
 
         funct = getopt_long (argc, argv, ":hm:r:q:s:S:f:F:l:", long_options, &option_index);
 
-        /* Detect the end of the options. */
         if (funct == -1) {
             break;
         }
 
-        // Parse all inputs
         switch (funct) {
             case 'h':
                 // Program help
@@ -693,13 +642,8 @@ int main(int argc, char **argv) {
                 break;
             
             case 's':
-                // General location search keyword
-                if (optarg[0] == '\0') {
-                    // puts("Anda telah memasukkan kata kunci yang tidak valid.");
-                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
-                    // abort();
-                }
-                else {
+                // Starting location input
+                if (optarg[0] != '\0') {
                     replace_space(optarg);
                     strcpy(start, escape);
                     memset(escape, 0, sizeof(escape));
@@ -707,13 +651,8 @@ int main(int argc, char **argv) {
                 break;
             
             case 'f':
-                // General location search keyword
-                if (optarg[0] == '\0') {
-                    // puts("Anda telah memasukkan kata kunci yang tidak valid.");
-                    // puts("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode yang tersedia.");
-                    // abort();
-                }
-                else {
+                // Finish location input
+                if (optarg[0] != '\0') {
                     replace_space(optarg);
                     strcpy(finish, escape);
                     memset(escape, 0, sizeof(escape));
@@ -775,13 +714,13 @@ int main(int argc, char **argv) {
                 // Error: missing arguments
                 fputs("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.\n", stderr);
                 fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
-                abort();
+                exit(0);
 
             case '?':
                 // Error: unknown options
                 fputs("Anda telah memasukkan opsi yang tidak valid.\n", stderr);
                 fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
-                abort();
+                exit(0);
 
             default:
                 abort();
@@ -800,7 +739,7 @@ int main(int argc, char **argv) {
         switch (mode) {
             case -1:
                 fputs("Mohon masukkan mode pengunaan perkakas.\n", stderr);
-                abort();
+                exit(0);
                 break;
 
             case 1:
@@ -809,13 +748,11 @@ int main(int argc, char **argv) {
             
             case 2:
                 build_url_searchplace(region, query);
-                // printf("%s\n", URL);
                 execute_curl();
                 break;
             
             case 3:
                 build_url_findroute(locale, start, finish);
-                // printf("%s\n", URL);
                 execute_curl();
                 break;
             
@@ -830,7 +767,6 @@ int main(int argc, char **argv) {
 
                 step = 1;
                 build_url_searchplace(regstart, finish);
-                // printf("%s\n", URL);
                 execute_curl();
                 if (error == 1) {
                     break;
@@ -839,17 +775,16 @@ int main(int argc, char **argv) {
 
                 step = 2;
                 build_url_findroute(locale, start, finish);
-                // printf("%s\n", URL);
                 execute_curl();
                 break;
 
             default:
                 fputs("Anda telah memasukkan mode yang tidak valid.\n", stderr);
                 fputs("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.\n", stderr);
-                abort();
+                exit(0);
                 break;
         }
     }
 
-    exit (0);
+    exit(0);
 }
