@@ -93,7 +93,7 @@ int error = 0;
 	
 	\begin{lstlisting}[language=C, caption=Implementasi fungsi print\textunderscore help(), label=code:kiritool-function-help]
 void print_help() {
-    puts("KIRI Command Line Tool, version 1.2.12");
+    puts("KIRI Command Line Tool, version 1.2.13");
     puts("Use the KIRI tool through the command line.");
     putchar('\n');
     puts("USAGE:");
@@ -200,7 +200,7 @@ void replace_space(char* string) {
         fputs("You have inputted an invalid language (locale) option.\n", stderr);
         fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
         fputs("Locale available: id, en\n", stderr);
-        exit(0);
+        exit(1);
     }
 
     // Region check
@@ -219,7 +219,7 @@ void replace_space(char* string) {
                 fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
                 fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
             }
-            exit(0);
+            exit(1);
             break;
         
         case 1:
@@ -252,7 +252,7 @@ void replace_space(char* string) {
                 fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
                 fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
             }
-            exit(0);
+            exit(1);
             break;
     }
 
@@ -269,7 +269,7 @@ void replace_space(char* string) {
             fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
             fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
         }
-        exit(0);
+        exit(1);
     }
     else {
         strcat(URL, "&querystring=");
@@ -302,7 +302,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("You have inputted an invalid language (locale) option.\n", stderr);
             fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
             fputs("Locale available: id, en\n", stderr);
-            exit(0);
+            exit(1);
             break;
         
         default:
@@ -323,7 +323,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
             fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
         }
-        exit(0);
+        exit(1);
     }
     else {
         strcat(URL, "&start=");
@@ -343,7 +343,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
             fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
         }
-        exit(0);
+        exit(1);
     }
     else {
         strcat(URL, "&finish=");
@@ -765,6 +765,49 @@ void write_searchplace_noreturns() {
 \subsection{Implementasi CMake}
 \label{sec:testing-implementation-cmake}
 
+Implementasi CMake dalam perkakas ini tentunya akan membutuhkan sebuah file \verb|CMakeLists.txt|, di mana untuk perkakas \cl KIRI ini, \textit{file} tersebut dapat dilihat di kode \ref{code:kiritool-cmakelists}. \textit{File} CMakeLists ini memiliki tiga fungsi utama, yaitu:
+
+\begin{itemize}
+	\item mengikutkan (\textit{include}) \textit{file-file} utama dalam perkakas,
+	\item mengikutkan \textit{library-library} yang dibutuhkan, dan
+	\item menangani instalasi \textit{manual (man) page} untuk sistem operasi berbasis Linux. 
+\end{itemize}
+
+\begin{lstlisting}[language={}, caption=Implementasi fungsi print\textunderscore help(), label=code:kiritool-cmakelists]
+set(PROJECT_NAME kiritool)
+set(SOURCES main.c includes/cJSON/cJSON.c includes/cJSON/cJSON.h)
+
+cmake_minimum_required(VERSION 3.15.0)
+project(${PROJECT_NAME} VERSION 1.2.13 LANGUAGES C)
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+find_package(CURL REQUIRED)
+
+# libcurl
+target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
+# cJSON
+target_include_directories(${PROJECT_NAME} PRIVATE includes)
+
+# UNIX specific commands
+if (UNIX)
+    include(GNUInstallDirs)
+
+    file(ARCHIVE_CREATE OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/build/kiritool.1.gz
+        PATHS ${CMAKE_CURRENT_SOURCE_DIR}/additionals/linux/kiritool.1
+        FORMAT raw
+        COMPRESSION GZip
+    )
+    set(MANFILES build/kiritool.1.gz)
+
+    if (DEFINED CMAKE_INSTALL_MANDIR)
+        install(FILES ${MANFILES} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
+    else()
+        message(FATAL_ERROR "CMAKE_INSTALL_MANDIR is not defined. \n  ")
+    endif()
+endif()
+\end{lstlisting}
+
 \section{Pengujian}
 \label{sec:testing-experiments}
 
@@ -806,7 +849,7 @@ Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan p
 	
 	\begin{itemize}
 		\item OS: Ubuntu Jammy (22.04)
-		\item \textit{Compiler}: MinGW (GNU\textemdash versi 12.1.0)
+		\item \textit{Compiler}: MinGW (GNU\textemdash versi 11.3.0)
 		\item \textit{Library}:
 		
 		\begin{itemize}
@@ -824,7 +867,7 @@ Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan p
 \subsubsection{Instalasi}
 \label{sec:testing-implementation-usage-instalation}
 
-Proses instalasi dari perkakas ini memiliki garis besar yang sama - instal \textit{compiler} C, kemudian instal \textit{library yang diperlukan}. Karena banyaknya perbedaan dari detil yang perlu dilakukan untuk setiap sistem operasi, maka bagian ini akan dibagi dua, menjadi satu bagian per sistem operasi.
+Proses instalasi dari perkakas ini memiliki garis besar yang sama\textemdash instal \textit{compiler} C, kemudian instal \textit{library yang diperlukan}. Karena banyaknya perbedaan dari detil yang perlu dilakukan untuk setiap sistem operasi, maka bagian ini akan dibagi dua, menjadi satu bagian per sistem operasi.
 
 \begin{itemize}
 	\item Windows \\
@@ -844,34 +887,13 @@ Proses instalasi dari perkakas ini memiliki garis besar yang sama - instal \text
 	\begin{itemize}
 		\item cURL
 		\item CMake
-		\item libcurl4-openssl-dev (\textit{library development} cURL)
-		\item GNU Make
+		\item libcurl4-openssl-dev
+		\item GNU Make (opsional)
 	\end{itemize}
 	
 \end{itemize}
-
-Ingat bahwa perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
-
-% Old version
-\begin{comment}
-Untuk dapat menjalankan perkakas ini, pengguna harus menginstal sebuah \textit{compiler} bahasa C, vcpkg (untuk Windows), serta dua buah \textit{library} umum yang telah didaftarkan di subbab \ref{sec:testing-specs-software}, yaitu:
-
-\begin{itemize}
-	\item cURL, dan
-	\item cmake.
-\end{itemize}
 \noindent
-Perlu diperhatikan bahwa \textit{library} cURL perlu diinstal melalui vcpkg, untuk menghindari masalah kompatibilitas akibat versi cURL yang tidak sesuai dengan yang dibutuhkan. Penggunaan vcpkg akan menghindari terjadinya masalah ini karena seluruh \textit{library} di vcpkg selalu diperbarui ke versi terbarunya.
-
-Adapun perkakas ini juga membutuhkan adanya \textit{package} tambahan yang spesifik untuk Linux, yaitu:
-
-\begin{itemize}
-	\item libcurl4-openssl-dev (\textit{library development} cURL), dan
-	\item GNU Make (opsional).
-\end{itemize}
-
-Perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
-\end{comment}
+Ingat bahwa perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
 
 \subsubsection{Pembangunan}
 \label{sec:testing-implementation-usage-build}
@@ -911,22 +933,562 @@ cmake ../
 		Untuk sistem operasi berbasis Linux, tidak perlu mengatur \textit{compiler}, karena nilai \textit{default} dari variabel \verb|<compiler>| di sistem operasi berbasis Linux (\textbf{Unix Makefiles}) sudah ideal.
 	\end{itemize}
 	
-	\item Ketik dan jalankan perintah berikut:
-	\begin{verbatim}
-cmake --build .
-	\end{verbatim}
-	Bagi pengguna sistem operasi berbasis Linux, perintah di langkah ini dapat digantikan dengan perintah berikut:
-	\begin{verbatim}
-sudo make install
-	\end{verbatim}
-	Perintah alternatif ini akan menghasilkan hasil yang sama. Perlu diperhatikan bahwa jika pengguna ingin menginstal perkakas melalui, pengguna perlu menginstal \textbf{GNU Make} terlebih dahulu.
+	\item Lanjutkan dengan instalasi perkakas.
 	
-	\item Khusus sistem operasi berbasis \textbf{Linux}, jika pengguna \textbf{tidak} menggunakan perintah \verb|make|, ketik dan jalankan perintah berikut pula untuk menginstal file-file tambahan:
+	\begin{itemize}
+		\item Windows: \\
+			Jalankan perintah berikut.
+			\begin{verbatim}
+cmake --build .
+			\end{verbatim}
+		\item Linux: \\
+		Jalankan kedua perintah berikut.
+			\begin{verbatim}
+cmake --build .
+cmake --install .
+			\end{verbatim}
+		Jika \textbf{GNU Make} terinstal di perangkat pengguna, maka kedua perintah ini dapat digantikan dengan perintah berikut.
 		\begin{verbatim}
-sudo cmake --install .
-	\end{verbatim}
+make install
+		\end{verbatim}
+		Jika terjadi \textit{error permission}, cukup tambahkan perintah \verb|sudo| di depan perintah yang ingin dijalankan.
+	\end{itemize}
+	
 	\item File \textit{executable} akan terletak di dalam \textit{folder} ``build'', dan siap dijalankan.
 \end{enumerate}
 
 \subsection{Pengujian}
 \label{sec:testing-experiments}
+
+Pengujian akan dilakukan untuk setiap fitur untuk memeriksa apakah semua fitur perkakas sudah berfungsi sebagaimanamestinya, serta semua kemungkinan \textit{error} yang ada sudah diatasi dengan benar. Perlu ditekankan bahwa pengujian berikut juga akan dilakukan dengan versi panjang dari opsi-opsi yang ada di dalam perintah (misal \verb|-h| diganti menjadi \verb|--help|). Akan tetapi, untuk alasan keringkasan dokumen, kecuali terjadi kegagalan, tes-tes tersebut tidak akan dicatat.
+
+\subsubsection{Sintaks dasar}
+\label{sec:testing-experiments-basic}
+
+Pengujian ini akan dilakukan untuk mengecek apakah perkakas akan merespon terhadap masukan yang sama sekali tidak sesuai dengan apa yang diharapkan oleh perkakas. Beberapa dari kasus-kasus berikut sudah meliputi kemungkinan-kemungkinan kesalahan masukan untuk fitur-fitur yang disediakan perkakas, jadi tes spesifik per fitur nantinya tidak akan mengikutkan pengujian sintaks lagi.
+
+\begin{enumerate}
+	\item Perintah tanpa opsi
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan mode operasional perkakas.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan mode operasional perkakas.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Perintah dengan satu atau lebih opsi tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar -b id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} yang memberi tahu pengguna bahwa ada opsi yang tidak valid di dalam perintah masukan.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang memberi tahu pengguna bahwa ada opsi yang tidak valid di dalam perintah masukan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Perintah tanpa argumen di akhir perintah
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar -l
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} mengenai adanya opsi yang kehilangan argumennya di dalam perintah masukan.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang mengenai adanya opsi yang kehilangan argumennya di dalam perintah masukan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Perintah tanpa argumen di tengah perintah
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} mengenai opsi yang kehilangan argumennya di dalam perintah masukan.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
+		\item Status tes: \textbf{Gagal}
+		\item Catatan tambahan: \\
+		Akibat batasan teknis, \textit{library} getopt sendiri tidak bisa menangani kasus di mana opsi yang kehilangan argumennya berada di tengah perintah, karena getopt akan menginterpretasikan opsi selanjutnya sebagai argumen dari opsi yang kehilangan argumennya. Satu-satunya solusi yang mungkin adalah mengecek apakah argumen dimulai dengan karakter tanda hubung (`-'), tetapi solusi ini tidak dapat diimplementasikan, karena argumen dari beberapa opsi berpotensi untuk diawali dengan karakter tersebut.
+	\end{itemize}
+	
+	\item Perintah dengan terlalu banyak argumen
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar -l id en
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Perintah dengan mode yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m help
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa mode yang dimasukkan tidak valid.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa mode yang dimasukkan tidak valid.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pengunaan banyak mode sekaligus
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar -h -l en
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas hanya akan merespon terhadap mode operasional pertama yang dimasukkan (beserta opsi-opsinya).
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan hasil pencarian lokasi (keluaran opsi \verb|-m searchplace|) dan tidak mengindahkan panggilan bantuan penggunaan (opsi \verb|-h|).
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Mode bantuan}
+\label{sec:testing-experiments-help}
+
+Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur bantuan penggunaan perkakas sudah berfungsi dengan baik.
+
+\begin{enumerate}
+	\item Panggilan bantuan normal
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -h
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan bantuan penggunaan perkakas.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan bantuan penggunaan perkakas.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Panggilan bantuan dengan tambahan opsi valid yang tidak relevan
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -h -s unpar
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan bantuan penggunaan perkakas, tanpa memedulikan opsi serta argumen tambahan di dalam perintah.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan bantuan penggunaan perkakas seperti biasanya.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pemanggilan \textit{manual page} (khusus Linux)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+man kiritool
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		\textit{Terminal} akan menampilkan manual page dari perkakas yang sesuai.
+		\item Keluaran perkakas: \\
+		\textit{Terminal} menampilkan manual page yang sesuai.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Mode \textit{searchplace}}
+\label{sec:testing-experiments-searchplace}
+
+Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur pencarian lokasi sudah berfungsi dengan baik.
+
+\begin{enumerate}
+	\item Pencarian lokasi sukses dengan satu hasil
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama dan koordinat \latlon lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan nama dan koordinat \latlon lokasi sesuai dengan bahasa yang diminta.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi sukses dengan lebih dari satu hasil
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q ab -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama dan koordinat \latlon semua kemungkinan lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan nama dan koordinat \latlon semua kemungkinan lokasi sesuai dengan bahasa yang diminta.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi gagal
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q abasdasd -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan keluaran yang memberitahu pengguna bahwa lokasi tidak berhasil ditemukan.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan keluaran yang memberitahu bahwa lokasi tidak berhasil ditemukan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi tanpa opsi region
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -q unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kode region.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kode region.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi dengan region yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdg -q unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan pesan \textit{error} bahwa region yang dimasukkan tidak valid.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan pesan \textit{error} bahwa region yang dimasukkan tidak valid.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi tanpa kata kunci pencarian
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kata kunci pencarian.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kata kunci pencarian.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi dengan kata kunci pencarian yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q -6.87520,107.60492 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan pesan bahwa keluaran API adalah sebuah \textit{error}.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan pesan bahwa keluaran API adalah sebuah \textit{error}.
+		\item Status tes: \textbf{Sukses}
+		\item Catatan tambahan: \\
+		Perkakas tetap menerima kata kunci pencarian yang diawali dengan tanda hubung (`-'), jadi perkakas tidak bisa langsung mengembalikan \textit{error} ke pengguna apabila pengguna (misal dalam kasus ini) memasukkan koordinat \latlon sebagai argumen opsi \verb|-q|.
+	\end{itemize}
+	
+	\item Pencarian lokasi tanpa pengaturan bahasa
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas tetap berfungsi seperti biasa, dengan mengeluarkan keluaran dalam bahasa Indonesia.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan keluaran seperi biasa, dalam bahasa Indonesia.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi dengan pengaturan bahasa yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m searchplace -r bdo -q unpar -l ch
+		\end{verbatim}
+		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa bahasa yang dimasukkan tidak valid.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang sesuai dengan ekspektasi.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+\end{enumerate}
+
+\subsubsection{Mode \textit{findroute}}
+\label{sec:testing-experiments-findroute}
+
+Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur pencarian rute angkot sudah berfungsi dengan baik.
+
+\begin{enumerate}
+	\item Pencarian rute sukses dengan satu kemungkinan rute
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan estimasi durasi rute, serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan estimasi durasi rute, serta langkah-langkah dalam rute, sesuai dengan bahasa yang diminta.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute sukses dengan satu kemungkinan rute yang sangat jauh
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.16935,106.78899 -f -6.87520,107.60492 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Jauhnya rute tidak akan mempengaruhi kinerja dari perkakas.
+		\item Keluaran perkakas: \\
+		Perkakas tetap menampilkan estimasi durasi rute dan langkah-langkah dalam rute seperti seharusnya.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute sukses dengan lebih dari satu kemungkinan rute
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -f -6.91527,107.59454 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan setiap rutenya, diikuti dengan estimasi waktunya serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas: \\
+		Perkakas akan menampilkan setiap rutenya, diikuti dengan estimasi waktunya serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute gagal
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -f -6.88307,107.65529 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan kepada pengguna bahwa rute perjalanan dengan angkot tidak berhasil ditemukan.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan bahwa rute perjalanan dengan angkot tidak berhasil ditemukan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute tanpa masukan lokasi (2 kasus)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -l id
+kiritool -m findroute -f -6.87520,107.60492 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan koordinat \latlon lokasi awal atau akhir, tergantung dari lokasi mana yang tidak dimasukkan.
+		\item Keluaran perkakas: \\
+		Perkakas  mengeluarkan pesan \textit{error} yang sesuai untuk kedua kasus pengujian.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute dengan koordinat lokasi yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.6049a -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan bahwa keluaran API adalah sebuah \textit{error}.
+		\item Keluaran perkakas: \\
+		Perkakas  mengeluarkan pesan bahwa API mengembalikan sebuah \textit{error}.
+		\item Status tes: \textbf{Sukses}
+		\item Catatan tambahan: \\
+		Akibat penggunaan variabel yang sama dengan variabel dalam fitur \verb|direct|, di mana di dalam fitur tersebut opsi \verb|-s| atau opsi \verb|| memiliki aturan masukan yang berbeda, maka fitur ini tidak akan langsung mendeteksi \textit{error} apabila pengguna memasukkan koordinat yang tidak valid.
+	\end{itemize}
+	
+	\item Pencarian lokasi tanpa pengaturan bahasa
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas tetap berfungsi seperti biasa, dengan mengeluarkan keluaran dalam bahasa Indonesia.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan keluaran seperi biasa, dalam bahasa Indonesia.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian lokasi dengan pengaturan bahasa yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492 -l ch
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa bahasa yang dimasukkan tidak valid.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang sesuai dengan ekspektasi.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+\end{enumerate}
+
+\subsubsection{Mode \textit{direct}}
+\label{sec:testing-experiments-directroute}
+
+Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur pencarian rute angkot langsung dari kata kunci lokasi awal dan akhir sudah berfungsi dengan baik.
+
+\begin{enumerate}
+	\item Pencarian rute langsung sukses dengan satu kemungkinan rute
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi awal dan akhir, estimasi durasi rute, serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan seluruh aspek yang disebutkan dalam keluarannya.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung sukses dengan satu kemungkinan rute yang sangat jauh
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S cgk -s untar -F bdo -f unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Jauhnya rute tidak akan berpengaruh ke keluaran perkakas.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan seluruh aspek dalam keluarannya seperti biasanya.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung sukses dengan lebih dari satu kemungkinan rute
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f paskal -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi awal dan akhir, serta tiap-tiap kemungkinan rutenya, dimulai dari estimasi durasi, diikuti dengan langkah-langkah yang perlu ditempuh di dalamnya, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan seluruh aspek yang disebutkan dalam keluarannya.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung gagal
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f paku -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi awal dan akhir, tetapi akan mengeluarkan pesan bahwa rute tidak berhasil ditemukan.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung tanpa region lokasi (2 kasus)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -f unpar -l id
+kiritool -m direct -s ciwalk -F bdo -f unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan regionnya, dan kemudian akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa ada kata kunci pencarian lokasi yang hilang.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung dengan region lokasi yang tidak valid (2 kasus)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdg -s ciwalk -F bdo -f unpar -l id
+kiritool -m direct -S bdo -s ciwalk -F bdg -f unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan regionnya, dan kemudian akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa ada kata kunci pencarian lokasi yang hilang.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung tanpa kata kunci pencarian lokasi (2 kasus)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -l id
+kiritool -m direct -S bdo -F bdo -f unpar -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan kata kunci pencariannya, dan kemudian akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa ada kata kunci pencarian lokasi yang hilang.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung dengan kata kunci pencarian lokasi yang tidak valid (2 kasus)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s -6.89350,107.60430 -F bdo -f unpar -l id
+kiritool -m direct -S bdo -s ciwalk -F bdo -f -6.87520,107.60492 -l id
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan kata kunci pencariannya, dan kemudian akan mengeluarkan pesan yang memberitahu pengguna bahwa API mengembalikan sebuah \textit{error}.
+		\item Keluaran perkakas: \\
+		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung sukses tanpa pengaturan bahasa
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas tetap berfungsi seperti biasa, dengan mengeluarkan keluaran dalam bahasa Indonesia.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan keluaran seperti biasa, dalam bahasa Indonesia.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pencarian rute langsung sukses dengan pengaturan bahasa yang tidak valid
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l ch
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa bahasa yang dimasukkan tidak valid.
+		\item Keluaran perkakas: \\
+		Perkakas mengeluarkan pesan \textit{error} yang sesuai dengan ekspektasi.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+\end{enumerate}
