@@ -466,7 +466,7 @@ void build_url_searchplace(int region, char* query) {
         fputs("You have inputted an invalid language (locale) option.\n", stderr);
         fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
         fputs("Locale available: id, en\n", stderr);
-        exit(0);
+        exit(1);
     }
 
     // Region check
@@ -485,7 +485,7 @@ void build_url_searchplace(int region, char* query) {
                 fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
                 fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
             }
-            exit(0);
+            exit(1);
             break;
         
         case 1:
@@ -518,7 +518,7 @@ void build_url_searchplace(int region, char* query) {
                 fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
                 fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
             }
-            exit(0);
+            exit(1);
             break;
     }
 
@@ -535,7 +535,7 @@ void build_url_searchplace(int region, char* query) {
             fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
             fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
         }
-        exit(0);
+        exit(1);
     }
     else {
         strcat(URL, "&querystring=");
@@ -563,7 +563,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("You have inputted an invalid language (locale) option.\n", stderr);
             fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
             fputs("Locale available: id, en\n", stderr);
-            exit(0);
+            exit(1);
             break;
         
         default:
@@ -584,7 +584,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
             fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
         }
-        exit(0);
+        exit(1);
     }
     else {
         strcat(URL, "&start=");
@@ -604,7 +604,7 @@ void build_url_findroute(int locale, char* start, char* finish) {
             fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
             fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
         }
-        exit(0);
+        exit(1);
     }
     else {
         strcat(URL, "&finish=");
@@ -800,7 +800,7 @@ int main(int argc, char **argv) {
                     fputs("Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.\n", stderr);
                     fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
                 }
-                exit(0);
+                exit(1);
 
             case '?':
                 // Error: unknown options
@@ -815,10 +815,10 @@ int main(int argc, char **argv) {
                     fputs("Anda telah memasukkan opsi yang tidak valid.\n", stderr);
                     fputs("Mohon periksa kembali penulisan perintah yang anda masukkan.\n", stderr);
                 }
-                exit(0);
+                exit(1);
 
             default:
-                abort();
+                exit(1);
         }
     }
 
@@ -854,7 +854,7 @@ int main(int argc, char **argv) {
                 else {
                     fputs("Mohon masukkan mode pengunaan perkakas.\n", stderr);   
                 }
-                exit(0);
+                exit(1);
                 break;
 
             case 1:
@@ -905,7 +905,7 @@ int main(int argc, char **argv) {
                     fputs("Anda telah memasukkan mode yang tidak valid.\n", stderr);
                     fputs("Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.\n", stderr);
                 }
-                exit(0);
+                exit(1);
                 break;
         }
     }
