@@ -334,7 +334,7 @@ void write_findroute() {
 }
 
 void print_help() {
-    puts("KIRI Command Line Tool, version 1.2.12");
+    puts("KIRI Command Line Tool, version 1.2.13");
     puts("Use the KIRI tool through the command line.");
     putchar('\n');
     puts("USAGE:");
@@ -671,24 +671,28 @@ int main(int argc, char **argv) {
         switch (funct) {
             case 'h':
                 // Program help
-                mode = 1;
+                if (mode == -1) {
+                    mode = 1;
+                }
                 break;
 
             case 'm':
-                // Program mode
-                if (strcmp(optarg, "searchplace") == 0) {
-                    mode = 2;
+                if (mode == -1) {
+                    // Program mode
+                    if (strcmp(optarg, "searchplace") == 0) {
+                        mode = 2;
+                    }
+                    else if (strcmp(optarg, "findroute") == 0) {
+                        mode = 3;
+                    }
+                    else if (strcmp(optarg, "direct") == 0) {
+                        mode = 4;
+                    }
+                    else {
+                        mode = 0;
+                    }
+                    break;
                 }
-                else if (strcmp(optarg, "findroute") == 0) {
-                    mode = 3;
-                }
-                else if (strcmp(optarg, "direct") == 0) {
-                    mode = 4;
-                }
-                else {
-                    mode = 0;
-                }
-                break;
             
             case 'r':
                 // Location regions
@@ -881,7 +885,7 @@ int main(int argc, char **argv) {
                 else reset_url();
 
                 step = 1;
-                build_url_searchplace(regstart, finish);
+                build_url_searchplace(regfinish, finish);
                 execute_curl();
                 if (error == 1) {
                     break;
