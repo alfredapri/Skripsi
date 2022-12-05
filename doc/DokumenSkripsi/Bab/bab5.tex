@@ -1,7 +1,7 @@
 \chapter{Implementasi dan Pengujian}
 \label{chap:testing}
 
-Bab ini akan membahas hal-hal mengenai implementasi kode perkakas, serta skenario-skenario pengujian yang akan digunakan dalam pengujian fungsional perkakas.
+Bab ini akan membahas hal-hal mengenai implementasi kode dari tiap-tiap fungsi dalam perkakas, serta skenario-skenario pengujian yang akan digunakan dalam pengujian fungsional perkakas.
 
 \section{Implementasi Kode}
 \label{sec:testing-implementation}
@@ -9,7 +9,7 @@ Bab ini akan membahas hal-hal mengenai implementasi kode perkakas, serta skenari
 \subsection{Implementasi Kode Utama}
 \label{sec:testing-implementation-main}
 
-Seperti yang dapat dilihat di bab sebelumnya, dalam dokumen skripsi ini, perkakas yang telah dibuat ini tidak mengikutkan sebuah diagram kelas. Hal ini dikarenakan perkakas \cl KIRI ini terdiri atas satu kelas saja, yang di dalamnya memiliki berbagai macam fungsi, yang masing-masingnya memiliki fungsi-fungsi tersendiri. Subbab ini akan menjelaskan kode tersebut secara singkat tetapi menyeluruh, mulai dari cara kerja perkakas secara garis besar, variabel-variabel global, serta tujuan dari tiap-tiap fungsi. Adapun kode lengkap dari perkakas dapat dilihat di Lampiran \ref{lamp:A}.
+Subbab ini akan memaparkan implementasi dari fungsi-fungsi yang secara singkat tetapi menyeluruh, mulai dari cara kerja perkakas secara garis besar, variabel-variabel global, serta tujuan dari tiap-tiap fungsi.
 	
 \begin{itemize}[listparindent=\parindent]
 	\item Cara kerja perkakas \\
@@ -17,7 +17,7 @@ Seperti yang dapat dilihat di bab sebelumnya, dalam dokumen skripsi ini, perkaka
 	
 	\begin{enumerate}
 		\item Penerimaan opsi dan argumen \\
-		Di proses ini, perkakas akan melakukan pengecekan paling dasar, yaitu mengecek apakah pengguna menggunakan opsi dan memasukkan argumennya dengan tepat atau tidak. \textit{Error checking} yang dilakukan di tahap ini juga hanya sebatas pengecekan dasar, seperti pengecekan validitas opsi yang digunakan, jumlah argumen yang dimasukkan, serta validitas mode operasi dari perkakas (opsi \verb|--mode|). Kesalahan apapun yang terdapat di hal-hal selain kedua aspek tersebut hanya akan ditandai.
+		Di proses ini, perkakas akan melakukan pemeriksaan paling dasar, yaitu memeriksa apakah pengguna menggunakan opsi dan memasukkan argumennya dengan tepat atau tidak. \textit{Error checking} yang dilakukan di tahap ini juga hanya sebatas pengecekan dasar, seperti pengecekan validitas opsi yang digunakan, jumlah argumen yang dimasukkan, serta validitas mode operasi dari perkakas (opsi \verb|--mode|). Kesalahan apapun yang terdapat di hal-hal selain kedua aspek tersebut hanya akan ditandai.
 		\item Verifikasi kebenaran opsi dan argumen \\
 		Di proses ini, perkakas akan melakukan pengecekan lanjutan terhadap argumen-argumen yang dimasukkan pengguna. Jika ada argumen yang tidak valid, perkakas akan langsung berhenti dan mengeluarkan pesan \textit{error} yang sesuai.
 		\item Pengiriman permintaan GET ke API serta penerimaan kembali respons\\
@@ -773,7 +773,7 @@ Implementasi CMake dalam perkakas ini tentunya akan membutuhkan sebuah file \ver
 	\item menangani instalasi \textit{manual (man) page} untuk sistem operasi berbasis Linux. 
 \end{itemize}
 
-\begin{lstlisting}[language={}, caption=Implementasi fungsi print\textunderscore help(), label=code:kiritool-cmakelists]
+\begin{lstlisting}[language={}, caption=Implementasi CMakeLists.txt, label=code:kiritool-cmakelists]
 set(PROJECT_NAME kiritool)
 set(SOURCES main.c includes/cJSON/cJSON.c includes/cJSON/cJSON.h)
 
@@ -816,7 +816,7 @@ Bagian ini akan menjelaskan hal-hal yang seputar pengujian perkakas yang telah d
 \subsection{Lingkungan Perangkat Keras}
 \label{sec:testing-experiments-hardware}
 
-Berikut merupakan spesifikasi perangkat keras yang digunakan dalam pembangunan perkakas ini:
+Berikut merupakan spesifikasi perangkat keras yang digunakan dalam pengujian perkakas ini:
 
 \begin{itemize}
 	\item \textit{Processor}: Intel\logoregistered\xspace Core\logotrademark\xspace i5-10300H @ 2.50 GHz
@@ -828,14 +828,14 @@ Berikut merupakan spesifikasi perangkat keras yang digunakan dalam pembangunan p
 \subsection{Lingkungan Perangkat Lunak}
 \label{sec:testing-experiments-software}
 
-Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan perkakas ini:
+Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pengujian perkakas ini:
 
 \begin{itemize}
 	\item Windows:
 	
 	\begin{itemize}
 		\item OS: Windows 10 Home Single Language (64-bit)
-		\item \textit{Compiler}: MinGW (GNU\textemdash versi 12.1.0)
+		\item \textit{Compiler}: MinGW (GNU GCC\textemdash versi 12.1.0)
 		\item \textit{Library}:
 		
 		\begin{itemize}
@@ -849,7 +849,7 @@ Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan p
 	
 	\begin{itemize}
 		\item OS: Ubuntu Jammy (22.04)
-		\item \textit{Compiler}: MinGW (GNU\textemdash versi 11.3.0)
+		\item \textit{Compiler}: GNU GCC\textemdash versi 11.3.0
 		\item \textit{Library}:
 		
 		\begin{itemize}
@@ -861,13 +861,13 @@ Berikut merupakan spesifikasi perangkat lunak yang digunakan dalam pembangunan p
 	
 \end{itemize}
 
-\subsection{Instalasi dan Pembangunan}
-\label{sec:testing-implementation-usage}
+\subsection{Pembangunan dan Instalasi}
+\label{sec:testing-experiments-installation}
 
-\subsubsection{Instalasi}
-\label{sec:testing-implementation-usage-instalation}
+\subsubsection{Syarat Instalasi}
+\label{sec:testing-experiments-installation-requirements}
 
-Proses instalasi dari perkakas ini memiliki garis besar yang sama\textemdash instal \textit{compiler} C, kemudian instal \textit{library yang diperlukan}. Karena banyaknya perbedaan dari detil yang perlu dilakukan untuk setiap sistem operasi, maka bagian ini akan dibagi dua, menjadi satu bagian per sistem operasi.
+Instalasi perkakas ini tentunya mengharuskan \textit{library-library} yang telah dibahas untuk diinstal terlebih dahulu. Karena banyaknya perbedaan dari detil-detil yang ada di dalam persyaratan instalasi untuk kedua sistem operasi yang didukung, maka bagian ini akan dibagi dua, menjadi satu bagian per sistem operasi.
 
 \begin{itemize}
 	\item Windows \\
@@ -893,12 +893,12 @@ Proses instalasi dari perkakas ini memiliki garis besar yang sama\textemdash ins
 	
 \end{itemize}
 \noindent
-Ingat bahwa perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
+Ingat bahwa perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{source code} dari \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
 
-\subsubsection{Pembangunan}
-\label{sec:testing-implementation-usage-build}
+\subsubsection{Cara Instalasi}
+\label{sec:testing-implementation-installation-howto}
 
-Untuk memakai perkakasnya sendiri, perkakas ini perlu dibangun terlebih dahulu. Berikut merupakan langkah-langkah yang perlu diambil untuk proses tersebut.
+Untuk memakai perkakasnya sendiri, perkakas ini perlu dibangun dan diinstal terlebih dahulu. Berikut merupakan langkah-langkah yang perlu diambil untuk seluruh proses tersebut.
 
 \begin{enumerate}
 	\item Buka \textit{folder} ``build'' di dalam \textit{folder} perkakas.
@@ -924,7 +924,7 @@ cmake ../
 		\item Windows
 			
 		\begin{itemize}
-			\item Opsi \verb|-DMAKE_TOOLCHAIN_FILE| merupakan metode pengintegrasian vcpkg untuk proyek CMake. Untuk direktori persisnya (dan sintaks lengkap dari opsi ini) dapat dilihat setelah langkah ``Using vcpkg with MSBuild/Visual Studio'' di halaman panduan instalasi vcpkg.\footnote{\href{https://vcpkg.io/en/getting-started.html}{Getting started with vcpkg}}
+			\item Opsi \verb|-DMAKE_TOOLCHAIN_FILE| merupakan metode pengintegrasian vcpkg untuk proyek CMake. Untuk direktori persisnya (dan sintaks lengkap dari opsi ini) dapat dilihat setelah langkah ``Using vcpkg with MSBuild/Visual Studio'' di halaman panduan instalasi vcpkg.\footnote{\href{https://vcpkg.io/en/getting-started.html}{https://vcpkg.io/en/getting-started.html}}
 			\item Direkomendasikan untuk menginstal \textit{compiler} \textbf{MinGW}, karena \textit{compiler} ini sudah mengikutkan salah satu file \textit{header} yang dibutuhkan oleh perkakas ini. Apabila pengguna menggunakan \textit{compiler} ini, variabel \verb|<compiler>| harus diisi dengan ``\verb|MinGW Makefiles|''.
 			\item \textbf{Jangan menggunakan \textit{compiler} Visual Studio}, karena \textit{compiler} ini tidak mengandung file \textit{header} C yang dibutuhkan di perkakas ini. Perlu diperhatikan juga bahwa compiler Visual Studio ini merupakan nilai \textit{default} dari \verb|<compiler>| untuk sistem operasi Windows, jadi pengguna juga tidak boleh menghilangkan opsi \verb|-G| tersebut begitu saja.
 		\end{itemize}
@@ -958,12 +958,35 @@ make install
 \end{enumerate}
 
 \subsection{Pengujian}
-\label{sec:testing-experiments}
+\label{sec:testing-experiments-testing}
 
 Pengujian akan dilakukan untuk setiap fitur untuk memeriksa apakah semua fitur perkakas sudah berfungsi sebagaimanamestinya, serta semua kemungkinan \textit{error} yang ada sudah diatasi dengan benar. Perlu ditekankan bahwa pengujian berikut juga akan dilakukan dengan versi panjang dari opsi-opsi yang ada di dalam perintah (misal \verb|-h| diganti menjadi \verb|--help|). Akan tetapi, untuk alasan keringkasan dokumen, kecuali terjadi kegagalan, tes-tes tersebut tidak akan dicatat.
 
+Tabel \ref{tab:testing-experiments-testing-overview} memaparkan jumlah tes yang akan dilakukan. Adapun penjelasan dari apa persisnya yang akan dites (\textit{scope}) untuk setiap objek tes akan dibahas langsung di tiap-tiap bagiannya.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+        Objek tes & Jumlah tes \\
+    \hline
+        Sintaks dasar & 7 \\
+    \hline
+        Mode bantuan (\verb|--help|) & 3 \\
+    \hline
+        Mode \textit{searchplace} & 9 \\
+    \hline
+        Mode \textit{findroute} & 8 \\
+    \hline
+        Mode \textit{direct} & 10 \\
+    \hline
+	\end{tabular}
+    \caption{Jumlah kategori dan tes yang dilakukan.}
+    \label{tab:testing-experiments-testing-overview}
+\end{table}
+
 \subsubsection{Sintaks dasar}
-\label{sec:testing-experiments-basic}
+\label{sec:testing-experiments-testing-basic}
 
 Pengujian ini akan dilakukan untuk mengecek apakah perkakas akan merespon terhadap masukan yang sama sekali tidak sesuai dengan apa yang diharapkan oleh perkakas. Beberapa dari kasus-kasus berikut sudah meliputi kemungkinan-kemungkinan kesalahan masukan untuk fitur-fitur yang disediakan perkakas, jadi tes spesifik per fitur nantinya tidak akan mengikutkan pengujian sintaks lagi.
 
@@ -1064,7 +1087,7 @@ kiritool -m searchplace -r bdo -q unpar -h -l en
 \end{enumerate}
 
 \subsubsection{Mode bantuan}
-\label{sec:testing-experiments-help}
+\label{sec:testing-experiments-testing-help}
 
 Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur bantuan penggunaan perkakas sudah berfungsi dengan baik.
 
@@ -1111,7 +1134,7 @@ man kiritool
 \end{enumerate}
 
 \subsubsection{Mode \textit{searchplace}}
-\label{sec:testing-experiments-searchplace}
+\label{sec:testing-experiments-testing-searchplace}
 
 Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur pencarian lokasi sudah berfungsi dengan baik.
 
@@ -1237,7 +1260,7 @@ kiritool -m searchplace -r bdo -q unpar -l ch
 \end{enumerate}
 
 \subsubsection{Mode \textit{findroute}}
-\label{sec:testing-experiments-findroute}
+\label{sec:testing-experiments-testing-findroute}
 
 Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur pencarian rute angkot sudah berfungsi dengan baik.
 
@@ -1352,7 +1375,7 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492 -l ch
 \end{enumerate}
 
 \subsubsection{Mode \textit{direct}}
-\label{sec:testing-experiments-directroute}
+\label{sec:testing-experiments-testing-directroute}
 
 Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang berhubungan dengan fitur pencarian rute angkot langsung dari kata kunci lokasi awal dan akhir sudah berfungsi dengan baik.
 
