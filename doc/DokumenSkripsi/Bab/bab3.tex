@@ -318,7 +318,7 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
     \label{fig:thesisapp-uml}
 \end{figure}
 
-\begin{longtable}{|p{3cm} | c p{10cm}|}
+\begin{longtable}{| l | c p{10cm} |}
 	\caption{\textit{Scenario case} untuk fitur pencarian lokasi dengan kata kunci pencarian.} 
 	\label{tab:thesisapp-scenariocase-searchplace} \\
 	
@@ -335,28 +335,28 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline
 	\endlastfoot
 
-        Nama & \multicolumn{2}{p{10.5cm} |}{Mencari lokasi menggunakan kata kunci pencarian} \\
+        \textbf{Nama} & \multicolumn{2}{p{10.5cm} |}{Mencari lokasi menggunakan kata kunci pencarian} \\
     \hline \addlinespace[0.1cm]
     \hline
-        Deskripsi & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari lokasi di area tertentu berdasarkan kata kunci pencarian.} \\
+        \textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari lokasi di area tertentu berdasarkan kata kunci pencarian.} \\
     \hline
-		Aktor & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
+		\textbf{Aktor} & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
 	\hline
-		Pre-kondisi & \multicolumn{2}{p{10.5cm} |}{-} \\
+		\textbf{Pre-kondisi} & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-		Pos-kondisi & \multicolumn{2}{p{10.5cm} |}{Nama dari lokasi serta koordinat \textit{latitude} dan \textit{longitude}-nya ditampilkan kepada pengguna.} \\
+		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Nama dari lokasi serta koordinat \textit{latitude} dan \textit{longitude}-nya ditampilkan kepada pengguna.} \\
     \hline
-		Skenario utama & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi dari argumen dalam perintah \cl. \\
+		\textbf{Skenario utama} & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi dari argumen dalam perintah \cl. \\
 		 & 2. & Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
 		 & 3. & Perkakas menerima keluaran berupa nama serta koordinat \latlon dari lokasi yang ditemukan. \\
 		 & 4. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
     \hline
-		Skenario eksepsi & - &  Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian. \\
+		\textbf{Skenario eksepsi} & - &  Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian. \\
 		 & - & Lokasi tidak berhasil ditemukan. \\
 \end{longtable}
 
 \vspace{-0.25cm}
-\begin{longtable}{|p{3cm} | c p{10cm}|}
+\begin{longtable}{| l | c p{10cm }|}
 	\caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan nilai \latlon kedua lokasi sebagai masukan.}
     \label{tab:thesisapp-scenariocase-findroute} \\
 	
@@ -373,28 +373,28 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline
 	\endlastfoot
 
-        Nama & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan \latlon lokasi} \\
+        \textbf{Nama} & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan \latlon lokasi} \\
     \hline \addlinespace[0.1cm]
     \hline
-        Deskripsi & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.} \\
+        \textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan nilai \latlon lokasi sebagai masukan.} \\
     \hline
-		Aktor & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
+		\textbf{Aktor} & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
 	\hline
-		Pre-kondisi & \multicolumn{2}{p{10.5cm} |}{-} \\
+		\textbf{Pre-kondisi} & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-		Pos-kondisi & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
+		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
     \hline
-		Skenario utama & 1. & Perkakas membaca masukan berupa nilai \latlon lokasi awal dan akhir dari argumen dalam perintah \cl. \\
+		\textbf{Skenario utama} & 1. & Perkakas membaca masukan berupa nilai \latlon lokasi awal dan akhir dari argumen dalam perintah \cl. \\
 		 & 2. & Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
 		 & 3. & Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh. \\
 		 & 4. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
 	\hline
-		Skenario eksepsi & - & Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian. \\
+		\textbf{Skenario eksepsi} & - & Pengguna memasukkan masukan yang tidak valid sebagai kata kunci pencarian. \\
 		 & - & Rute tidak berhasil ditemukan/tidak tersedia. \\
 \end{longtable}
 
 \vspace{-0.25cm}
-\begin{longtable}{|p{3cm} | c p{10cm}|}
+\begin{longtable}{| l | c p{10cm} |}
 	\caption{\textit{Scenario case} untuk fitur pencarian rute dengan angkot, dengan kata kunci pencarian lokasi awal dan akhir sebagai masukan.}
     \label{tab:thesisapp-scenariocase-findroutedirect} \\
 	
@@ -411,18 +411,18 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline
 	\endlastfoot
 
-        Nama & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan kata kunci pencarian lokasi} \\
+        \textbf{Nama} & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan kata kunci pencarian lokasi} \\
     \hline \addlinespace[0.1cm]
     \hline
-        Deskripsi & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan dengan kata kunci pencarian kedua lokasi sebagai masukan.} \\
+        \textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan dengan kata kunci pencarian kedua lokasi sebagai masukan.} \\
     \hline
-		Aktor & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
+		\textbf{Aktor} & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
 	\hline
-		Pre-kondisi & \multicolumn{2}{p{10.5cm} |}{-} \\
+		\textbf{Pre-kondisi} & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-		Pos-kondisi & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
+		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
     \hline
-		Skenario utama & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi awal dan akhir dari argumen dalam perintah \cl. \\
+		\textbf{Skenario utama} & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi awal dan akhir dari argumen dalam perintah \cl. \\
 		 & 2. & Perkakas memproses kata kunci pencarian lokasi awal dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
 		 & 3. & Perkakas menerima keluaran berupa koordinat \latlon lokasi awal dari API KIRI. \\
 		 & 4. & Perkakas memproses kata kunci pencarian lokasi akhir dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
@@ -431,7 +431,7 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 		 & 7. & Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh. \\
 		 & 8. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
 	\hline
-		Skenario eksepsi & - & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter. \\
+		\textbf{Skenario eksepsi} & - & Pengguna memasukkan masukan yang tidak valid di dalam salah satu parameter. \\
 		 & - & Lokasi yang dicari dalam langkah 2 atau langkah 4 tidak ditemukan. \\
 		 & - & Rute tidak berhasil ditemukan/tidak tersedia. \\
 \end{longtable}
