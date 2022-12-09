@@ -52,6 +52,8 @@
 %\overfullrule=3mm % memperlihatkan overfull 
 
 % Custom packages
+\usepackage{algorithm} % algorithm
+\usepackage{algpseudocode} % algorithm - pseudocodes
 \usepackage{booktabs} % longtable row spacing
 \usepackage{graphicx} % footnotemark & footnotetext
 \usepackage{longtable} % scenario case tables
@@ -89,7 +91,7 @@
 %\mode{sidangakhir} 	% untuk sidang 2 / sidang pada Skripsi 2(IF)
 %\mode{final} 			% untuk mencetak buku skripsi 
 %=============================================================================
-\mode{sidang}
+\mode{sidangakhir}
 
 %_____________________________________________________________________________
 %=============================================================================
@@ -144,8 +146,8 @@
 %\gambar{no}
 %\tabel{yes}
 \tabel{no} 
-%\kode{yes}
-\kode{no} 
+\kode{yes}
+%\kode{no} 
 %\notasi{yes}
 \notasi{no}
 %=============================================================================
@@ -358,4 +360,21 @@
 \newcommand{\logoregistered}{\textsuperscript{\textregistered}}
 \newcommand{\logotrademark}{\textsuperscript{TM}}
 \newcommand{\ubercli}{Uber CLI\xspace}
+
+% Algorithmic - switch case
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicdefault{\textbf{default}}
+%\algnewcommand\algorithmicassert{\texttt{assert}}
+%\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algdef{SE}[CASE]{Default}{EndDefault}[1]{\algorithmicdefault\ #1}{\algorithmicend\ \algorithmiccase}%
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+% remove "end x" text
+%\algtext*{EndSwitch} 
+\algtext*{EndCase}
+\algtext*{EndDefault}
 %=============================================================================
