@@ -469,7 +469,7 @@ Fungsi ini digunakan untuk proses pengiriman permintaan ke API, serta penerimaan
 \end{algorithm}
 
 \subsection{\texttt{print\char`_curl\char`_error()}}
-\label{sec:design-code-curl-execute}
+\label{sec:design-code-curl-error}
 
 Fungsi ini merupakan fungsi sederhana yang akan mengeluarkan pesan \textit{error} apabila terjadi \textit{error} koneksi ketika perkakas ingin melakukan komunikasi dengan API KIRI. Fungsi ini akan mengubah nilai variabel \verb|error| ke 1, untuk menandakan bahwa sebuah \textit{error} telah terjadi, dan kemudian mengeluarkan pesan \textit{error} mengenai terjadinya \textit{error} cURL.
 	
@@ -654,7 +654,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 \end{algorithm}
 
 \subsection{Fungsi utama (\texttt{main})}
-\label{sec:design-code-write-searchplacenoreturns}
+\label{sec:design-code-main}
 
 Tentunya seluruh perangkat lunak bahasa C akan memiliki satu buah fungsi utama. Bagian ini akan membahas garis besar alur kerja dari fungsi utama yang ada di perkakas ini melalui \textit{pseudocode} \ref{alg:design-main}.
 
