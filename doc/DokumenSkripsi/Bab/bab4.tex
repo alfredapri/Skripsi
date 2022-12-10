@@ -253,7 +253,7 @@ Fungsi ini merupakan fungsi yang akan dipanggil ketika pengguna memilih opsi sta
 \subsection{\texttt{replace\char`_space()}}
 \label{sec:design-code-replacespace}
 
-Fungsi ini merupakan fungsi yang berfungsi untuk meng-\textit{escape} semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Fungsi ini akan menerima sebuah \textit{array} karakter sebagai masukannya, mengganti semua karakter spasi yang ada di dalamnya menjadi sebuah susunan sesuai pengkodean URL yang terdiri atas tiga karakter, yaitu `\%20', dan meletakkan hasilnya di variabel global \verb|escape|. Adapun \textit{pseudocode} dari fungsi ini dapat dilihat di algoritma \ref{alg:design-replacespace}.
+Fungsi ini merupakan fungsi yang berguna untuk meng-\textit{escape} semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Hal ini perlu dilakukan karena pengkodean HTML yang digunakan untuk format URL tidak medukung karakter spasi, dan melainkan mensubstitusi seluruh kejadian karakter tersebut dalam suatu URL menjadi `\%20'. Fungsi ini akan menerima sebuah \textit{array} karakter berisi URL permintaan sebagai masukannya, mengganti semua karakter spasi yang ada di dalamnya menjadi `\%20', dan meletakkan hasilnya di variabel global \verb|escape|. Adapun \textit{pseudocode} dari fungsi ini dapat dilihat di algoritma \ref{alg:design-replacespace}.
 
 \begin{algorithm}[h]
 	\caption{Algoritma fungsi \texttt{replace\char`_space()}}
@@ -491,7 +491,7 @@ Fungsi ini adalah fungsi tambahan untuk cURL yang bertugas menerima data yang ma
 	\vspace{-1.05\baselineskip}
 	\begin{algorithmic}
 		\State $realsize \gets size * nmemb$ \Comment{Hitung ukuran data yang diterima} 
-		\State $memory \gets userdata$ \Comment{Masukkan data yang diterima ke variabel sementara}
+		\State $memory \gets userdata$ \Comment{Masukkan data yang diterima ke variabel tujuan}
 		\State $ptr \gets$ realokasi ukuran memori dari data dalam $memory$
 		
 		\If{$ptr ==$ NULL} \Comment{Kalau realokasi gagal...}
