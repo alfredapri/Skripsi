@@ -6,807 +6,104 @@ Bab ini akan membahas hal-hal mengenai implementasi kode dari tiap-tiap fungsi d
 \section{Implementasi Kode}
 \label{sec:testing-implementation}
 
-\subsection{Implementasi Kode Utama}
-\label{sec:testing-implementation-main}
+Subbab ini akan memaparkan implementasi dari fungsi-fungsi yang ada dalam perkakas secara singkat tetapi menyeluruh, serta membahas secara detail sebagian kecil dari fungsi-fungsi tersebut yang memerlukan penjelasan lebih lanjut.
 
-Subbab ini akan memaparkan implementasi dari fungsi-fungsi yang secara singkat tetapi menyeluruh, mulai dari cara kerja perkakas secara garis besar, variabel-variabel global, serta tujuan dari tiap-tiap fungsi.
+\subsection{\texttt{print\char`_help()}}
+\label{sec:testing-implementation-printhelp}
+
+Fungsi ini akan menampilkan \textit{string-string} (dalam bentuk \textit{array-array}karakter) yang merupakan versi singkat dari bantuan penggunaan perkakas ke pengguna. Implementasi dari fungsi ini ada di lampiran \ref{appdx:A-maincode}, mulai dari baris ke-336 sampai dengan baris ke-394.
+
+\subsection{\texttt{replace\char`_space()}}
+\label{sec:testing-implementation-replacespace}
+
+Seperti yang telah dijelaskan di subbab \ref{sec:design-code-replacespace}, fungsi ini akan menerima sebuah \textit{array} karakter, mengganti semua karakter spasi yang ada di dalamnya menjadi `\%20', dan meletakkan hasilnya di variabel global \verb|escape|. Implementasi dari fungsi ini dapat dilihat di \textit{source code} murni perkakas dalam lampiran \ref{appdx:A-maincode}, mulai dari baris ke-623 sampai dengan baris ke-643.
+
+\subsection{\texttt{build\char`_url\char`_searchplace()}}
+\label{sec:testing-implementation-buildurl-searchplace}
+
+Fungsi ini bekerja dengan menambahkan URL ke variabel global \verb|url|, sesuai dengan opsi-opsi yang telah dimasukkan (dan diperlukan oleh API) untuk fitur \textit{searchplace}. Adapun implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris 455 sampai baris 523.
+
+\subsection{\texttt{build\char`_url\char`_findroute()}}
+\label{sec:testing-implementation-buildurl-findroute}
+
+Fungsi ini bekerja dengan menambahkan URL ke variabel global \verb|url|, sesuai dengan opsi-opsi yang telah dimasukkan (dan diperlukan oleh API) untuk fitur \textit{findroute}. Adapun implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris 547 sampai baris 616.
+
+\subsection{\texttt{reset\char`_url()}}
+\label{sec:testing-implementation-buildurl-reset}
+
+Fungsi ini hanya terdiri atas satu baris kode yang akan mengembalikan isi dari variabel \verb|url| ke nilai awalnya. Implementasi dari fungsi ini dapat dilihat langsung di lampiran \ref{appdx:A-maincode}, di baris 618 sampai 621.
 	
-\begin{itemize}[listparindent=\parindent]
-	\item Cara kerja perkakas \\
-	Untuk setiap operasinya, perkakas \cl KIRI ini terdiri atas empat proses utama, dengan urutan operasi internal sebagai berikut.
+\subsection{\texttt{execute\char`_curl()}}
+\label{sec:testing-implementation-curl-execute}
+
+Fungsi ini merupakan fungsi yang mengatur seluruh proses yang berhubungan langsung dengan cURL dalam perkakas, mulai dari inisialisasi \textit{easy handle} cURL (serta proses pembersihannya di akhir fungsi), pengaturan penerimaan data keluaran proses cURL (\verb|write_memalloc()|), pengaturan variabel apa dalam perkakas yang akan diisi oleh data keluaran, serta \textit{error handler} apabila proses cURL gagal. Selain itu, fungsi ini juga mengatur proses apa yang harus dilakukan setelah data tersebut berhasil diterima, dengan cara memanggil fungsi yang sesuai dengan mode operasional yang telah ditentukan dalam masukan yang diberikan oleh pengguna. Adapun implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode} dari baris 410 ke baris 453.
+
+\subsection{\texttt{print\char`_curl\char`_error()}}
+\label{sec:testing-implementation-curl-error}
+
+Fungsi ini akan dipanggil apabila proses curl dari fungsi \verb|execute_curl()| tidak mengembalikan ``OK'' sebagai kode respons cURLnya. Cara kerja fungsi ini adalah dengan mengecek kode bahasa (variabel \verb|locale|) dan mengeluarkan pesan \textit{error} yang sesuai. Implementasi fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris 396 sampai dengan 408.
 	
-	\begin{enumerate}
-		\item Penerimaan opsi dan argumen \\
-		Di proses ini, perkakas akan melakukan pemeriksaan paling dasar, yaitu memeriksa apakah pengguna menggunakan opsi dan memasukkan argumennya dengan tepat atau tidak. \textit{Error checking} yang dilakukan di tahap ini juga hanya sebatas pengecekan dasar, seperti pengecekan validitas opsi yang digunakan, jumlah argumen yang dimasukkan, serta validitas mode operasi dari perkakas (opsi \verb|--mode|). Kesalahan apapun yang terdapat di hal-hal selain kedua aspek tersebut hanya akan ditandai.
-		\item Verifikasi kebenaran opsi dan argumen \\
-		Di proses ini, perkakas akan melakukan pengecekan lanjutan terhadap argumen-argumen yang dimasukkan pengguna. Jika ada argumen yang tidak valid, perkakas akan langsung berhenti dan mengeluarkan pesan \textit{error} yang sesuai.
-		\item Pengiriman permintaan GET ke API serta penerimaan kembali respons\\
-		Setelah semua opsi dan argumen yang dibutuhkan diverifikasi validitasnya, perkakas akan membangun URL yang diperlukan untuk permintaan GET ke API, dan melakukan permintaan tersebut melalui cURL. \textit{Library} cURL ini nantinya juga adalah \textit{library} yang memfasilitasi penerimaan kembali respons dari API.
-		\item Verifikasi akhir respons API \\
-		Terakhir, isi dari respons API akan diperiksa. Segala abnormalitas yang terdapat di dalam isi respons tersebut akan ditangani langsung oleh perkakas dalam bentuk pesan-pesan \textit{error} untuk tiap kasusnya.
-	\end{enumerate}
-	
-	\item Variabel global \\
-	Perkakas ini memiliki beberapa variabel global, seperti yang dapat dilihat di kode \ref{code:kiritool-global-vars}. Variabel-variabel ini sengaja diletakkan sebagai variabel global, karena variabel-variabel ini digunakan di hampir keseluruhan dari keempat proses di bagian sebelumnya. Adapun variabel-variabel ini adalah sebagai berikut:
-	
-	\begin{itemize}
-		\item \verb|chunk| (\verb|struct|) \\
-		Struktur dari respons API KIRI. Struktur ini memiliki dua variabel, yaitu \verb|data|, yang akan berisi datanya sendiri, serta \verb|size|, yang merupakan ukuran dari data dalam respons.
-		\item \verb|responsedata| (\verb|chunk|) \\
-		Akan diisi respons dari API KIRI.
-		\item \verb|responseJSON| (\verb|cJSON|) \\
-		Berisi hasil konversi JSON dari respons API yang dapat dibaca oleh perkakas dan utilitas-utilitas \textit{library} cJSON.
-		\item \verb|URL| (\verb|char[]|) \\
-		Basis dari URL yang akan digunakan sebagai URL permintaan GET ke API. Awalnya variabel ini akan berisi ``\verb|https://projectkiri.id/api?version=2|''\textemdash bagian ini tidak akan berubah bagaimanapun permintaan GET-nya.
-		\item \verb|mode| (\verb|int|) \\
-		Kode operasional perkakas berupa bilangan bulat. Bilangan ini memiliki rentang dari -1 hingga 4, di mana arti dari tiap bilangan dapat dilihat di komentar di potongan kode.
-		\item \verb|region| (\verb|int|) \\
-		Kode region berupa bilangan bulat untuk mode \verb|searchplace|. Bilangan ini memiliki rentang dari -1 hingga 4, di mana arti dari tiap bilangan dapat dilihat di komentar di potongan kode.
-		\item \verb|query| (\verb|char[]|) \\
-		\textit{String} (berupa \textit{array} karakter) yang menyimpan kata kunci pencarian lokasi untuk mode \verb|searchplace|.
-		\item \verb|start| (\verb|char[]|) \\
-		\textit{String} (berupa \textit{array} karakter) yang menyimpan koordinat lokasi awal (\verb|findroute|) atau kata kunci pencarian lokasi awal (\verb|direct|).
-		\item \verb|finish| (\verb|char[]|) \\
-		\textit{String} (berupa \textit{array} karakter) yang menyimpan koordinat lokasi akhir (\verb|findroute|) atau kata kunci pencarian lokasi akhir (\verb|direct|).
-		\item \verb|escape| (\verb|char[]|) \\
-		Variabel ini dibutuhkan karena pengkodean URL (untuk permintaan GET) tidak mendukung karakter spasi (` '), melainkan ``\verb|%20|''. \textit{String} yang karakter spasinya sudah diganti dengan ``\verb|%20|'' akan disimpan sementara di variabel ini, sebelum isinya disalin kembali ke variabel awalnya.
-		\item \verb|regstart| (\verb|int|) \\
-		Kode region lokasi awal berupa bilangan bulat untuk mode \verb|direct|. Bilangan ini memiliki rentang dari -1 hingga 4, di mana arti dari tiap bilangan dapat dilihat di komentar di potongan kode.
-		\item \verb|regfinish| (\verb|int|) \\
-		Kode region lokasi akhir berupa bilangan bulat untuk mode \verb|direct|. Bilangan ini memiliki rentang dari -1 hingga 4, di mana arti dari tiap bilangan dapat dilihat di komentar di potongan kode.
-		\item \verb|locale| (\verb|int|) \\
-		Kode bahasa berupa bilangan bulat. Bilangan ini memiliki rentang dari 0 hingga 2, di mana arti dari tiap bilangan dapat dilihat di komentar di potongan kode. Variabel ini juga merupakan satu-satunya variabel kode \textit{integer} yang nilai awalnya (jika tidak diubah) tidak akan menyebabkan \textit{error}.
-		\item \verb|step| (\verb|int|) \\
-		Kode khusus untuk mode \verb|direct| yang menandakan proses mana yang sedang berlangsung\textemdash pencarian lokasi awal, pencarian lokasi akhir, atau pencarian rute.
-		\item \verb|error| (\verb|int|) \\
-		Kode yang menandakan apakah sebuah \textit{error} telah terjadi. Nilai awal dari variabel ini adalah 0, dan jika variabel ini diganti menjadi 1, di pengecekan kode \textit{error} selanjutnya, perkakas akan dihentikan.
-	\end{itemize}
-	\noindent
-	Potongan kode dalam file \verb|main.c| yang menunjukkan variabel-variabel global dari perkakas dapat dilihat di kode \ref{code:kiritool-global-vars}.
-	
-	\begin{lstlisting}[language=C, caption=Variabel global perkakas \cl KIRI, label=code:kiritool-global-vars]
-struct chunk {
-    char *data;
-    size_t size;
-};
-struct chunk responsedata; // Incoming data chunks
+\subsection{\texttt{write\char`_memalloc()}}
+\label{sec:testing-implementation-write-memalloc}
 
-cJSON *responseJSON;
-char URL[1000] = "https://projectkiri.id/api?version=2";
-int mode = -1; // -1 = undefined, 0 = unknown, 1 = help, 2 = searchplace, 3 = findroute, 4 = direct
-int region = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-char query[100];
-char start[100];
-char finish[100];
-char escape[100]; // Temporary variable for escaping string inputs
-int regstart = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-int regfinish = -1; // -1 = undefined, 0 = unknown, 1 = cgk, 2 = bdo, 3 = mlg, 4 = sub
-int locale = 0; // 0 = id, 1 = en, 2 = unknown
-int step; // 0 = search starting location, 1 = search finish location, 2 = find route
-// Used only in multistep modes
-// 1 = an error has occurred, otherwise 0
-int error = 0; 
-	\end{lstlisting}
-	
-	\item Fungsi \verb|print_help()| \\
-	Fungsi ini merupakan fungsi yang akan dipanggil ketika pengguna memilih opsi standar \verb|--help|. Fungsi ini akan mengeluarkan bantuan singkat cara penggunaan perkakas. Implementasi dari fungsi ini dapat dilihat di potongan kode \ref{code:kiritool-function-help}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi print\textunderscore help(), label=code:kiritool-function-help]
-void print_help() {
-    puts("KIRI Command Line Tool, version 1.2.13");
-    puts("Use the KIRI tool through the command line.");
-    putchar('\n');
-    puts("USAGE:");
-    puts("    kiritool <COMMAND> [OPTIONS...] [<ARGUMENTS>]");
-    putchar('\n');
-    puts("COMMAND:");
-    puts("    -h, --help          Display usage tutorial.");
-    puts("    -m, --mode <MODE>   Set the tool operation mode.\n");
-    puts("    You can only choose one mode per operation.");
-    putchar('\n');
-    puts("OPTIONS:");
-    puts("    -F, --regfinish <REGION>    Set region to search for finish location in.");
-    puts("    -f, --finish <FINISH>       Set finish location.");
-    puts("    -l, --locale <LANG>         Set tool output language.");
-    puts("    -q, --query <KEYWORD>       Set keyword for searching.");
-    puts("    -r, --region <REGION>       Set region to search for location in.");
-    puts("    -S, --regstart <REGION>     Set region to search for starting location in.");
-    puts("    -s, --start <START>         Set starting location.");
-    putchar('\n');
-    puts("ARGUMENTS:");
-    puts("    <FINISH>");
-    puts("        Route finish location.");
-    puts("        For 'findroute' mode, input the location's latitude and longitude coordinates.");
-    puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
-    puts("    <KEYWORD>");
-    puts("        Keywords used by the tool to search for the desired location.");
-    puts("        For multiple words queries, encase the keywords in quotation marks (\" \").");
-    puts("    <LANG>");
-    puts("        Tool output language.");
-    puts("        Available languages: id, en");
-    puts("          - id (Indonesian - Default)");
-    puts("          - en (English)");
-    puts("    <MODE>");
-    puts("        Tool operation mode. Note that not all options are needed for all modes.");
-    puts("        Should the user input extra options, they will simply not be used.");
-    puts("        Available modes:");
-    puts("          - searchplace");
-    puts("                Required options: --query, --region");
-    puts("                Optional options: --locale");
-    puts("          - findroute");   
-    puts("                Required options: --start, --finish");
-    puts("                Optional options: --locale");
-    puts("          - direct");   
-    puts("                Required options: --regstart, --start, --regfinish, --finish");
-    puts("                Optional options: --locale");
-    puts("    <REGION>");
-    puts("        Region to search for locations in.");
-    puts("        Available regions:");
-    puts("          - cgk (Jakarta)");
-    puts("          - bdo (Bandung)");
-    puts("          - mlg (Malang)");
-    puts("          - sub (Surabaya)");
-    puts("    <START>");
-    puts("        Route starting location.");
-    puts("        For 'findroute' mode, input the location's latitude and longitude coordinates.");
-    puts("        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).");
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|replace_space()| \\
-	Fungsi ini merupakan fungsi yang berfungsi untuk mengganti semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Implementasi dari fungsi ini dapat dilihat di potongan kode \ref{code:kiritool-function-spaceescape}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi print\textunderscore help(), label=code:kiritool-function-spaceescape]
-void replace_space(char* string) {
-    // Escapes all whitespace characters in string
-    int i;
-    int j = 0;
+Fungsi ini adalah fungsi yang bertugas untuk memastikan bahwa data keluaran dari API yang diterima tidak melebihi ukuran maksimal yang diperbolehkan untuk dimasukkan ke dalam variabel tujuan. Implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris ke-33 sampai dengan baris ke-47.
 
-    for (i = 0; i < 100; i++) {
-        if (string[i] == '\0') {
-            break;
-        }
-
-        if (string[i] == ' ') {
-            escape[j] = '%';
-            escape[j + 1] = '2';
-            escape[j + 2] = '0';
-            j = j + 2;
-        }
-        else escape[j] = string[i];
-
-        j++;
-    }
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|build_url_searchplace(region, query)| \\
-	Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET untuk proses pencarian lokasi. Fungsi ini menerima dua variabel, yaitu \verb|region| dan \verb|query|, yang keduanya dapat diatur berdasarkan proses pencarian lokasi untuk fitur mana yang sedang dilakukan. 
-	
-	Selain itu, fitur ini juga memiliki implementasi tambahan yang tidak ada di API KIRI, yaitu implementasi variabel \verb|locale| untuk mode \verb|searchplace|, yang memungkinkan pemilihan bahasa Indonesia atau Inggris untuk keluaran serta pesan-pesan \textit{error} yang berhubungan dengan mode tersebut. Adapun implementasi dari fungsi ini dapat dilihat di potongan kode \ref{code:kiritool-function-buildurl-searchplace}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi build\textunderscore url\textunderscore searchplace(), label=code:kiritool-function-buildurl-searchplace]
-	void build_url_searchplace(int region, char* query) {
-    strcat(URL, "&mode=searchplace");
-
-    // Locale check - tool adition
-    if (locale == 2) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-        fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
-        fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
-        fputs("Pilihan locale: id, en\n", stderr);
-        fputs("--------------------\n", stderr);
-        fputs("You have inputted an invalid language (locale) option.\n", stderr);
-        fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
-        fputs("Locale available: id, en\n", stderr);
-        exit(1);
-    }
-
-    // Region check
-    switch (region) {
-        case -1:
-            error = 1;
-            fputs("\nError:\n", stderr);
-
-            if (locale == 1) {
-                fputs("Location searching requires a region to be set.\n", stderr);
-                fputs("Please make sure you have chosen between one of the four available regions.\n", stderr);
-                fputs("Regions available: cgk, bdo, mlg, sub\n", stderr);
-            }
-            else {
-                fputs("Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.\n", stderr);
-                fputs("Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.\n", stderr);
-                fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
-            }
-            exit(1);
-            break;
-        
-        case 1:
-            strcat(URL, "&region=cgk");
-            break;
-        
-        case 2:
-            strcat(URL, "&region=bdo");
-            break;
-        
-        case 3:
-            strcat(URL, "&region=mlg");
-            break;
-        
-        case 4:
-            strcat(URL, "&region=sub");
-            break;
-
-        default:
-            error = 1;
-            fputs("\nError:\n", stderr);
-
-            if (locale == 1) {
-                fputs("You have inputted an invalid region.\n", stderr);
-                fputs("Please recheck whether the region code chosen was one of the four region codes supported.\n", stderr);
-                fputs("Regions available: cgk, bdo, mlg, sub\n", stderr);
-            }
-            else {
-                fputs("Anda telah memasukkan region yang tidak valid.\n", stderr);
-                fputs("Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.\n", stderr);
-                fputs("Pilihan region: cgk, bdo, mlg, sub\n", stderr);
-            }
-            exit(1);
-            break;
-    }
-
-    // Query check
-    if (strcmp(query, "\0") == 0) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-
-        if (locale == 1) {
-            fputs("Location searching requires a search query.\n", stderr);
-            fputs("Please make sure you have inputted a query to be used in the search.\n", stderr);
-        }
-        else {
-            fputs("Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.\n", stderr);
-            fputs("Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.\n", stderr);
-        }
-        exit(1);
-    }
-    else {
-        strcat(URL, "&querystring=");
-        strcat(URL, query);
-    }
-    strcat(URL, "&apikey=68CD281C8A8EE97C");
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|build_url_findroute(locale, start, finish)| \\
-	Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET untuk proses pencarian rute angkot. Fungsi ini menerima tiga variabel, yaitu \verb|locale|, \verb|start|, dan \verb|finish|. Adapun implementasi dari fungsi ini dapat dilihat di potongan kode \ref{code:kiritool-function-buildurl-findroute}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi build\textunderscore url\textunderscore findroute(), label=code:kiritool-function-buildurl-findroute]
-void build_url_findroute(int locale, char* start, char* finish) {
-    strcat(URL, "&mode=findroute");
-
-    // Locale check
-    switch (locale) {
-        case 1:
-            strcat(URL, "&locale=en");
-            break;
-        
-        case 2:
-            error = 1;
-            fputs("\nError:\n", stderr);
-            fputs("Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.\n", stderr);
-            fputs("Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.\n", stderr);
-            fputs("Pilihan locale: id, en\n", stderr);
-            fputs("--------------------\n", stderr);
-            fputs("You have inputted an invalid language (locale) option.\n", stderr);
-            fputs("Please recheck whether the language code you inserted was supported or not.\n", stderr);
-            fputs("Locale available: id, en\n", stderr);
-            exit(1);
-            break;
-        
-        default:
-            strcat(URL, "&locale=id");
-            break;
-    }
-
-    // Starting location check
-    if (strcmp(start, "\0") == 0) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-
-        if (locale == 1) {
-            fputs("You did not input the coordinates of the starting location.\n", stderr);
-            fputs("Please input the coordinates of the starting location through the corresponding option.\n", stderr);
-        }
-        else {
-            fputs("Anda belum memasukkan sebuah koordinat untuk lokasi awal.\n", stderr);
-            fputs("Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.\n", stderr);
-        }
-        exit(1);
-    }
-    else {
-        strcat(URL, "&start=");
-        strcat(URL, start);
-    }
-
-    // End location check
-    if (strcmp(finish, "\0") == 0) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-
-        if (locale == 1) {
-            fputs("You did not input the coordinates of the end location.\n", stderr);
-            fputs("Please input the coordinates of the end location through the corresponding option.\n", stderr);
-        }
-        else {
-            fputs("Anda belum memasukkan sebuah koordinat untuk lokasi akhir.\n", stderr);
-            fputs("Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.\n", stderr);
-        }
-        exit(1);
-    }
-    else {
-        strcat(URL, "&finish=");
-        strcat(URL, finish);
-    }
-
-    strcat(URL, "&presentation=desktop");
-    strcat(URL, "&apikey=68CD281C8A8EE97C");
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|reset_url()| \\
-	Fungsi ini digunakan untuk mengembalikan isi dari variabel \verb|URL| ke nilai semula. Fungsi ini akan dipanggil hanya di fitur \verb|direct|, dan hanya di saat pergantian proses dalam fitur tersebut, dengan asumsi bahwa tidak ada \textit{error} yang terjadi di langkah sebelumnya. Implementasi dari fungsi ini dapat dilihat di potongan kode \ref{code:kiritool-function-buildurl-reset}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi reset\textunderscore url(), label=code:kiritool-function-buildurl-reset]
-void reset_url() {
-    // Reset URL for multiple API processes at once
-    strcpy(URL, "https://projectkiri.id/api?version=2");
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|execute_curl()| \\
-	Fungsi ini digunakan untuk proses pengiriman permintaan ke API, serta penerimaan respons dari API. Semua utilitas dari library cURL yang dipakai dalam perkakas ini diimplementasikan hanya di dalam fungsi ini. Adapun implementasi dari fungsi ini dapat dilihat di potongan kode \ref{code:kiritool-function-curl-execute}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi execute\textunderscore curl(), label=code:kiritool-function-curl-execute]
-void execute_curl() {
-    CURL *curl;
-    CURLcode response;
-    memset(&responsedata, 0, sizeof(responsedata)); // Empty response data chunk for multiprocess modes
-
-    curl_global_init(CURL_GLOBAL_DEFAULT);
-    curl = curl_easy_init();
-
-    if (curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, URL);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memalloc);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&responsedata);
-        response = curl_easy_perform(curl);
-        if (response != CURLE_OK) {
-            print_curl_error();
-        }
-
-        switch (mode) {
-            case 2: // searchplace
-                write_searchplace();
-                break;
-            
-            case 3: // findroute
-                write_findroute();
-                break;
-
-            case 4: // directroute
-                if (step == 0 || step == 1) { // search start and finish
-                    write_searchplace_noreturns();
-                }
-                else if (step == 2) { // findroute
-                    write_findroute();
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        curl_easy_cleanup(curl);
-    }
-
-    curl_global_cleanup();
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|print_curl_error()| \\
-	Fungsi ini merupakan fungsi sederhana yang akan mengeluarkan pesan \textit{error} apabila terjadi \textit{error} koneksi ketika perkakas ingin melakukan komunikasi dengan API KIRI. Implementasi dari fungsi ini tertera di potongan kode \ref{code:kiritool-function-curl-error}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi print\textunderscore curl\textunderscore error(), label=code:kiritool-function-curl-error]
-void print_curl_error() {
-    error = 1;
-    fputs("\nError:\n", stderr);
-
-    if (locale == 1) {
-        fputs("A connection error has occurred.\n", stderr);
-        fputs("Please verify whether the internet connection is up and running.\n", stderr);
-    }
-    else {
-        fputs("Telah terjadi error koneksi.\n", stderr);
-        fputs("Mohon cek apakah koneksi internet aktif dan terhubung dengan baik.\n", stderr);
-    }
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|write_memalloc()| \\
-	Fungsi ini adalah fungsi tambahan untuk cURL yang bertugas menerima data yang masuk dari API. Di fungsi ini juga diimplementasikan sebuah fitur pengalokasian memori untuk menghindari terjadinya \textit{error} akibat data yang diterima melebihi alokasi memori yang diperbolehkan oleh nilai ukuran memori \textit{default}-nya. Implementasi dari fungsi ini tertera di potongan kode \ref{code:kiritool-function-write-memalloc}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi write\textunderscore memalloc(), label=code:kiritool-function-write-memalloc]
-// Allocate the memory of incoming data
-// If data size + original allocated size exceeds the memory capability, print an error.
-size_t write_memalloc(void *incomingdata, size_t size, size_t nmemb, void *userdata) {
-    size_t realsize = size * nmemb;
-    struct chunk *memory = (struct chunk *)userdata;
-    char *ptr = realloc(memory->data, memory->size + realsize + 1);
-    if(ptr == NULL) {
-        fprintf(stderr, "Out of memory!\n");
-        return 0;
-    } 
-    memory->data = ptr;
-    memcpy(&(memory->data[memory->size]), incomingdata, realsize);
-    memory->size += realsize;
-    memory->data[memory->size] = 0;
-
-    return realsize;
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|write_searchplace()| \\
-	Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|searchplace|. Fungsi ini akan langsung menampilkan keluaran akhir, atau jika terjadi \textit{error}, maka fitur ini akan menampilkan pesan \textit{error} yang sesuai. Adapun implementasi dari fungsi ini dapat dilihat di potongan \ref{code:kiritool-function-write-search}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi write\textunderscore seachplace(), label=code:kiritool-function-write-search]
-void write_searchplace() {
-    cJSON *status;
-    cJSON *result;
-    cJSON *resultitem;
-    cJSON *resultitemname;
-    cJSON *resultitemlocation;
-    int indexitem;
-
-    responseJSON = cJSON_Parse(responsedata.data);
-    status = cJSON_GetObjectItem(responseJSON, "status");
-    
-    // Check whether API returned an error
-    if (strcmp(status->valuestring, "ok") != 0) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-
-        if (locale == 1) {
-            fputs("API returned an error as its output.\n", stderr);
-            fputs("Please recheck whether the query was formatted correctly.\n", stderr);
-        }
-        else {
-            fputs("API mengembalikan error sebagai keluarannya.\n", stderr);
-            fputs("Silakan cek ulang apakah kata kunci pencarian sudah diformat dengan benar.\n", stderr);
-        }
-    }
-    else {
-        result = cJSON_GetObjectItem(responseJSON, "searchresult");
-
-        // Check whether API managed to find a single result
-        if (cJSON_GetArraySize(result) == 0) {
-            error = 1;
-            fputs("\n", stderr);
-
-            if (locale == 1) {
-                fputs("Location not found.\n", stderr);
-                fputs("Please recheck whether the search keyword was inputted correctly.\n", stderr);
-            }
-            else {
-                fputs("Lokasi tidak berhasil ditemukan.\n", stderr);
-                fputs("Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.\n", stderr);
-            }
-        }
-        else {
-            indexitem = 1;
-            
-            cJSON_ArrayForEach(resultitem, result) {
-                resultitemname = cJSON_GetObjectItem(resultitem, "placename");
-                resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
-
-                // Print location index only if there were more than one found
-                if (cJSON_GetArraySize(result) > 1) {
-                    if (locale == 1) {
-                        printf("Location %d:\n", indexitem);
-                    }
-                    else printf("Lokasi %d:\n", indexitem);
-                }
-                else {
-                    if (locale == 1) {
-                        puts("Location:");
-                    }
-                    else puts("Lokasi:");
-                }
-                puts("--------------------");
-
-                if (locale == 1) {
-                    printf("Name: %s\n", resultitemname->valuestring);
-                    printf("Coordinates: %s\n", resultitemlocation->valuestring);
-                }
-                else {
-                    printf("Nama: %s\n", resultitemname->valuestring);
-                    printf("Koordinat: %s\n", resultitemlocation->valuestring);
-                }
-                putchar('\n');
-
-                indexitem++;
-            }
-        }
-    }
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|write_findroute()| \\
-	Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Fungsi ini akan langsung menampilkan keluaran akhir, atau jika terjadi \textit{error}, maka fitur ini akan menampilkan pesan \textit{error} yang sesuai. Adapun implementasi dari fungsi ini dapat dilihat di potongan \ref{code:kiritool-function-write-findroute}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi write\textunderscore findroute(), label=code:kiritool-function-write-findroute]
-void write_findroute() {
-    cJSON *status;
-    cJSON *result;
-    cJSON *route;
-    cJSON *routesteps;
-    cJSON *routetime;
-    cJSON *routestepitem;
-    cJSON *routestepdetail;
-    char routetimestring[20]; // Store translated duration string
-    char *routetimetemp;
-    char *timearraytoken;
-    int indexroute;
-    int indexstep;
-
-    responseJSON = cJSON_Parse(responsedata.data);
-    status = cJSON_GetObjectItem(responseJSON, "status");
-
-    // Check whether API returned an error
-    if (strcmp(status->valuestring, "ok") != 0) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-
-        if (locale == 1) {
-            fputs("API returned an error as its output.\n", stderr);
-            fputs("Please recheck whether both location's coordinates were inputted correctly.\n", stderr);
-        }
-        else {
-            fputs("API mengembalikan error sebagai keluarannya.\n", stderr);
-            fputs("Silakan cek ulang apakah koordinat kedua lokasi sudah dimasukkan dengan benar.\n", stderr);
-        }
-    }
-    else {
-        result = cJSON_GetObjectItem(responseJSON, "routingresults");
-        indexroute = 1;
-
-        // For each possible routes...
-        cJSON_ArrayForEach(route, result) {
-            routesteps = cJSON_GetObjectItem(route, "steps");
-            routetime = cJSON_GetObjectItem(route, "traveltime");
-
-            if (mode == 4 && indexroute == 1) {
-                putchar('\n');
-            }
-
-            // Check whether API managed to find a single result
-            if (cJSON_IsNull(routetime)) {
-                error = 1;
-                fputs("\n", stderr);
-
-                if (locale == 1) {
-                    fputs("Sorry, we couldn't find a public transport route for your trip.\n", stderr);
-                }
-                else fputs("Maaf, kami tidak dapat menemukan rute transportasi publik untuk perjalanan anda.\n", stderr);
-            }
-            else {
-                routetimetemp = routetime->valuestring;
-                memset(routetimestring, 0, sizeof(routetimestring));
-                indexstep = 1;
-
-                // Fix bug from KIRI API in which "minute" time unit is not translated in id
-                // Else skip whole process
-                if (locale != 1) {
-                    timearraytoken = strtok(routetimetemp, " ");
-
-                    while (timearraytoken != NULL) {
-                        if (strcmp(timearraytoken, "minutes") == 0) {
-                            strcpy(timearraytoken, "menit");
-                        }
-                        strcat(routetimestring, timearraytoken);
-                        strcat(routetimestring, " ");
-
-                        timearraytoken = strtok(NULL, " ");
-                    }
-                }
-                else strcpy(routetimestring, routetimetemp);
-
-                // Print route index only if there were more than one found
-                // Otherwise simply print "Route:"
-                if (cJSON_GetArraySize(result) > 1) {
-                    if (locale == 1) {
-                        printf("Route %d:\n", indexroute);
-                    }
-                    else printf("Rute %d:\n", indexroute);
-                }
-                else {
-                    if (locale == 1) {
-                        puts("Route:");
-                    }
-                    else puts("Rute:");
-                }
-                puts("--------------------");
-                
-                if (locale == 1) {
-                    printf("Estimated duration: %s\n", routetimestring);
-                }
-                else printf("Estimasi waktu: %s\n", routetimestring);
-                puts("--------------------");
-                
-                cJSON_ArrayForEach(routestepitem, routesteps) {
-                    routestepdetail = cJSON_GetArrayItem(routestepitem, 3);
-
-                    if (locale == 1) {
-                        printf("Step %d: ", indexstep);
-                    }
-                    else printf("Langkah %d: ", indexstep);
-                    printf("%s\n", routestepdetail->valuestring);
-                    indexstep++;
-                }
-            }
-            if (error != 1) {
-                putchar('\n');
-            };
-
-            indexroute++;
-        }
-    }
-}
-	\end{lstlisting}
-	
-	\item Fungsi \verb|write_searchplace_noreturns()| \\
-	Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|direct|. Berbeda dengan fungsi \verb|searchplace| sebelumnya, fungsi ini hanya akan menampilkan nama lokasi (awal dan/atau akhir), atau jika terjadi \textit{error} di salah satu prosesnya, maka fitur ini akan menampilkan pesan \textit{error} yang sesuai. Adapun implementasi dari fungsi ini dapat dilihat di potongan \ref{code:kiritool-function-write-searchdirect}.
-	
-	\begin{lstlisting}[language=C, caption=Implementasi fungsi write\textunderscore searchplace\textunderscore noreturns(), label=code:kiritool-function-write-searchdirect]
-void write_searchplace_noreturns() {
-    cJSON *status;
-    cJSON *result;
-    cJSON *resultitem;
-    cJSON *resultitemname;
-    cJSON *resultitemlocation;
-
-    responseJSON = cJSON_Parse(responsedata.data);
-    status = cJSON_GetObjectItem(responseJSON, "status");
-    
-    // Check whether API returned an error
-    if (strcmp(status->valuestring, "ok") != 0) {
-        error = 1;
-        fputs("\nError:\n", stderr);
-        
-        if (step == 0) {
-            if (locale == 1) {
-                fputs("API returned an error as its start coordinates.\n", stderr);
-                fputs("Please recheck whether the starting location coordinates were inputted correctly.\n", stderr);
-            }
-            else {
-                fputs("API mengembalikan error sebagai koordinat lokasi awal.\n", stderr);
-                fputs("Silakan cek ulang apakah koordinat lokasi awal sudah dimasukkan dengan benar.\n", stderr);
-            }
-        }
-        else if (step == 1) {
-            if (locale == 1) {
-                fputs("API returned an error as its end coordinates.\n", stderr);
-                fputs("Please recheck whether the end location coordinates were inputted correctly.\n", stderr);
-            }
-            else {
-                fputs("API mengembalikan error sebagai koordinat lokasi akhir.\n", stderr);
-                fputs("Silakan cek ulang apakah koordinat lokasi akhir sudah dimasukkan dengan benar.\n", stderr);
-            }
-        }
-    }
-    else {
-        result = cJSON_GetObjectItem(responseJSON, "searchresult");
-
-        // Check whether API managed to find a single result
-        if (cJSON_GetArraySize(result) == 0) {
-            error = 1;
-            fputs("\n", stderr);
-            
-            if (step == 0) {
-                if (locale == 1) {
-                    fputs("Starting location not found.\n", stderr);
-                    fputs("Please recheck whether the search keyword was inputted correctly.\n", stderr);
-                }
-                else {
-                    fputs("Lokasi awal tidak berhasil ditemukan.\n", stderr);
-                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.\n", stderr);
-                }
-            }
-            else if (step == 1) {
-                if (locale == 1) {
-                    fputs("Finish location not found.\n", stderr);
-                    fputs("Please recheck whether the search keyword was inputted correctly.\n", stderr);
-                }
-                else {
-                    fputs("Lokasi akhir tidak berhasil ditemukan.\n", stderr);
-                    fputs("Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.\n", stderr);
-                }
-            }
-        }
-        else {
-            // Direct route mode only supports first location found
-            resultitem = cJSON_GetArrayItem(result, 0);
-            resultitemname = cJSON_GetObjectItem(resultitem, "placename");
-            resultitemlocation = cJSON_GetObjectItem(resultitem, "location");
-
-            if (step == 0) {
-                if (locale == 1) {
-                    printf("Starting location: %s\n", resultitemname->valuestring);
-                }
-                else printf("Lokasi awal: %s\n", resultitemname->valuestring);
-                strcpy(start, resultitemlocation->valuestring);
-            }
-            else if (step == 1) {
-                if (locale == 1) {
-                    printf("Finish location: %s\n", resultitemname->valuestring);
-                }
-                else printf("Lokasi akhir: %s\n", resultitemname->valuestring);
-                strcpy(finish, resultitemlocation->valuestring);
-            }
-        }
-    }
-}
-	\end{lstlisting}
-	
-	
-\end{itemize}
-
-\subsection{Implementasi CMake}
-\label{sec:testing-implementation-cmake}
-
-Implementasi CMake dalam perkakas ini tentunya akan membutuhkan sebuah file \verb|CMakeLists.txt|, di mana untuk perkakas \cl KIRI ini, \textit{file} tersebut dapat dilihat di kode \ref{code:kiritool-cmakelists}. \textit{File} CMakeLists ini memiliki tiga fungsi utama, yaitu:
+Penjelasan detail dari proses yang dilakukan dalam fungsi ini adalah sebagai berikut.
 
 \begin{itemize}
-	\item mengikutkan (\textit{include}) \textit{file-file} utama dalam perkakas,
-	\item mengikutkan \textit{library-library} yang dibutuhkan, dan
-	\item menangani instalasi \textit{manual (man) page} untuk sistem operasi berbasis Linux. 
+	\item Fungsi ini akan memiliki \textit{return value} bertipe \textit{unsigned integer} \verb|size_t|. Hal ini merupakan kewajiban dari\textit{library} cURL sendiri.
+	\item Seperti yang sudah disebutkan di bagian rancangan implementasi, fungsi ini akan memiliki empat variabel masukan, yaitu:
+	
+	\begin{itemize}
+		\item \verb|incomingdata| \\
+		Variabel ini merupakan data keluaran dari API yang diterima dalam proses cURL.
+		\item \verb|size| \\
+		Variabel ini merupakan ukuran dari satu buah objek data. Variabel ini selalu bernilai 1, yang juga merupakan kewajiban dari \textit{library} cURL.
+		\item \verb|nmemb| \\
+		Variabel ini merupakan ukuran dari data keluaran tersebut.
+		\item \verb|userdata| \\
+		Variabel ini merupakan penunjuk ke variabel dalam perkakas yang akan diisi oleh data yang diterima proses cURL.
+	\end{itemize}
+	
+	\item Implementasi cara kerja fungsi ini adalah sebagai berikut:
+	
+	\begin{enumerate}
+		\item \textbf{Baris 34}: Hitung ukuran dari data yang masuk.
+		\item \textbf{Baris 35\textendash 40}: Cek apakah ukuran data melebihi yang diperbolehkan.
+		\item \textbf{Baris 41\textendash 44}: Setor data yang dimasukkan ke dalam variabel tujuan.
+		\item \textbf{Baris 46}: Kembalikan ukuran data yang masuk untuk verifikasi keutuhan data.
+	\end{enumerate}
 \end{itemize}
 
-\begin{lstlisting}[language={}, caption=Implementasi CMakeLists.txt, label=code:kiritool-cmakelists]
-set(PROJECT_NAME kiritool)
-set(SOURCES main.c includes/cJSON/cJSON.c includes/cJSON/cJSON.h)
+\subsection{\texttt{write\char`_searchplace()}}
+\label{sec:testing-implementation-write-searchplace}
 
-cmake_minimum_required(VERSION 3.15.0)
-project(${PROJECT_NAME} VERSION 1.2.13 LANGUAGES C)
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|searchplace|. Penerapan fungsi ini hanya meliputi pengambilan data yang diterima, mengubah format data tersebut dari JSON ke tipe data yang bisa langsung diproses dalam fungsi-fungsi bawaan bahasa C, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 49 sampai baris 127.
+	
+\subsection{\texttt{write\char`_findroute()}}
+\label{sec:testing-implementation-write-findroute}
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Sama seperti fungsi \verb|write_searchplace()|, penerapan fungsi ini hanya meliputi pengambilan data yang diterima, konversi format data tersebut dari JSON, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 218 sampai baris 334.
 
-find_package(CURL REQUIRED)
+Perlu ditekankan kembali bahwa fitur ini memiliki pembetulan \textit{bug} tambahan, yang diimplementasikan di baris 273 sampai dengan baris 292.
 
-# libcurl
-target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
-# cJSON
-target_include_directories(${PROJECT_NAME} PRIVATE includes)
+\subsection{\texttt{write\char`_searchplace\char`_noreturns()}}
+\label{sec:testing-implementation-write-searchplacenoreturns}
 
-# UNIX specific commands
-if (UNIX)
-    include(GNUInstallDirs)
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|direct|. Seperti yang sudah dijelaskan di bagian perancangan alur kerja dari fungsi ini (subbab \ref{sec:design-code-write-searchplacenoreturns}), fungsi ini mirip dengan fungsi \verb|write_searchplace()|, hanya saja untuk keluarannya, fungsi ini tidak akan menampilkan koordinat lokasi yang ditemukan. Implementasi dari  fungsi ini ada di lampiran \ref{appdx:A-maincode}, di baris 129 sampai dengan 216.
 
-    file(ARCHIVE_CREATE OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/build/kiritool.1.gz
-        PATHS ${CMAKE_CURRENT_SOURCE_DIR}/additionals/linux/kiritool.1
-        FORMAT raw
-        COMPRESSION GZip
-    )
-    set(MANFILES build/kiritool.1.gz)
+\subsection{Fungsi utama (\texttt{main})}
+\label{sec:testing-implementation-main}
 
-    if (DEFINED CMAKE_INSTALL_MANDIR)
-        install(FILES ${MANFILES} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
-    else()
-        message(FATAL_ERROR "CMAKE_INSTALL_MANDIR is not defined. \n  ")
-    endif()
-endif()
-\end{lstlisting}
+Fungsi \verb|main| di perkakas ini dapat dibagi menjadi dua buah proses utama, yaitu penerimaan masukan dari pengguna, serta penentuan langkah-langkah yang harus dijalankan untuk tiap-tiap mode operasional. Adapun implementasi dari fungsi utama ini ada di baris 645 sampai dengan 918, dengan proses-proses internalnya meliputi langkah-langkah berikut.
+
+\begin{enumerate}
+	\item \textbf{Baris 646\textendash 827}: Implementasi \verb|getopt-long| dan pentransferan argumen ke dalam variabel-variabel internal perkakas.
+	\item \textbf{Baris 647 \& 648}: Inisialisasi \verb|opterr| dengan nilai 0, untuk mencegah \verb|getopt-long| mengeluarkan pesan \textit{error default}-nya untuk opsi-opsi yang tidak diketahui (\textquotesingle\verb|?|\textquotesingle). 
+	\item \textbf{Baris 830\textendash 848}: Pengecekan kelebihan argumen dalam perintah masukan.
+	\item \textbf{Baris 850\textendash 915}: Penentuan langkah-langkah yang harus ditempuh untuk setiap kemungkinan mode operasional.
+	\item \textbf{Baris 917}: \textit{Return code} 0, menandakan bahwa perkakas berhasil berjalan tanpa ada masalah.
+\end{enumerate}
 
 \section{Pengujian}
 \label{sec:testing-experiments}
