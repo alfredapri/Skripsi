@@ -1,0 +1,82 @@
+kiritool(1)                                                                                                  kiritool Manual                                                                                                 kiritool(1)
+NAME
+       kiritool - search routes using angkot
+	   
+SYNOPSIS
+       kiritool OPTIONS... ARGUMENTS
+	   
+DESCRIPTION
+       kiritool searches for available routes and shows steps needed to go from one location to another using angkot (angkutan kota). This tool will be utilizing the KIRI API in its processes.
+       This tool has three features:
+              - Search location names from query
+              - Find routes using angkot from starting and end locations' latitude and longitude coordinates
+              - Find routes using angkot from starting and end locations' search query keywords
+			  
+OPTIONS
+   Basic Program Options
+       The user must select either one of these options per operation.
+       -h, --help
+              Display concise help for tool usage.
+       -m, --mode
+              Set tool operation mode.
+   Tool Operation Modes
+       The user must select only one of these modes per operation.
+       searchplace
+              Search  location  names  from  user-provided query (-q).  Additionally, users must also provide the region (-r) to search the desired location in.  If at least one location was found, this mode will output their names,
+              along with the latitude and longitude coordinates.
+       findroute
+              Find routes utilizing angkot and display the steps required for the route. User must provide the latitude and longitude coordinates of both the starting (-s) and end (-f) locations.
+              If a route was found, this mode will output the estimated time required to take the route, along with the steps to be taken in said route.
+       direct
+              Find routes utilizing angkot and display the steps required for the route. This mode combines both searchplace and findroute modes, so user will only need to provide the queries for both the starting (-s) and end  (-f)
+              locations, along with the region (-S and -F) to search for each in.
+              If a route was found, this mode will output the name of both START and FINISH, along with the estimated time required to take the route, and the steps to be taken in said route.
+              Note that this mode does not support vague queries - should either the search for starting or end locations return more than one results, this mode will only take the first ones.
+   Required Options
+       Note that not all of these options are required for each of the operation modes. Should the user provide additional options than what the mode requires, they will simply be unused.
+       For information on which options are required for certain modes, refer to the "Tool Operation Modes" section.
+       -F REGION, --regfinish REGION
+              Set the REGION to search for the finish location (-f) in. Only four options are available as regions: cgk (Jakarta), bdo (Bandung), mlg (Malang), or sub (Surabaya).
+              This option is specifically used for the direct mode. For the searchplace mode alternative, see option -r.
+       -f FINISH, --finish FINISH
+              Set where the desired FINISH should be.
+              When this option is used in the findroute mode, it will only accept latitude and longitude coordinates, formatted as LATITUDE,LONGITUDE.
+              Alternatively, when this option is used in the direct mode, it will only accept keywords as its argument.
+       -l LANG, --locale LANG
+              Set the output language to LANG. This tool only supports two languages: id (Indonesian) and en (English).
+              If the user does not use this option, the tool will default to outputting in id.
+       -q KEYWORD, --query KEYWORD
+              Search for the desired location using KEYWORD. If KEYWORD contained more than one words, it must be encased in quotation marks (" ").
+              This option is only used in the searchplace mode. For the direct mode alternatives, see option -s and -f.
+       -r REGION, --region REGION
+              Set the REGION to search for the desired location (-s) in. Only four options are available as regions: cgk (Jakarta), bdo (Bandung), mlg (Malang), or sub (Surabaya).
+              This option is specifically used for the searchplace mode. For the direct mode alternative, see options -s and -f.
+       -S REGION, --regstart REGION
+              Set the REGION to search for the start location (-s) in. Only four options are available as regions: cgk (Jakarta), bdo (Bandung), mlg (Malang), or sub (Surabaya).
+              This option is specifically used for the direct mode. For the searchplace mode alternative, see option -r.
+       -s START, --start START
+              Set where the desired START should be.
+              When this option is used in the findroute mode, it will only accept latitude and longitude coordinates, formatted as LATITUDE,LONGITUDE.
+              Alternatively, when this option is used in the direct mode, it will only accept keywords as its argument.
+			  
+OUTPUT
+       searchplace
+              In this mode, the output will be the location name, along with its latitude and longitude coordinates for the user to use as the input for findroute mode.
+       findroute
+              In this mode, the output will be the steps needed to be taken within the determined route.
+              Should there be more than one possible routes, the tool will list all of them.
+       direct
+              In this mode, the output will be the starting and end location names, and the steps needed to be taken within the determined route.
+              Should there be more than one possible routes, the tool will list all of them.
+			  
+ERROR HANDLING
+       Should there be an error occuring somewhere (most likely due to faulty inputs), the tool will output an error message.
+       This message will be in either Indonesian or English language, depending on the -l option's input.
+	   
+BUGS
+       No known bugs.
+	   
+AUTHOR
+       Alfred Aprianto Liaunardi (aaliaunardi@gmail.com)
+	   
+1.2.13                                                                                                        November 2022                                                                                                  kiritool(1)

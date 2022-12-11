@@ -105,6 +105,37 @@ Fungsi \verb|main| di perkakas ini dapat dibagi menjadi dua buah proses utama, y
 	\item \textbf{Baris 917}: \textit{Return code} 0, menandakan bahwa perkakas berhasil berjalan tanpa ada masalah.
 \end{enumerate}
 
+\subsection{CMakeLists}
+\label{sec:testing-implementation-cmakelists}
+
+Cara kerja file CMakeLists untuk perkakas ini dapat dibagi menjadi beberapa bagian sebagai berikut:
+
+\begin{enumerate}
+	\item \textbf{Baris 1 \& 2}: Pengaturan nama proyek serta file-file utama dari proyeknya.
+	\item \textbf{Baris 4}: Pengaturan versi minimum CMake. Versi CMake yang dibutuhkan minimal adalah 3.18, karena fitur \textit{file compression} baru didukung di versi tersebut.
+	\item \textbf{Baris 5}: Pendefinisian nama proyek, versi, serta bahasa pemrograman dari proyek tersebut.
+	\item \textbf{Baris 7}: Penghubungan file-file utama proyek ke proyek yang sudah didefinisikan di baris 5.
+	\item \textbf{Baris 9\textendash 14}: Pencarian dan pengintegrasian \textit{library-library} yang diperlukan perkakas.
+	\item \textbf{Baris 16\textendash 32}: Perintah-perintah spesifik untuk sistem operasi berbasis Linux, yang berhubungan dengan instalasi halaman manual (\textit{man page}). File yang berisi kode murni \textit{man page} akan di-\textit{compress}, dan kemudian diatur untuk dapat diinstal langsung ke direktori yang benar di Linux.
+\end{enumerate}
+\noindent
+Implementasi lengkap dari file CMakeLists.txt ini dapat dilihat di lampiran \ref{appdx:A-cmakelists}.
+
+\subsection{Halaman manual (\textit{man page})}
+\label{sec:testing-implementation-man}
+
+Kode ini diperlukan untuk fitur halaman manual (man \textit{page}) di sistem operasi berbasis Linux, yang pada dasarnya merupakan bantuan penggunaan perkakas yang lebih panjang dan lebih detail. Implementasi dari perkakas ini dapat dibagi menjadi bagian bagian sebagai berikut, berdasarkan sintaks yang mengawali bagian-bagian dalam kode tersebut, yaitu:
+
+\begin{itemize}
+	\item \textbf{.TH} \\
+	Judul dari halaman manual. Tanggal dibuat, versi, serta judul dari halaman manualnya sendiri diatur di bagian ini.
+	\item \textbf{.SH} \\
+	Setiap baris yang diawali dengan sintaks ini akan di-format menjadi judul dari tiap-tiap bab di dalam halaman manual.
+	\item Sisa dari file yang tidak diawali dengan kedua perintah di atas merupakan deskripsi dari tiap-tiap bagian yang ada di dalam halaman manual nantinya.
+\end{itemize}
+\noindent
+Adapun implementasi lengkap dari kode halaman manual ini ada di lampiran \ref{appdx:A-manpage}.
+
 \section{Pengujian}
 \label{sec:testing-experiments}
 
@@ -263,20 +294,22 @@ Tabel \ref{tab:testing-experiments-testing-overview} memaparkan jumlah tes yang 
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{| c | c |}
+    \begin{tabular}{| c | c | c |}
     \hline
-        \textbf{Objek tes} & \textbf{Jumlah tes} \\
+        \textbf{No.} & \textbf{Objek tes} & \textbf{Jumlah tes} \\
     \hline
     \hline
-        Sintaks dasar & 7 \\
+        1 & Sintaks dasar & 7 \\
     \hline
-        Mode bantuan (\verb|--help|) & 3 \\
+        2 & Mode bantuan (\verb|--help|) & 3 \\
     \hline
-        Mode \textit{searchplace} & 9 \\
+        3 & Mode \textit{searchplace} & 9 \\
     \hline
-        Mode \textit{findroute} & 8 \\
+        4 & Mode \textit{findroute} & 8 \\
     \hline
-        Mode \textit{direct} & 10 \\
+        5 & Mode \textit{direct} & 10 \\
+    \hline
+        6 & Integrasi perkakas \cl lain & 6 \\
     \hline
 	\end{tabular}
     \caption{Jumlah kategori dan tes yang dilakukan.}
@@ -297,8 +330,11 @@ kiritool
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan mode operasional perkakas.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan mode operasional perkakas.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Mohon masukkan mode pengunaan perkakas.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -310,8 +346,12 @@ kiritool -m searchplace -r bdo -q unpar -b id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} yang memberi tahu pengguna bahwa ada opsi yang tidak valid di dalam perintah masukan.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang memberi tahu pengguna bahwa ada opsi yang tidak valid di dalam perintah masukan.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan opsi yang tidak valid.
+Mohon periksa kembali penulisan perintah yang anda masukkan.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -323,8 +363,12 @@ kiritool -m searchplace -r bdo -q unpar -l
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} mengenai adanya opsi yang kehilangan argumennya di dalam perintah masukan.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang mengenai adanya opsi yang kehilangan argumennya di dalam perintah masukan.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Salah satu dari opsi yang anda masukkan kehilangan argumen yang dibutuhkan.
+Mohon periksa kembali penulisan perintah yang anda masukkan.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -335,12 +379,16 @@ kiritool -m searchplace -r bdo -q unpar -l
 kiritool -m searchplace -r bdo -q -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
-		Perkakas akan mengeluarkan pesan \textit{error} mengenai opsi yang kehilangan argumennya di dalam perintah masukan.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
-		\item Status tes: \textbf{Gagal}
+		Perkakas akan mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan kelebihan argumen: id
+Mohon periksa kembali penulisan perintah yang anda masukkan.
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
 		\item Catatan tambahan: \\
-		Akibat batasan teknis, \textit{library} getopt sendiri tidak bisa menangani kasus di mana opsi yang kehilangan argumennya berada di tengah perintah, karena getopt akan menginterpretasikan opsi selanjutnya sebagai argumen dari opsi yang kehilangan argumennya. Satu-satunya solusi yang mungkin adalah mengecek apakah argumen dimulai dengan karakter tanda hubung (`-'), tetapi solusi ini tidak dapat diimplementasikan, karena argumen dari beberapa opsi berpotensi untuk diawali dengan karakter tersebut.
+		Kasus ini idealnya berakhir dengan pesan \textit{error} yang menyatakan bahwa ada opsi yang kehilangan argumennya. Akan tetapi, akibat batasan teknis, \textit{library} getopt sendiri tidak bisa menangani kasus di mana opsi yang kehilangan argumennya berada di tengah perintah, karena getopt akan menginterpretasikan opsi selanjutnya sebagai argumen dari opsi yang kehilangan argumennya. Satu-satunya solusi yang mungkin adalah mengecek apakah argumen dimulai dengan karakter tanda hubung (`-'), tetapi solusi ini tidak dapat diimplementasikan, karena argumen dari beberapa opsi berpotensi untuk diawali dengan karakter tersebut.
 	\end{itemize}
 	
 	\item Perintah dengan terlalu banyak argumen
@@ -351,8 +399,12 @@ kiritool -m searchplace -r bdo -q unpar -l id en
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} mengenai kelebihan argumen yang dimasukkan pengguna, serta mendaftarkan argumen apa saja yang berlebih.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan kelebihan argumen: en
+Mohon periksa kembali penulisan perintah yang anda masukkan.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -364,8 +416,12 @@ kiritool -m help
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa mode yang dimasukkan tidak valid.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa mode yang dimasukkan tidak valid.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan mode yang tidak valid.
+Mohon periksa kembali apakah mode yang anda masukkan sudah diketik dengan benar.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -377,8 +433,13 @@ kiritool -m searchplace -r bdo -q unpar -h -l en
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas hanya akan merespon terhadap mode operasional pertama yang dimasukkan (beserta opsi-opsinya).
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan hasil pencarian lokasi (keluaran opsi \verb|-m searchplace|) dan tidak mengindahkan panggilan bantuan penggunaan (opsi \verb|-h|).
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Location:
+--------------------
+Name: Universitas Katolik Parahyangan
+Coordinates: -6.87520,107.60492
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 
@@ -399,7 +460,7 @@ kiritool -h
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan bantuan penggunaan perkakas.
 		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan bantuan penggunaan perkakas.
+		Perkakas akan mengeluarkan bantuan penggunaan perkakas dengan benar. Keluaran dari kasus tes ini dapat dilihat di lampiran \ref{appdx:A-output-help}.
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -412,7 +473,7 @@ kiritool -h -s unpar
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan bantuan penggunaan perkakas, tanpa memedulikan opsi serta argumen tambahan di dalam perintah.
 		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan bantuan penggunaan perkakas seperti biasanya.
+		Keluaran dari kasus tes ini sama seperti kasus sebelumnya, yang juga dapat dilihat di lampiran \ref{appdx:A-output-help}.
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -425,7 +486,7 @@ man kiritool
 		\item Keluaran yang diharapkan: \\
 		\textit{Terminal} akan menampilkan manual page dari perkakas yang sesuai.
 		\item Keluaran perkakas: \\
-		\textit{Terminal} menampilkan manual page yang sesuai.
+		\textit{Terminal} menampilkan manual page yang sesuai. Hasil dari kasus tes ini dapat dilihat di lampiran \ref{appdx:A-output-manpage}. Perlu diingat bahwa \textit{man page} memiliki \textit{formatting} otomatisnya sendiri, jadi ketika dikonversi ke file .txt (agar bisa dimasukkan sebagai lampiran), beberapa aspek \textit{formatting}-nya menjadi tidak sempurna.
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 
@@ -445,8 +506,13 @@ kiritool -m searchplace -r bdo -q unpar -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama dan koordinat \latlon lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan nama dan koordinat \latlon lokasi sesuai dengan bahasa yang diminta.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi:
+--------------------
+Nama: Universitas Katolik Parahyangan
+Koordinat: -6.87520,107.60492
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -458,8 +524,23 @@ kiritool -m searchplace -r bdo -q ab -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama dan koordinat \latlon semua kemungkinan lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan nama dan koordinat \latlon semua kemungkinan lokasi sesuai dengan bahasa yang diminta.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi 1:
+--------------------
+Nama: Blk. A-B
+Koordinat: -6.88612,107.65028
+
+Lokasi 2:
+--------------------
+Nama: Blk. A-B
+Koordinat: -6.90845,107.67641
+
+Lokasi 3:
+--------------------
+Nama: Blk. AB
+Koordinat: -6.89748,107.70782
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -471,8 +552,11 @@ kiritool -m searchplace -r bdo -q abasdasd -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan keluaran yang memberitahu pengguna bahwa lokasi tidak berhasil ditemukan.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan keluaran yang memberitahu bahwa lokasi tidak berhasil ditemukan.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi tidak berhasil ditemukan.
+Silakan cek ulang apakah kata kunci pencarian sudah dimasukkan dengan benar.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -484,8 +568,13 @@ kiritool -m searchplace -q unpar -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kode region.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kode region.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.
+Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.
+Pilihan region: cgk, bdo, mlg, sub
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -497,8 +586,13 @@ kiritool -m searchplace -r bdg -q unpar -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan pesan \textit{error} bahwa region yang dimasukkan tidak valid.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan pesan \textit{error} bahwa region yang dimasukkan tidak valid.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan region yang tidak valid.
+Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.
+Pilihan region: cgk, bdo, mlg, sub
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -510,8 +604,12 @@ kiritool -m searchplace -r bdo -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kata kunci pencarian.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan kata kunci pencarian.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.
+Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -523,8 +621,12 @@ kiritool -m searchplace -r bdo -q -6.87520,107.60492 -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan pesan bahwa keluaran API adalah sebuah \textit{error}.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan pesan bahwa keluaran API adalah sebuah \textit{error}.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+API mengembalikan error sebagai keluarannya.
+Silakan cek ulang apakah kata kunci pencarian sudah diformat dengan benar.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 		\item Catatan tambahan: \\
 		Perkakas tetap menerima kata kunci pencarian yang diawali dengan tanda hubung (`-'), jadi perkakas tidak bisa langsung mengembalikan \textit{error} ke pengguna apabila pengguna (misal dalam kasus ini) memasukkan koordinat \latlon sebagai argumen opsi \verb|-q|.
@@ -538,8 +640,13 @@ kiritool -m searchplace -r bdo -q unpar
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas tetap berfungsi seperti biasa, dengan mengeluarkan keluaran dalam bahasa Indonesia.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan keluaran seperi biasa, dalam bahasa Indonesia.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi:
+--------------------
+Nama: Universitas Katolik Parahyangan
+Koordinat: -6.87520,107.60492
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -550,8 +657,17 @@ kiritool -m searchplace -r bdo -q unpar
 kiritool -m searchplace -r bdo -q unpar -l ch
 		\end{verbatim}
 		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa bahasa yang dimasukkan tidak valid.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang sesuai dengan ekspektasi.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.
+Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.
+Pilihan locale: id, en
+--------------------
+You have inputted an invalid language (locale) option.
+Please recheck whether the language code you inserted was supported or not.
+Locale available: id, en
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -571,8 +687,16 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492 -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan estimasi durasi rute, serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan estimasi durasi rute, serta langkah-langkah dalam rute, sesuai dengan bahasa yang diminta.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Rute:
+--------------------
+Estimasi waktu: 25 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 203 meter.
+Langkah 2: Naik angkot Ciumbuleuit - St. Hall (belok) di Jalan Cihampelas, dan turun di 40141 kurang lebih setelah 3,9 kilometer.
+Langkah 3: Jalan dari 40141 ke lokasi mulai Anda sejauh kurang lebih 64 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -584,8 +708,18 @@ kiritool -m findroute -s -6.16935,106.78899 -f -6.87520,107.60492 -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Jauhnya rute tidak akan mempengaruhi kinerja dari perkakas.
-		\item Keluaran perkakas: \\
-		Perkakas tetap menampilkan estimasi durasi rute dan langkah-langkah dalam rute seperti seharusnya.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Rute:
+--------------------
+Estimasi waktu: 3 jam 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jelambar 1 sejauh kurang lebih 365 meter.
+Langkah 2: Naik Daytrans Grogol - Cihampelas di Jelambar 1, dan turun di SMA Pasundan 2 Bandung kurang lebih setelah 155,8 kilometer.
+Langkah 3: Jalan dari SMA Pasundan 2 Bandung ke Jalan Cihampelas sejauh kurang lebih 35 meter.
+Langkah 4: Naik angkot Ciumbuleuit - St. Hall (belok) di Jalan Cihampelas, dan turun di 40141 kurang lebih setelah 3,9 kilometer.
+Langkah 5: Jalan dari 40141 ke lokasi mulai Anda sejauh kurang lebih 64 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -597,8 +731,26 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.91527,107.59454 -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan setiap rutenya, diikuti dengan estimasi waktunya serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
-		\item Keluaran perkakas: \\
-		Perkakas akan menampilkan setiap rutenya, diikuti dengan estimasi waktunya serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Rute 1:
+--------------------
+Estimasi waktu: 30 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 56 meter.
+Langkah 2: Naik angkot Cicaheum - Ciroyom di Jalan Cihampelas, dan turun di Jalan Arjuna kurang lebih setelah 4,2 kilometer.
+Langkah 3: Jalan sedikit di Jalan Arjuna.
+Langkah 4: Naik angkot Dago - Caringin di Jalan Arjuna, dan turun di Jalan Kebon Jati kurang lebih setelah 688 meter.
+Langkah 5: Jalan dari Jalan Kebon Jati ke lokasi mulai Anda sejauh kurang lebih 138 meter.
+
+Rute 2:
+--------------------
+Estimasi waktu: 25 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 26 meter.
+Langkah 2: Naik angkot Cisitu - Tegallega di Jalan Cihampelas, dan turun di Jalan Pasir Kaliki kurang lebih setelah 3,7 kilometer.
+Langkah 3: Jalan dari Jalan Pasir Kaliki ke lokasi mulai Anda sejauh kurang lebih 396 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -610,8 +762,10 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.88307,107.65529 -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan kepada pengguna bahwa rute perjalanan dengan angkot tidak berhasil ditemukan.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan bahwa rute perjalanan dengan angkot tidak berhasil ditemukan.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Maaf, kami tidak dapat menemukan rute transportasi publik untuk perjalanan anda.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -619,13 +773,24 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.88307,107.65529 -l id
 	\begin{itemize}
 		\item Perintah masukan:
 		\begin{verbatim}
-kiritool -m findroute -s -6.89350,107.60430 -l id
 kiritool -m findroute -f -6.87520,107.60492 -l id
+kiritool -m findroute -s -6.89350,107.60430 -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan koordinat \latlon lokasi awal atau akhir, tergantung dari lokasi mana yang tidak dimasukkan.
 		\item Keluaran perkakas: \\
-		Perkakas  mengeluarkan pesan \textit{error} yang sesuai untuk kedua kasus pengujian.
+		\textbf{Kasus 1}: Lokasi awal tidak dimasukkan
+		\begin{lstlisting}
+Error:
+Anda belum memasukkan sebuah koordinat untuk lokasi awal.
+Mohon masukkan koordinat untuk lokasi awal pencarian rute melalui opsi yang sesuai.
+		\end{lstlisting}
+		\textbf{Kasus 2}: Lokasi akhir tidak dimasukkan
+		\begin{lstlisting}
+Error:
+Anda belum memasukkan sebuah koordinat untuk lokasi akhir.
+Mohon masukkan koordinat untuk lokasi akhir pencarian rute melalui opsi yang sesuai.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -637,11 +802,15 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.6049a -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan bahwa keluaran API adalah sebuah \textit{error}.
-		\item Keluaran perkakas: \\
-		Perkakas  mengeluarkan pesan bahwa API mengembalikan sebuah \textit{error}.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+API mengembalikan error sebagai keluarannya.
+Silakan cek ulang apakah koordinat kedua lokasi sudah dimasukkan dengan benar.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 		\item Catatan tambahan: \\
-		Akibat penggunaan variabel yang sama dengan variabel dalam fitur \verb|direct|, di mana di dalam fitur tersebut opsi \verb|-s| atau opsi \verb|| memiliki aturan masukan yang berbeda, maka fitur ini tidak akan langsung mendeteksi \textit{error} apabila pengguna memasukkan koordinat yang tidak valid.
+		Akibat penggunaan variabel yang sama dengan variabel dalam fitur \verb|direct|, di mana di dalam fitur tersebut opsi \verb|-s| dan opsi \verb|-f| memiliki aturan masukan yang berbeda, maka fitur ini tidak akan langsung mendeteksi \textit{error} apabila pengguna memasukkan koordinat yang tidak valid.
 	\end{itemize}
 	
 	\item Pencarian lokasi tanpa pengaturan bahasa
@@ -652,8 +821,16 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas tetap berfungsi seperti biasa, dengan mengeluarkan keluaran dalam bahasa Indonesia.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan keluaran seperi biasa, dalam bahasa Indonesia.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Rute:
+--------------------
+Estimasi waktu: 25 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 203 meter.
+Langkah 2: Naik angkot Ciumbuleuit - St. Hall (belok) di Jalan Cihampelas, dan turun di 40141 kurang lebih setelah 3,9 kilometer.
+Langkah 3: Jalan dari 40141 ke lokasi mulai Anda sejauh kurang lebih 64 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -665,8 +842,17 @@ kiritool -m findroute -s -6.89350,107.60430 -f -6.87520,107.60492 -l ch
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa bahasa yang dimasukkan tidak valid.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang sesuai dengan ekspektasi.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.
+Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.
+Pilihan locale: id, en
+--------------------
+You have inputted an invalid language (locale) option.
+Please recheck whether the language code you inserted was supported or not.
+Locale available: id, en
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -686,8 +872,19 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi awal dan akhir, estimasi durasi rute, serta langkah-langkah yang perlu ditempuh di dalam rutenya, sesuai dengan bahasa yang diminta oleh pengguna.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan seluruh aspek yang disebutkan dalam keluarannya.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+Lokasi akhir: Universitas Katolik Parahyangan
+
+Rute:
+--------------------
+Estimasi waktu: 25 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 203 meter.
+Langkah 2: Naik angkot Ciumbuleuit - St. Hall (belok) di Jalan Cihampelas, dan turun di 40141 kurang lebih setelah 3,9 kilometer.
+Langkah 3: Jalan dari 40141 ke lokasi mulai Anda sejauh kurang lebih 64 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -699,8 +896,21 @@ kiritool -m direct -S cgk -s untar -F bdo -f unpar -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Jauhnya rute tidak akan berpengaruh ke keluaran perkakas.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan seluruh aspek dalam keluarannya seperti biasanya.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi awal: Universitas Tarumanagara
+Lokasi akhir: Universitas Katolik Parahyangan
+
+Rute:
+--------------------
+Estimasi waktu: 3 jam 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jelambar 1 sejauh kurang lebih 365 meter.
+Langkah 2: Naik Daytrans Grogol - Cihampelas di Jelambar 1, dan turun di SMA Pasundan 2 Bandung kurang lebih setelah 155,8 kilometer.
+Langkah 3: Jalan dari SMA Pasundan 2 Bandung ke Jalan Cihampelas sejauh kurang lebih 35 meter.
+Langkah 4: Naik angkot Ciumbuleuit - St. Hall (belok) di Jalan Cihampelas, dan turun di 40141 kurang lebih setelah 3,9 kilometer.
+Langkah 5: Jalan dari 40141 ke lokasi mulai Anda sejauh kurang lebih 64 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -712,8 +922,29 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f paskal -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi awal dan akhir, serta tiap-tiap kemungkinan rutenya, dimulai dari estimasi durasi, diikuti dengan langkah-langkah yang perlu ditempuh di dalamnya, sesuai dengan bahasa yang diminta oleh pengguna.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan seluruh aspek yang disebutkan dalam keluarannya.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+Lokasi akhir: 23 Paskal Shopping Center
+
+Rute 1:
+--------------------
+Estimasi waktu: 30 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 56 meter.
+Langkah 2: Naik angkot Cicaheum - Ciroyom di Jalan Cihampelas, dan turun di Jalan Arjuna kurang lebih setelah 4,2 kilometer.
+Langkah 3: Jalan sedikit di Jalan Arjuna.
+Langkah 4: Naik angkot Dago - Caringin di Jalan Arjuna, dan turun di Jalan Kebon Jati kurang lebih setelah 688 meter.
+Langkah 5: Jalan dari Jalan Kebon Jati ke lokasi mulai Anda sejauh kurang lebih 138 meter.
+
+Rute 2:
+--------------------
+Estimasi waktu: 25 menit 
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 26 meter.
+Langkah 2: Naik angkot Cisitu - Tegallega di Jalan Cihampelas, dan turun di Jalan Pasir Kaliki kurang lebih setelah 3,7 kilometer.
+Langkah 3: Jalan dari Jalan Pasir Kaliki ke lokasi mulai Anda sejauh kurang lebih 396 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -725,8 +956,14 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f paku -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi awal dan akhir, tetapi akan mengeluarkan pesan bahwa rute tidak berhasil ditemukan.
-		\item Keluaran perkakas: \\
-		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+Lokasi akhir: Curug Paku
+
+
+Maaf, kami tidak dapat menemukan rute transportasi publik untuk perjalanan anda.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -734,13 +971,28 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f paku -l id
 	\begin{itemize}
 		\item Perintah masukan:
 		\begin{verbatim}
-kiritool -m direct -S bdo -s ciwalk -f unpar -l id
 kiritool -m direct -s ciwalk -F bdo -f unpar -l id
+kiritool -m direct -S bdo -s ciwalk -f unpar -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan regionnya, dan kemudian akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa ada kata kunci pencarian lokasi yang hilang.
 		\item Keluaran perkakas: \\
-		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\textbf{Kasus 1}: Region awal tidak dimasukkan
+		\begin{lstlisting}
+Error:
+Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.
+Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.
+Pilihan region: cgk, bdo, mlg, sub
+		\end{lstlisting}
+		\textbf{Kasus 2}: Region akhir tidak dimasukkan
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+
+Error:
+Fitur pencarian lokasi memerlukan pengaturan region lokasi yang ingin dicari.
+Mohon pastikan anda sudah memasukkan salah satu dari empat kode region yang tersedia.
+Pilihan region: cgk, bdo, mlg, sub
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -754,7 +1006,22 @@ kiritool -m direct -S bdo -s ciwalk -F bdg -f unpar -l id
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan regionnya, dan kemudian akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa ada kata kunci pencarian lokasi yang hilang.
 		\item Keluaran perkakas: \\
-		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\textbf{Kasus 1}: Region awal tidak valid
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan region yang tidak valid.
+Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.
+Pilihan region: cgk, bdo, mlg, sub
+		\end{lstlisting}
+		\textbf{Kasus 2}: Region akhir tidak valid
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+
+Error:
+Anda telah memasukkan region yang tidak valid.
+Mohon periksa kembali apakah kode region yang anda masukkan merupakan salah satu dari empat kode region yang tersedia.
+Pilihan region: cgk, bdo, mlg, sub
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -762,13 +1029,26 @@ kiritool -m direct -S bdo -s ciwalk -F bdg -f unpar -l id
 	\begin{itemize}
 		\item Perintah masukan:
 		\begin{verbatim}
-kiritool -m direct -S bdo -s ciwalk -F bdo -l id
 kiritool -m direct -S bdo -F bdo -f unpar -l id
+kiritool -m direct -S bdo -s ciwalk -F bdo -l id
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan kata kunci pencariannya, dan kemudian akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa ada kata kunci pencarian lokasi yang hilang.
 		\item Keluaran perkakas: \\
-		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\textbf{Kasus 1}: Lokasi awal tidak dimasukkan
+		\begin{lstlisting}
+Error:
+Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.
+Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.
+		\end{lstlisting}
+		\textbf{Kasus 2}: Lokasi akhir tidak dimasukkan
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+
+Error:
+Fitur pencarian lokasi memerlukan sebuah kata kunci pencarian.
+Mohon pastikan anda sudah memasukkan kata kunci untuk melakukan pencarian lokasi.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -782,7 +1062,20 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f -6.87520,107.60492 -l id
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan menampilkan nama lokasi hingga lokasi yang tidak diberikan kata kunci pencariannya, dan kemudian akan mengeluarkan pesan yang memberitahu pengguna bahwa API mengembalikan sebuah \textit{error}.
 		\item Keluaran perkakas: \\
-		Perkakas menampilkan keluaran sesuai dengan format yang diharapkan.
+		\textbf{Kasus 1}: Lokasi awal tidak valid
+		\begin{lstlisting}
+Error:
+API mengembalikan error sebagai koordinat lokasi awal.
+Silakan cek ulang apakah koordinat lokasi awal sudah dimasukkan dengan benar.
+		\end{lstlisting}
+		\textbf{Kasus 2}: Lokasi akhir tidak valid
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+
+Error:
+API mengembalikan error sebagai koordinat lokasi akhir.
+Silakan cek ulang apakah koordinat lokasi akhir sudah dimasukkan dengan benar.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -794,8 +1087,19 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas tetap berfungsi seperti biasa, dengan mengeluarkan keluaran dalam bahasa Indonesia.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan keluaran seperti biasa, dalam bahasa Indonesia.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Lokasi awal: Cihampelas Walk Extention
+Lokasi akhir: Universitas Katolik Parahyangan
+
+Rute:
+--------------------
+Estimasi waktu: 25 menit
+--------------------
+Langkah 1: Jalan dari tujuan akhir Anda ke Jalan Cihampelas sejauh kurang lebih 203 meter.
+Langkah 2: Naik angkot Ciumbuleuit - St. Hall (belok) di Jalan Cihampelas, dan turun di 40141 kurang lebih setelah 3,9 kilometer.
+Langkah 3: Jalan dari 40141 ke lokasi mulai Anda sejauh kurang lebih 64 meter.
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 	
@@ -807,9 +1111,143 @@ kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l ch
 		\end{verbatim}
 		\item Keluaran yang diharapkan: \\
 		Perkakas akan mengeluarkan pesan \textit{error} yang memberitahu pengguna bahwa bahasa yang dimasukkan tidak valid.
-		\item Keluaran perkakas: \\
-		Perkakas mengeluarkan pesan \textit{error} yang sesuai dengan ekspektasi.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Error:
+Anda telah memasukkan pilihan bahasa (locale) yang tidak valid.
+Mohon periksa kembali apakah pilihan bahasa yang anda masukkan valid atau tidak.
+Pilihan locale: id, en
+--------------------
+You have inputted an invalid language (locale) option.
+Please recheck whether the language code you inserted was supported or not.
+Locale available: id, en
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+\end{enumerate}
+
+\subsubsection{Integrasi perkakas \cl lain}
+\label{sec:testing-experiments-testing-integration}
+
+Pengujian ini dilakukan untuk menguji kompatibilitas keluaran perkakas dengan fungsi dari perkakas-perkakas \cl bawaan yang ada. Sebelum dilakukan, perlu ditetapkan beberapa aturan dasar untuk pengujian ini, yaitu sebagai berikut:
+
+\begin{itemize}
+	\item Tes kasus yang akan digunakan sebagai masukan adalah pencarian rute langsung dengan satu kemungkinan rute, dari ``ciwalk'' (Bandung) ke ``unpar'' (Bandung), dalam bahasa inggris. Masukan ini akan disamakan untuk seluruh bagian ini untuk alasan konsistensi.
+	\item Pengujian akan dilakukan sebanyak dua kali untuk tiap kasus, untuk Windows dan Linux.
+	\item Pengujian hanya akan dilakukan sekali untuk kasus-kasus tertentu apabila fungsi yang diuji memiliki perintah yang sama, atau fungsi tersebut tidak didukung oleh perkakas \cl bawaan dalam sistem operasi tersebut.
+\end{itemize}
+
+Berikut merupakan hasil pengujian untuk bagian ini.
+\begin{enumerate}	
+	\item Memasukkan keluaran perkakas ke dalam file output
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l en > out.txt
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menuliskan keluaran dari perintah tersebut langsung di dalam file \verb|out.txt|.
+		\item Keluaran perkakas: Akan dihasilkan sebuah file \verb|out.txt| yang isinya adalah sebagai berikut.
+		\begin{lstlisting}
+Starting location: Cihampelas Walk Extention
+Finish location: Universitas Katolik Parahyangan
+
+Route:
+--------------------
+Estimated duration: 25 minutes
+--------------------
+Step 1: Walk about 203 meter from your starting point to Jalan Cihampelas.
+Step 2: Take angkot Ciumbuleuit - St. Hall (belok) at Jalan Cihampelas, and alight at 40141 about 3.9 kilometer later.
+Step 3: Walk about 64 meter from 40141 to your destination.
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Mengeluarkan hanya langkah-langkah yang perlu ditempuh (Windows)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l en | findstr /i
+"step"
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan hanya baris yang memaparkan durasi rute yang ingin ditempuh. Jika tes berhasil, keluaran untuk Windows maupun Linux (tes selanjutnya) akan sama.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Step 1: Walk about 203 meter from your starting point to Jalan Cihampelas.
+Step 2: Take angkot Ciumbuleuit - St. Hall (belok) at Jalan Cihampelas, and alight at 40141 about 3.9 kilometer later.
+Step 3: Walk about 64 meter from 40141 to your destination.
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Mengeluarkan hanya langkah-langkah yang perlu ditempuh (Linux)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l en | grep -i
+"step"
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan hanya baris yang memaparkan durasi rute yang ingin ditempuh. Jika tes berhasil, keluaran untuk Windows (tes sebelumnya) maupun Linux akan sama.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Step 1: Walk about 203 meter from your starting point to Jalan Cihampelas.
+Step 2: Take angkot Ciumbuleuit - St. Hall (belok) at Jalan Cihampelas, and alight at 40141 about 3.9 kilometer later.
+Step 3: Walk about 64 meter from 40141 to your destination.
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Mengeluarkan hanya durasi dari rute (Windows)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l en | findstr /i
+"duration"
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan hanya baris yang memaparkan durasi rute yang ingin ditempuh. Jika tes berhasil, keluaran untuk Windows maupun Linux (tes selanjutnya) akan sama.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Estimated duration: 25 minutes
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Mengeluarkan hanya durasi dari rute (Linux)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l en | grep -i
+"duration"
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+		Perkakas akan menampilkan hanya baris yang memaparkan durasi rute yang ingin ditempuh. Jika tes berhasil, keluaran untuk Windows (tes sebelumnya) maupun Linux akan sama.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+Estimated duration: 25 minutes
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Menampilkan jumlah langkah yang perlu ditempuh (Linux)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{verbatim}
+kiritool -m direct -S bdo -s ciwalk -F bdo -f unpar -l en | grep -i "step"
+| wc -l
+		\end{verbatim}
+		\item Keluaran yang diharapkan: \\
+Ada tiga langkah dalam rute yang diuji, jadi perkakas akan mengeluarkan `3'.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+3
+		\end{lstlisting}
+		\item Status tes: \textbf{Sukses}
+		\item Catatan tambahan: \\
+		Tes ini hanya berlaku untuk sistem operasi berbasis Linux, karena tidak ada perintah dasar bawaan dalam \cl Windows yang dapat menghitung jumlah baris dalam suatu keluaran. Tes ini juga tidak dapat dilakukan ke pencarian rute yang menghasilkan lebih dari satu hasil.
 	\end{itemize}
 	
 \end{enumerate}

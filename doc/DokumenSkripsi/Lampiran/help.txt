@@ -1,0 +1,58 @@
+KIRI Command Line Tool, version 1.2.13
+Use the KIRI tool through the command line.
+
+USAGE:
+    kiritool <COMMAND> [OPTIONS...] [<ARGUMENTS>]
+
+COMMAND:
+    -h, --help          Display usage tutorial.
+    -m, --mode <MODE>   Set the tool operation mode.
+
+    You can only choose one mode per operation.
+
+OPTIONS:
+    -F, --regfinish <REGION>    Set region to search for finish location in.
+    -f, --finish <FINISH>       Set finish location.
+    -l, --locale <LANG>         Set tool output language.
+    -q, --query <KEYWORD>       Set keyword for searching.
+    -r, --region <REGION>       Set region to search for location in.
+    -S, --regstart <REGION>     Set region to search for starting location in.
+    -s, --start <START>         Set starting location.
+
+ARGUMENTS:
+    <FINISH>
+        Route finish location.
+        For 'findroute' mode, input the location's latitude and longitude coordinates.
+        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).
+    <KEYWORD>
+        Keywords used by the tool to search for the desired location.
+        For multiple words queries, encase the keywords in quotation marks (" ").
+    <LANG>
+        Tool output language.
+        Available languages: id, en
+          - id (Indonesian - Default)
+          - en (English)
+    <MODE>
+        Tool operation mode. Note that not all options are needed for all modes.
+        Should the user input extra options, they will simply not be used.
+        Available modes:
+          - searchplace
+                Required options: --query, --region
+                Optional options: --locale
+          - findroute
+                Required options: --start, --finish
+                Optional options: --locale
+          - direct
+                Required options: --regstart, --start, --regfinish, --finish
+                Optional options: --locale
+    <REGION>
+        Region to search for locations in.
+        Available regions:
+          - cgk (Jakarta)
+          - bdo (Bandung)
+          - mlg (Malang)
+          - sub (Surabaya)
+    <START>
+        Route starting location.
+        For 'findroute' mode, input the location's latitude and longitude coordinates.
+        For 'direct' mode, input the location's search keyword (<KEYWORD> argument).

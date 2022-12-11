@@ -1,7 +1,7 @@
 set(PROJECT_NAME kiritool)
 set(SOURCES main.c includes/cJSON/cJSON.c includes/cJSON/cJSON.h)
 
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.18.0)
 project(${PROJECT_NAME} VERSION 1.2.13 LANGUAGES C)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
