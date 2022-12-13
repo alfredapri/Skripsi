@@ -499,7 +499,7 @@ int main(int argc, char **argv) {
 \subsubsection{getopt-long}
 \label{sec:cmodules-getopt-long}
 
-Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata.
+Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata. Perlu diingat juga bahwa perkakas yang menerima opsi sebagai masukannya sebaiknya memiliki versi panjang dari opsi-opsi tersebut, karena tidak hanya hal ini tidak sulit untuk diimplementasikan, tetapi implementasi versi panjang dari opsi-opsi yang ada juga akan memudahkan pengguna untuk mengingat cara kerja perkakas tersebut.
 
 \verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
 
@@ -507,7 +507,7 @@ Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima du
 	\item \verb|name|\\
 	Variabel ini merupakan nama panjang dari opsi.
 	\item \verb|has_arg|\\
-	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai yang mungkin dalam variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
+	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai untuk variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
 	\item \verb|flag| \& \verb|val|\\ 
 	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt-long|. Variabel \verb|flag| dapat diisi dengan penunjuk (\textit{pointer}) ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt-long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt-long| akan mengembalikan isi dari variabel \verb|val|.
 \end{itemize}
@@ -520,7 +520,7 @@ Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, beri
 	\item Perangkat lunak ini akan menerima masukan dari penggunaan opsi-opsi serta parameternya.
 	\item Keluaran dari perangkat lunak ini adalah opsi apa saja yang dipilih, serta parameter yang diberikan (jika ada).
 	\item Opsi pertama yang disediakan adalah \verb|-a| atau \verb|--args| yang merupakan opsi tidak berargumen.
-	\item Opsi kedua yang disediakan adalah \verb|-n| atau \verb|--noargs|, yang merupakan opsi yang membutuhkan sebuah arguman.
+	\item Opsi kedua yang disediakan adalah \verb|-n| atau \verb|--noargs|, yang merupakan opsi yang membutuhkan sebuah argumen.
 	\item Opsi ketiga dan keempat merupakan penanda mode keluaran, yaitu \verb|--short| dan \verb|--long|. Jika opsi \verb|--long| digunakan, maka perangkat lunak ini akan mengeluarkan versi panjang dari keluaran, sedangkan jika opsi \verb|--short| digunakan, maka perangkat akan mengeluarkan versi pendek dari keluaran.
 \end{itemize}
 

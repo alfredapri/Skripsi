@@ -24,7 +24,7 @@ Dengan \verb|identifier| berupa ID dari ekstensi yang diinginkan. Jadi, misalkan
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.75\linewidth]{chromewebstorecli}
+    \includegraphics[width=0.9\linewidth]{chromewebstorecli}
     \caption[Contoh penggunaan perkakas \chromewebstorecli]{Contoh penggunaan perkakas \chromewebstorecli.}
     \label{fig:similarapps-chromewebstorecli}
 \end{figure}
@@ -73,13 +73,13 @@ Perkakas ini dapat digunakan melalui \textit{command prompt} dengan cara mengeti
 Dengan \verb|input| berupa nama dari objek yang dicari. Perkakas ini juga memiliki opsi yang masing-masing memiliki parameter tersendiri untuk mempersempit hasil pencarian. Adapun opsi-opsi tersebut dapat dilihat di daftar di bawah ini.
 
 \begin{itemize}
-	\item \verb|country|\\
+	\item \verb|--country|\\
 	\textbf{Kemungkinan nilai:} Kode negara dua huruf\\
 	Opsi ini menerima parameter berupa kode negara asal dari album atau artis yang dicari.
-	\item \verb|entity|\\
+	\item \verb|--entity|\\
 	\textbf{Kemungkinan nilai:} \verb|song|, \verb|musicArtist|, atau \verb|album|\\
 	Menandakan jenis objek/entitas yang ingin dicari. Opsi ini dapat bernilai \verb|song| untuk pencarian berbasis judul lagu, \verb|musicArtist| untuk pencarian nama artis, atau \verb|album| untuk pencarian nama album. Jika opsi ini tidak dipakai, objek apapun yang memiliki kemiripan dengan \verb|input| dalam salah satu dari ketiga properti ini akan muncul dalam hasil pencarian.
-	\item \verb|limit|\\
+	\item \verb|--limit|\\
 	\textbf{Kemungkinan nilai:} Bilangan bulat positif\footnote{Opsi ini juga menerima bilangan bulat negatif, tetapi menggunakan sebuah bilangan bulat negatif akan menghilangkan pengaruh opsi ini terhadap hasil keluaran.}\\
 	Jumlah hasil pencarian maksimal yang ingin ditampilkan dalam keluaran.
 \end{itemize}
@@ -97,8 +97,8 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.75\linewidth]{itunesapi}
-    \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi. Gambar hanya memuat satu objek untuk menghemat tempat.}
+    \includegraphics[width=0.9\linewidth]{itunesapi}
+    \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi, untuk mencari artis bernama "The Presets".}
     \label{fig:similarapps-itunesapi}
 \end{figure}
 
