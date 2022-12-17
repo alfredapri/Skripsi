@@ -78,10 +78,10 @@ Dengan \verb|input| berupa nama dari objek yang dicari. Perkakas ini juga memili
 	Opsi ini menerima parameter berupa kode negara asal dari album atau artis yang dicari.
 	\item \verb|--entity|\\
 	\textbf{Kemungkinan nilai:} \verb|song|, \verb|musicArtist|, atau \verb|album|\\
-	Menandakan jenis objek/entitas yang ingin dicari. Opsi ini dapat bernilai \verb|song| untuk pencarian berbasis judul lagu, \verb|musicArtist| untuk pencarian nama artis, atau \verb|album| untuk pencarian nama album. Jika opsi ini tidak dipakai, objek apapun yang memiliki kemiripan dengan \verb|input| dalam salah satu dari ketiga properti ini akan muncul dalam hasil pencarian.
+	Menandakan jenis entitas (objek) yang ingin dicari. Opsi ini dapat bernilai \verb|song| untuk pencarian berbasis judul lagu, \verb|musicArtist| untuk pencarian nama artis, atau \verb|album| untuk pencarian nama album. Jika opsi ini tidak dipakai, objek apapun yang memiliki kemiripan dengan \verb|input| dalam salah satu dari ketiga properti ini akan muncul dalam hasil pencarian.
 	\item \verb|--limit|\\
 	\textbf{Kemungkinan nilai:} Bilangan bulat positif\footnote{Opsi ini juga menerima bilangan bulat negatif, tetapi menggunakan sebuah bilangan bulat negatif akan menghilangkan pengaruh opsi ini terhadap hasil keluaran.}\\
-	Jumlah hasil pencarian maksimal yang ingin ditampilkan dalam keluaran.
+	Batas maksimal hasil pencarian yang ingin ditampilkan dalam keluaran.
 \end{itemize}
 \vspace{\baselineskip}
 Sedangkan, keluaran dari perkakas ini merupakan sebuah objek JSON yang memiliki dua properti utama, yaitu:
@@ -98,7 +98,7 @@ Adapun contoh penggunaan dan hasil keluaran perkakas ini dapat dilihat di gambar
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{itunesapi}
-    \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi, untuk mencari artis bernama "The Presets".}
+    \caption[Contoh penggunaan perkakas \itunesapi]{Contoh penggunaan perkakas \itunesapi, untuk mencari artis bernama ``\textit{The Presets}''.}
     \label{fig:similarapps-itunesapi}
 \end{figure}
 
@@ -158,10 +158,10 @@ Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket
 \googlemapscli merupakan sebuah perkakas \cl yang memiliki kegunaan yang mirip dengan KIRI, hanya saja perkakas ini tidak secara spesifik mengharuskan penggunaan angkot, atau transportasi umum lainnya. Singkatnya, perkakas ini memiliki fungsi seperti sebuah GPS. Untuk menggunakannya, pengguna harus memasukkan perintah dengan bentuk sebagai berikut.
 
 \begin{verbatim}
-                     direction <lokasi awal> <lokasi akhir>
+               direction <lokasi awal> <lokasi akhir> -k <kunci API>
 \end{verbatim}
 
-Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan mengirim permintaan ke API Google \textit{Maps}, di mana jika prosesnya berhasil, keluarannya akan berupa langkah-langkah yang harus ditempuh untuk sampai ke lokasi akhir, beserta di jarak berapa langkah tersebut harus diambil, relatif terhadap langkah sebelumnya. Adapun penggunaan dari perkakas ini dapat dilihat di gambar \ref{fig:similarapps-googlemapscli}.
+Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan mengirim permintaan ke API Google \textit{Maps}, di mana jika prosesnya berhasil, keluarannya akan berupa langkah-langkah yang harus ditempuh untuk sampai ke lokasi akhir, beserta di jarak berapa langkah tersebut harus diambil, relatif terhadap langkah sebelumnya. Perintah untuk perkakas ini juga dapat mengikutkan kunci API Google \textit{Maps} melalui opsi \texttt{-k} (atau \verb|--key|) untuk ramalan kemacetan yang lebih akurat. Adapun penggunaan dari perkakas ini dapat dilihat di gambar \ref{fig:similarapps-googlemapscli}.
 
 \begin{figure}[ht]
     \centering
@@ -174,7 +174,7 @@ Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan me
 \subsubsection{Permasalahan}
 \label{sec:similarapps-googlemapscli-problem}
 
-Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan perkakas ini tidak dapat digunakan lagi-lagi merupakan masalah teknikal, yaitu diperbaruinya API Google \textit{Maps}. Lebih spesifiknya, semenjak 2018, \textit{Google} tidak lagi memperbolehkan penggunaan API Google \textit{Maps} tanpa kunci API, yang sayangnya tidak hanya mendasari perkakas ini, tetapi juga kunci API ini tidak bisa didapatkan tanpa membayarkan biaya tertentu. Oleh karena itu, perkakas ini dianggap tidak bisa lagi dijalankan.
+Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan perkakas ini tidak dapat digunakan lagi-lagi merupakan masalah teknikal, yaitu diperbaruinya API Google \textit{Maps}. Lebih spesifiknya, semenjak 2018, Google tidak lagi memperbolehkan penggunaan API Google \textit{Maps} tanpa kunci API, yang sayangnya tidak hanya mendasari perkakas ini, tetapi juga kunci API ini tidak bisa didapatkan tanpa membayarkan biaya tertentu. Oleh karena itu, perkakas ini dianggap tidak bisa dijalankan.
 
 \section{Analisis API KIRI}
 \label{sec:analysis-kiri}
@@ -229,7 +229,7 @@ Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place},
 Di bagian ini akan dibahas analisis hal-hal yang berhubungan dengan perkakas yang akan dibangun sebagai proyek skripsi ini.
 
 \subsection{Analisis Fitur Perkakas}
-\label{sec:analysis-thesisapp-functions}
+\label{sec:analysis-thesisapp-features}
 
 Pada skripsi ini, akan dibangun sebuah aplikasi berupa perkakas \cl yang merupakan ekstensi dari sebuah aplikasi berbasis web lain, yaitu KIRI. Perkakas ini akan menjadi ekstensi KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
 
@@ -241,15 +241,32 @@ Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan sa
 	\item Pencarian rute\\
 	Pencarian rute dengan angkot merupakan fungsi utama kedua, sekaligus fungsi umum dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan langsung pengguna berupa nilai \latlon dari lokasi awal serta lokasi akhir dari perjalanan pengguna. Setelah masukan ini berhasil diterima dan diproses, perkakas akan mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
 \end{itemize}
-\vspace{\baselineskip}\noindent
-Berikut merupakan opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
+\noindent
+Selain itu, perkakas ini juga akan memiliki fitur-fitur standar yang harus dimiliki oleh perkakas-perkakas \cl, seperti dokumentasi singkat (bantuan penggunaan perkakas) sebagai salah satu mode operasional perkakas, dan juga \textit{man page} (khusus implementasi di Linux).
+
+\subsubsection{Aturan Penamaan}
+\label{sec:analysis-thesisapp-features-conventions}
+
+Sedangkan, untuk memenuhi fitur-fitur tersebut, perkakas akan perlu berbagai opsi yang masing-masing merepresentasikan fitur (mode operasional) perkakas, serta variabel-variabel yang dibutuhkan oleh API. Setelah dilakukan analisis perkakas-perkakas sejenis yang memerlukan opsi-opsi dalam masukannya, dibuat seperangkat aturan yang mendasari penamaan dari opsi-opsi yang akan dimiliki perkakas yang akan dibuat. Berikut merupakan aturan-aturan tersebut.
+
+\begin{enumerate}
+	\item Nama pendek (satu huruf) opsi umumnya akan dinamakan sesuai dengan huruf pertama dari fitur/variabel yang direpresentasikan oleh opsi tersebut.
+	\item Nama panjang dari opsi umumnya akan dinamakan sesuai dengan nama fitur/variabel yang direpresentasikan oleh opsi tersebut.
+	\item Argumen dari opsi yang merepresentasikan fitur perkakas akan dinamakan sesuai dengan nama dari mode operasionalnya masing-masing di API KIRI, kecuali \texttt{direct}, karena fitur ini merupakan mode tambahan yang bukan merupakan fitur langsung dari API KIRI.
+	\item Nama-nama opsi, baik pendek maupun panjang, yang jika mengikuti ketiga aturan pertama akan menghasilkan nama yang sama dengan nama opsi lain, akan dinamakan dengan nama buatan yang artinya tidak terlalu jauh dengan variabel apa yang direpresentasikan olehnya.
+\end{enumerate}
+
+\subsubsection{Opsi-opsi Perkakas}
+\label{sec:analysis-thesisapp-features-options}
+
+Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab \ref{sec:analysis-thesisapp-features-conventions}, berikut merupakan daftar serta penjelasan singkat dari opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
 
 \begin{itemize}
 	\item \verb|-h (--help)|\\
-	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun. Untuk membantu penggunanya dalam mengetahui bagaimana cara menggunakan perkakas ini, tentunya perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|-h| ini.
+	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apapun, sehingga perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah \verb|-h| ini.
 	
 	\item \verb|-m <mode> (--mode)|\\
-	Opsi ini merupakan opsi berparameter yang menentukan fitur mana yang ingin digunakan oleh pengguna. Adapun isi dari parameter \verb|<mode>| yang dapat digunakan adalah sebagai berikut:
+	Opsi ini merupakan opsi berparameter yang menentukan fitur (mode operasional perkakas) mana yang ingin digunakan oleh pengguna. Adapun isi dari parameter \verb|<mode>| yang dapat digunakan adalah sebagai berikut:
 	
 	\begin{itemize}	
 		\item \verb|searchplace|\\
