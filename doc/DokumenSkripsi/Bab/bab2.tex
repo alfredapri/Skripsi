@@ -96,6 +96,56 @@ Untuk navigasi, terminal Linux memiliki beberapa perintah utama. Adapun perintah
 	Sedangkan, direktori relatif selalu dimulai dari \textit{working directory}. Untuk penggunaan direktori relatif, diperlukan dua buah notasi spesial, yaitu titik (\verb|.|), yang merepresentasikan \textit{working directory} sekarang itu sendiri, dan dua titik (\verb|..|), yang merepresentasikan \textit{parent folder} dari \textit{working directory}.
 \end{itemize}
 
+\subsubsection{\texttt{man} \cite{shottsjr:2019:linuxcommandline}}
+\label{sec:commandline-linux-manpage}
+
+Untuk sistem-sistem operasi berbasis Linux, ada sebuah konvensi bahwa semua perangkat lunak \textit{executable} yang dimaksudkan untuk dijalankan melalui \cl perlu disertai dengan sebuah dokumentasi formal yang disebut \textit{manual} atau \textit{man page}. Di sistem-sistem operasi ini sudah ada perangkat lunak khusus, bernama ``\textit{man}'' yang fungsinya adalah untuk menampilkan dokumentasi-dokumentasi ini. Adapun \textit{man} digunakan dengan perintah berikut:
+
+\begin{verbatim}
+                           man <nama perangkat lunak>
+\end{verbatim}
+\noindent
+\textit{Man page} tidak memiliki format umum, tapi pada umumnya memiliki bagian-bagian berikut:
+
+\begin{itemize}
+	\item judul\textemdash perangkat lunak mana yang sedang ditampilkan halaman \textit{man}-nya,
+	\item perintah penggunaan perangkat lunak,
+	\item deskripsi singkat dari fungsi perangkat lunak, serta
+	\item daftar fitur-fitur perangkat lunak serta cara penggunaannya.
+\end{itemize}
+\noindent
+Walaupun begitu, perlu diingat bahwa halaman \textit{man} umumnya tidak mengikutkan contoh penggunaan. Selain itu, perlu juga diingat bahwa halaman \textit{man} ini dibagi ke delapan bagian, di mana bagian-bagiannya dapat dilihat di tabel \ref{tab:commandline-linux-manpage-sections}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{| c | c |}
+    \hline
+        \textbf{Bagian} & \textbf{Kategori \textit{manual}} \\
+    \hline
+    \hline
+        1 & Perintah pengguna \\
+    \hline
+        2 & Panggilan langsung ke \textit{kernel} sistem \\
+    \hline
+        3 & Panggilan langsung ke \textit{library} C \\
+    \hline
+        4 & File-file spesial (contohnya \textit{driver}) \\
+    \hline
+        5 & Format file \\
+    \hline
+        6 & Permainan \\
+    \hline
+		7 & Lain-lain \\
+	\hline
+		8 & Perintah administrasi sistem \\
+	\hline
+	\end{tabular}
+    \caption{Jumlah kategori dan tes yang dilakukan.}
+    \label{tab:commandline-linux-manpage-sections}
+\end{table}
+\noindent
+Adapun contoh penggunaan perintah \texttt{man} ini ada di gambar <REF!>.
+
 \subsection{\textit{Command Line} di Windows}
 \label{sec:commandline-windows}
 
@@ -141,7 +191,6 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
                         cd [/d] [<drive>:][<path>]
 	\end{verbatim}
 	
-	\newpage % Prevent widow
 	Dengan fungsi dari semua opsi dan parameter yang ada sebagai berikut.
 	
 	\begin{itemize}
@@ -178,7 +227,7 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 		Seluruh teks dalam keluaran akan menggunakan huruf kecil. Jika opsi ini tidak digunakan, keluaran akan mengandung huruf besar dan huruf kecil \textit{mixed case}.
 		\item \verb|/N|\\
 		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
-		\newpage \enlargethispage{1.5\baselineskip} % Prevent widow
+		%\newpage \enlargethispage{1.5\baselineskip} % Prevent widow
 		\item \verb|/O[[:]<sortorder>]|\\
 		Menampilkan daftar direktori yang terurut berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan terurut secara menaik.
 		\item \verb|/P|\\
@@ -228,7 +277,7 @@ Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memas
     \label{fig:kiri-example}
 \end{figure}
 
-\newpage
+%\newpage
 \subsection{API\protect\footnotemark}
 \label{sec:kiri-api}
 \footnotetext{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
@@ -250,7 +299,7 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	\item \verb|region|\\
 	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
 	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
-	\newpage % Prevent widow
+%	\newpage % Prevent widow
 	\item \verb|querystring|\\
 	\textbf{Kemungkinan nilai:} \textit{string} berisi teks apapun dengan panjang minimal satu karakter\\
 	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
@@ -929,7 +978,7 @@ add_executable(Hello Hello.c)
 		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
 		
 		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
-		\newpage % Prevent widow
+%		\newpage % Prevent widow
 		\item ccmake\\
 		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
 		
@@ -971,7 +1020,7 @@ add_executable(Hello Hello.c)
 		
 		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
 		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
-		\newpage % Prevent widow
+%		\newpage % Prevent widow
 		\begin{lstlisting}[caption=Contoh kode pembangunan CMake lebih dari satu mode, label=code:cmake-multibuild]
 ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
 ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
