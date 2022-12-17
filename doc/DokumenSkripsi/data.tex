@@ -215,7 +215,7 @@
 %=============================================================================
 \namanpm{Alfred Aprianto Liaunardi}{6181801014}
 \tanggal{31}{3}{2022}         %isi bulan dengan angka - not final
-\pembimbing{\PAN}{<<pembimbing pendamping/2>>}    
+\pembimbing{\PAN}{}
 \penguji{<<penguji 1>>}{<<penguji 2>>} 
 %=============================================================================
 
@@ -245,8 +245,17 @@
 % - hilangkan tanda << & >>, dan isi sesuai dengan data anda
 % - langsung mulai setelah '{' awal, jangan mulai menulis di baris bawahnya
 %=============================================================================
-\abstrakINA{<<Tuliskan abstrak anda di sini, dalam bahasa Indonesia>>}
-\abstrakENG{<<Tuliskan abstrak anda di sini, dalam bahasa Inggris>>} 
+\abstrakINA{Project KIRI (atau KIRI saja) merupakan sebuah perkakas berbasis \textit{web} yang dapat digunakan untuk membantu memudahkan penggunanya untuk menggunakan angkutan kota (angkot). KIRI merealisasikan hal ini dengan cara menunjukkan kepada penggunanya langkah-langkah yang harus dilakukan untuk pergi dari suatu lokasi ke lokasi lainnya, angkot-angkot mana yang harus dinaiki dalam rute tersebut, serta di mana pengguna harus menaiki atau turun dari angkot-angkot yang bersangkutan. Selain itu, KIRI juga dapat menunjukkan estimasi waktu dari rute-rute yang ditemukan.
+
+Sementara itu, dalam komputer, salah satu dari sekian banyak tipe perangkat lunak adalah perangkat lunak berbasis \cl . Perangkat-perangkat lunak ini selalu terdiri atas sebuah kotak (\textit{window}) yang memuat teks berupa perintah-perintah, yang menerima masukan (berupa perintah-perintah juga) langsung dari pengguna dan menjalankannya. Indikator utama dari tipe perangkat lunak ini adalah bahwa perangkat-perangkat lunak jenis ini tidak memiliki tampilan dengan gambar grafis apapun\textemdash dalam artian bahwa tampilan perangkat tipe ini hanya berupa teks.
+
+Dalam skripsi ini akan dibuat sebuah perangkat lunak berupa perkakas \cl yang dapat menjalankan fungsi-fungsi API KIRI. Seperti jenis umumnya, perkakas ini akan dibuat murni sebagai perkakas yang dijalankan dari \cl , dan tidak akan memiliki tambahan gambar grafis apapun dalam tampilannya. Perkakas ini akan dibuat dalam bahasa C, dengan mengutilisasikan berbagai macam \textit{library}, seperti getopt, cJSON, cURL, dan CMake, serta mengimplementasikan fitur-fitur API KIRI serta fitur-fitur dasar perkakas \cl , seperti mode bantuan, dan \textit{man page} (untuk Linux). Perkakas ini nantinya akan diuji coba dengan cara menguji satu-satu fungsinya, dan juga dengan menguji kasus-kasus umum untuk integrasinya dengan perkakas-perkakas lainnya yang sudah ada.}
+
+\abstrakENG{Project KIRI (or just KIRI) is a web-based tool which could be used to assist its users in utilizing \textit{angkutan kota} (or \textit{angkot}). KIRI does this by showing to its users the steps needed to go from one location to the other, which \textit{angkots} would have to be taken within said route, as well as where they would have to board or get off of these \textit{angkots}. Aside from that, KIRI also has the ability to show the estimated durations of the available routes.
+
+Meanwhile, in computers, one of the many types of softwares is command line softwares. These programs always consist of a box (window) with texts in the form of commands, which accepts direct inputs (also in the form of commands) from the users, and run them. The main indicator of this type is the fact that these softwares do not have any graphical images in its interface\textemdash in the sense that the interface of this type of programs contains only texts.
+
+In this undergraduate thesis, a command line tool will be made, in which the tool  would be able to run KIRI's API functions. Just like its general type, this tool will be run purely through the command line, and will not have any additional graphical images whatsoever in its interface. This newly-made tool will be made in C language, utilizing various libraries such as getopt, cJSON, cURL, and CMake, along with implementing the KIRI API features, as well as the general features of a command line tool, such as a help mode, and a man page (for Linux). This tool will later be tested by testing each of its functions, as well as the general cases of its integration with other, existing command line tools.}
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -258,8 +267,8 @@
 % - kunciENG: keywords in english
 % Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
 %=============================================================================
-\kunciINA{<<Tuliskan di sini kata-kata kunci yang anda gunakan, dalam bahasa Indonesia>>}
-\kunciENG{<<Tuliskan di sini kata-kata kunci yang anda gunakan, dalam bahasa Inggris>>}
+\kunciINA{Navigasi, angkot, \textit{Project KIRI}, \textit{command line}, C}
+\kunciENG{Navigation, \textit{angkot}, Project KIRI, command line, C}
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -269,7 +278,7 @@
 % Persembahan : kepada siapa anda mempersembahkan skripsi ini ...
 % Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
 %=============================================================================
-\untuk{<<kepada siapa anda mempersembahkan skripsi ini\ldots?>>}
+\untuk{Skripsi ini dipersembahkan kepada Tuhan Yang Maha Esa, keluarga, para dosen, rekan-rekan sesama mahasiswa, serta teman-teman yang sudah memberi motivasi, baik di dalam maupun di luar UNPAR.}
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -280,7 +289,17 @@
 % kasih kepada yang telah membantu anda bla bla bla ....  
 % Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
 %=============================================================================
-\prakata{<<Tuliskan kata pengantar dari anda di sini \ldots>>} 
+\prakata{Puji syukur penulis panjatkan kepada Tuhan Yang Maha Esa atas berkat dan karunia-Nya, yang memungkinkan diselesaikannya penulisan skripsi yang berjudul ``Perkakas \textit{Command Line} KIRI'' ini. Selama penulisan skripsi ini tentunya penulis menemui berbagai macam kesulitan serta menghadapi berbagai macam halangan, yang puji syukur dapat diselesaikan dengan baik dengan bantuan beberapa pihak. Pada kesempatan ini, penulis ingin mengucapkan terima kasih sebesar-besarnya kepada pihak-pihak tersebut, yaitu:
+
+\begin{itemize}
+	\item Bapak Pascal Alfadian Nugroho, M.Comp. selaku dosen pembimbing yang telah membimbing serta membantu memberikan arahan kepada penulis dalam seluruh proses pembuatan skripsi ini.
+	\item <<...>> dan <<...>> selaku dosen-dosen penguji yang telah memeriksa skripsi ini serta memberikan kritik dan saran yang membangun.
+	\item Teman-teman penulis\textemdash Daniel, Yalvi, Rama, JJ, serta teman-teman lainnya, yang telah memberikan dorongan, semangat, serta saran tambahan selama penulisan skripsi ini.
+	\item Keluarga penulis, yang telah memberikan bantuan dan dukungan dalam seluruh aspek lainnya yang tidak berhubungan langsung dengan penulisan skripsi ini.
+	\item Para staf tata usaha, baik dalam tata usaha FTIS maupun BAA, yang telah membantu penyelesaian semua urusan non-akademik dalam proses pembuatan skripsi ini.
+\end{itemize}
+
+Terakhir, penulis menyadari bahwa penulisan skripsi ini jauh dari sempurna, karena \mbox{berbagai} \mbox{macam} keterbatasan yang ada. Oleh karena itu, pada kesempatan ini penulis juga ingin \mbox{mengucapkan} permohonan maaf atas kekurangan-kekurangan yang ada. Walaupun begitu, penulis berharap skripsi ini dapat bermanfaat bagi seluruh pihak yang membacanya.}
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -307,7 +326,7 @@
 %\ttd{materai}
 %\ttd{kosong}
 %=============================================================================
-\ttd{gambar}
+\ttd{digital}
 
 %_____________________________________________________________________________
 %=============================================================================
