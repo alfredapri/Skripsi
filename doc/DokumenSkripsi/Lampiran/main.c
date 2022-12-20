@@ -452,7 +452,7 @@ void execute_curl() {
     curl_global_cleanup();
 }
 
-void build_url_searchplace(int region, char* query) {
+void build_url_searchplace(int locale, int region, char* query) {
     strcat(URL, "&mode=searchplace");
 
     // Locale check - tool adition
@@ -866,7 +866,7 @@ int main(int argc, char **argv) {
                 break;
             
             case 2:
-                build_url_searchplace(region, query);
+                build_url_searchplace(locale, region, query);
                 execute_curl();
                 break;
             
@@ -877,7 +877,7 @@ int main(int argc, char **argv) {
             
             case 4:
                 step = 0;
-                build_url_searchplace(regstart, start);
+                build_url_searchplace(locale, regstart, start);
                 execute_curl();
                 if (error == 1) {
                     break;
@@ -885,7 +885,7 @@ int main(int argc, char **argv) {
                 else reset_url();
 
                 step = 1;
-                build_url_searchplace(regfinish, finish);
+                build_url_searchplace(locale, regfinish, finish);
                 execute_curl();
                 if (error == 1) {
                     break;
