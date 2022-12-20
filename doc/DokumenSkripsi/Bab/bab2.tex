@@ -96,7 +96,7 @@ Untuk navigasi, terminal Linux memiliki beberapa perintah utama. Adapun perintah
 	Sedangkan, direktori relatif selalu dimulai dari \textit{working directory}. Untuk penggunaan direktori relatif, diperlukan dua buah notasi spesial, yaitu titik (\verb|.|), yang merepresentasikan \textit{working directory} sekarang itu sendiri, dan dua titik (\verb|..|), yang merepresentasikan \textit{parent folder} dari \textit{working directory}.
 \end{itemize}
 
-\subsubsection{\texttt{man} \cite{shottsjr:2019:linuxcommandline}}
+\subsubsection{\texttt{man} \cite{marsh:2010:fatfreeintrotocommandline} \cite{shottsjr:2019:linuxcommandline}}
 \label{sec:commandline-linux-manpage}
 
 Untuk sistem-sistem operasi berbasis Linux, ada sebuah konvensi bahwa semua perangkat lunak \textit{executable} yang dimaksudkan untuk dijalankan melalui \cl perlu disertai dengan sebuah dokumentasi formal yang disebut \textit{manual} atau \textit{man page}. Di sistem-sistem operasi ini sudah ada perangkat lunak khusus, bernama ``\textit{man}'' yang fungsinya adalah untuk menampilkan dokumentasi-dokumentasi ini. Adapun \textit{man} digunakan dengan perintah berikut:
@@ -144,7 +144,26 @@ Walaupun begitu, perlu diingat bahwa halaman \textit{man} umumnya tidak mengikut
     \label{tab:commandline-linux-manpage-sections}
 \end{table}
 \noindent
-Adapun contoh penggunaan perintah \texttt{man} ini ada di gambar <REF!>.
+Adapun contoh penggunaan perintah \texttt{man} ini ada di gambar \ref{fig:commandline-linux-man}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.667\linewidth]{man-ls}
+    \caption[Contoh keluaran \textit{man page}]{Contoh keluaran \texttt{man} untuk perintah \texttt{ls}.}
+    \label{fig:commandline-linux-man}
+\end{figure}
+
+Selain \verb|man|, ada juga perintah yaitu \verb|whatis|, yang akan menampilkan deskripsi satu baris untuk perangkat lunak yang dipilih. Misal, jika pengguna memasukkan perintah berikut:
+
+\begin{verbatim}
+                                 whatis ls
+\end{verbatim}
+
+Hasilnya akan berupa isi dari bagian \verb|NAME| untuk perintah \verb|man ls|, yaitu sebagai berikut.
+
+\begin{verbatim}
+                  ls (1)         - list directory contents
+\end{verbatim}
 
 \subsection{\textit{Command Line} di Windows}
 \label{sec:commandline-windows}
@@ -244,7 +263,7 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 		Menampilkan keluaran dengan format yang lebih lebar. Opsi ini hampir sama dengan \verb|/D|, hanya saja untuk \verb|/W|, jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan baris, dan bukan kolom.
 		\item \verb|/X|\\
 		Menampilkan nama pendek yang dibuat untuk nama-nama file non-8.3. Opsi ini memiliki format taampilan yang sama seperti opsi \verb|/N|, hanya saja nama pendeknya ditampilkan di keluaran sebelum nama panjangnya.
-		\item \verb|4|\\
+		\item \verb|/4|\\
 		Menampilkan angka tahun dengan format angka empat digit.
 	\end{itemize}
 \end{itemize}
@@ -847,7 +866,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 		\item \verb|cJSON_Number|\\
 		Merepresentasikan nilai numerik apapun. Jika nilainya merupakan nilai \textit{double}, maka nilai tersebut akan disimpan di dalam variabel \verb|valuedouble|. Sedangkan jika nilainya merupakan nilai \textit{integer}, maka nilai tersebut akan disimpan di dalam variabel \verb|valueint|.
 		\item \verb|cJSON_String|\\
-		Merepresentasikan nilai \textit{string} apapun. Nilainya disimpan sebagai \textit{string} yang dipisah dengan \textit{null terminator} ('\verb|\0|' atau \verb|\u0000|).
+		Merepresentasikan nilai \textit{string} apapun. Nilainya disimpan sebagai \textit{string} yang dipisah dengan \textit{null terminator} (\textquotesingle\verb|\0|\textquotesingle\xspace atau \verb|\u0000|).
 		\item \verb|cJSON_Array|\\
 		Merepresentasikan nilai \textit{array}. \textit{Array} dalam cJSON diimplementasikan dengan menunjukkan isi dari variabel \verb|child| tadi ke sebuah \textit{linked list} dari objek-objek cJSON. Jika objek cJSON ini merupakan elemen dalam sebuah \textit{array}, maka isi dari variabel \verb|prev| dan \verb|next| merupakan salah satu dari elemen-elemen lain dalam \textit{array} yang menjadi elemen sebelum dan sesudah elemen ini.
 		\item \verb|cJSON_Object|\\
@@ -858,7 +877,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 		Merepresentasikan sebuah nilai \textit{null}.
 	\end{itemize}
 	
-	\item \verb|valuestring|/\verb|valuestring|/\verb|valuestring|/\verb|string|\\	
+	\item \verb|valuestring|/\verb|valueint|/\verb|valuedouble|/\verb|string|\\	
 	Merupakan variabel-variabel yang menyimpan nilai dari struktur cJSON. Variabel apa yang diisi dan apa isinya tergantung dari tipe data yang disimpan.
 \end{itemize}
 
