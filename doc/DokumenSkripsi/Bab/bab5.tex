@@ -83,9 +83,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 \subsection{\texttt{write\char`_findroute()}}
 \label{sec:testing-implementation-write-findroute}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Sama seperti fungsi \verb|write_searchplace()|, penerapan fungsi ini hanya meliputi pengambilan data yang diterima, konversi format data tersebut dari JSON, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 218 sampai baris 334.
-
-Perlu ditekankan kembali bahwa fitur ini memiliki pembetulan \textit{bug} tambahan, yang diimplementasikan di baris 273 sampai dengan baris 292.
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Sama seperti fungsi \verb|write_searchplace()|, penerapan fungsi ini hanya meliputi pengambilan data yang diterima, konversi format data tersebut dari JSON, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 218 sampai baris 334. Perlu ditekankan kembali bahwa fitur ini memiliki pembetulan \textit{bug} tambahan, yang diimplementasikan di baris 273 sampai dengan baris 292.
 
 \subsection{\texttt{write\char`_searchplace\char`_noreturns()}}
 \label{sec:testing-implementation-write-searchplacenoreturns}
@@ -112,7 +110,7 @@ Cara kerja file CMakeLists untuk perkakas ini dapat dibagi menjadi beberapa bagi
 
 \begin{enumerate}
 	\item \textbf{Baris 1 \& 2}: Pengaturan nama proyek serta file-file utama dari proyeknya.
-	\item \textbf{Baris 4}: Pengaturan versi minimum CMake. Versi CMake yang dibutuhkan minimal adalah 3.18, karena fitur \textit{file compression} baru didukung di versi tersebut.
+	\item \textbf{Baris 4}: Pengaturan versi minimum CMake. Versi CMake yang dibutuhkan minimal adalah 3.18, karena fitur \textit{file compression} (untuk instalasi \textit{man page}) baru didukung di versi tersebut.
 	\item \textbf{Baris 5}: Pendefinisian nama proyek, versi, serta bahasa pemrograman dari proyek tersebut.
 	\item \textbf{Baris 7}: Penghubungan file-file utama proyek ke proyek yang sudah didefinisikan di baris 5.
 	\item \textbf{Baris 9\textendash 14}: Pencarian dan pengintegrasian \textit{library-library} yang diperlukan perkakas.
@@ -139,7 +137,7 @@ Adapun implementasi lengkap dari kode halaman manual ini ada di lampiran \ref{ap
 \section{Pengujian}
 \label{sec:testing-experiments}
 
-Bagian ini akan menjelaskan hal-hal yang seputar pengujian perkakas yang telah dibuat\textemdash lingkungan pengujian, cara instalasi dan penggunaan perkakas, serta pengujian fungsional melalui berbagai macam kasus tes (\textit{test case}).
+Bagian ini akan menjelaskan hal-hal yang seputar pengujian perkakas yang telah dibuat\textemdash lingkungan pengujian, cara instalasi dan penggunaan perkakas, serta pengujian fungsional perkakas.
 
 \subsection{Lingkungan Perangkat Keras}
 \label{sec:testing-experiments-hardware}
@@ -301,7 +299,7 @@ Tabel \ref{tab:testing-experiments-testing-overview} memaparkan jumlah tes yang 
     \hline
         1 & Sintaks dasar & 7 \\
     \hline
-        2 & Mode bantuan (\verb|--help|) & 3 \\
+        2 & Mode bantuan & 4 \\
     \hline
         3 & Mode \textit{searchplace} & 9 \\
     \hline
@@ -484,9 +482,24 @@ kiritool --help --start unpar
 man kiritool
 		\end{lstlisting}
 		\item Keluaran yang diharapkan: \\
-		\textit{Terminal} akan menampilkan manual page dari perkakas yang sesuai.
+		\textit{Terminal} akan menampilkan \textit{man page} dari perkakas yang sesuai.
 		\item Keluaran perkakas: \\
-		\textit{Terminal} menampilkan manual page yang sesuai. Hasil dari kasus tes ini dapat dilihat di lampiran \ref{appdx:A-output-manpage}. Perlu diingat bahwa \textit{man page} memiliki \textit{formatting} otomatisnya sendiri, jadi ketika dikonversi ke file .txt (agar bisa dimasukkan sebagai lampiran), beberapa aspek \textit{formatting}-nya menjadi tidak sempurna.
+		\textit{Terminal} menampilkan \textit{man page} yang sesuai. Hasil dari kasus tes ini dapat dilihat di lampiran \ref{appdx:A-output-manpage}. Perlu diingat bahwa \textit{man page} memiliki \textit{formatting} otomatisnya sendiri, jadi ketika dikonversi ke file .txt (agar bisa dimasukkan sebagai lampiran), beberapa aspek \textit{formatting}-nya menjadi tidak sempurna.
+		\item Status tes: \textbf{Sukses}
+	\end{itemize}
+	
+	\item Pemanggilan versi pendek dari \textit{manual page} (\verb|whatis|\textemdash khusus Linux)
+	\begin{itemize}
+		\item Perintah masukan:
+		\begin{lstlisting}
+whatis kiritool
+		\end{lstlisting}
+		\item Keluaran yang diharapkan: \\
+		\textit{Terminal} akan menampilkan nama dan deskripsi singkat perkakas, sesuai dengan isi dari bagian \verb|NAME| dalam \textit{man page} perkakas.
+		\item Keluaran perkakas:
+		\begin{lstlisting}
+kiritool (1)         - search routes using angkot
+		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 	\end{itemize}
 
