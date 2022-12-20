@@ -339,9 +339,9 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 	\hline
 		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Membangun URL untuk permintaan GET pencarian lokasi ke API KIRI.} \\
 	\hline
-		\textbf{\textit{Input}} & - & \texttt{locale} \\
-		 & - & \texttt{region} \\
-		 & - & \texttt{query} \\
+		\textbf{\textit{Input}} & - & \texttt{locale}: Kode bahasa \\
+		 & - & \texttt{region}: Region dari lokasi yang ingin dicari \\
+		 & - & \texttt{query}: Kata kunci pencarian lokasi \\
 	\hline
 		\textbf{\textit{Output}} & - & \texttt{error} (variabel global) \\
 		 & - & \texttt{url} (variabel global) \\
@@ -426,8 +426,8 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Membangun URL untuk permintaan GET pencarian rute ke API KIRI.} \\
 	\hline
 		\textbf{\textit{Input}} & - & \texttt{locale} (variabel global) \\
-		 & - & \texttt{region} \\
-		 & - & \texttt{query} \\
+		 & - & \texttt{start}: Koordinat lokasi awal \\
+		 & - & \texttt{finish}: Koordinat lokasi akhir \\
 	\hline
 		\textbf{\textit{Output}} & - & \texttt{error} (variabel global) \\
 		 & - & \texttt{url} (variabel global) \\
@@ -508,7 +508,7 @@ Fungsi ini digunakan untuk mengembalikan isi dari variabel \verb|URL| ke nilai s
 	\hline
 		\textbf{\textit{Input}} & \multicolumn{2}{p{10.5cm} |}{\texttt{url} (variabel global)} \\
 	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{url} yang sudah dikembalikan nilainya (variabel global)} \\
+		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{url} yang sudah dikembalikan nilainya} \\
 	\hline
 		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{\textit{Pseudocode} fungsi ini tidak ditulis karena fungsi ini hanya berisi satu buah proses penggantian nilai \textit{array} karakter.} \\
 	\hline
@@ -659,12 +659,12 @@ Fungsi ini adalah fungsi tambahan untuk cURL yang bertugas menerima data yang ma
 		\textbf{Tujuan} & - & Mengurus penerimaan data dari hasil proses cURL. \\
 		 & - & Mencegah \textit{error} akibat kegagalan alokasi memori data yang diterima. \\
 	\hline
-		\textbf{\textit{Input}} & - & \texttt{incomingdata} \\
-		 & - & \texttt{size} \\
-		 & - & \texttt{nmenb} \\
-		 & - & \texttt{userdata} \\
+		\textbf{\textit{Input}} & - & \texttt{incomingdata}: Variabel sementara data yang diterima \\
+		 & - & \texttt{size}: Ukuran dari satu \textit{block} data \\
+		 & - & \texttt{nmenb}: Berapa banyak \textit{block} data yang diterima \\
+		 & - & \texttt{userdata}: Variabel yang diisi dengan data yang diterima \\
 	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{realsize}\textemdash untuk verifikasi keutuhan data yang diterima} \\
+		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{realsize}: Untuk verifikasi keutuhan data yang diterima} \\
 	\hline
 		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat algoritma \ref{alg:design-write-memalloc}.} \\
 	\hline
@@ -774,7 +774,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 \subsection{\texttt{write\char`_findroute()}}
 \label{sec:design-code-write-findroute}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Perlu diperhatikan bahwa ada sebuah \textit{bug} dari API KIRI di mana durasi rute dalam menit tidak diterjemahkan dari bahasa Inggris, apabila variabel \verb|locale| diatur ke bahasa Indonesia. Potongan kode untuk mengatasi \textit{bug} ini terdapat di dalam fungsi ini. Adapun penjelasan lebih lanjut dari fungsi ini dapat dilihat di tabel \ref{tab:design-write-findroute}.
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Perlu diperhatikan bahwa ada sebuah \textit{bug} dari API KIRI di mana durasi rute dalam menit tidak diterjemahkan dari bahasa Inggris, apabila variabel \verb|locale| diatur ke bahasa Indonesia. Potongan kode untuk mengatasi \textit{bug} ini juga akan terdapat di dalam fungsi ini. Adapun penjelasan lebih lanjut dari fungsi ini dapat dilihat di tabel \ref{tab:design-write-findroute}.
 
 \begin{table}[H]
     \centering
@@ -1006,7 +1006,7 @@ Tentunya seluruh perangkat lunak bahasa C akan memiliki satu buah fungsi utama. 
 % Belah 2 - terlalu panjang
 \begin{algorithm}[h]
 	\begin{center}
-		\textbf{Algorithm 9} - Lanjutan dari halaman sebelumnya
+		\textbf{Algorithm 10} - Lanjutan dari halaman sebelumnya
 	\end{center}
 	\begin{algorithmic}
 		\If{ada kelebihan argumen}
