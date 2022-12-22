@@ -24,7 +24,7 @@ Oleh karena itu, tiap-tiap fitur akan memiliki satu dari setiap tipe diagram. Ad
 
 \textit{Activity} dan \textit{sequence} diagram untuk fitur pencarian lokasi dengan kata kunci ini dapat dilihat di gambar \ref{fig:diagrams-activity-searchplace} dan \ref{fig:diagrams-sequence-searchplace}. Dari diagram-diagram tersebut, maka alur kerja fitur ini adalah sebagai berikut.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.55\linewidth]{diagrams-activity-searchplace}
     \caption[\textit{Activity diagram} fitur pencarian lokasi menggunakan kata kunci lokasi]{\textit{Activity diagram} dari fitur pencarian lokasi menggunakan kata kunci pencarian.}
@@ -184,7 +184,7 @@ Struktur ini akan digunakan untuk variabel \verb|responsedata|, yang akan diisi 
 \subsection{Variabel Global}
 \label{sec:design-implementation-globalvars}
 
-Perkakas ini memiliki beberapa variabel global, yang sengaja diletakkan sebagai variabel global karena variabel-variabel ini digunakan di hampir keseluruhan dari keempat proses di subbab\ref{sec:design-code-overview}. Adapun variabel-variabel ini adalah sebagai berikut:
+Perkakas ini memiliki beberapa variabel global, yang sengaja diletakkan sebagai variabel global karena variabel-variabel ini digunakan di hampir keseluruhan dari keempat proses di subbab \ref{sec:design-implementation-overview}. Adapun variabel-variabel ini adalah sebagai berikut:
 
 \begin{itemize}
 	\item \verb|responsedata| (\verb|chunk|) \\
@@ -240,7 +240,7 @@ Perkakas ini memiliki beberapa variabel global, yang sengaja diletakkan sebagai 
 	
 	 Variabel ini juga merupakan satu-satunya variabel kode \textit{integer} yang, jika tidak diubah nilai awalnya (\textbf{0}), tidak akan menyebabkan \textit{error}.
 	\item \verb|step| (\verb|int|) \\
-	Kode khusus untuk mode \verb|direct| yang menandakan proses mana yang sedang berlangsung\textemdash pencarian lokasi awal, pencarian lokasi akhir, atau pencarian rute.
+	Kode khusus untuk mode \verb|direct| yang menandakan proses mana yang sedang \linebreak berlangsung\textemdash pencarian lokasi awal, pencarian lokasi akhir, atau pencarian rute.
 	\item \verb|error| (\verb|int|) \\
 	Kode yang menandakan apakah sebuah \textit{error} telah terjadi. Nilai awal dari variabel ini adalah \textbf{0}, dan jika variabel ini diganti menjadi \textbf{1}, di pengecekan kode \textit{error} selanjutnya, perkakas akan dihentikan.
 \end{itemize}
@@ -496,7 +496,7 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 \subsection{\texttt{reset\char`_url()}}
 \label{sec:design-code-buildurl-reset}
 
-Fungsi ini digunakan untuk mengembalikan isi dari variabel \verb|URL| ke nilai semula, dengan cara menimpa isi dari variabel tersebut dengan nilai awalnya, yaitu ``\texttt{https://projectkiri.id/api?version=2}''. Penjelasan singkat dari fungsi ini terdapat di tabel \ref{tab:design-code-buildurl-reset-details}.
+Fungsi ini digunakan untuk mengembalikan isi dari variabel \verb|URL| ke nilai semula, dengan cara \mbox{mengganti} isi dari variabel tersebut kembali ke nilai awalnya, yaitu ``\verb|https://projectkiri.id/|\linebreak\verb|api?version=2|''. Penjelasan singkat dari fungsi ini terdapat di tabel \ref{tab:design-code-buildurl-reset-details}.
 
 \begin{table}[H]
     \centering
@@ -714,7 +714,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	\hline
 		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_searchplace()}} \\
 	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian lokasi dan menampilkan hasilnya ke pengguna.} \\
+		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian lokasi dan\linebreak menampilkan hasilnya ke pengguna.} \\
 	\hline
 		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
 		 & - & \texttt{responseJSON} (variabel global) \\
@@ -782,7 +782,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	\hline
 		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_findroute()}} \\
 	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian rute dan menampilkan hasilnya ke pengguna.} \\
+		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian rute dan\linebreak menampilkan hasilnya ke pengguna.} \\
 	\hline
 		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
 		 & - & \texttt{responseJSON} (variabel global) \\
@@ -861,7 +861,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	\hline
 		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_searchplace\char`_noreturns()()}} \\
 	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian lokasi dan menampilkan hanya nama lokasi pertama yang ditemukan ke pengguna.} \\
+		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian lokasi dan\linebreak menampilkan hanya nama lokasi pertama yang ditemukan ke\linebreak pengguna.} \\
 	\hline
 		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
 		 & - & \texttt{responseJSON} (variabel global) \\

@@ -52,7 +52,7 @@ Ketika terminal di Linux dijalankan, akan keluar kotak dialog, beserta sebuah ba
         <nama pengguna>@<nama perangkat>:<direktori yang sedang diproses>$
 \end{verbatim}
 
-Tanda dolar di ujung baris ini menandakan bahwa baris tersebut merupakan baris \textit{shell prompt}, yang merupakan waktu di mana terminal sudah siap menerima masukan dari pengguna untuk diproses. Perlu diingat bahwa di posisi tanda dolar ini, terkadang justru terdapat tanda pagar (\#). Tanda pagar di akhir baris \textit{shell prompt} menandakan bahwa terminal tersebut dijalankan dengan tingkat akses \textit{superuser}, yang berarti bahwa entah pengguna masuk ke sistem sebagai user \textit{root}, atau terminal memiliki izin tingkat \textit{superuser/administrator}.\cite{shottsjr:2019:linuxcommandline}
+Tanda dolar (\$) di ujung baris ini menandakan bahwa baris tersebut merupakan baris \textit{shell prompt}, yang merupakan waktu di mana terminal sudah siap menerima masukan dari pengguna untuk diproses. Perlu diingat bahwa di posisi tanda dolar ini, terkadang justru terdapat tanda pagar (\#). Tanda pagar di akhir baris \textit{shell prompt} menandakan bahwa terminal tersebut dijalankan dengan tingkat akses \textit{superuser}, yang berarti bahwa entah pengguna masuk ke sistem sebagai user \textit{root}, atau terminal memiliki izin tingkat \textit{superuser/administrator}.\cite{shottsjr:2019:linuxcommandline}
 
 \begin{figure}[ht]
     \begin{subfigure}[b]{0.475\linewidth}
@@ -114,7 +114,7 @@ Untuk sistem-sistem operasi berbasis Linux, ada sebuah konvensi bahwa semua pera
 	\item daftar fitur-fitur perangkat lunak serta cara penggunaannya.
 \end{itemize}
 \noindent
-Walaupun begitu, perlu diingat bahwa halaman \textit{man} umumnya tidak mengikutkan contoh penggunaan. Selain itu, perlu juga diingat bahwa halaman \textit{man} ini dibagi ke delapan bagian, di mana bagian-bagiannya dapat dilihat di tabel \ref{tab:commandline-linux-manpage-sections}.
+Walaupun begitu, perlu diingat bahwa halaman \textit{man} umumnya tidak mengikutkan contoh penggunaan. Selain itu, perlu juga diingat bahwa halaman \textit{man} ini selalu diletakkan ke satu (atau lebih) dari delapan kategori, di mana kategori-kategori tersebut dapat dilihat di tabel \ref{tab:commandline-linux-manpage-sections}.
 
 \begin{table}[H]
     \centering
@@ -158,7 +158,7 @@ Selain \verb|man|, ada juga perintah yaitu \verb|whatis|, yang akan menampilkan 
 \begin{verbatim}
                                  whatis ls
 \end{verbatim}
-
+\noindent
 Hasilnya akan berupa isi dari bagian \verb|NAME| untuk perintah \verb|man ls|, yaitu sebagai berikut.
 
 \begin{verbatim}
@@ -246,7 +246,6 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 		Seluruh teks dalam keluaran akan menggunakan huruf kecil. Jika opsi ini tidak digunakan, keluaran akan mengandung huruf besar dan huruf kecil \textit{mixed case}.
 		\item \verb|/N|\\
 		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
-		%\newpage \enlargethispage{1.5\baselineskip} % Prevent widow
 		\item \verb|/O[[:]<sortorder>]|\\
 		Menampilkan daftar direktori yang terurut berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan terurut secara menaik.
 		\item \verb|/P|\\
@@ -271,14 +270,14 @@ Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai k
 \section{KIRI}
 \label{sec:kiri}
 
-KIRI merupakan sebuah perangkat lunak berbasis web yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun begitu, banyak masyarakat lokal sendiri yang seringkali masih segan untuk menaiki transportasi publik, umumnya karena transportasi publik dianggap lebih rumit persiapannya dibandingkan dengan metode-metode transportasi privat, seperti menaiki kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
+KIRI merupakan sebuah perangkat lunak berbasis \textit{web} yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun begitu, banyak masyarakat lokal sendiri yang seringkali masih segan untuk menaiki transportasi publik, umumnya karena transportasi publik dianggap lebih rumit persiapannya dibandingkan dengan metode-metode transportasi privat, seperti menaiki kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
 
 Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot. Keluaran ini sudah meliputi kode angkot mana saja yang harus dinaiki, dan juga seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi rute angkot berikutnya.
 
 \subsection{Tampilan}
 \label{sec:kiri-appearance}
 
-Pada saat pertama kali dibuka, hal pertama yang paling mencolok di halaman awal web KIRI adalah sebuah peta besar di sebelah kiri yang dapat diperbesar ataupun diperkecil. Sedangkan, bagian kanan dari halamannya terdiri atas beberapa bagian. Di bagian paling atas terdapat logo KIRI, beserta sepasang menu \textit{dropdown}\textemdash yang pertama merupakan pilihan kota tempat pengguna berada (untuk sekarang hanya tersedia pilihan kota Jakarta dan Bandung), dan yang kedua merupakan pilihan bahasa, entah bahasa Indonesia atau Inggris. Di bawahnya merupakan sepasang menu \textit{dropdown} yang merupakan tempat di mana pengguna memasukkan lokasi awal dan tujuan yang akan diproses oleh KIRI. Terakhir, di bawahnya ada sebuah bagian kosong, yang nantinya akan menjadi tempat di mana KIRI akan meletakkan keluaran dari prosesnya. Adapun tampilan awal dari halaman web ini dapat dilihat di gambar \ref{fig:kiri-base}.
+Pada saat pertama kali dibuka, hal pertama yang paling dominan di halaman awal \textit{web} KIRI adalah sebuah peta besar di sebelah kiri yang dapat diperbesar ataupun diperkecil. Sedangkan, bagian kanan dari halamannya terdiri atas beberapa bagian. Di bagian paling atas terdapat logo KIRI, beserta sepasang menu \textit{dropdown}\textemdash yang pertama merupakan pilihan kota tempat pengguna berada (untuk sekarang hanya tersedia pilihan kota Jakarta dan Bandung), dan yang kedua merupakan pilihan bahasa, entah bahasa Indonesia atau Inggris. Di bawahnya merupakan sepasang menu \textit{dropdown} yang merupakan tempat di mana pengguna memasukkan lokasi awal dan tujuan yang akan diproses oleh KIRI. Terakhir, di bawahnya ada sebuah bagian kosong, yang nantinya akan menjadi tempat di mana KIRI akan meletakkan keluaran dari prosesnya. Adapun tampilan awal dari halaman web ini dapat dilihat di gambar \ref{fig:kiri-base}.
 
 \begin{figure}[ht]
     \centering
@@ -287,7 +286,7 @@ Pada saat pertama kali dibuka, hal pertama yang paling mencolok di halaman awal 
     \label{fig:kiri-base}
 \end{figure}
 
-Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memasukkan masukan dan menyuruh KIRI untuk memprosesnya. Bagian yang pertama adalah bagian peta, yang setelah pemrosesan masukan, akan memiliki garis-garis berwarna yang menandakan rute angkot maupun tujuan perjalanan kaki yang harus ditempuh oleh pengguna. Bagian kedua adalah bagian keluaran, yang tadinya kosong, sekarang akan berisi langkah-langkah yang harus ditempuh oleh penggunanya untuk pergi dari lokasi awal ke lokasi tujuan. Spesifiknya, perbedaan-perbedaan ini dapat dilihat di gambar \ref{fig:kiri-example}.
+Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memasukkan masukan dan menyuruh KIRI untuk memprosesnya. Bagian yang pertama adalah bagian peta, yang setelah pemrosesan masukan, akan memiliki garis-garis berwarna yang menandakan rute angkot maupun perjalanan kaki yang harus ditempuh oleh pengguna. Bagian kedua adalah bagian keluaran, yang sekarang akan berisi langkah-langkah yang harus ditempuh oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir. Spesifiknya, perbedaan-perbedaan ini dapat dilihat di gambar \ref{fig:kiri-example}.
 
 \begin{figure}[ht]
     \centering
@@ -296,7 +295,6 @@ Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memas
     \label{fig:kiri-example}
 \end{figure}
 
-%\newpage
 \subsection{API\protect\footnotemark}
 \label{sec:kiri-api}
 \footnotetext{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
@@ -318,7 +316,7 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	\item \verb|region|\\
 	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
 	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
-%	\newpage % Prevent widow
+	\newpage % Prevent widow
 	\item \verb|querystring|\\
 	\textbf{Kemungkinan nilai:} \textit{string} berisi teks apapun dengan panjang minimal satu karakter\\
 	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
@@ -581,7 +579,7 @@ Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima du
 \end{itemize}
 \noindent
 Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
-\newline\newline
+
 Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, berikut merupakan contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Adapun perangkat lunak ini memiliki spesifikasi sebagai berikut:
 
 \begin{itemize}
@@ -697,9 +695,9 @@ Setelah seluruh \textit{easy handle} yang ingin dijalankan dimasukkan ke dalam \
 
 \begin{enumerate}
 	\item Inisialisasi variabel \verb|transfers_running|\\
-	\verb|transfers_running| merupakan sebuah variabel \textit{integer} yang menjadi penanda bagi pengguna mengenai berapa banyak \textit{handle} yang sedang melakukan proses transfer di suatu waktu. Selama nilai variabel ini bukan 0, artinya ada \textit{easy handle} yang belum selesai melakukan proses transfer berkas.
+	\verb|transfers_running| merupakan sebuah variabel \textit{integer} yang menjadi penanda bagi pengguna mengenai berapa banyak \textit{handle} yang sedang melakukan proses transfer di suatu waktu. Selama nilai variabel ini bukan 0, artinya ada \textit{easy handle} yang belum selesai proses transfernya.
 	\item Menjalankan transfer dalam \textit{multi handle}\\
-	Langkah selanjutnya adalah menjalankan transfer dalam \textit{mutli handle}, dengan memanggil fungsi \verb|curl_multi_perform|. Adapun fungsi tersebut harus dipanggil dengan format berikut, yaitu:
+	Langkah selanjutnya adalah menjalankan transfer dalam \textit{mutli handle}, dengan memanggil fungsi \verb|curl_multi_perform|. Adapun fungsi tersebut harus dipanggil dengan format berikut:
 
 \begin{verbatim}
            curl_multi_perform(<multi handle>, <transfers_running>)
@@ -725,7 +723,7 @@ Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Be
 
 \textit{Socket} ini, beserta apa aksi yang ingin ditunggu dalam socket tersebut, diperhatikan dengan implementasi sebuah fungsi \textit{callback}, yaitu \verb|socket_callback()|. Handle mana yang ingin digunakan, socket mana yang ingin diperhatikan, serta aksi apa yang ditunggu diatur dalam fungsi ini. Jika ada beberapa \textit{socket} yang ingin diperhatikan, fungsi ini harus dipanggil lagi untuk setiap \textit{socket}-nya. Selain itu, perlu juga dipanggil fungsi \verb|timer_callback()|, yang berfungsi untuk mengatur seberapa lama aplikasi akan menunggu \textit{socket}, sebelum terjadi \textit{timeout}. Kedua \textit{callback} ini dapat diatur ke dalam suatu \textit{multi handle} dengan menggunakan fungsi \verb|curl_multi_setopt()| biasa\textemdash untuk \textit{callback socket}, fungsi ini ditandai dengan menggunakan paramter \verb|CURLMOPT_TIMERFUNCTION|, sedangkan untuk \textit{callback timer}, fungsi tersebut ditandai dengan parameter \verb|CURLMOPT_TIMERFUNCTION|.
 
-Adapun seluruh \textit{handle} ini dapat dipanggil dengan memanggil fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa.
+Adapun seluruh \textit{handle} ini dapat dipanggil dengan fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa. 
 
 Contoh implementasi singkat dari seluruh fungsi-fungsi tersebut dapat dilihat di potongan kode berikut.
 
@@ -779,6 +777,7 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 		\item \verb|-DENABLE_TARGET_EXPORT|\\
 		\textbf{Nilai awal:} On\\
 		Mengekspor target-target ekspor cJSON. Opsi ini dapat dimatikan jika terjadi masalah saat instalasi.
+		\newpage % Prevent description cutoff
 		\item \verb|-DENABLE_CUSTOM_COMPILER_FLAGS|\\
 		\textbf{Nilai awal:} On\\
 		Mengaktifkan properti-properti untuk \textit{compiler} non-standar (Clang, GCC, MSVC). Opsi ini dapat dimatikan jika terjadi masalah saat instalasi.
@@ -815,7 +814,7 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 	Jika CMake tidak tersedia, cJSON juga dapat dibangun dengan menggunakan GNU Make, dengan menggunakan perintah \verb|make all|, dan menginstal \textit{library-library} yang sudah ter-\textit{compile} dengan perintah \verb|make install|. Akan tetapi, perlu diingat bahwa metode instalasi ini sudah tidak lagi diperbarui (\textit{deprecated}), dan dukungannya hanya sebatas pembetulan \textit{bug}.
 	
 	\item vcpkg\\
-	Melalui vcpkg, cJSON dapat diunduh dan diinstal secara langsung. Versi vcpkg dari cJSON terus diperbarui oleh tim Microsoft dan kontributor-kontributor dari komunitas publik, jadi \textit{library} cJSON yang diinstal melalui vcpkg kemungkinan besar akan selalu merupakan versi terbarunya.
+	Melalui vcpkg, cJSON dapat diunduh dan diinstal secara langsung. Versi vcpkg dari cJSON terus diperbarui oleh tim Microsoft dan kontributor-kontributor dari komunitas publik, jadi \textit{library} cJSON yang diinstal melalui vcpkg akan selalu merupakan versi terbarunya.
 \end{itemize}
 
 \subsubsection{Penggunaan}
@@ -872,7 +871,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 		\item \verb|cJSON_Object|\\
 		Merepresentasikan nilai objek general. Implementasinya sama dengan \textit{array}, hanya saja untuk objek general, kuncinya diletakkan di dalam variabel \verb|string|.
 		\item \verb|cJSON_Raw|\\
-		Merepresentasikan objek JSON apapun yang disimpan dalam bentuk \textit{array} yang diterminasi/dipisah oleh \textit{null terminator}.
+		Merepresentasikan objek JSON apapun yang disimpan dalam bentuk \textit{array} yang diakhiri oleh \textit{null terminator}.
 		\item \verb|cJSON_NULL|\\
 		Merepresentasikan sebuah nilai \textit{null}.
 	\end{itemize}
@@ -880,13 +879,13 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	\item \verb|valuestring|/\verb|valueint|/\verb|valuedouble|/\verb|string|\\	
 	Merupakan variabel-variabel yang menyimpan nilai dari struktur cJSON. Variabel apa yang diisi dan apa isinya tergantung dari tipe data yang disimpan.
 \end{itemize}
-
+\vspace{-0.6em}
 \subsubsection{Fungsi-Fungsi Dasar}
 \label{sec:cmodules-cJSON-basicfuncts}
 
 \begin{itemize}[listparindent=\parindent]
 	\item Tipe-tipe data dasar\\
-	Untuk setiap tipe data cJSON, ada sebuah fungsi \verb|cJSON_Create...|. Semua fungsi \mbox{tersebut} akan mengalokasikan sebuah struktur cJSON yang nantinya dapat dihapus dengan \verb|cJSON_Delete|. Perlu diingat juga bahwa seluruh struktur yang dibuat harus dihapus agar tidak terjadi kebocoran memori. Adapun fungsi-fungsi \verb|cJSON_Create| yang dapat digunakan untuk tipe-tipe data yang tersedia adalah sebagai berikut.
+	Untuk setiap tipe data cJSON, ada sebuah fungsi \verb|cJSON_Create...|. Semua fungsi \mbox{tersebut} \mbox{akan} mengalokasikan sebuah struktur cJSON yang nantinya dapat dihapus dengan \verb|cJSON_Delete|. Perlu diingat juga bahwa seluruh struktur yang dibuat harus dihapus agar tidak terjadi kebocoran memori. Adapun fungsi-fungsi \verb|cJSON_Create| yang dapat digunakan untuk tipe-tipe data yang tersedia adalah sebagai berikut.
 	
 	\begin{itemize}
 		\item \textit{null} dibuat dengan \verb|cJSON_CreateNull|.
@@ -921,6 +920,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	\begin{verbatim}
                             cJSON_Parse(<JSON>)
 	\end{verbatim}
+	\newpage % Prevent widow
 	\noindent
 	Sedangkan, jika objek JSON tersebut tidak (atau belum tentu) dibatasi oleh \textit{null terminator}, objek tersebut dapat di-\textit{parse} dengan fungsi berikut.
 	
@@ -979,7 +979,7 @@ add_executable(Hello Hello.c)
 	\begin{itemize}
 		\item Baris pertama harus selalu merupakan \verb|cmake_minimum_required|. Hal ini mengharuskan proyek untuk menggunakan versi dari CMake yang dispesifikasi, dan juga memungkinkan \textit{backwards compatibility}.
 		\item Baris selanjutnya merupakan perintah \verb|project|. Perintah ini mengatur nama proyek, dan juga bisa digunakan untuk mengatur aturan-aturan lainnya, seperti versi, atau bahasa dari proyek.
-		\item Terakhir, perintah \verb|add_executable| merupakan sebuah perintah yang akan menambahkan sebuah file \textit{executable} untuk menjalankan proyek yang sudah dibangun tersebut.
+		\item Terakhir, \verb|add_executable| merupakan sebuah perintah yang akan menambahkan sebuah file \textit{executable} untuk menjalankan proyek yang sudah dibangun tersebut.
 	\end{itemize}
 	\item CMake membuat dan mengkonfigurasi proyek tersebut.\\
 	Setelah file-file CMakeLists selesai dibuat, CMake akan memproses file-file tersebut dan membuat entri-entri dalam sebuah file \textit{cache}. Pengembang perangkat lunak dapat mengedit file CMakeLists atau mengatur isi dari file \textit{cache} tadi dengan GUI CMake, ccmake, atau untuk proyek-proyek skala kecil, langsung dari \cl.
@@ -990,14 +990,14 @@ add_executable(Hello Hello.c)
 		
 		\begin{figure}[ht]
 		    \centering
-		    \includegraphics[width=0.66667\linewidth]{cmake-gui}
+		    \includegraphics[width=0.85\linewidth]{cmake-gui}
 		    \caption[Tampilan aplikasi cmake-gui]{Tampilan aplikasi cmake-gui.\protect\footnotemark}
 		    \label{fig:cmake-gui}
 		\end{figure}
 		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
 		
 		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
-%		\newpage % Prevent widow
+		
 		\item ccmake\\
 		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
 		
@@ -1037,15 +1037,14 @@ add_executable(Hello Hello.c)
 			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi untuk \textit{debugging}.
 		\end{itemize}
 		
-		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. 
-		Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
-%		\newpage % Prevent widow
-		\begin{lstlisting}[caption=Contoh kode pembangunan CMake lebih dari satu mode, label=code:cmake-multibuild]
-ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
-ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
-		\end{lstlisting}
+		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus menggunakan ccmake, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
 		
 	\end{itemize}
 	
+	\begin{lstlisting}[caption=Contoh kode pembangunan CMake lebih dari satu mode, label=code:cmake-multibuild]
+ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Debug
+ccmake ../<direktori> -DCMAKE_BUILD_TYPE=Release
+	\end{lstlisting}
+
 	Setelah CMake dijalankan, proyek tersebut siap untuk dibangun. Jika generator yang dipilih merupakan generator berbasis Makefiles, maka proyek tersebut dapat dibangun dengan mengganti \textit{working direktory} ke lokasi file-file \textit{binary}, dan kemudian menjalankan perintah \verb|make| atau \verb|cmake --install|. Jika generator yang dipilih merupakan sebuah IDE, maka proyek tersebut dapat dibangun secara biasa melalui IDE tersebut.
 \end{enumerate}

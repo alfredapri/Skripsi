@@ -145,7 +145,7 @@ Adapun keluaran dari fungsi kedua ini dapat dilihat di gambar \ref{fig:similarap
 \label{sec:similarapps-ubercli-problem}
 
 Seperti telah dijelaskan di awal bab ini, perkakas ini tidak dapat digunakan. Kesimpulan yang diambil oleh penulis mengenai alasan perkakas ini tidak dapat dijalankan adalah dikarenakan oleh penggunaan API dan modul-modul yang telah usang (\textit{deprecated}). Kesimpulan ini diambil oleh penulis karena dua alasan utama. Pertama, pada awalnya, perkakas ini tidak dapat dijalankan karena API Google \textit{Maps} yang dipakai mengandung baris kode berikut didalamnya.
-
+\vspace{-0.5em} % Prevent inevitable widow on next page
 \begin{verbatim}
            exports.placesAutoCompleteSessionToken = require('uuid/v4');
 \end{verbatim}
@@ -155,8 +155,8 @@ Kode ini merupakan kode yang dipakai untuk mengambil \textit{subpath} dari paket
 \subsection{\googlemapscli\footnote{\href{https://github.com/yujinlim/google-maps-direction-cli}{https://github.com/yujinlim/google-maps-direction-cli}}}
 \label{sec:similarapps-googlemapscli}
 
-\googlemapscli merupakan sebuah perkakas \cl yang memiliki kegunaan yang mirip dengan KIRI, hanya saja perkakas ini tidak secara spesifik mengharuskan penggunaan angkot, atau transportasi umum lainnya. Singkatnya, perkakas ini memiliki fungsi seperti sebuah GPS. Untuk menggunakannya, pengguna harus memasukkan perintah dengan bentuk sebagai berikut.
-
+\googlemapscli merupakan sebuah perkakas \cl yang memiliki kegunaan yang mirip dengan KIRI, hanya saja perkakas ini tidak secara spesifik mengharuskan penggunaan angkot, atau transportasi umum lainnya. Singkatnya, perkakas ini memiliki fungsi seperti sebuah GPS. Untuk menggunakannya, pengguna harus memasukkan perintah sebagai berikut.
+\vspace{-0.5em} % Prevent inevitable widow on next page
 \begin{verbatim}
                direction <lokasi awal> <lokasi akhir> -k <kunci API>
 \end{verbatim}
@@ -165,7 +165,7 @@ Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan me
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.66667\linewidth]{googlemapscli}
+    \includegraphics[width=0.7\linewidth]{googlemapscli}
     \caption[Contoh penggunaan perkakas \googlemapscli]{Contoh penggunaan perkakas \googlemapscli.\protect\footnotemark}
     \label{fig:similarapps-googlemapscli}
 \end{figure}
@@ -174,7 +174,7 @@ Setelah pengguna memasukkan perintah tersebut dengan benar, perkakas ini akan me
 \subsubsection{Permasalahan}
 \label{sec:similarapps-googlemapscli-problem}
 
-Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan perkakas ini tidak dapat digunakan lagi-lagi merupakan masalah teknikal, yaitu diperbaruinya API Google \textit{Maps}. Lebih spesifiknya, semenjak 2018, Google tidak lagi memperbolehkan penggunaan API Google \textit{Maps} tanpa kunci API, yang sayangnya tidak hanya mendasari perkakas ini, tetapi juga kunci API ini tidak bisa didapatkan tanpa membayarkan biaya tertentu. Oleh karena itu, perkakas ini dianggap tidak bisa dijalankan.
+Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan perkakas ini tidak dapat digunakan lagi-lagi merupakan masalah teknikal, yaitu diperbaruinya API Google \textit{Maps}. Lebih spesifiknya, semenjak 2018, Google tidak lagi memperbolehkan penggunaan API Google \textit{Maps} tanpa kunci API, yang sayangnya mendasari pemakaian perkakas ini. Selain itu, ada ketentuan tambahan dari Google bahwa bahwa kunci API ini tidak lagi bisa didapatkan tanpa membayarkan sebuah biaya tertentu. Oleh karena itu, perkakas ini dianggap tidak bisa dijalankan.
 
 \section{Analisis API KIRI}
 \label{sec:analysis-kiri}
@@ -227,7 +227,7 @@ Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place},
 \label{sec:analysis-thesisapp}
 
 Di bagian ini akan dibahas analisis hal-hal yang berhubungan dengan perkakas yang akan dibangun sebagai proyek skripsi ini.
-
+\vspace{-0.5em} % Prevent widow
 \subsection{Analisis Fitur Perkakas}
 \label{sec:analysis-thesisapp-features}
 
@@ -243,11 +243,11 @@ Walaupun begitu, aplikasi ini akan memiliki dua fungsi utama yang berhubungan sa
 \end{itemize}
 \noindent
 Selain itu, perkakas ini juga akan memiliki fitur-fitur standar yang harus dimiliki oleh perkakas-perkakas \cl, seperti dokumentasi singkat (bantuan penggunaan perkakas) sebagai salah satu mode operasional perkakas, dan juga \textit{man page} (khusus implementasi di Linux).
-
+\vspace{-0.5em} % Prevent widow
 \subsubsection{Aturan Penamaan}
 \label{sec:analysis-thesisapp-features-conventions}
 
-Sedangkan, untuk memenuhi fitur-fitur tersebut, perkakas akan perlu berbagai opsi yang masing-masing merepresentasikan fitur (mode operasional) perkakas, serta variabel-variabel yang dibutuhkan oleh API. Setelah dilakukan analisis perkakas-perkakas sejenis yang memerlukan opsi-opsi dalam masukannya, dibuat seperangkat aturan yang mendasari penamaan dari opsi-opsi yang akan dimiliki perkakas yang akan dibuat. Berikut merupakan aturan-aturan tersebut.
+Untuk memenuhi fitur-fitur tersebut, perkakas akan perlu berbagai opsi yang masing-masing merepresentasikan fitur (mode operasional) perkakas, serta variabel-variabel yang dibutuhkan oleh API. Setelah dilakukan analisis perkakas-perkakas sejenis yang memerlukan opsi-opsi dalam masukannya, dibuat seperangkat aturan yang mendasari penamaan dari opsi-opsi yang akan dimiliki perkakas yang akan dibuat. Berikut merupakan aturan-aturan tersebut.
 
 \begin{enumerate}
 	\item Nama pendek (satu huruf) opsi umumnya akan dinamakan sesuai dengan huruf pertama dari fitur/variabel yang direpresentasikan oleh opsi tersebut.
@@ -255,7 +255,7 @@ Sedangkan, untuk memenuhi fitur-fitur tersebut, perkakas akan perlu berbagai ops
 	\item Argumen dari opsi yang merepresentasikan fitur perkakas akan dinamakan sesuai dengan nama dari mode operasionalnya masing-masing di API KIRI, kecuali \texttt{direct}, karena fitur ini merupakan mode tambahan yang bukan merupakan fitur langsung dari API KIRI.
 	\item Nama-nama opsi, baik pendek maupun panjang, yang jika mengikuti ketiga aturan pertama akan menghasilkan nama yang sama dengan nama opsi lain, akan dinamakan dengan nama buatan yang artinya tidak terlalu jauh dengan variabel apa yang direpresentasikan olehnya.
 \end{enumerate}
-
+\vspace{0.5em} % Prevent orphan
 \subsubsection{Opsi-opsi Perkakas}
 \label{sec:analysis-thesisapp-features-options}
 
@@ -283,10 +283,10 @@ Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab sebelumnya, berikut 
 	
 		\item \verb|findroute|\\
 		Parameter ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{find route} dari perkakas. Sama seperti mode \verb|--search|, perkakas akan menerima input dari pengguna dari parameter-parameter milik opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
-		
+		\newpage % Prevent weird cutoff
 		\begin{itemize}
 			\item \verb|-s <lokasi awal> (--start)|\\
-			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal perjalanan pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
+			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi awal \mbox{perjalanan} pengguna nantinya. Perlu diingat bahwa opsi ini hanya menerima masukan lokasi berupa nilai \latlon dari lokasi tersebut.
 			\item \verb|-f <lokasi akhir> (--finish)|\\
 			Opsi ini merupakan opsi yang akan menerima parameter berupa lokasi akhir perjalanan pengguna nantinya. Sama seperti opsi sebelumnya, parameter ini juga hanya menerima masukan lokasi berupa nilai \textit{latitude} dan \textit{longitude}.
 			\item \verb|-l <kode bahasa> (--locale)|\\
@@ -308,9 +308,9 @@ Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab sebelumnya, berikut 
 		
 		\begin{itemize}
 			\item \verb|-S <region tempat lokasi awal berada> (--regstart)|\\
-			Opsi ini akan menerima parameter berupa kode area dari lokasi awal yang akan digunakan.
+			Opsi ini akan menerima parameter berupa kode region dari lokasi awal.
 			\item \verb|-F <region tempat lokasi akhir berada> (--regfinish)|\\
-			Opsi ini akan menerima parameter berupa kode area dari lokasi akhir yang akan digunakan.
+			Opsi ini akan menerima parameter berupa kode region dari lokasi akhir.
 			\item \verb|-s <kata kunci untuk lokasi awal> (--start)|\\
 			Opsi ini akan menerima parameter berupa kata kunci untuk pencarian lokasi awal yang akan digunakan.
 			\item \verb|-f <kata kunci untuk lokasi akhir> (--finish)|\\
@@ -334,7 +334,7 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
     \caption[Diagram \textit{use case} perkakas yang akan dibangun]{Diagram \textit{use case} dari perkakas yang akan dibangun.}
     \label{fig:thesisapp-uml}
 \end{figure}
-
+\vspace{-0.5em} % Prevent leftover row
 \begin{longtable}{| l | c p{10cm} |}
 	\caption{\textit{Scenario case} untuk fitur pencarian lokasi dengan kata kunci pencarian.} 
 	\label{tab:thesisapp-scenariocase-searchplace} \\
@@ -342,7 +342,7 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline 
 	\endfirsthead
 	
-	\multicolumn{3}{c}{\tablename\ \thetable{} -- Lanjutan dari halaman sebelumnya} \\
+	\multicolumn{3}{c}{\textbf{\tablename\ \thetable{}} -- Lanjutan dari halaman sebelumnya} \\
 	\hline 
 	\endhead
 	
@@ -380,7 +380,7 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline 
 	\endfirsthead
 	
-	\multicolumn{3}{c}{\tablename\ \thetable{} -- Lanjutan dari halaman sebelumnya} \\
+	\multicolumn{3}{c}{\textbf{\tablename\ \thetable{}} -- Lanjutan dari halaman sebelumnya} \\
 	\hline 
 	\endhead
 	
@@ -399,9 +399,9 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline
 		\textbf{Pre-kondisi} & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
+		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan \mbox{tersebut} akan ditampilkan kepada pengguna.} \\
     \hline
-		\textbf{Skenario utama} & 1. & Perkakas membaca masukan berupa nilai \latlon lokasi awal dan akhir dari argumen dalam perintah \cl. \\
+		\textbf{Skenario utama} & 1. & Perkakas membaca masukan berupa nilai \textit{latitude} dan \mbox{\textit{longitude}} lokasi awal dan akhir dari argumen dalam \mbox{perintah} \cl. \\
 		 & 2. & Perkakas memproses masukan tersebut dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\
 		 & 3. & Perkakas menerima keluaran akhir dari API KIRI berupa langkah-langkah dalam rute yang perlu ditempuh. \\
 		 & 4. & Perkakas menampilkan kembali keluaran tersebut kepada pengguna. \\
@@ -418,7 +418,7 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
 	\hline 
 	\endfirsthead
 	
-	\multicolumn{3}{c}{\tablename\ \thetable{} -- Lanjutan dari halaman sebelumnya} \\
+	\multicolumn{3}{c}{\textbf{\tablename\ \thetable{}} -- Lanjutan dari halaman sebelumnya} \\
 	\hline 
 	\endhead
 	
@@ -431,13 +431,13 @@ Perkakas \cl ini akan memiliki tiga fitur, yaitu pencarian lokasi dengan kata ku
         \textbf{Nama} & \multicolumn{2}{p{10.5cm} |}{Mencari rute dengan angkot menggunakan kata kunci pencarian lokasi} \\
     \hline \addlinespace[0.1cm]
     \hline
-        \textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi lainnya dengan menggunakan angkot dengan dengan kata kunci pencarian kedua lokasi sebagai masukan.} \\
+        \textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fitur untuk mencari cara pergi ke satu lokasi ke lokasi \mbox{lainnya} dengan menggunakan angkot dengan dengan kata kunci \mbox{pencarian} kedua lokasi sebagai masukan.} \\
     \hline
 		\textbf{Aktor} & \multicolumn{2}{p{10.5cm} |}{Pengguna aplikasi} \\
 	\hline
 		\textbf{Pre-kondisi} & \multicolumn{2}{p{10.5cm} |}{-} \\
     \hline
-		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan tersebut akan ditampilkan kepada pengguna.} \\
+		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Langkah-langkah yang harus ditempuh untuk perjalanan \mbox{tersebut} akan ditampilkan kepada pengguna.} \\
     \hline
 		\textbf{Skenario utama} & 1. & Perkakas membaca masukan berupa kata kunci pencarian lokasi awal dan akhir dari argumen dalam perintah \cl. \\
 		 & 2. & Perkakas memproses kata kunci pencarian lokasi awal dan mengirimkannya ke API KIRI untuk diproses lebih lanjut. \\

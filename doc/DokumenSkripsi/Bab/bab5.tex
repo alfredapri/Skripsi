@@ -244,7 +244,7 @@ cmake ../
 		\end{verbatim}
 	\end{itemize}		
 
-	Untuk apa yang harus menggantikan variabel \verb|<compiler>| dapat dilihat dengan perintah \verb|cmake --help|. Daftar \textit{compiler} yang didukung oleh cmake dapat dilihat di bagian \mbox{``Generators''}, dan pengguna tinggal menyesuaikan dengan \textit{compiler} yang telah diinstal sebelumnya.  Ada beberapa hal yang perlu dijelaskan/diperhatikan untuk langkah ini.
+	Untuk apa yang harus menggantikan variabel \verb|<compiler>| dapat dilihat dengan \mbox{perintah} \verb|cmake --help|. Daftar \textit{compiler} yang didukung oleh cmake dapat dilihat di bagian \linebreak ``Generators'', dan pengguna tinggal menyesuaikan dengan \textit{compiler} yang telah diinstal sebelumnya.  Ada beberapa hal yang perlu dijelaskan/diperhatikan untuk langkah ini.
 	
 	\begin{itemize}
 		\item Windows
@@ -252,7 +252,7 @@ cmake ../
 		\begin{itemize}
 			\item Opsi \verb|-DMAKE_TOOLCHAIN_FILE| merupakan metode pengintegrasian vcpkg untuk proyek CMake. Untuk direktori persisnya (dan sintaks lengkap dari opsi ini) dapat dilihat setelah langkah ``Using vcpkg with MSBuild/Visual Studio'' di halaman panduan instalasi vcpkg.\footnote{\href{https://vcpkg.io/en/getting-started.html}{https://vcpkg.io/en/getting-started.html}}
 			\item Direkomendasikan untuk menginstal \textit{compiler} \textbf{MinGW}, karena \textit{compiler} ini sudah mengikutkan salah satu file \textit{header} yang dibutuhkan oleh perkakas ini. Apabila pengguna menggunakan \textit{compiler} ini, variabel \verb|<compiler>| harus diisi dengan ``\verb|MinGW Makefiles|''.
-			\item \textbf{Jangan menggunakan \textit{compiler} Visual Studio}, karena \textit{compiler} ini tidak mengandung file \textit{header} C yang dibutuhkan di perkakas ini. Perlu diperhatikan juga bahwa compiler Visual Studio ini merupakan nilai \textit{default} dari \verb|<compiler>| untuk sistem operasi Windows, jadi pengguna juga tidak boleh menghilangkan opsi \verb|-G| tersebut begitu saja.
+			\item \textbf{Jangan menggunakan \textit{compiler} Visual Studio}, karena \textit{compiler} ini tidak mengandung file \textit{header} C yang dibutuhkan di perkakas ini. Perlu diperhatikan juga bahwa \textit{compiler} Visual Studio ini merupakan nilai \textit{default} dari \verb|<compiler>| untuk sistem operasi Windows, jadi pengguna juga tidak boleh menghilangkan opsi \verb|-G| tersebut begitu saja.
 		\end{itemize}
 			
 		\item Linux \\
@@ -1146,11 +1146,11 @@ Locale available: id, en
 Pengujian ini dilakukan untuk menguji kompatibilitas keluaran perkakas dengan fungsi dari perkakas-perkakas \cl bawaan yang ada. Sebelum dilakukan, perlu ditetapkan beberapa aturan dasar untuk pengujian ini, yaitu sebagai berikut:
 
 \begin{itemize}
-	\item Tes kasus yang akan digunakan sebagai masukan adalah pencarian rute langsung dengan satu kemungkinan rute, dari ``ciwalk'' (Bandung) ke ``unpar'' (Bandung), dalam bahasa inggris. Masukan ini akan disamakan untuk seluruh bagian ini untuk alasan konsistensi.
+	\item Tes kasus yang akan digunakan sebagai masukan adalah pencarian rute langsung dengan satu kemungkinan rute, dari ``ciwalk'' (Bandung) ke ``unpar'' (Bandung), dalam bahasa Inggris. Masukan ini akan disamakan untuk seluruh bagian ini untuk alasan konsistensi.
 	\item Pengujian akan dilakukan sebanyak dua kali untuk tiap kasus, untuk Windows dan Linux.
 	\item Pengujian hanya akan dilakukan sekali untuk kasus-kasus tertentu apabila fungsi yang diuji memiliki perintah yang sama, atau fungsi tersebut tidak didukung oleh perkakas \cl bawaan dalam sistem operasi tersebut.
 \end{itemize}
-
+\noindent
 Berikut merupakan hasil pengujian untuk bagian ini.
 \begin{enumerate}	
 	\item Memasukkan keluaran perkakas ke dalam file output
