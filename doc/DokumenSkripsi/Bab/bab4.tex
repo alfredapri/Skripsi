@@ -272,7 +272,7 @@ Fungsi ini merupakan fungsi yang akan dipanggil ketika pengguna memilih opsi sta
 \subsection{\texttt{replace\char`_space()}}
 \label{sec:design-code-replacespace}
 
-Fungsi ini merupakan fungsi yang berguna untuk meng-\textit{escape} semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Hal ini perlu dilakukan karena pengkodean HTML yang digunakan untuk format URL tidak medukung karakter spasi, dan melainkan mensubstitusi seluruh kejadian karakter tersebut dalam suatu URL menjadi `\%20'. Fungsi ini akan menerima sebuah \textit{array} karakter berisi URL permintaan sebagai masukannya, mengganti semua karakter spasi yang ada di dalamnya menjadi `\%20', dan meletakkan hasilnya di variabel global \verb|escape|. Adapun keterangan singkat dari fungsi ini dapat dilihat di tabel \ref{tab:design-code-printhelp-details}.
+Fungsi ini merupakan fungsi yang berguna untuk meng-\textit{escape} semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Hal ini perlu dilakukan karena pengkodean HTML yang digunakan untuk format URL tidak medukung karakter spasi, dan melainkan mensubstitusi seluruh kejadian karakter tersebut dalam suatu URL menjadi ``\%20''. Fungsi ini akan menerima sebuah \textit{array} karakter berisi URL permintaan sebagai masukannya, mengganti semua karakter spasi yang ada di dalamnya menjadi ``\%20'', dan meletakkan hasilnya di variabel global \verb|escape|. Adapun keterangan singkat dari fungsi ini dapat dilihat di tabel \ref{tab:design-code-printhelp-details}.
 
 \begin{table}[H]
     \centering
