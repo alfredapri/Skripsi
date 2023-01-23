@@ -1,305 +1,39 @@
-%versi 3 (22-07-2020)
 \chapter{Landasan Teori}
 \label{chap:teori}
-
-\section{\textit{Command Line}}
-\label{sec:commandline}
-\textit{Command line} (atau \cli) dapat diartikan sebagai tampilan antarmuka/\textit{interface} yang memproses perintah dari pengguna dan meneruskannya langsung ke sistem operasi untuk dijalankan.\cite{shottsjr:2019:linuxcommandline} Seluruh sistem operasi komputer yang ada memiliki sebuah \cli dalam bentuk \textit{shell}, yang dapat digunakan oleh penggunanya untuk langsung mengakses fungsi atau servis yang disediakan oleh sistem operasi.\cite{mueller:2007:windowscommandline} 
-
-%Sedangkan, perangkat lunak yang memproses \cli ini disebut sebagai \cl \textit{interpreter}\cite{mueller:2007:windowscommandline} atau \textit{shell}.\cite{shottsjr:2019:linuxcommandline}
-
-\subsection{\textit{Command Line Interface} dan \textit{Graphical User Interface}}
-\label{sec:commandline-comparison}
-
-Ada beberapa dari tipe antarmuka yang masih banyak digunakan di zaman sekarang, tetapi dua tipe yang paling banyak muncul adalah \cli dan \gui. Perangkat lunak berbasis \cl sendiri bisa memiliki berbagai macam tampilan, tetapi semuanya selalu mengikuti satu bentuk antarmuka umum. Bentuk yang dimaksud adalah sebuah area/\textit{window} yang memuat teks berupa perintah-perintah dari \textit{user} untuk dilakukan oleh komputer, beserta keluarannya yang juga berupa teks, seperti dapat dilihat pada gambar \ref{fig:commandline-cli}. Jenis perangkat lunak seperti ini disebut memiliki antarmuka jenis \cli (CLI). Adapun dekorasi visual yang dimiliki oleh jenis tampilan ini hanya berupa warna pada teks-teks yang ada, tanpa tambahan gambar apa pun. Jika perangkat lunak tersebut memiliki dekorasi dan/atau tombol interaktif berupa gambar grafis, seperti pada gambar \ref{fig:commandline-gui}, maka perangkat lunak tersebut dikategorikan sebagai perangkat lunak berbasis \gui.
-
-\begin{figure}[ht]
-    \begin{subfigure}[b]{0.45\linewidth}
-		\centering
-		\includegraphics[height=4.7cm]{terminal-linux}
-		\caption{Antarmuka perangkat lunak berbasis \cli.}
-		\label{fig:commandline-cli}
-	\end{subfigure}
-	\hfill
-    \begin{subfigure}[b]{0.5\linewidth}
-		\centering
-		\includegraphics[height=4.33333cm]{gui}
-		\caption{Antarmuka perangkat lunak berbasis \gui.}
-		\label{fig:commandline-gui}
-	\end{subfigure}
-    \caption[Dua jenis tampilan perangkat lunak]{Contoh dua jenis antarmuka (\textit{interface)} perangkat lunak.}
-	\label{fig:commandline-interfacetypes}
-\end{figure}
-
-Selain dari tampilannya sendiri, ada beberapa perbedaan utama lain antara perangkat-perangkat lunak berbasis \cli dengan perangkat lunak berbasis \gui. Adapun perbedaan-perbedaan utama dari kedua jenis antarmuka ini adalah sebagai berikut.\cite{mueller:2007:windowscommandline}
-\begin{itemize}
-	\item Penggunaan sumber daya sistem untuk menjalankan perangkat lunak berbasis \cli lebih rendah dibandingkan dengan perangkat lunak berbasis \gui.
-	\item Bagi pengguna pemula (atau pengguna awam pada umumnya), perangkat lunak berbasis \cli akan lebih sulit digunakan karena tidak adanya bantuan apa pun dalam bentuk visual, sehingga satu-satunya cara untuk tahu bagaimana cara menggunakan fitur-fiturnya adalah melalui dokumentasi perangkat lunak yang ada. Karena alasan yang sama pula, perangkat lunak berbasis \cli lebih sulit untuk dibiasakan penggunaannya.
-	\item Automasi perintah yang bersifat berulang-ulang jauh lebih mudah dilakukan pada perangkat lunak berbasis \cli. Hal ini dikarenakan perangkat lunak berbasis \cli tidak hanya lebih mudah untuk dibuat \textit{script}-nya, tetapi juga lebih efisien untuk digunakan ketika ada banyak sekali perintah yang harus dilakukan pada suatu saat tertentu.
-\end{itemize}
-
-\subsection{\textit{Command Line} di Linux}
-\label{sec:commandline-linux}
-
-Linux merupakan sebuah sistem operasi yang sangat modular, jadi ada banyak sekali \textit{shell} yang dapat dijalankan dan digunakan di dalamnya. Walaupun begitu, ada satu \textit{shell} yang selalu datang ter-\textit{install} di dalam semua sistem operasi Linux, yaitu \textit{``bash''} (GNU \textit{\textbf{B}ourne \textbf{A}gain \textbf{Sh}ell}).\cite{matthew:2007:beginninglinuxprogramming}
-
-\subsubsection{Tampilan}
-\label{sec:commandline-linux-appearance}
-
-Ketika terminal di Linux dijalankan, akan keluar kotak dialog, beserta sebuah baris. Baris ini biasanya berisi sebuah teks dengan format sebagai berikut.
-
-\begin{verbatim}
-        <nama pengguna>@<nama perangkat>:<direktori yang sedang diproses>$
-\end{verbatim}
-
-Tanda dolar (\$) di ujung baris ini menandakan bahwa baris tersebut merupakan baris \textit{shell prompt}, yang merupakan waktu di mana terminal sudah siap menerima masukan dari pengguna untuk diproses. Perlu diingat bahwa di posisi tanda dolar ini, terkadang justru terdapat tanda pagar (\#). Tanda pagar di akhir baris \textit{shell prompt} menandakan bahwa terminal tersebut dijalankan dengan tingkat akses \textit{superuser}, yang berarti bahwa entah pengguna masuk ke sistem sebagai user \textit{root}, atau terminal memiliki izin tingkat \textit{superuser/administrator}.\cite{shottsjr:2019:linuxcommandline}
-
-\begin{figure}[ht]
-    \begin{subfigure}[b]{0.475\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{linux-shellprompt-normal}
-		\caption{\textit{Shell prompt} terminal dengan tingkat izin \mbox{normal}.}
-		\label{fig:shellprompt-linux-normal}
-	\end{subfigure}
-	\hfill
-    \begin{subfigure}[b]{0.475\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{linux-shellprompt-superuser}
-		\caption{\textit{Shell prompt} terminal dengan tingkat izin \textit{\mbox{superuser}}.}
-		\label{fig:shellprompt-linux-superuser}
-	\end{subfigure}
-    \caption{Baris \textit{shell prompt} terminal di sistem operasi Linux.}
-	\label{fig:commandline-shellprompt-linux}
-\end{figure}
-
-\subsubsection{Navigasi \cite{shottsjr:2019:linuxcommandline}}
-\label{sec:commandline-linux-nav}
-
-Sistem-sistem operasi berbasis Linux menyimpan file-filenya di sebuah struktur direktori yang bersifat hierarkial. Hal ini berarti bahwa file-file tersebut disimpan dalam direktori-direktori (atau \textit{folder-folder}) yang tersusun seperti sebuah pohon. dalam arti bahwa satu \textit{folder} bisa jadi berada di dalam satu \textit{folder} lain, atau berisi beberapa \textit{folder} lainnya.
-
-Untuk navigasi, terminal Linux memiliki beberapa perintah utama. Adapun perintah-perintah tersebut adalah sebagai berikut.
-
-\begin{itemize}
-	\item \verb|pwd|\\
-	\verb|pwd| merupakan singkatan dari \textit{print working directory}, yang berarti bahwa perintah ini akan mengeluarkan \textit{working directory}, atau direktori tempat terminal sekarang sedang bekerja/berjalan, sebagai keluaran dari perintah tersebut. Ketika pengguna pertama kali menjalankan terminal, \textit{working directory}-nya selalu merupakan direktori \textit{home} dari perangkat.
-	\item \verb|ls|\\
-	\verb|ls| digunakan untuk menghasilkan keluaran berupa isi dari folder yang dispesifikasi. Biasanya digunakan ketika pengguna sudah memasuki folder yang diinginkan, walaupun dengan perintah ini, pengguna bisa saja mengintip isi dari folder manapun di direktori manapun, dengan mengikutkan direktori yang diinginkan sebagai parameter dari perintah tersebut. Adapun Isi dari folder yang diikutkan sebagai parameter tidak hanya berupa folder lain, tetapi juga seluruh file-file yang ada, walaupun untuk file-file yang disembunyikan (nama file diawali dengan tanda titik), perlu ditambahkan opsi \verb|-a| agar file-file tersebut muncul pula dalam keluarannya.
-	\item \verb|cd|\\
-	\verb|cd| adalah perintah yang berfungsi untuk mengganti \textit{working directory} dari terminal. Untuk melakukan hal tersebut, perintah yang perlu dimasukkan adalah sebagai berikut:
-	
-	\begin{verbatim}
-	                     cd <direktori yang diinginkan>
-	\end{verbatim}
-	
-	Direktori yang diinginkan dapat berupa direktori absolut, atau direktori relatif. Perbedaannya adalah direktori absolut selalu dimulai dari folder \textit{root}, mengikuti folder-folder apapun yang ada di antara \textit{root} sampai ke folder yang diinginkan.
-	
-	Sedangkan, direktori relatif selalu dimulai dari \textit{working directory}. Untuk penggunaan direktori relatif, diperlukan dua buah notasi spesial, yaitu titik (\verb|.|), yang merepresentasikan \textit{working directory} sekarang itu sendiri, dan dua titik (\verb|..|), yang merepresentasikan \textit{parent folder} dari \textit{working directory}.
-\end{itemize}
-
-\subsubsection{\texttt{man} \cite{marsh:2010:fatfreeintrotocommandline} \cite{shottsjr:2019:linuxcommandline}}
-\label{sec:commandline-linux-manpage}
-
-Untuk sistem-sistem operasi berbasis Linux, ada sebuah konvensi bahwa semua perangkat lunak \textit{executable} yang dimaksudkan untuk dijalankan melalui \cl perlu disertai dengan sebuah dokumentasi formal yang disebut \textit{manual} atau \textit{man page}. Di sistem-sistem operasi ini sudah ada perangkat lunak khusus, bernama ``\textit{man}'' yang fungsinya adalah untuk menampilkan dokumentasi-dokumentasi ini. Adapun \textit{man} digunakan dengan perintah berikut:
-
-\begin{verbatim}
-                           man <nama perangkat lunak>
-\end{verbatim}
-\noindent
-\textit{Man page} tidak memiliki format umum, tapi pada umumnya memiliki bagian-bagian berikut:
-
-\begin{itemize}
-	\item judul\textemdash perangkat lunak mana yang sedang ditampilkan halaman \textit{man}-nya,
-	\item perintah penggunaan perangkat lunak,
-	\item deskripsi singkat dari fungsi perangkat lunak, serta
-	\item daftar fitur-fitur perangkat lunak serta cara penggunaannya.
-\end{itemize}
-\noindent
-Walaupun begitu, perlu diingat bahwa halaman \textit{man} umumnya tidak mengikutkan contoh penggunaan. Selain itu, perlu juga diingat bahwa halaman \textit{man} ini selalu diletakkan ke satu (atau lebih) dari delapan kategori, di mana kategori-kategori tersebut dapat dilihat di tabel \ref{tab:commandline-linux-manpage-sections}.
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{| c | c |}
-    \hline
-        \textbf{Bagian} & \textbf{Kategori \textit{manual}} \\
-    \hline
-    \hline
-        1 & Perintah pengguna \\
-    \hline
-        2 & Panggilan langsung ke \textit{kernel} sistem \\
-    \hline
-        3 & Panggilan langsung ke \textit{library} C \\
-    \hline
-        4 & File-file spesial (contohnya \textit{driver}) \\
-    \hline
-        5 & Format file \\
-    \hline
-        6 & Permainan \\
-    \hline
-		7 & Lain-lain \\
-	\hline
-		8 & Perintah administrasi sistem \\
-	\hline
-	\end{tabular}
-    \caption{Jumlah kategori dan tes yang dilakukan.}
-    \label{tab:commandline-linux-manpage-sections}
-\end{table}
-\noindent
-Adapun contoh penggunaan perintah \texttt{man} ini ada di gambar \ref{fig:commandline-linux-man}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.667\linewidth]{man-ls}
-    \caption[Contoh keluaran \textit{man page}]{Contoh keluaran \texttt{man} untuk perintah \texttt{ls}.}
-    \label{fig:commandline-linux-man}
-\end{figure}
-
-Selain \verb|man|, ada juga perintah yaitu \verb|whatis|, yang akan menampilkan deskripsi satu baris untuk perangkat lunak yang dipilih. Misal, jika pengguna memasukkan perintah berikut:
-
-\begin{verbatim}
-                                 whatis ls
-\end{verbatim}
-\noindent
-Hasilnya akan menyerupai isi dari bagian \verb|NAME| untuk perintah \verb|man ls|, yaitu sebagai berikut.
-
-\begin{verbatim}
-                  ls (1)         - list directory contents
-\end{verbatim}
-
-\subsection{\textit{Command Line} di Windows}
-\label{sec:commandline-windows}
-
-Cara kerja \cl di Windows serupa dengan cara kerja \cl di Linux, dalam arti bahwa untuk bekerja dengan \cl di Windows, penggunanya juga akan langsung berinteraksi dengan utilitas yang disediakan oleh sistem operasi. \textit{Command line} di Windows juga dapat digunakan untuk hal-hal yang serupa dengan \cl di Linux, seperti menulis (dan menjalankan) \textit{script}, menjalankan perintah yang diinginkan pengguna secara otomatis, atau melihat status dari sistem operasi.\cite{mueller:2007:windowscommandline}
-
-Masih sama dengan Linux, ada banyak sekali \textit{command} yang bisa digunakan, sehingga susah untuk menghafal seluruh \textit{command-command} yang ada\textemdash termasuk masukan, parameter-parameter yang dibutuhkan, serta keluarannya. Untuk melihat dokumentasi, atau penjelasan detail untuk masukan, keluaran, parameter, serta opsi-opsi dari perintah tertentu, pengguna dapat memasukkan perintah tersebut, diikuti dengan \verb|/?|.\cite{mueller:2007:windowscommandline}
-
-\subsubsection{Tampilan}
-\label{sec:commandline-windows-appearance}
-
-Di sistem operasi Windows, ada dua jenis antarmuka \cl, yaitu cmd (\textit{Command Prompt}) dan \textit{PowerShell}. Keduanya memiliki tampilan yang kurang lebih sama\textemdash hanya saja awalnya cmd memiliki latar belakang hitam, sedangkan \textit{PowerShell} memiliki latar belakang biru tua, seperti terlihat di gambar \ref{fig:commandline-windows-programs}.
-
-\begin{figure}[ht]
-    \begin{subfigure}[b]{0.49\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{windows-cmd}
-		\caption{Antarmuka Windows \textit{Command Prompt} (\textit{cmd})}
-		\label{fig:commandline-windows-cmd}
-	\end{subfigure}
-	\hfill
-    \begin{subfigure}[b]{0.49\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{windows-powershell}
-		\caption{Antarmuka Winodws \textit{PowerShell}}
-		\label{fig:commandline-windows-powershell}
-	\end{subfigure}
-    \caption{Tampang kedua antarmuka \cl bawaan di sistem operasi Windows.}
-	\label{fig:commandline-windows-programs}
-\end{figure}
-
-\subsubsection{Navigasi}
-\label{sec:commandline-windows-nav}
-
-Untuk navigasi di antarmuka \cl Windows, ada dua perintah penting yang dipakai ketika pengguna sedang berurusan dengan file-file dan navigasi dalam direktori sistem. Kedua perintah tersebut adalah \verb|cd| dan \verb|dir|.
-
-\begin{itemize}
-	\item \verb|cd| (\verb|chdir|) \cite{microsoftdocs:2021:windowscommands}\\
-	\verb|cd| merupakan sebuah perintah yang memiliki tiga fungsi utama, yaitu menampilkan \textit{drive} tempat sedang \cl berada (jika pengguna hanya memasukkan \verb|cd| tanpa parameter apa pun), menampilkan direktori tempat \cl sedang berada (jika pengguna hanya memasukkan \textit{drive} sebagai parameter, atau fungsi yang paling umumnya, untuk mengganti \textit{working directory} dari \cl.
-	\newline\newline
-	Adapun format dari perintah \verb|cd| adalah sebagai berikut.
-	
-	\begin{verbatim}
-                        cd [/d] [<drive>:][<path>]
-	\end{verbatim}
-	
-	Dengan fungsi dari semua opsi dan parameter yang ada sebagai berikut.
-	
-	\begin{itemize}
-		\item \verb|/d|\\
-		Opsi yang menandakan bahwa pengguna ingin mengganti \textit{drive} (partisi) dan juga \textit{working directory} dari \cl.
-		\item \verb|<drive>:|\\
-		Kode huruf dari partisi yang akan diproses.
-		\item \verb|<path>|\\
-		Direktori yang akan diproses. Parameter ini harus diikutkan beserta kode huruf partisi (tidak dapat berdiri sendiri.)
-	\end{itemize}
-	
-	\item \verb|dir|\\
-	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apa pun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}).\cite{microsoftdocs:2021:windowscommands}
-	\newline\newline
-	Adapun format dari perintah \verb|dir| adalah sebagai berikut.\cite{mueller:2007:windowscommandline}
-	
-	\begin{verbatim}
-         dir [<drive:>][<path>][<filename>] [/A[[:]<attributes>]] [/B] 
-         [/C] [/D] [/L] [/N] [/O[[:]<sortorder>]] [/P] [/Q] [/R] [/S] 
-                    [/T[[:]<timefield>]] [/W] [/X] [/4]
-	\end{verbatim}
-	
-	Untuk perintah ini, seperti terlihat di atas, memiliki banyak sekali opsi dan parameter. Tiap-tiap dari parameter tersebut memiliki fungsi tersendiri, yaitu:
-	\begin{itemize}
-		\item \verb|/A[[:]<attributes>]|\\
-		Menampilkan file-file dengan atribut tertentu, seperti file yang disembunyikan, file sistem, file \textit{read-only}, dan sebagainya.
-		\item \verb|/B|\\
-		Menghilangkan \textit{heading} dan ringkasan informasi dari keluaran, atau dengan kata lain, hanya menampilkan file-file dan direktori, tanpa informasi tambahan apapun.
-		\item \verb|/C|\\
-		Menggunakan separator koma untuk tiap angka ribuan di ukuran file. Jika opsi yang dimasukkan adalah \verb|/-C|, separator koma justru akan dihilangkan.
-		\item \verb|/D|\\
-		Menampilkan keluaran dengan format yang lebih lebar. Jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan kolom.
-		\item \verb|/L|\\
-		Seluruh teks dalam keluaran akan menggunakan huruf kecil. Jika opsi ini tidak digunakan, keluaran akan mengandung huruf besar dan huruf kecil \textit{mixed case}.
-		\item \verb|/N|\\
-		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
-		\item \verb|/O[[:]<sortorder>]|\\
-		Menampilkan daftar direktori yang diurutkan berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan diurutkan secara menaik.
-		\item \verb|/P|\\
-		Memberhentikan keluaran selama beberapa waktu singkat (memberi jeda kecil) setelah setiap halaman informasi.
-		\item \verb|/Q|\\
-		Menambahkan informasi mengenai pemilik file dalam keluaran.
-		\item \verb|/R|\\
-		Menampilkan \textit{data stream} alternatif, jika ada.
-		\item \verb|/S|\\
-		Mendaftarkan seluruh file di direktori dan subdirektori yang diproses. Tiap-tiap direktori akan memiliki \textit{header} tersendiri dalam keluarannya.
-		\item \verb|/T[[:]<timefield>]|\\
-		Menspesifikasi \textit{time field} mana yang akan tampil dan digunakan sebagai urutan, jika aturan pengurutan lain tidak ditentukan. \textit{Time field} yang dapat digunakan adalah waktu pembuatan file, kapan terakhir file diakses, dan kapan file terakhir dimodifikasi. Jika parameter ini tidak dispesifikasikan, \textit{time field} yang digunakan adalah kapan file terakhir dimodifikasi.
-		\item \verb|/W|\\
-		Menampilkan keluaran dengan format yang lebih lebar. Opsi ini hampir sama dengan \verb|/D|, hanya saja untuk \verb|/W|, jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan baris, dan bukan kolom.
-		\item \verb|/X|\\
-		Menampilkan nama pendek yang dibuat untuk nama-nama file non-8.3. Opsi ini memiliki format tampilan yang sama seperti opsi \verb|/N|, hanya saja nama pendeknya ditampilkan di keluaran sebelum nama panjangnya.
-		\item \verb|/4|\\
-		Menampilkan angka tahun dengan format angka empat digit.
-	\end{itemize}
-\end{itemize}
 
 \section{KIRI}
 \label{sec:kiri}
 
-KIRI merupakan sebuah perangkat lunak berbasis \textit{web} yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi. Walaupun begitu, banyak masyarakat lokal sendiri yang sering kali masih segan untuk menaiki transportasi publik, umumnya karena transportasi publik dianggap lebih rumit persiapannya dibandingkan dengan metode-metode transportasi privat, seperti menaiki kendaraan pribadi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
+KIRI merupakan sebuah perangkat lunak berbasis \textit{web} yang berfungsi untuk menyelesaikan (atau setidaknya mengurangi) dampak dari masalah-masalah yang dapat diselesaikan oleh transportasi umum/publik di Indonesia, seperti pemanasan global, kemacetan, atau peningkatan harga bensin. Selain itu, turis mancanegara juga memilih untuk menaiki transportasi umum, karena jenis sarana transportasi tersebut tidak hanya jauh lebih murah, tetapi juga memberikan kesempatan yang mudah kepada mereka untuk melihat seluk-beluk dari kota-kota yang mereka kunjungi.\footnote{\href{https://projectkiri.github.io/\#about-kiri}{https://projectkiri.github.io/\#about-kiri}}
 
-Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot. Keluaran ini sudah meliputi kode angkot mana saja yang harus dinaiki, dan juga seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi rute angkot berikutnya.
+Di halaman web KIRI, pengguna dapat memasukkan input berupa lokasi awal dan lokasi tujuan dan KIRI akan menghasilkan seluruh langkah yang harus ditempuh oleh pengguna untuk sampai ke lokasi tujuan, dengan menggunakan angkot. Keluaran ini sudah meliputi kode angkot mana saja yang harus dinaiki, dan juga seberapa jauh pengguna harus berjalan kaki untuk sampai ke lokasi dalam rute angkot berikutnya, atau ke tujuan akhir.
 
 \subsection{Tampilan}
 \label{sec:kiri-appearance}
 
-Pada saat pertama kali dibuka, hal pertama yang paling dominan di halaman awal \textit{web} KIRI adalah sebuah peta besar di sebelah kiri yang dapat diperbesar ataupun diperkecil. Sedangkan, bagian kanan dari halamannya terdiri atas beberapa bagian. Di bagian paling atas terdapat logo KIRI, beserta sepasang menu \textit{dropdown}\textemdash yang pertama merupakan pilihan kota tempat pengguna berada (untuk sekarang hanya tersedia pilihan kota Jakarta dan Bandung), dan yang kedua merupakan pilihan bahasa, entah bahasa Indonesia atau Inggris. Di bawahnya merupakan sepasang menu \textit{dropdown} yang merupakan tempat di mana pengguna memasukkan lokasi awal dan tujuan yang akan diproses oleh KIRI. Terakhir, di bawahnya ada sebuah bagian kosong, yang nantinya akan menjadi tempat di mana KIRI akan meletakkan keluaran dari prosesnya. Adapun tampilan awal dari halaman web ini dapat dilihat di gambar \ref{fig:kiri-base}.
-
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.74\linewidth]{projectkiri-base}
     \caption[Tampilan awal halaman web KIRI]{Tampilan awal halaman web KIRI.}
     \label{fig:kiri-base}
 \end{figure}
 
-Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memasukkan masukan dan menyuruh KIRI untuk memprosesnya. Bagian yang pertama adalah bagian peta, yang setelah pemrosesan masukan, akan memiliki garis-garis berwarna yang menandakan rute angkot maupun perjalanan kaki yang harus ditempuh oleh pengguna. Bagian kedua adalah bagian keluaran, yang sekarang akan berisi langkah-langkah yang harus ditempuh oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir. Spesifiknya, perbedaan-perbedaan ini dapat dilihat di gambar \ref{fig:kiri-example}.
+Pada saat pertama kali dibuka, hal pertama yang paling dominan di halaman awal \textit{web} KIRI adalah sebuah peta besar di sebelah kiri yang dapat diperbesar ataupun diperkecil. Sedangkan, bagian kanan dari halamannya terdiri atas beberapa bagian. Di bagian paling atas terdapat logo KIRI, beserta sepasang menu \textit{dropdown}\textemdash yang pertama merupakan pilihan kota tempat pengguna berada (untuk sekarang hanya tersedia pilihan kota Jakarta dan Bandung), dan yang kedua merupakan pilihan bahasa, entah bahasa Indonesia atau Inggris. Di bawahnya merupakan sepasang menu \textit{dropdown} yang merupakan tempat di mana pengguna memasukkan lokasi awal dan tujuan yang akan diproses oleh KIRI. Terakhir, di bawahnya ada sebuah bagian kosong, yang nantinya akan menjadi tempat di mana KIRI akan meletakkan keluaran dari prosesnya. Adapun tampilan awal dari halaman web ini dapat dilihat di Gambar \ref{fig:kiri-base}.
 
-\begin{figure}[ht]
+Ada dua area yang memiliki perbedaan yang signifikan ketika pengguna sudah memasukkan masukan dan menyuruh KIRI untuk memprosesnya. Bagian yang pertama adalah bagian peta, yang setelah pemrosesan masukan, akan memiliki garis-garis berwarna yang menandakan rute angkot maupun perjalanan kaki yang harus ditempuh oleh pengguna. Bagian kedua adalah bagian keluaran, yang sekarang akan berisi langkah-langkah yang harus ditempuh oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir. Spesifiknya, perbedaan-perbedaan ini dapat dilihat di Gambar \ref{fig:kiri-example}.
+
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.74\linewidth]{projectkiri-example}
     \caption[Tampilan akhir halaman web KIRI]{Tampilan halaman \textit{web} KIRI setelah pemrosesan masukan dari pengguna selesai.}
     \label{fig:kiri-example}
 \end{figure}
-
+\vspace{-1em}
 \subsection{API\footnotemark}
 \label{sec:kiri-api}
 \footnotetext{\href{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}{https://github.com/projectkiri/Tirtayasa/wiki/KIRI-API-v2}}
 
-KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. API ini menyediakan tiga buah jenis layanan \textit{web} (\textit{webservice}), yang ketiganya dapat dilakukan dengan mengirim permintaan (\textit{request}) tipe GET melalui API tersebut. Isi dari permintaan yang perlu dikirimkan serta respons dari API yang akan dikembalikan berbeda tergantung dari jenis layanan yang digunakan. Adapun ketiga jenis layanan tersebut adalah pencarian tempat (\textit{search place}), pencarian rute (\textit{routing}), dan \textit{smart direction}.
+KIRI juga memiliki sebuah API yang dapat digunakan untuk keperluan pengembangan perangkat lunak. API ini menyediakan tiga buah jenis layanan \textit{web} (\textit{web service}), yang ketiganya dapat dilakukan dengan mengirim permintaan (\textit{request}) tipe GET melalui API tersebut. Isi dari permintaan yang perlu dikirimkan serta respons dari API yang akan dikembalikan berbeda tergantung dari jenis layanan yang digunakan. Adapun ketiga jenis layanan tersebut adalah pencarian tempat (\textit{search place}), pencarian rute (\textit{routing}), dan \textit{smart direction}.
  
 \subsubsection{\textit{Search Place}}
 \label{sec:kiri-api-searchplace}
@@ -315,8 +49,7 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	Parameter ini merupakan mode dari servis/jasa API yang akan digunakan oleh pengguna. Untuk penggunaan layanan pencarian lokasi, variabel ini harus diisi dengan \verb|searchplace|.
 	\item \verb|region|\\
 	\textbf{Kemungkinan nilai:} \verb|cgk|, \verb|bdo|, \verb|mlg|, atau \verb|sub|\\
-	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
-	\newpage % Prevent widow
+	Parameter ini merupakan kode bandara IATA tiga huruf yang merepresentasikan daerah mana tempat lokasi yang ingin dicari berada. Kode yang dapat diproses oleh API ini meliputi \verb|cgk| (Cengkareng/Jakarta), \verb|bdo| (Bandoeng/Bandung), \verb|mlg| (Malang), dan \verb|sub| (Surabaya).
 	\item \verb|querystring|\\
 	\textbf{Kemungkinan nilai:} \textit{string} berisi teks apapun dengan panjang minimal satu karakter\\
 	Parameter ini berisi kata kunci yang akan digunakan untuk menentukan lokasi yang ingin dicari pengguna.
@@ -325,25 +58,26 @@ Layanan pencarian lokasi (\textit{search place}) adalah layanan web pada API KIR
 	Parameter ini berisi kunci API pribadi yang harus digenerasikan terlebih dahulu sebelum API dapat digunakan.
 \end{itemize}
 \vspace{\baselineskip}
-Perlu diperhatikan bahwa salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
+Salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan parameter yang meminta kunci API. Kunci tersebut harus digenerasikan terlebih dahulu sebelum API KIRI dapat digunakan, melalui halaman \textit{API Keys} KIRI,\footnote{\href{https://projectkiri.id/dev/apikeys}{https://projectkiri.id/dev/apikeys}} yang dapat dilihat di gambar \ref{fig:kiri-apikeypage}.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.75\linewidth]{projectkiri-apikey}
-    \caption[Halaman web \textit{API Keys} KIRI.]{Halaman web \textit{API Keys} KIRI.}
+    \caption[Halaman web \textit{API Keys} KIRI.]{Halaman web \textit{API Keys} KIRI\footnotemark.}
     \label{fig:kiri-apikeypage}
 \end{figure}
+\footnotetext{Bagian tengah kunci API ditutup untuk alasan keamanan. Kunci-kunci API yang tidak berhubungan dengan perkakas di skripsi ini ditutup total.}
 
 Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
 
-Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa definisi dari nilai \latlon suatu lokasi. \textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respon API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Adapun respons yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
+Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa definisi dari nilai \latlon suatu lokasi. \textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respons API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Adapun respons yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
 
 \begin{itemize}
 	\item \verb|status|\\
 	\textbf{Kemungkinan nilai:} \verb|ok| atau \verb|error|\\
-	Variabel ini manandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
+	Variabel ini menandakan apakah permintaan berhasil diproses atau tidak. Jika permintaan berhasil diproses, variabel ini akan bernilai \verb|ok|, dan jika tidak, variabel ini akan bernilai \verb|error|.
 	\item \verb|message|\\
-	Variabel ini bisa berisi dua macam objek. Jika permintaan dari user tidak berhasil diproses, atau dalam kata lain, terjadi sebuah \textit{error}, maka variabel ini akan berisi string yang merupakan pesan \textit{error} serta alasan spesifik mengapa \textit{error} tersebut terjadi. Di lain sisi, jika permintaan dari pengguna berhasil diproses, variabel ini akan mengalami dua perubahan utama. Pertama, nama variabel ini akan berubah menjadi \verb|searchresult|, dan kedua, isi dari variabel ini akan menjadi sebuah \textit{array} yang merupakan respon dari API KIRI berupa keluaran yang akan dilihat oleh pengguna. \textit{Array} ini sendiri akan memiliki variabel berikut.
+	Variabel ini bisa berisi dua macam objek. Jika permintaan dari user tidak berhasil diproses, atau dalam kata lain, terjadi sebuah \textit{error}, maka variabel ini akan berisi string yang merupakan pesan \textit{error} serta alasan spesifik mengapa \textit{error} tersebut terjadi. Di lain sisi, jika permintaan dari pengguna berhasil diproses, variabel ini akan mengalami dua perubahan utama. Pertama, nama variabel ini akan berubah menjadi \verb|searchresult|, dan kedua, isi dari variabel ini akan menjadi sebuah \textit{array} yang merupakan respons dari API KIRI berupa keluaran yang akan dilihat oleh pengguna. \textit{Array} ini sendiri akan memiliki variabel berikut.
 	
 	\begin{itemize}
 		\item \verb|placename|\\
@@ -353,13 +87,13 @@ Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa defini
 	\end{itemize}
 	
 \end{itemize}
-\vspace{\baselineskip}\noindent
-Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di gambar \ref{fig:kiri-api-searchplace-usage}.
+\noindent
+Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di Gambar \ref{fig:kiri-api-searchplace-usage}.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.74\linewidth]{apikiri-searchplace}
-    \caption[Penggunaan API KIRI untuk layanan pencarian lokasi]{Penggunaan API KIRI untuk layanan pencarian lokasi menggunakan Postman. Gambar ini menunjukkan hasil pencarian lokasi ``unpar'' di daerah Bandung.}
+    \caption[Penggunaan API KIRI untuk layanan pencarian lokasi]{Penggunaan API KIRI untuk layanan pencarian lokasi menggunakan Postman. Gambar ini menunjukkan hasil pencarian lokasi ``ciwalk'' di daerah Bandung.}
     \label{fig:kiri-api-searchplace-usage}
 \end{figure}
 
@@ -412,6 +146,7 @@ Sedangkan, respons yang diberikan oleh API akan berupa sebuah objek JSON yang se
 			Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
 			\item \textit{Array} \latlon lokasi\\
 			\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
+			\newpage % prevent widow
 			\item Deskripsi langkah\\
 			Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa yang digunakan tergantung parameter \verb|locale| yang diatur dalam masukan.
 			\item URL untuk mendapatkan tiket kendaraan\\
@@ -426,7 +161,7 @@ Sedangkan, respons yang diberikan oleh API akan berupa sebuah objek JSON yang se
 	\end{itemize}
 	
 \end{itemize}
-\vspace{0.5em}\noindent
+\noindent
 Adapun gambar \ref{fig:kiri-api-routing-usage} menunjukkan penggunaan API KIRI untuk layanan pencarian rute dari Cihampelas Walk ke Universitas Katolik Parahyangan.
 
 \begin{figure}[t]
@@ -461,7 +196,7 @@ Dapat dilihat bahwa URL tersebut memiliki tiga buah parameter, yaitu:
 	Menentukan dalam bahasa apa hasil pencarian rutenya akan ditampilkan (bahasa Indonesia atau bahasa Inggris). Jika parameter ini tidak diberikan oleh pengguna, maka bahasa yang akan digunakan adalah bahasa yang terakhir dipakai di halaman web KIRI sendiri.
 \end{itemize}
 \vspace{\baselineskip}\noindent
-Misalkan pengguna ingin mencari rute dari Cihampelas Walk ke Universitas Katolik Parahyangan, dan menampilkan langkah-langkah yang harus ditempuh dalam rutenya dalam bahasa Indonesia. Pengguna dapat memasukkan URL berikut ke peramban mereka.
+Misalkan pengguna ingin mencari rute dari ``ciwalk'' (Cihampelas Walk) ke ``unpar'' (Universitas Katolik Parahyangan), dan menampilkan langkah-langkah yang harus ditempuh dalam rutenya dalam bahasa Indonesia. Pengguna dapat memasukkan URL berikut ke peramban mereka.
 
 \begin{verbatim}
             https://projectkiri.id?start=ciwalk&finish=unpar&locale=id
@@ -476,6 +211,288 @@ Jika URL tersebut sudah dimasukkan ke kotak \textit{link} pada peramban, halaman
     \label{fig:kiri-api-smartdirections-usage}
 \end{figure}
 
+\section{Pengantar \textit{Command Line Interface}}
+\label{sec:commandline}
+\textit{Command line} (atau \cli , disingkat CLI) dapat diartikan sebagai tampilan antarmuka yang memproses perintah dari pengguna dan meneruskannya langsung ke sistem operasi untuk dijalankan \cite{shottsjr:2019:linuxcommandline}. Seluruh sistem operasi komputer yang ada memiliki sebuah CLI dalam bentuk \textit{shell}, yang dapat digunakan oleh penggunanya untuk langsung mengakses fungsi atau servis yang disediakan oleh sistem operasi \cite{mueller:2007:windowscommandline}. Karakteristik-karakteristik utama dari CLI adalah sebagai berikut \cite{marsh:2010:fatfreeintrotocommandline} \cite{mueller:2007:windowscommandline}.
+
+\begin{itemize}
+	\item Pengguna menjalankan pekerjaan-pekerjaan yang ingin dilakukan dengan memasukkan (\mbox{mengetikkan}) perintah tertentu.
+	\item Pekerjaan akan dijalankan (dieksekusi) oleh sistem sampai selesai, sampai terjadi \textit{error}, atau sampai pekerjaannya dihentikan oleh pengguna.
+	\item Ketika pekerjaan telah selesai, keluaran (jika ada) akan ditampilkan, dan kemudian pengguna akan diminta memasukkan perintah berikutnya.
+\end{itemize}
+\noindent
+Salah satu dari banyak contoh CLI adalah Windows PowerShell, yang dapat dilihat di Gambar \ref{fig:commandline-example}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=5.5cm]{cli-windows-powershell}
+    \caption[Contoh CLI]{Salah satu contoh CLI, yaitu Windows PowerShell.}
+    \label{fig:commandline-example}
+\end{figure}
+
+\subsection{\textit{Command Line Interface} dan \textit{Graphical User Interface}}
+\label{sec:commandline-comparison}
+
+Dua tipe antarmuka utama untuk penggunaan perangkat lunak adalah \cli\xspace (CLI) dan \gui\xspace(GUI). CLI merupakan tipe antarmuka yang lebih awal muncul, dalam bentuk sebuah terminal teks. Masukan untuk terminal tersebut akan dimasukkan oleh pengguna (umumnya menggunakan sebuah \textit{keyboard}), dan keluarannya juga akan berupa teks yang ditampilkan langsung di layar perangkat, seperti dapat dilihat di Gambar \ref{fig:commandline-comparison-cli}. Seiring berjalannya waktu serta kemajuan teknologi, muncul tipe antarmuka lain, yaitu GUI, yang merupakan antarmuka dengan tambahan berbagai macam elemen-elemen grafis, seperti tertera di Gambar \ref{fig:commandline-comparison-gui} \cite{kavakli:2007:clivsguivr}.
+
+\begin{figure}[ht]
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[height=5.5cm]{cli-cliexample}
+		\caption{Antarmuka Git berbasis \cli.}
+		\label{fig:commandline-comparison-cli}
+	\end{subfigure}
+	\hfill
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[height=5.5cm]{cli-guiexample}
+		\caption{Antarmuka Git berbasis \gui.}
+		\label{fig:commandline-comparison-gui}
+	\end{subfigure}
+    \caption[Dua jenis antarmuka perangkat lunak]{Kedua jenis antarmuka perangkat lunak untuk perangkat lunak Git.}
+	\label{fig:commandline-comparison}
+\end{figure}
+
+Selain dari tampilannya sendiri, ada beberapa perbedaan lain antara antarmuka CLI dengan antarmuka berbasis \gui. Adapun perbedaan-perbedaan utama dari kedua jenis antarmuka ini adalah sebagai berikut \cite{mueller:2007:windowscommandline}.
+\begin{itemize}
+	\item Penggunaan sumber daya sistem untuk menjalankan perangkat lunak dengan antarmuka berbasis CLI lebih rendah dibandingkan dengan perangkat lunak dengan antarmuka berbasis GUI.
+	\item Bagi pengguna pemula (atau pengguna awam pada umumnya), perangkat lunak CLI akan lebih sulit digunakan karena tidak adanya bantuan apa pun dalam bentuk visual, sehingga satu-satunya cara untuk tahu bagaimana cara menggunakan fitur-fiturnya adalah melalui dokumentasi perangkat lunak yang ada. Karena alasan yang sama pula, perangkat lunak dengan antarmuka berbasis CLI lebih sulit untuk dibiasakan penggunaannya.
+	\newpage
+	\item Automasi perintah yang bersifat berulang-ulang jauh lebih mudah dilakukan pada perangkat lunak CLI. Hal ini dikarenakan perangkat lunak CLI tidak hanya lebih mudah untuk dibuat \textit{script}-nya, tetapi juga lebih efisien untuk digunakan ketika ada banyak sekali perintah yang harus dilakukan pada suatu saat tertentu, karena penggunaannya cukup dengan mengetikkan perintah dan menyuruh sistem untuk menjalankannya.
+\end{itemize}
+
+\subsection{\textit{Command Line} di Linux}
+\label{sec:commandline-linux}
+
+Linux merupakan sebuah sistem operasi yang sangat modular, jadi ada banyak sekali tipe \textit{shell} yang dapat dijalankan dan digunakan di dalamnya, seperti Bourne Shell (sh), C \textit{shell} (csh), Z shell (zsh), dan sebagainya. Walaupun begitu, ada satu \textit{shell} yang selalu datang ter-\textit{install} di dalam semua sistem operasi Linux, yaitu \textit{``bash''} (GNU \textit{\textbf{B}ourne \textbf{A}gain \textbf{Sh}ell}) \cite{matthew:2007:beginninglinuxprogramming}. \textit{Shell} jenis ini yang akan dipakai sebagai basis untuk pembahasan ini.
+
+\subsubsection{Tampilan}
+\label{sec:commandline-linux-appearance}
+
+Ketika terminal di Linux dijalankan, akan keluar kotak dialog, beserta sebuah baris. Baris ini biasanya berisi sebuah teks dengan format sebagai berikut.
+
+\begin{verbatim}
+        <nama pengguna>@<nama perangkat>:<direktori yang sedang diproses>$
+\end{verbatim}
+
+Tanda dolar (\$) di ujung baris ini menandakan bahwa baris tersebut merupakan baris \textit{shell prompt}, yang merupakan waktu di mana terminal sudah siap menerima masukan dari pengguna untuk diproses. Di posisi tanda dolar ini, terkadang justru terdapat tanda pagar (\#). Tanda pagar di akhir baris \textit{shell prompt} menandakan bahwa terminal tersebut dijalankan dengan tingkat akses \textit{superuser}, yang berarti bahwa entah pengguna masuk ke sistem sebagai user \textit{root}, atau terminal memiliki izin tingkat \textit{superuser/administrator} \cite{shottsjr:2019:linuxcommandline}. Perbedaan tampilan ini dapat dilihat dengan lebih jelas di Gambar \ref{fig:commandline-shellprompt-linux}.
+
+\begin{figure}[ht]
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{linux-shellprompt-normal}
+		\caption{\textit{Shell prompt} terminal dengan tingkat izin \mbox{normal}.}
+		\label{fig:shellprompt-linux-normal}
+	\end{subfigure}
+	\hfill
+    \begin{subfigure}[b]{0.475\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{linux-shellprompt-superuser}
+		\caption{\textit{Shell prompt} terminal dengan tingkat izin \textit{\mbox{superuser}}.}
+		\label{fig:shellprompt-linux-superuser}
+	\end{subfigure}
+    \caption{Baris \textit{shell prompt} terminal di sistem operasi Linux.}
+	\label{fig:commandline-shellprompt-linux}
+\end{figure}
+
+\subsubsection{Navigasi \cite{shottsjr:2019:linuxcommandline}}
+\label{sec:commandline-linux-nav}
+
+Sistem-sistem operasi berbasis Linux menyimpan file-filenya di sebuah struktur direktori yang bersifat hierarkial. Hal ini berarti bahwa file-file tersebut disimpan dalam direktori-direktori (atau \textit{folder-folder}) yang tersusun seperti sebuah pohon. dalam arti bahwa satu \textit{folder} bisa jadi berada di dalam satu \textit{folder} lain, atau berisi beberapa \textit{folder} lainnya.
+
+Untuk navigasi, terminal Linux memiliki beberapa perintah utama. Adapun perintah-perintah tersebut adalah sebagai berikut.
+
+\begin{itemize}[listparindent=\parindent]
+	\item \verb|pwd|\\
+	\verb|pwd| merupakan singkatan dari \textit{print working directory}, yang berarti bahwa perintah ini akan mengeluarkan \textit{working directory}, atau direktori tempat terminal sekarang sedang bekerja/berjalan, sebagai keluaran dari perintah tersebut. Ketika pengguna pertama kali menjalankan terminal, \textit{working directory}-nya selalu merupakan direktori \textit{home} dari perangkat.
+	\item \verb|ls|\\
+	\verb|ls| digunakan untuk menghasilkan keluaran berupa isi dari folder yang dispesifikasi. Biasanya digunakan ketika pengguna sudah memasuki folder yang diinginkan, walaupun dengan perintah ini, pengguna bisa saja mengintip isi dari folder mana pun di direktori mana pun, dengan mengikutkan direktori yang diinginkan sebagai parameter dari perintah tersebut. Adapun Isi dari folder yang diikutkan sebagai parameter tidak hanya berupa folder lain, tetapi juga seluruh file-file yang ada, walaupun untuk file-file yang disembunyikan (nama file diawali dengan tanda titik), perlu ditambahkan opsi \verb|-a| agar file-file tersebut muncul pula dalam keluarannya.
+	\item \verb|cd|\\
+	\verb|cd| adalah perintah yang berfungsi untuk mengganti \textit{working directory} dari terminal. Untuk melakukan hal tersebut, perintah yang perlu dimasukkan adalah sebagai berikut:
+	
+	\begin{verbatim}
+	                     cd <direktori yang diinginkan>
+	\end{verbatim}
+	\noindent
+	Direktori yang diinginkan dapat berupa direktori absolut, atau direktori relatif. Perbedaannya adalah direktori absolut selalu dimulai dari folder \textit{root}, mengikuti folder-folder apapun yang ada di antara \textit{root} sampai ke folder yang diinginkan.
+	
+	Sedangkan, direktori relatif selalu dimulai dari \textit{working directory}. Untuk penggunaan direktori relatif, diperlukan dua buah notasi spesial, yaitu titik (\verb|.|), yang merepresentasikan \textit{working directory} sekarang itu sendiri, dan dua titik (\verb|..|), yang merepresentasikan \textit{parent folder} (satu tingkat di atas) dari \textit{working directory}.
+\end{itemize}
+
+\subsubsection{\texttt{man} \cite{marsh:2010:fatfreeintrotocommandline} \cite{shottsjr:2019:linuxcommandline}}
+\label{sec:commandline-linux-manpage}
+
+Untuk sistem-sistem operasi berbasis Linux, ada sebuah konvensi bahwa semua perangkat lunak \textit{executable} yang dimaksudkan untuk dijalankan melalui \cl\xspace perlu disertai dengan sebuah dokumentasi formal yang disebut halaman manual atau \textit{man page}. Di sistem-sistem operasi ini sudah ada perangkat lunak khusus, bernama ``\verb|man|'' yang fungsinya adalah untuk menampilkan dokumentasi-dokumentasi ini. Adapun \verb|man| digunakan dengan perintah berikut:
+
+\begin{verbatim}
+                           man <nama perangkat lunak>
+\end{verbatim}
+\noindent
+\textit{Man page} tidak memiliki format umum, tapi pada umumnya memiliki bagian-bagian berikut:
+
+\begin{itemize}
+	\item judul\textemdash perangkat lunak mana yang sedang ditampilkan halaman \textit{man}-nya,
+	\item perintah penggunaan perangkat lunak,
+	\item deskripsi singkat dari fungsi perangkat lunak, serta
+	\item daftar fitur-fitur perangkat lunak serta cara penggunaannya.
+\end{itemize}
+\noindent
+Walaupun begitu, perlu diperhatikan bahwa halaman \verb|man| umumnya tidak mengikutkan contoh penggunaan, dalam arti bahwa contoh yang diberikan hanya sebatas format penggunaan perintah yang ditampilkan halaman manualnya. Selain itu, halaman-halaman manual ini selalu diletakkan ke satu (atau lebih) dari delapan kategori, di mana kategori-kategori tersebut dapat dilihat di Tabel \ref{tab:commandline-linux-manpage-sections}.
+
+\begin{table}[H]
+	\caption{Jumlah kategori dan tes yang dilakukan.}
+    \label{tab:commandline-linux-manpage-sections}
+    \centering
+    \begin{tabular}{| c | c |}
+    \hline
+        \textbf{Bagian} & \textbf{Kategori \textit{manual}} \\
+    \hline
+    \hline
+        1 & Perintah pengguna \\
+    \hline
+        2 & Panggilan langsung ke \textit{kernel} sistem \\
+    \hline
+        3 & Panggilan langsung ke \textit{library} C \\
+    \hline
+        4 & File-file spesial (contohnya \textit{driver}) \\
+    \hline
+        5 & Format file \\
+    \hline
+        6 & Permainan \\
+    \hline
+		7 & Lain-lain \\
+	\hline
+		8 & Perintah administrasi sistem \\
+	\hline
+	\end{tabular}
+\end{table}
+\noindent
+Adapun contoh penggunaan perintah \texttt{man} ini ada di Gambar \ref{fig:commandline-linux-man}.
+\newpage\vspace*{-3em}  % prevent awkward chapter positioning
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.667\linewidth]{man-ls}
+    \caption[Contoh keluaran \textit{man page}]{Contoh keluaran \texttt{man} untuk perintah \texttt{ls}.}
+    \label{fig:commandline-linux-man}
+\end{figure}
+
+Selain \verb|man|, ada juga perintah yaitu \verb|whatis|, yang akan menampilkan deskripsi satu baris untuk perangkat lunak yang dipilih. Misal, jika pengguna memasukkan perintah berikut:
+%\vspace{-0.1em} % prevent awkward chapter positioning
+\begin{verbatim}
+                                 whatis ls
+\end{verbatim}
+%\vspace{-0.1em}
+\noindent
+Hasilnya akan menyerupai isi dari bagian \verb|NAME| untuk perintah \verb|man ls| dengan tambahan kategori mana perintah tersebut berada, yaitu sebagai berikut.
+%\vspace{-0.1em}
+\begin{verbatim}
+                  ls (1)         - list directory contents
+\end{verbatim}
+
+\subsection{\textit{Command Line} di Windows}
+\label{sec:commandline-windows}
+
+Cara kerja CLI di Windows serupa dengan cara kerja CLI di Linux, dalam arti bahwa untuk bekerja dengan \cl\xspace di Windows, penggunanya juga akan langsung berinteraksi dengan utilitas yang disediakan oleh sistem operasi. \textit{Command line} di Windows juga dapat digunakan untuk hal-hal yang serupa dengan \cl\xspace di Linux, seperti menulis (dan menjalankan) \textit{script}, menjalankan perintah yang diinginkan pengguna secara otomatis, atau melihat status dari sistem operasi \cite{mueller:2007:windowscommandline}.
+
+Masih sama dengan Linux, ada banyak sekali \textit{command} yang bisa digunakan, sehingga susah untuk menghafal seluruh \textit{command-command} yang ada\textemdash termasuk masukan, parameter-parameter yang dibutuhkan, serta keluarannya. Untuk melihat dokumentasi, atau penjelasan detail untuk masukan, keluaran, parameter, serta opsi-opsi dari perintah tertentu, pengguna dapat memasukkan perintah tersebut, diikuti dengan \verb|/?| \cite{mueller:2007:windowscommandline}.
+
+\subsubsection[Jenis]{Jenis \cite{mueller:2007:windowscommandline}}
+\label{sec:commandline-windows-types}
+
+Di sistem operasi Windows, ada dua jenis CLI, yaitu \textit{Command Prompt} (cmd) dan Windows PowerShell, yang keduanya dapat dilihat di Gambar \ref{fig:commandline-windows-types}. Menurut tampilannya, keduanya sama saja\textemdash tampilan awalnya berbeda, tetapi keduanya sama-sama bisa dimodifikasi sesuai keinginan pengguna. 
+
+Akan tetapi, bukan berarti keduanya merupakan versi yang berbeda dari perangkat lunak yang sama. Perbedaan utama antara cmd dan Windows PowerShell, adalah bahwa beberapa perintah untuk fungsi yang sama bisa memiliki nama yang berbeda, atau memiliki perintah sekunder dengan nama yang berbeda. Misal perintah untuk mengganti \textit{working directory}, \verb|cd|. Di PowerShell ada perintah yaitu \verb|set-location| yang memiliki fungsi yang sama, tetapi \verb|set-location| ini tidak berfungsi di cmd. Dalam beberapa kasus, seperti \verb|help|, keluarannya pun berbeda juga dengan fungsi dasarnya, yaitu \verb|/?|.
+\newpage\vspace*{-3em}  % prevent awkward chapter positioning
+\begin{figure}[ht]
+    \begin{subfigure}[b]{0.495\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{cli-windows-cmd}
+		\caption{Antarmuka Windows \textit{Command Prompt} (\textit{cmd})}
+		\label{fig:commandline-windows-types-cmd}
+	\end{subfigure}
+	\hfill
+    \begin{subfigure}[b]{0.495\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{cli-windows-powershell}
+		\caption{Antarmuka Windows PowerShell}
+		\label{fig:commandline-windows-types-powershell}
+	\end{subfigure}
+    \caption{Tampang kedua antarmuka \cl bawaan di sistem operasi Windows.}
+	\label{fig:commandline-windows-types}
+\end{figure}
+
+\subsubsection{Navigasi}
+\label{sec:commandline-windows-nav}
+
+Untuk navigasi di antarmuka \cl\xspace Windows, ada dua perintah penting yang dipakai ketika pengguna sedang berurusan dengan file-file dan navigasi dalam direktori sistem. Kedua perintah tersebut adalah \verb|cd| dan \verb|dir|.
+
+\begin{itemize}
+	\item \verb|cd| (\verb|chdir|) \cite{microsoftdocs:2021:windowscommands}\\
+	\verb|cd| merupakan sebuah perintah yang memiliki tiga fungsi utama, yaitu menampilkan \textit{drive} tempat proses sedang berada (jika pengguna hanya memasukkan \verb|cd| tanpa parameter apa pun), menampilkan direktori tempat \cl sedang berada (jika pengguna hanya memasukkan \textit{drive} sebagai parameter, atau fungsi yang paling umumnya, untuk mengganti \textit{working directory} dari \cl.
+	\newline\newline
+	Format dari perintah \verb|cd| adalah sebagai berikut.
+	
+	\begin{verbatim}
+                        cd [/d] [<drive>:][<path>]
+	\end{verbatim}
+	
+	Dengan fungsi dari semua opsi dan parameter yang ada sebagai berikut.
+	
+	\begin{itemize}
+		\item \verb|/d|\\
+		Opsi yang menandakan bahwa pengguna ingin mengganti \textit{drive} (partisi) dan juga \textit{working directory} dari \cl.
+		\item \verb|<drive>:|\\
+		Kode huruf dari partisi yang akan diproses.
+		\item \verb|<path>|\\
+		Direktori yang akan diproses. Parameter ini harus diikutkan beserta kode huruf partisi (tidak dapat berdiri sendiri.)
+	\end{itemize}
+	
+	\item \verb|dir|\\
+	\verb|dir| merupakan sebuah perintah yang mengeluarkan/menampilkan sebuah daftar berisi file-file yang ada di suatu direktori, termasuk subdirektori. Jika tidak disertai parameter apa pun, perintah ini akan menampilkan label volume dan nomor serial \textit{disk}, dilanjutkan dengan daftar direktori dan file di dalamnya. Untuk file, akan ditampilkan nama beserta ukurannya. Perintah ini juga akan menampilkan jumlah direktori dan file yang didaftarkan, ukuran kumulatifnya, dan sisa dari \textit{disk} yang tidak terpakai (dalam \textit{bytes}) \cite{microsoftdocs:2021:windowscommands}.
+	\newline\newline
+	Format dari perintah \verb|dir| adalah sebagai berikut \cite{mueller:2007:windowscommandline}.
+	
+	\begin{verbatim}
+         dir [<drive:>][<path>][<filename>] [/A[[:]<attributes>]] [/B] 
+         [/C] [/D] [/L] [/N] [/O[[:]<sortorder>]] [/P] [/Q] [/R] [/S] 
+                    [/T[[:]<timefield>]] [/W] [/X] [/4]
+	\end{verbatim}
+	
+	Untuk perintah ini, seperti terlihat di atas, memiliki banyak sekali opsi dan parameter. Tiap-tiap dari parameter tersebut memiliki fungsi tersendiri, yaitu:
+	\begin{itemize}
+		\item \verb|/A[[:]<attributes>]|\\
+		Menampilkan file-file dengan atribut tertentu, seperti file yang disembunyikan, file sistem, file \textit{read-only}, dan sebagainya.
+		\item \verb|/B|\\
+		Menghilangkan \textit{heading} dan ringkasan informasi dari keluaran, atau dengan kata lain, hanya menampilkan file-file dan direktori, tanpa informasi tambahan apapun.
+		\item \verb|/C|\\
+		Menggunakan separator koma untuk tiap angka ribuan di ukuran file. Jika opsi yang dimasukkan adalah \verb|/-C|, separator koma justru akan dihilangkan.
+		\item \verb|/D|\\
+		Menampilkan keluaran dengan format yang lebih lebar. Jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan kolom.
+		\item \verb|/L|\\
+		Seluruh teks dalam keluaran akan menggunakan huruf kecil. Jika opsi ini tidak digunakan, keluaran akan mengandung huruf besar dan huruf kecil \textit{mixed case}.
+		\item \verb|/N|\\
+		Menampilkan daftar dengan format panjang, dengan nama file berada di ujung paling kanan.
+		\item \verb|/O[[:]<sortorder>]|\\
+		Menampilkan daftar direktori yang diurutkan berdasarkan urutan tertentu, seperti berdasarkan ekstensi file, berdasarkan tanggal dibuat, berdasarkan nama, dan sebagainya. Jika tidak diikutkan tanda minus (\verb|-|) sebelum huruf \verb|O| pada perintah, daftar yang muncul akan diurutkan secara menaik.
+		\item \verb|/P|\\
+		Memberhentikan keluaran selama beberapa waktu singkat (memberi jeda kecil) setelah setiap halaman informasi.
+		\item \verb|/Q|\\
+		Menambahkan informasi mengenai pemilik file dalam keluaran.
+		\item \verb|/R|\\
+		Menampilkan \textit{data stream} alternatif, jika ada.
+		\item \verb|/S|\\
+		Mendaftarkan seluruh file di direktori dan subdirektori yang diproses. Tiap-tiap direktori akan memiliki \textit{header} tersendiri dalam keluarannya.
+		\item \verb|/T[[:]<timefield>]|\\
+		Menspesifikasi \textit{time field} mana yang akan tampil dan digunakan sebagai urutan, jika aturan pengurutan lain tidak ditentukan. \textit{Time field} yang dapat digunakan adalah waktu pembuatan file, kapan terakhir file diakses, dan kapan file terakhir dimodifikasi. Jika parameter ini tidak dispesifikasikan, \textit{time field} yang digunakan adalah kapan file terakhir dimodifikasi.
+		\item \verb|/W|\\
+		Menampilkan keluaran dengan format yang lebih lebar. Opsi ini hampir sama dengan \verb|/D|, hanya saja untuk \verb|/W|, jika opsi ini diikutkan, keluaran akan ditampilkan dengan urutan berdasarkan baris, dan bukan kolom.
+		\item \verb|/X|\\
+		Menampilkan nama pendek yang dibuat untuk nama-nama file non-8.3. Opsi ini memiliki format tampilan yang sama seperti opsi \verb|/N|, hanya saja nama pendeknya ditampilkan di keluaran sebelum nama panjangnya.
+		\item \verb|/4|\\
+		Menampilkan angka tahun dengan format angka empat digit.
+	\end{itemize}
+\end{itemize}
+
 \section{Fungsi dan \textit{Library} Bahasa C}
 \label{sec:cmodules}
 
@@ -484,17 +501,17 @@ Di bagian ini akan dilakukan studi literatur terhadap seluruh fungsi bawaan sert
 \subsection[getopt]{getopt \cite{loosemore:2022:gnuclibrary}}
 \label{sec:cmodules-getopt}
 
-\verb|getopt| merupakan sebuah fungsi yang dapat mengautomasikan pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl berbasis UNIX.
+\verb|getopt| merupakan sebuah fungsi yang dapat mengautomasikan pekerjaan-pekerjaan yang berhubungan dengan penerimaan opsi-opsi untuk \cl\xspace berbasis UNIX.
 \newline\newline\noindent
 Fungsi \verb|getopt| dapat dipanggil dengan format sebagai berikut.
 
 \begin{verbatim}
-                         getopt (argc, argv, <options>)
+            getopt (int argc, char *const *argv, const char *<options>)
 \end{verbatim}
 
 Seluruh kode ini dapat dimasukkan ke suatu variabel berupa sebuah karakter yang merepresentasikan opsi yang ingin digunakan. \verb|argc| merupakan jumlah argumen yang terdapat dalam masukan, sedangkan \verb|argv| merupakan sebuah \textit{array} yang berisi argumen-argumen tersebut.
-\newline\newline
-Selain itu, penggunaan \verb|getopt| juga akan memakai variabel-variabel tertentu, yang nilainya akan diisi oleh fungsi \verb|getopt| tersebut sendiri. Variabel-variabel ini beserta penjelasannya dapat dilihat di daftar berikut.\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}
+
+Selain itu, penggunaan \verb|getopt| juga akan memakai variabel-variabel tertentu, yang nilainya akan diisi oleh fungsi \verb|getopt| tersebut sendiri. Variabel-variabel ini beserta penjelasannya dapat dilihat di daftar berikut\footnote{\href{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}{https://www.gnu.org/software/libc/manual/html\_node/Using-Getopt.html}}.
 \begin{itemize}
 	\item \verb|opterr|\\
 	Isi dari variabel ini akan memberi sinyal ke perangkat lunak/perkakas yang menentukan apakah \verb|getopt| akan mengirim pesan ke \textit{error stream} atau tidak. Jika variabel ini bukan bernilai 0, maka pesan \textit{error} akan dikirim. Sebaliknya, jika variabel ini bernilai 0, \verb|getopt| tidak akan mengirim pesan \textit{error} apapun, tetapi tetap akan mengembalikan sebuah karakter tanda tanya (\verb|?|) sebagai tanda bahwa sebuah \textit{error} telah terjadi.
@@ -510,12 +527,24 @@ Selain itu, penggunaan \verb|getopt| juga akan memakai variabel-variabel tertent
 	\begin{itemize}
 		\item Diikuti dengan titik dua (\verb|:|), maka opsi tersebut memiliki argumen yang bersifat wajib.
 		\item Diikuti dengan titik dua ganda (\verb|::|), maka opsi tersebut memiliki argumen yang bersifat opsional.
-		\item Tidak diikuti apa-apa, maka opsi tersebut merupakan opsi tidak berarguman.
+		\item Tidak diikuti apa-apa, maka opsi tersebut merupakan opsi tidak berargumen.
 	\end{itemize}
 	
 \end{itemize}
 \noindent
-Untuk memberikan gambaran yang lebih baik mengenai penggunaan fungsi \verb|getopt|, berikut merupakan contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Perangkat lunak ini akan menerima masukan berupa opsi tidak berparameter \verb|-a| dan/atau opsi berparameter \verb|-b|. Untuk opsi \verb|-a|, perangkat lunak ini akan mengeluarkan nilai 0 jika opsi \verb|-a| tidak dipakai, dan 1 jika opsi tersebut dipakai. Sebagai keluaran keduanya, perangkat lunak ini akan mengeluarkan isi parameter dari opsi \verb|-b|, atau \verb|NULL| jika opsi \verb|-b| tidak dipakai.
+Untuk memberikan gambaran yang lebih baik mengenai penggunaan fungsi \verb|getopt|, Kode \ref{code:getopt-usage} merupakan contoh perkakas CLI sederhana yang menggunakan fungsi tersebut. Penjelasan singkat dari perkakas ini adalah sebagai berikut.
+
+\begin{itemize}
+	\item Perangkat lunak ini akan menerima masukan berupa opsi tidak berparameter \verb|-a| dan/atau opsi berparameter \verb|-b|.
+	\item Untuk opsi \verb|-a|, perangkat lunak ini akan mengeluarkan nilai 0 jika opsi \verb|-a| tidak dipakai, dan 1 jika opsi tersebut dipakai.
+	\item Untuk opsi \verb|-b|, perangkat lunak ini akan mengeluarkan isi argumen opsi, atau \verb|NULL| jika opsi \verb|-b| tidak dipakai di masukan.
+	\item Perangkat lunak ini menerima dua variabel awal dari masukan, yaitu \verb|argc| (jumlah opsi dalam masukan) dan \verb|**argv| (array yang berisi opsi-opsi dalam masukan). Variabel \verb|argv| merupakan \textit{pointer} ke \textit{pointer} akibat implementasi dari \verb|getopt| (variabel merupakan pointer konstan ke variabel fungsi \verb|main|, dan variabel fungsi \verb|main| merupakan pointer ke masukan).
+	\item \verb|args| diisi opsi yang sedang diperiksa di dalam masukan. Opsi-opsi (serta argumennya, jika ada) akan terus diiterasi sampai habis.
+	\item Jika iterasi opsi dalam masukan selesai, tampilkan keluarannya.
+	\item Jika ada argumen yang tidak didukung (bukan \verb|-a| atau \verb|-b|), tampilkan semuanya setelah keluaran utama.
+	\item Keluaran akan ditampilkan melalui \textit{stream} \verb|stdout|.
+	\item Keluaran yang berupa pesan \textit{error} fatal akan dikeluarkan melalui \textit{stream} \verb|stderr|.
+\end{itemize}
 
 \begin{lstlisting}[language=C, caption=Contoh sederhana penggunaan getopt, label=code:getopt-usage]
 #include <ctype.h>
@@ -562,12 +591,12 @@ int main(int argc, char **argv) {
 }
 \end{lstlisting}
 
-\subsubsection{getopt-long}
+\subsubsection{getopt\textunderscore long}
 \label{sec:cmodules-getopt-long}
 
-Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata. Perlu diingat juga bahwa perkakas yang menerima opsi sebagai masukannya sebaiknya memiliki versi panjang dari opsi-opsi tersebut, karena tidak hanya hal ini tidak sulit untuk diimplementasikan, tetapi implementasi versi panjang dari opsi-opsi yang ada juga akan memudahkan pengguna untuk mengingat cara kerja perkakas tersebut.
+Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima dua jenis opsi\textemdash opsi versi pendek berupa sebuah karakter singular, seperti pada \verb|getopt| biasa, dan/atau opsi panjang bergaya GNU, berupa sebuah kata. Sebagai konvensi, perkakas yang menerima opsi sebagai masukannya sebaiknya memiliki versi panjang dari opsi-opsi tersebut, karena tidak hanya hal ini tidak sulit untuk diimplementasikan, tetapi implementasi versi panjang dari opsi-opsi yang ada juga akan memudahkan pengguna untuk mengingat cara kerja perkakas tersebut.
 
-\verb|getopt-long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt-long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain in merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
+\verb|getopt_long| juga memiliki seluruh variabel-variabel yang dimiliki oleh \verb|getopt|, hanya saja \verb|getopt_long| memiliki sebuah variabel tambahan berupa struktur, yaitu \verb|long_options|. Variabel ini merupakan sebuah struktur berupa \textit{array} yang berisi beberapa \textit{array} lainnya, di mana \textit{array-array} lain ini merupakan masing-masing opsi dari fungsi \verb|getopt-long| tersebut. Tiap-tiap \textit{array} tersebut memiliki variabel-variabel berikut:
 
 \begin{itemize}
 	\item \verb|name|\\
@@ -575,12 +604,12 @@ Ada pula versi \verb|getopt| yang memungkinkan perangkat lunak untuk menerima du
 	\item \verb|has_arg|\\
 	Variabel ini merupakan penanda apakah opsi memerlukan argumen atau tidak. Nilai untuk variabel ini adalah \verb|no_argument|, \verb|required_argument|, atau \verb|optional_argument|.
 	\item \verb|flag| \& \verb|val|\\ 
-	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt-long|. Variabel \verb|flag| dapat diisi dengan penunjuk (\textit{pointer}) ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt-long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt-long| akan mengembalikan isi dari variabel \verb|val|.
+	Kedua variabel ini menandakan bagaimana sebuah opsi akan diberlakukan ketika diterima oleh \verb|getopt_long|. Variabel \verb|flag| dapat diisi dengan penunjuk (\textit{pointer}) ke suatu variabel lain yang akan diisi dengan isi dari variabel \verb|val| untuk menandakan bahwa \verb|getopt_long| telah berhasil memroses opsi tersebut. Di lain sisi, jika variabel ini berisi \textit{null pointer}, maka fungsi \verb|getopt_long| akan mengembalikan isi dari variabel \verb|val|.
 \end{itemize}
 \noindent
 Struktur ini harus diakhiri dengan sebuah \textit{array} tambahan yang seluruh variabelnya bernilai 0.
-
-Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, berikut merupakan contoh perangkat lunak berbasis \cl sederhana yang menggunakan fungsi tersebut. Adapun perangkat lunak ini memiliki spesifikasi sebagai berikut:
+\newline\newline % fix awkward section formatting
+Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt_long|, Kode \ref{code:getopt-usage-long} \mbox{merupakan} contoh perkakas CLI sederhana yang menggunakan fungsi tersebut. Penjelasan singkat dari perkakas ini adalah sebagai berikut.
 
 \begin{itemize}
 	\item Perangkat lunak ini akan menerima masukan dari penggunaan opsi-opsi serta parameternya.
@@ -588,9 +617,14 @@ Untuk menjelaskan lebih lanjut mengenai cara penggunaan \verb|getopt-long|, beri
 	\item Opsi pertama yang disediakan adalah \verb|-a| atau \verb|--args| yang merupakan opsi tidak berargumen.
 	\item Opsi kedua yang disediakan adalah \verb|-n| atau \verb|--noargs|, yang merupakan opsi yang membutuhkan sebuah argumen.
 	\item Opsi ketiga dan keempat merupakan penanda mode keluaran, yaitu \verb|--short| dan \verb|--long|. Jika opsi \verb|--long| digunakan, maka perangkat lunak ini akan mengeluarkan versi panjang dari keluaran, sedangkan jika opsi \verb|--short| digunakan, maka perangkat akan mengeluarkan versi pendek dari keluaran.
+	\item Perangkat lunak ini menerima dua variabel awal dari masukan, yaitu \verb|argc| (jumlah opsi dalam masukan) dan \verb|**argv| (array yang berisi opsi-opsi dalam masukan). Variabel \verb|argv| merupakan \textit{pointer} ke \textit{pointer} akibat implementasi dari \verb|getopt| (variabel merupakan pointer konstan ke variabel fungsi \verb|main|, dan variabel fungsi \verb|main| merupakan pointer ke masukan).
+	\item \verb|option| diisi opsi yang sedang diperiksa di dalam masukan. Opsi-opsi (serta argumennya, jika ada) akan terus diiterasi sampai habis.
+	\item Keluaran akan ditampilkan per iterasi sesuai dengan masing-masing kasus (opsi).
+	\item Jika ada argumen yang tidak didukung (bukan \verb|-a| atau \verb|-b|), tampilkan semuanya setelah keluaran utama.
+	\item Seluruh keluaran akan ditampilkan melalui \textit{stream} \verb|stdout|.
 \end{itemize}
 
-\begin{lstlisting}[language=C, caption=Contoh sederhana penggunaan getopt-long, label=code:getopt-usage-long]
+\begin{lstlisting}[language=C, caption=Contoh sederhana penggunaan getopt\textunderscore long, label=code:getopt-usage-long]
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
@@ -666,14 +700,14 @@ int main(int argc, char **argv) {
 libcurl (\textit{library} cURL) merupakan sebuah \textit{library} yang berisi fungsi-fungsi yang disediakan dalam bentuk API bahasa C, untuk digunakan oleh aplikasi-aplikasi bahasa C. libcurl didesain dengan berorientasi transfer (biasanya transfer berkas), tanpa memerlukan para penggunanya untuk mengerti protokol-protokol yang digunakan dalam proses pentransferan tersebut. Fitur transfer ini dapat dibuat sesederhana mungkin, dan seluruh aturan dan opsi seputar pemindahan berkas tersebut dapat diatur nantinya secara manual melalui opsi-opsi yang ada.
 
 Untuk mulai melakukan transfer berkas, diperlukan juga sebuah \textit{handle} yang perlu diinisialisasi terlebih dahulu. Adapun libcurl memiliki dua jenis \textit{handle}, yaitu \textit{easy handle} dan \textit{multi handle}. 
-
+\vspace{-0.2em} % fix awkward spacing
 \subsubsection{\textit{Easy Handle}}
 \label{sec:cmodules-libcurl-handleeasy}
 
-\textit{Easy handle} dari libcurl dapat diinisialisasi dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya,\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}} pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} ini berhasil diatur opsinya apabila fungsi \verb|curl_easy_setopt()| tadi mengembalikan \verb|CURLE_OK|. Terakhir, untuk menjalankan transfernya, fungsi yang perlu dipanggil adalah \verb|curl_easy_perform(<easy handle>)|, dengan variabel \verb|<easy handle>| diisi dengan nama dari \textit{easy handle} yang ingin dimulai transfernya.
+\textit{Easy handle} dari libcurl dapat diinisialisasi dengan memanggil fungsi \verb|curl_easy_init()|. Setelah itu, untuk mengatur opsi-opsi yang perlu diatur sesuai kebutuhan pengguna, seperti URL yang dituju, protokol yang ingin dipakai, koneksi ke port spesifik, dan sebagainya\footnote{\href{https://curl.se/libcurl/c/curl\_easy\_setopt.html}{https://curl.se/libcurl/c/curl\_easy\_setopt.html}}, pengguna harus mengaturnya dengan fungsi \verb|curl_easy_setopt()|. \textit{Handle} ini berhasil diatur opsinya apabila fungsi \verb|curl_easy_setopt()| tadi mengembalikan \verb|CURLE_OK|. Terakhir, untuk menjalankan transfernya, fungsi yang perlu dipanggil adalah \verb|curl_easy_perform(<easy handle>)|, dengan variabel \verb|<easy handle>| diisi dengan nama dari \textit{easy handle} yang ingin dimulai transfernya.
 
 \textit{Handle} yang telah diatur ini dapat digunakan berulang kali dengan konfigurasi yang sama, sampai entah pengguna mengganti konfigurasi opsi-opsinya kembali, atau atau \textit{handle}-nya direset dengan pemanggilan fungsi \verb|curl_easy_reset()|.
-
+\vspace{-0.2em} % fix awkward spacing
 \subsubsection{\textit{Multi Handle}}
 \label{sec:cmodules-libcurl-handlemulti}
 
@@ -704,10 +738,10 @@ Setelah seluruh \textit{easy handle} yang ingin dijalankan dimasukkan ke dalam \
 \end{verbatim}
 
 	\item Menunggu transfer untuk selesai sebelum data diekstraksi\\
-	Tentunya sebelum data hasil transfer dapat diekstraksi untuk dipakai, proses transfernya sendiri harus selesai terlebih dahulu\textemdash untuk kasus dalam \textit{multi handle} libcurl, seluruh \textit{handle} di dalam \textit{multi handle} harus selesai melakukan transfer terlebih dahulu, atau sampai terjadi \textit{timeout}. Adapun langkah ini dapat diselesaikan entah dengan menggunakan \verb|curl_multi_wait()| atau \verb|curl_multi_poll()|, atau dengan cara manual, yaitu dengan memasukkan deskriptor-deskriptor file serta nilai \textit{timeout} secara manual, dan kemudian menggunakan \verb|select()|, walaupun metode ini tidak dianjurkan karena keterbatasan jumlah deskriptor yang dapat digunakan.\footnote{\href{https://curl.se/libcurl/c/curl\_multi\_poll.html}{https://curl.se/libcurl/c/curl\_multi\_poll.html}}
+	Tentunya sebelum data hasil transfer dapat diekstraksi untuk dipakai, proses transfernya sendiri harus selesai terlebih dahulu\textemdash untuk kasus dalam \textit{multi handle} libcurl, seluruh \textit{handle} di dalam \textit{multi handle} harus selesai melakukan transfer terlebih dahulu, atau sampai terjadi \textit{timeout}. Adapun langkah ini dapat diselesaikan entah dengan menggunakan \verb|curl_multi_wait()| atau \verb|curl_multi_poll()|, atau dengan cara manual, yaitu dengan memasukkan deskriptor-deskriptor file serta nilai \textit{timeout} secara manual, dan kemudian menggunakan \verb|select()|, walaupun metode ini tidak dianjurkan karena keterbatasan jumlah deskriptor yang dapat digunakan\footnote{\href{https://curl.se/libcurl/c/curl\_multi\_poll.html}{https://curl.se/libcurl/c/curl\_multi\_poll.html}}.
 \end{enumerate}
 \noindent
-Implementasi singkat dari ketiga langkah ini dapat dilihat di potongan kode berikut.
+Implementasi singkat dari ketiga langkah ini dapat dilihat di Kode \ref{code:curl-usage-multi}.
 
 \begin{lstlisting}[language=C, caption=Loop sederhana dari pengunaan \textit{multi handle} curl, label=code:curl-usage-multi]
 do {
@@ -723,9 +757,7 @@ Ada mode lain dari \textit{multi handle}, yaitu \textit{multi socket handle}. Be
 
 \textit{Socket} ini, beserta apa aksi yang ingin ditunggu dalam socket tersebut, diperhatikan dengan implementasi sebuah fungsi \textit{callback}, yaitu \verb|socket_callback()|. Handle mana yang ingin digunakan, socket mana yang ingin diperhatikan, serta aksi apa yang ditunggu diatur dalam fungsi ini. Jika ada beberapa \textit{socket} yang ingin diperhatikan, fungsi ini harus dipanggil lagi untuk setiap \textit{socket}-nya. Selain itu, perlu juga dipanggil fungsi \verb|timer_callback()|, yang berfungsi untuk mengatur seberapa lama aplikasi akan menunggu \textit{socket}, sebelum terjadi \textit{timeout}. Kedua \textit{callback} ini dapat diatur ke dalam suatu \textit{multi handle} dengan menggunakan fungsi \verb|curl_multi_setopt()| biasa\textemdash untuk \textit{callback socket}, fungsi ini ditandai dengan menggunakan paramter \verb|CURLMOPT_TIMERFUNCTION|, sedangkan untuk \textit{callback timer}, fungsi tersebut ditandai dengan parameter \verb|CURLMOPT_TIMERFUNCTION|.
 
-Adapun seluruh \textit{handle} ini dapat dipanggil dengan fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa. 
-
-Contoh implementasi singkat dari seluruh fungsi-fungsi tersebut dapat dilihat di potongan kode berikut.
+Adapun seluruh \textit{handle} ini dapat dipanggil dengan fungsi \verb|curl_multi_socket_action()|, dan cara untuk melihat apakah seluruh transfer sudah selesai atau masih ada transfer yang berlangsung pada suatu waktu sama dengan \textit{multi transfer} biasa. Contoh implementasi singkat dari seluruh fungsi-fungsi tersebut dapat dilihat di Kode \ref{code:curl-usage-multisocket}.
 
 \begin{lstlisting}[language=C, caption=Kumpulan implementasi pengunaan \textit{multi socket handle} curl, label=code:curl-usage-multisocket]
 /* socket callback */
@@ -777,7 +809,6 @@ cJSON dapat diinstal dengan beberapa cara, yaitu:
 		\item \verb|-DENABLE_TARGET_EXPORT|\\
 		\textbf{Nilai awal:} On\\
 		Mengekspor target-target ekspor cJSON. Opsi ini dapat dimatikan jika terjadi masalah saat instalasi.
-		\newpage % Prevent description cutoff
 		\item \verb|-DENABLE_CUSTOM_COMPILER_FLAGS|\\
 		\textbf{Nilai awal:} On\\
 		Mengaktifkan properti-properti untuk \textit{compiler} non-standar (Clang, GCC, MSVC). Opsi ini dapat dimatikan jika terjadi masalah saat instalasi.
@@ -829,7 +860,7 @@ Jika cJSON diinstal melalui CMake atau Makefile, cJSON dapat digunakan dengan me
 \subsubsection{Struktur Data}
 \label{sec:cmodules-cJSON-datastruct}
 
-cJSON merepresentasikan sebuah nilai JSON dengan struktur data \verb|cJSON|, yang dapat dilihat di potongan kode \ref{code:cjson-struct}.
+cJSON merepresentasikan sebuah nilai JSON dengan struktur data \verb|cJSON|, yang dapat dilihat di Kode \ref{code:cjson-struct}.
 
 \begin{lstlisting}[caption=Struktur data cJSON, label=code:cjson-struct]
 typedef struct cJSON
@@ -879,7 +910,7 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	\item \verb|valuestring|/\verb|valueint|/\verb|valuedouble|/\verb|string|\\	
 	Merupakan variabel-variabel yang menyimpan nilai dari struktur cJSON. Variabel apa yang diisi dan apa isinya tergantung dari tipe data yang disimpan.
 \end{itemize}
-\vspace{-0.6em}
+
 \subsubsection{Fungsi-Fungsi Dasar}
 \label{sec:cmodules-cJSON-basicfuncts}
 
@@ -898,7 +929,8 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 	Sebuah \textit{array} kosong dapat dibuat dengan menggunakan fungsi \verb|cJSON_CreateArray|. Selain fungsi tersebut, pembuatan \textit{array} juga dapat dilakukan dengan memanggil sebuah fungsi alternatif, yaitu \verb|cJSON_CreateArrayReference|. Bedanya adalah dengan fungsi alternatif ini, \textit{array} yang dibuat tidak secara langsung ``mengandung'' nilai-nilainya, jadi ketika \textit{array} tersebut dihapus dengan \verb|cJSON_Delete|, nilai-nilai di dalamnya tidak terhapus juga. Hal yang sama juga dapat dilakukan dengan objek-objek di dalam \textit{array} tersebut, di mana objek ini dapat ditambahkan dengan fungsi \verb|cJSON_AddItemToArray|, yang akan langsung menambahkan objek tersebut ke dalam \textit{array}-nya, atau dengan menggunakan \verb|cJSON_AddItemReferenceToArray|, yang hanya akan menambahkan referensi dari objek yang ingin ditambahkan ke dalam \textit{array}.
 	
 	Jika ada sebuah objek yang ingin dihapus dari \textit{array} tertentu, perangkat lunak dapat memanggil fungsi \verb|cJSON_DetachItemFromArray|. Fungsi ini akan mengembalikan objek yang dihapus dari \textit{array} tadi, jadi objek ini harus diberikan ke sebuah penunjuk lainnya (dimasukkan ke dalam variabel lain) agar tidak terjadi kebocoran memori. Selain fungsi tersebut, fungsi \verb|cJSON_DeleteItemFromArray| juga dapat digunakan\textemdash bedanya adalah objek yang dihapus dari \textit{array} tadi, jika dihapus menggunakan fungsi ini, akan langsung dihapus, seakan-akan fungsi \verb|cJSON_Delete| dipanggil untuk objek tersebut.
-	
+	\newpage % prevent widow
+	\vspace*{-1.25em} % prevent widow on next page
 	Untuk menimpa/mengganti nilai suatu objek di dalam \textit{array}, fungsi \verb|cJSON_ReplaceItemIn|\linebreak \verb|Array| dapat dipanggil dengan indeks dari objek yang ingin diganti sebagai parameternya. Selain fungsi tersebut, fungsi \verb|cJSON_ReplaceItemViaPointer| juga dapat digunakan\textemdash fungsi ini bekerja dengan memutuskan (\textit{detach}) objek lama yang ingin diganti, menghapus objek tersebut, dan menyisipkan objek yang baru ke tempat objek lama yang sudah dihapus tadi.
 	
 	Terakhir, untuk mendapatkan objek tertentu dalam \textit{array} berdasarkan indeksnya, \mbox{perangkat} lunak dapat memanggil fungsi \verb|cJSON_GetArrayItem|. Ukuran dari \textit{array}-nya sendiri juga dapat dilihat dengan fungsi \verb|cJSON_GetArraySize|.
@@ -916,17 +948,18 @@ Dengan variabel-variabel dalam struktur tersebut sebagai berikut:
 
 	\item \textit{Parsing}\\
 	Objek JSON yang dibatasi/diterminasikan dengan \textit{null terminator} dapat di-\textit{parse} dengan \mbox{menggunakan} fungsi berikut.
-	
+	\vspace{-0.1em} % prevent widow on next page
 	\begin{verbatim}
                             cJSON_Parse(<JSON>)
 	\end{verbatim}
-	\newpage % Prevent widow
+	\vspace{-0.1em} % prevent widow on next page
 	\noindent
 	Sedangkan, jika objek JSON tersebut tidak (atau belum tentu) dibatasi oleh \textit{null terminator}, objek tersebut dapat di-\textit{parse} dengan fungsi berikut.
-	
+	\vspace{-0.1em} % prevent widow on next page
 	\begin{verbatim}
            cJSON_Parse(<JSON>, <ukuran JSON yang ingin di-parse>)
 	\end{verbatim}
+	\vspace{-0.1em} % prevent widow on next page
 	\noindent
 	Kedua fungsi ini akan membuat sebuah struktur hierarkial dari objek-objek cJSON yang merepresentasikan keseluruhan dari objek JSON tersebut. Setelah objek ini selesai digunakan, penggunanya harus mendealokasikan objek tersebut dengan fungsi \verb|cJSON_Delete|.
 \end{itemize}
@@ -966,8 +999,8 @@ Proses CMake umumnya terdiri atas langkah-langkah berikut.
 
 \begin{enumerate}
 	\item Proyek yang ingin dibangun didefinisikan di salah satu file CMakeLists.\\
-	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Tertera di kode \ref{code:cmake-basecode} merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, sebagai gambaran mengenai hal-hal apa saja yang minimal harus ada di dalam file CMakeLists.
-	
+	File-file CMakeLists (yang berupa file-file \verb|.txt|) merupakan file-file \textit{plain text} yang berisi deskripsi proyek dalam bahasa CMake. Tertera di Kode \ref{code:cmake-basecode} merupakan file CMakeLists yang dapat digunakan untuk membangun sebuah program \textit{``Hello World''} sederhana dalam bahasa C, sebagai gambaran mengenai hal-hal apa saja yang minimal harus ada di dalam file CMakeLists.
+
 	\begin{lstlisting}[caption=Kode utama operasional CMake, label=code:cmake-basecode]
 cmake_minimum_required(VERSION 3.20)
 project(Hello)
@@ -986,12 +1019,12 @@ add_executable(Hello Hello.c)
 	
 	\begin{itemize}
 		\item GUI CMake\\
-		CMake memiliki perangkat lunak GUI berbasis Qt yang bisa digunakan di sebagian besar sistem operasi, seperti UNIX, Mac OS X, dan Windows. Perangkat lunak ini, \verb|cmake-gui|, sudah terinstal bersama dengan CMake, tetapi membutuhkan instalasi Qt untuk dijalankan. Tampilan dari perangkat lunak ini dapat dilihat di gambar \ref{fig:cmake-gui}.
+		CMake memiliki perangkat lunak GUI berbasis Qt yang bisa digunakan di sebagian besar sistem operasi, seperti UNIX, Mac OS X, dan Windows. Perangkat lunak ini, \verb|cmake-gui|, sudah terinstal bersama dengan CMake, tetapi membutuhkan instalasi Qt untuk dijalankan. Tampilan dari perangkat lunak ini dapat dilihat di Gambar \ref{fig:cmake-gui}.
 		
 		\begin{figure}[ht]
 		    \centering
-		    \includegraphics[width=0.85\linewidth]{cmake-gui}
-		    \caption[Tampilan aplikasi cmake-gui]{Tampilan aplikasi cmake-gui.\protect\footnotemark}
+		    \includegraphics[width=0.9\linewidth]{cmake-gui}
+		    \caption[Tampilan aplikasi cmake-gui]{Tampilan aplikasi cmake-gui\protect\footnotemark.}
 		    \label{fig:cmake-gui}
 		\end{figure}
 		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
@@ -999,12 +1032,12 @@ add_executable(Hello Hello.c)
 		Dua \textit{field} paling atas adalah direktori dari \textit{source code} dan direktori tempat file-file \textit{binary} nantinya akan diletakkan setelah dibuat. Kedua \textit{field} ini harus diisi secara manual, walaupun jika direktori \textit{binary} ini sudah dikonfigurasi langsung melalui CMake sebelumnya, \textit{field} direktori kedua akan secara otomatis terisi.
 		
 		\item ccmake\\
-		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
-		
+		Di mayoritas sistem operasi berbasis UNIX, jika \textit{library curses}	didukung, maka CMake memiliki sebuah perangkat lunak lain yang dapat digunakan, yaitu \verb|ccmake|. Untuk menjalankan \verb|ccmake|, pengguna dapat menjalankannya melalui \textit{command line}, dan direktori tempat \verb|ccmake| dijalankan ini harus merupakan direktori tempat file-file \textit{binary} nantinya ingin disimpan. Ketika aplikasi ini dijalankan, akan keluar tampilan seperti di Gambar \ref{fig:cmake-ccmake}. Adapun instruksi singkat penggunaan dari aplikasi ini dapat dilihat di bagian bawah dari tampilan tersebut.
+		\newpage 
 		\begin{figure}[ht]
 		    \centering
-		    \includegraphics[width=0.66667\linewidth]{cmake-ccmake}
-		    \caption[Tampilan aplikasi ccmake]{Tampilan aplikasi ccmake.\protect\footnotemark}
+		    \includegraphics[width=0.75\linewidth]{cmake-ccmake}
+		    \caption[Tampilan aplikasi ccmake]{Tampilan aplikasi ccmake\protect\footnotemark.}
 		    \label{fig:cmake-ccmake}
 		\end{figure}
 		\footnotetext{\href{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}{https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting\%20Started.html}}
@@ -1036,8 +1069,8 @@ add_executable(Hello Hello.c)
 			\item \verb|MinSizeRel|\textemdash Ukuran kode akhir diusahakan sekecil mungkin.
 			\item \verb|RelWithDebinfo|\textemdash Membangun \textit{build} optimal dan mengikutkan informasi-informasi untuk \textit{debugging}.
 		\end{itemize}
-		
-		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus menggunakan ccmake, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di potongan kode \ref{code:cmake-multibuild}.
+		\newpage % prevent orphan
+		Dengan generator-generator berbasis Makefile, hanya sebuah mode konfigurasi yang bisa aktif ketika CMake sedang dijalankan, dan mode tersebut diatur dengan variabel \verb|CMAKE_BUILD_TYPE|. Jika variabel ini dikosongkan (atau tidak dimasukkan ke dalam kode), maka mode yang dipakai adalah mode \textit{default}. Di lain kasus, jika pengembang ingin membangun perangkat dalam dua mode yang berbeda, perintah untuk menjalankan CMake (dengan variabel mode konfigurasi masing-masing) harus dijalankan untuk setiap modenya. Misal, jika pengguna ingin membangun perangkat dengan mode \verb|Debug| dan \verb|Release| sekaligus menggunakan ccmake, maka perintah untuk menjalankan CMake harus ditulis seperti dapat dilihat di Kode \ref{code:cmake-multibuild}.
 		
 	\end{itemize}
 	
