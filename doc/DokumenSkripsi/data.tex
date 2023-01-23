@@ -91,7 +91,7 @@
 %\mode{sidangakhir} 	% untuk sidang 2 / sidang pada Skripsi 2(IF)
 %\mode{final} 			% untuk mencetak buku skripsi 
 %=============================================================================
-\mode{sidangakhir}
+\mode{final}
 
 %_____________________________________________________________________________
 %=============================================================================
@@ -214,9 +214,9 @@
 % Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda
 %=============================================================================
 \namanpm{Alfred Aprianto Liaunardi}{6181801014}
-\tanggal{31}{3}{2022}         %isi bulan dengan angka - not final
+\tanggal{19}{1}{2023}         %isi bulan dengan angka - not final
 \pembimbing{\PAN}{}
-\penguji{<<penguji 1>>}{<<penguji 2>>} 
+\penguji{\VAN}{\LNV} 
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -232,8 +232,8 @@
 % - gunakan \texorpdfstring{\\}{} untuk pindah ke baris baru
 % - judul TIDAK ditulis dengan menggunakan huruf besar seluruhnya !!
 %=============================================================================
-\judulINA{Perkakas Command Line KIRI}
-\judulENG{KIRI Command Line Tool}
+\judulINA{Perkakas Antarmuka Baris Perintah Untuk Aplikasi Berbasis Web KIRI}
+\judulENG{Command Line Tool for KIRI Web-Based Application}
 %_____________________________________________________________________________
 %=============================================================================
 % 								BAGIAN X
@@ -245,21 +245,29 @@
 % - hilangkan tanda << & >>, dan isi sesuai dengan data anda
 % - langsung mulai setelah '{' awal, jangan mulai menulis di baris bawahnya
 %=============================================================================
-\abstrakINA{Project KIRI (atau KIRI saja) merupakan sebuah perkakas berbasis \textit{web} yang dapat digunakan untuk membantu memudahkan penggunanya untuk menggunakan angkutan kota (angkot). KIRI merealisasikan hal ini dengan cara menunjukkan kepada penggunanya langkah-langkah yang harus dilakukan untuk pergi dari suatu lokasi ke lokasi lainnya, angkot-angkot mana yang harus dinaiki dalam rute tersebut, serta di mana pengguna harus menaiki atau turun dari angkot-angkot yang bersangkutan. Selain itu, KIRI juga dapat menunjukkan estimasi waktu dari rute-rute yang ditemukan.
+\begin{comment}
+Project KIRI (atau KIRI saja) merupakan sebuah perkakas berbasis \textit{web} yang dapat digunakan untuk membantu memudahkan penggunanya untuk menggunakan angkutan kota (angkot). KIRI merealisasikan hal ini dengan cara menunjukkan kepada penggunanya langkah-langkah yang harus dilakukan untuk pergi dari suatu lokasi ke lokasi lainnya, angkot-angkot mana yang harus dinaiki dalam rute tersebut, serta di mana pengguna harus menaiki atau turun dari angkot-angkot yang bersangkutan. Selain itu, KIRI juga dapat menunjukkan estimasi waktu dari rute-rute yang ditemukan.
 
 Sementara itu, dalam komputer, salah satu dari sekian banyak tipe perangkat lunak adalah perangkat lunak berbasis \cl . Perangkat-perangkat lunak ini selalu terdiri atas sebuah kotak (\textit{window}) yang memuat teks berupa perintah-perintah, yang menerima masukan (berupa perintah-perintah juga) langsung dari pengguna dan menjalankannya. Indikator utama dari tipe perangkat lunak ini adalah bahwa perangkat-perangkat lunak jenis ini tidak memiliki tampilan dengan gambar grafis apapun\textemdash dalam artian bahwa tampilan perangkat tipe ini hanya berupa teks.
 
 Dalam skripsi ini akan dibuat sebuah perangkat lunak berupa perkakas \cl yang dapat menjalankan fungsi-fungsi API KIRI. Seperti jenis umumnya, perkakas ini akan dibuat murni sebagai perkakas yang dijalankan dari \cl , dan tidak akan memiliki tambahan gambar grafis apapun dalam tampilannya. Perkakas ini akan dibuat dalam bahasa C, dengan menggunakan berbagai macam \textit{library}, seperti getopt, cJSON, cURL, dan CMake, serta mengimplementasikan fitur-fitur API KIRI serta fitur-fitur dasar perkakas \cl , seperti mode bantuan, dan \textit{man page} (untuk Linux). Perkakas ini nantinya akan diuji coba dengan cara menguji satu-satu fungsinya, dan juga dengan menguji kasus-kasus umum untuk integrasinya dengan perkakas-perkakas lainnya yang sudah ada.
 
-Hasil dari skripsi ini merupakan sebuah perkakas \cl yang dapat mengutilisasikan fungsi-fungsi API KIRI, serta memiliki fitur-fitur dasar perkakas \cl, yang meliputi sebuah halaman manual (berupa opsi (-{}-help) dan \textit{man page}), pengeluaran pesan \textit{error} yang sesuai dengan \textit{error} yang terjadi, serta kemampuan integrasi keluaran perkakas dengan perkakas-perkakas \cl lainnya.}
+Hasil dari skripsi ini merupakan sebuah perkakas \cl yang dapat mengutilisasikan fungsi-fungsi API KIRI, serta memiliki fitur-fitur dasar perkakas \cl, yang meliputi sebuah halaman manual (berupa opsi (-{}-help) dan \textit{man page}), pengeluaran pesan \textit{error} yang sesuai dengan \textit{error} yang terjadi, serta kemampuan integrasi keluaran perkakas dengan perkakas-perkakas \cl lainnya.
+\end{comment}
 
-\abstrakENG{Project KIRI (or just KIRI) is a web-based tool which could be used to assist its users in utilizing \textit{angkutan kota} (or \textit{angkot}). KIRI does this by showing to its users the steps needed to go from one location to the other, which \textit{angkots} would have to be taken within said route, as well as where they would have to board or get off of these \textit{angkots}. Aside from that, KIRI also has the ability to show the estimated durations of the available routes.
+\abstrakINA{}
+
+\begin{comment}
+Project KIRI (or just KIRI) is a web-based tool which could be used to assist its users in utilizing \textit{angkutan kota} (or \textit{angkot}). KIRI does this by showing to its users the steps needed to go from one location to the other, which \textit{angkots} would have to be taken within said route, as well as where they would have to board or get off of these \textit{angkots}. Aside from that, KIRI also has the ability to show the estimated durations of the available routes.
 
 Meanwhile, in computers, one of the many types of softwares is command line softwares. These programs always consist of a box (window) with texts in the form of commands, which accepts direct inputs (also in the form of commands) from the users, and run them. The main indicator of this type is the fact that these softwares do not have any graphical images in its interface\textemdash in the sense that the interface of this type of programs contains only texts.
 
 In this undergraduate thesis, a command line tool will be made, in which the tool  would be able to run KIRI's API functions. Just like its general type, this tool will be run purely through the command line, and will not have any additional graphical images whatsoever in its interface. This newly-made tool will be made in C language, using various libraries such as getopt, cJSON, cURL, and CMake, along with implementing the KIRI API features, as well as the general features of a command line tool, such as a help mode, and a man page (for Linux). This tool will later be tested by testing each of its functions, as well as the general cases of its integration with other, existing command line tools.
 
-The resulting program of this thesis is a command line tool which utilizes KIRI API's functions, and has the conventional features of a command line tool, including the inclusion of a manual page (-{}-help option and a man page), outputting the corresponding error messages for various errors, along with an output integration ability with other, existing command line tools.}
+The resulting program of this thesis is a command line tool which utilizes KIRI API's functions, and has the conventional features of a command line tool, including the inclusion of a manual page (-{}-help option and a man page), outputting the corresponding error messages for various errors, along with an output integration ability with other, existing command line tools.
+\end{comment}
+
+\abstrakENG{}
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -297,7 +305,7 @@ The resulting program of this thesis is a command line tool which utilizes KIRI 
 
 \begin{itemize}
 	\item Bapak Pascal Alfadian Nugroho, M.Comp. selaku dosen pembimbing yang telah membimbing serta membantu memberikan arahan kepada penulis dalam seluruh proses pembuatan skripsi ini.
-	\item <<...>> dan <<...>> selaku dosen-dosen penguji yang telah memeriksa skripsi ini serta memberikan kritik dan saran yang membangun.
+	\item Ibu Vania Natali, M.T. serta Bapak Lionov, Ph. D. selaku dosen-dosen penguji yang telah memeriksa hasil skripsi ini serta memberikan kritik dan saran yang membangun.
 	\item Teman-teman penulis\textemdash Daniel, Yalvi, Rama, JJ, serta teman-teman lainnya, yang telah memberikan dorongan, semangat, serta saran tambahan selama penulisan skripsi ini.
 	\item Keluarga penulis, yang telah memberikan bantuan dan dukungan dalam seluruh aspek lainnya yang tidak berhubungan langsung dengan penulisan skripsi ini.
 	\item Para staf tata usaha, baik dalam tata usaha FTIS maupun BAA, yang telah membantu penyelesaian semua urusan non-akademik dalam proses pembuatan skripsi ini.
@@ -347,7 +355,7 @@ Terakhir, penulis menyadari bahwa penulisan skripsi ini jauh dari sempurna, kare
 %=============================================================================
 %\ttddosen{yes}
 %=============================================================================
-\ttddosen{no}
+\ttddosen{yes}
 
 %_____________________________________________________________________________
 %=============================================================================
@@ -373,16 +381,18 @@ Terakhir, penulis menyadari bahwa penulisan skripsi ini jauh dari sempurna, kare
 \setlist{nosep}
 
 % New words/phrases
+\newcommand{\api}{\textit{application programming interface}}
 \newcommand{\chromewebstorecli}{Chrome \textit{Web Store Item Property} CLI\xspace}
-\newcommand{\cl}{\textit{command line}\xspace}
-\newcommand{\cli}{\textit{command line interface}\xspace}
+\newcommand{\cl}{\textit{command line}}
+\newcommand{\cli}{\textit{command line interface}}
 \newcommand{\googlemapscli}{Google \textit{Maps Direction} CLI\xspace}
-\newcommand{\gui}{\textit{graphical user interface}\xspace}
+\newcommand{\gui}{\textit{graphical user interface}}
 \newcommand{\itunesapi}{\textit{iTunes Search} API\xspace}
 \newcommand{\latlon}{\textit{latitude} dan \textit{longitude}\xspace}
 \newcommand{\logoregistered}{\textsuperscript{\textregistered}}
 \newcommand{\logotrademark}{\textsuperscript{\tiny{TM}}}
 \newcommand{\ubercli}{Uber CLI\xspace}
+\newcommand{\websoftware}{perangkat lunak berbasis \textit{web}}
 
 % Algorithmic - switch case
 \algnewcommand\algorithmicswitch{\textbf{switch}}
