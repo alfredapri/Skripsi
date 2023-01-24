@@ -70,7 +70,7 @@ Salah satu dari parameter yang harus diikutkan dalam pesan tersebut merupakan pa
 
 Untuk mengakses halaman tersebut, pengguna harus membuat sebuah akun terlebih dahulu. Ketika akun sudah dibuat, maka pengguna baru akan dapat membuat kunci API yang dibutuhkan, sekaligus membuat filter \textit{domain}, yang membatasi di \textit{domain} mana saja kunci tersebut dapat digunakan, serta memberikan deskripsi untuk kunci API tersebut. Kunci ini kemudian dapat digunakan sebagai nilai dari parameter \verb|apikey| yang diperlukan dalam permintaan tadi.
 
-Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa definisi dari nilai \latlon suatu lokasi. \textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respons API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Adapun respons yang diberikan oleh API akan berupa sebuah objek JSON yang selalu memiliki setidaknya dua variabel, yaitu:
+Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa definisi dari nilai \latlon\xspace suatu lokasi. \textit{Latitude} merupakan berapa derajat sebuah tempat berada dari garis ekuator, dengan lokasi-lokasi yang berada maksimum 90 derajat di atas ekuator memiliki nilai \textit{latitude} positif, sedangkan lokasi-lokasi yang berada maksimum 90 derajat di bawah ekuator memiliki nilai \textit{latitude} negatif. Sedangkan, \textit{longitude} merupakan berapa derajat lokasi sebuah tempat berada dari garis meridian (bujur) utama Bumi, dengan rentang nilai dari -180 derajat di sisi kiri (barat) meridian utama, hingga 180 derajat di kanan (timur) bujur tersebut.\footnote{\href{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}{https://gsp.humboldt.edu/olm/Lessons/GIS/01\%20SphericalCoordinates/Latitude\_and\_Longitude.html}} Kedua nilai ini merupakan salah satu dari dua variabel yang dikembalikan dalam respons API untuk layanan ini, dengan variabel lainnya berupa nama dari lokasi yang ditemukan itu sendiri. Respons yang diberikan oleh API berupa sebuah objek JSON yang memiliki setidaknya dua variabel, yaitu:
 
 \begin{itemize}
 	\item \verb|status|\\
@@ -83,11 +83,11 @@ Sebelum membahas keluaran dari layanan API ini, perlu ditegaskan dulu apa defini
 		\item \verb|placename|\\
 		Variabel ini berisi nama lokasi yang ditemukan berdasarkan kata kunci yang diberikan oleh pengguna.
 		\item \verb|location|\\
-		Variabel ini berisi nilai \latlon dari lokasi yang ditemukan dalam pencarian.
+		Variabel ini berisi nilai \latlon\xspace dari lokasi yang ditemukan dalam pencarian.
 	\end{itemize}
 	
 \end{itemize}
-\noindent
+\noindent\newline % fix weird formatting
 Contoh dari penggunaan API KIRI untuk layanan ini dapat dilihat di Gambar \ref{fig:kiri-api-searchplace-usage}.
 
 \begin{figure}[t]
@@ -114,10 +114,10 @@ Layanan pencarian rute (\textit{routing}) adalah layanan web pada API KIRI yang 
 	Parameter ini mengatur bahasa apa yang akan digunakan dalam keluaran API nantinya\textemdash\verb|en| berarti keluaran akan menggunakan bahasa Inggris, dan \verb|id| berarti keluaran akan menggunakan bahasa Indonesia.
 	\item \verb|start|\\
 	\textbf{Kemungkinan nilai:} \verb|lat|, \verb|lng|; dalam bentuk desimal 10-digit\\
-	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna.
+	Parameter ini merupakan nilai \latlon\xspace dari titik awal perjalanan pengguna.
 	\item \verb|finish|\\
 	\textbf{Kemungkinan nilai:} \verb|lat|, \verb|lng|; dalam bentuk desimal 10-digit\\
-	Parameter ini berisi nilai \latlon dari titik akhir/tujuan perjalanan pengguna.
+	Parameter ini berisi nilai \latlon\xspace dari titik akhir/tujuan perjalanan pengguna.
 	\item \verb|presentation| (opsional)\\
 	\textbf{Kemungkinan nilai:} \verb|desktop|\\
 	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}.
@@ -144,8 +144,8 @@ Sedangkan, respons yang diberikan oleh API akan berupa sebuah objek JSON yang se
 			Tipe sarana transportasi yang harus dipakai oleh pengguna. Jika pengguna harus berjalan kaki, variabel ini akan berisi \verb|walk|. Jika pengguna harus menaiki angkot, variabel ini akan berisi \verb|angkot|.
 			\item Kode angkot\\
 			Variabel ini menunjukkan angkot mana yang harus dinaiki oleh pengguna di langkah tersebut. Jika penggunaan angkot tidak dimungkinkan pada langkah ini (pengguna harus berjalan kaki), variabel ini akan berisi \verb|walk|.
-			\item \textit{Array} \latlon lokasi\\
-			\textit{Array} nilai-nilai desimal \latlon dari berbagai titik lokasi yang terdapat dalam rute.
+			\item \textit{Array} \latlon\xspace lokasi\\
+			\textit{Array} nilai-nilai desimal \latlon\xspace dari berbagai titik lokasi yang terdapat dalam rute.
 			\newpage % prevent widow
 			\item Deskripsi langkah\\
 			Deskripsi langkah yang harus ditempuh, dalam bahasa natural. Bahasa yang digunakan tergantung parameter \verb|locale| yang diatur dalam masukan.
@@ -186,10 +186,10 @@ Dapat dilihat bahwa URL tersebut memiliki tiga buah parameter, yaitu:
 
 \begin{itemize}
 	\item \verb|start|\\
-	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
+	\textbf{Kemungkinan nilai:} Nilai \latlon\xspace lokasi, atau nama lokasi tersebut\\
 	Parameter ini berisi lokasi yang ingin digunakan sebagai lokasi mulainya pencarian rute.
 	\item \verb|finish|\\
-	\textbf{Kemungkinan nilai:} Nilai \latlon lokasi, atau nama lokasi tersebut\\
+	\textbf{Kemungkinan nilai:} Nilai \latlon\xspace lokasi, atau nama lokasi tersebut\\
 	Parameter ini berisi lokasi yang merupakan tujuan akhir yang ingin dicapai dalam pencarian rute.
 	\item \verb|locale| (opsional)\\
 	\textbf{Kemungkinan nilai:} \verb|id| atau \verb|en|\\
