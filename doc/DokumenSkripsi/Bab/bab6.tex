@@ -9,8 +9,8 @@ Bab ini akan membahas kesimpulan yang telah ditarik selama seluruh proses pembua
 Berikut merupakan kesimpulan yang diambil dari penulisan skripsi ini:
 
 \begin{itemize}
-	\item Telah berhasil dibuat sebuah perkakas bernama ``\textit{KIRI Tool}'', yang merupakan perkakas \cl yang mengimplementasikan fitur-fitur API KIRI.
-	\item Integrasi perkakas \textit{KIRI Tool} dengan perkakas-perkakas \cl lainnya dapat dilakukan dengan beberapa metode, dengan metode yang paling umum adalah menggunakan \verb|grep| (atau perkakas lain dengan fungsi yang sama) untuk mengekstraksi aspek tertentu dari keluaran perkakas.
+	\item Telah berhasil dibuat sebuah perkakas bernama ``\textit{KIRI Tool}''. Perkakas ini merupakan perkakas \cl\xspace yang memiliki fitur-fitur serupa dengan KIRI, serta menggunakan API KIRI dalam implementasinya.
+	\item Karena keluaran dari perkakas \textit{KIRI Tool} berupa teks biasa, maka integrasi dengan perkakas-perkakas \cl\xspace lainnya dapat dilakukan selama perkakas \cl\xspace lainnya menerima masukan berupa teks. Metode yang paling umum adalah menggunakan \verb|grep| (atau perkakas lain dengan fungsi yang sama) untuk mengekstraksi aspek tertentu dari keluaran perkakas \textit{KIRI Tool}.
 \end{itemize}
 
 \section{Saran}
@@ -21,5 +21,5 @@ Berikut adalah saran yang dapat dipertimbangkan untuk penelitian lanjutan dari s
 \begin{itemize}
 	\item Mengembangkan perangkat agar bisa digunakan di sistem operasi lain selain Windows dan Linux, misal macOS.
 	\item Mencari tahu dan mengimplementasikan optimisasi apa saja yang dapat diberlakukan terhadap perkakas, seperti fungsi-fungsi apa dari \textit{library-library} yang ada yang dapat mengefektifkan penggunaan memori atau kecepatan pemrosesan perkakas, atau bahkan menggunakan \textit{library} yang lebih tepat.
-	\item Menambahkan fitur baru kepada perkakas yang mungkin dapat memberitahu persis lokasi-lokasi yang dilewati dalam rute yang didaftarkan.
+	\item Keluaran API untuk fitur pencarian lokasi mengandung sebuah \textit{array} berisi beberapa koordinat \latlon, yang merupakan lokasi-lokasi yang dilewati di dalam rute. Di versi terakhir perkakas \textit{KIRI Tool} ketika skripsi ini dibuat, data ini tidak dipakai. Sebagai fitur tambahan, mungkin data ini dapat digunakan dalam keluaran perkakas untuk memberitahu persis lokasi-lokasi yang dilewati dalam rute yang didaftarkan.
 \end{itemize}

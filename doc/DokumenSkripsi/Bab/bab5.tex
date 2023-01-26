@@ -11,42 +11,42 @@ Subbab ini akan memaparkan implementasi dari fungsi-fungsi yang ada dalam perkak
 \subsection{\texttt{print\textunderscore help()}}
 \label{sec:testing-implementation-printhelp}
 
-Fungsi ini akan menampilkan \textit{string-string} (dalam bentuk \textit{array-array} karakter) yang merupakan versi singkat dari bantuan penggunaan perkakas ke pengguna. Implementasi dari fungsi ini ada di lampiran \ref{appdx:A-maincode}, mulai dari baris ke-336 sampai dengan baris ke-394.
+Fungsi ini akan menampilkan \textit{string-string} (dalam bentuk \textit{array-array} karakter) yang merupakan versi singkat dari bantuan penggunaan perkakas ke pengguna. Implementasi dari fungsi ini ada di Lampiran \ref{appdx:A-printhelp}.
 
 \subsection{\texttt{replace\textunderscore space()}}
 \label{sec:testing-implementation-replacespace}
 
-Seperti yang telah dijelaskan di subbab \ref{sec:design-code-replacespace}, fungsi ini akan menerima sebuah \textit{array} karakter, mengganti semua karakter spasi yang ada di dalamnya menjadi ``\%20'', dan meletakkan hasilnya di variabel global \verb|escape|. Implementasi dari fungsi ini dapat dilihat di \textit{source code} murni perkakas dalam lampiran \ref{appdx:A-maincode}, mulai dari baris ke-623 sampai dengan baris ke-643.
+Seperti yang telah dijelaskan di subbab \ref{sec:design-code-replacespace}, fungsi ini akan menerima sebuah \textit{array} karakter, mengganti semua karakter spasi yang ada di dalamnya menjadi ``\%20'', dan meletakkan hasilnya di variabel global \verb|escape|. Implementasi dari fungsi ini dapat dilihat di \textit{source code} murni perkakas dalam Lampiran \ref{appdx:A-replacespace}.
 
 \subsection{\texttt{build\textunderscore url\textunderscore searchplace()}}
 \label{sec:testing-implementation-buildurl-searchplace}
 
-Fungsi ini bekerja dengan menambahkan URL ke variabel global \verb|url|, sesuai dengan opsi-opsi yang telah dimasukkan (dan diperlukan oleh API) untuk fitur \textit{searchplace}. Adapun implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris 455 sampai baris 523.
+Fungsi ini bekerja dengan menambahkan URL ke variabel global \verb|url|, sesuai dengan opsi-opsi yang telah dimasukkan (dan diperlukan oleh API) untuk fitur \textit{searchplace}. Adapun implementasi dari fungsi ini dapat dilihat di Lampiran \ref{appdx:A-buildurl-searchplace}.
 
 \subsection{\texttt{build\textunderscore url\textunderscore findroute()}}
 \label{sec:testing-implementation-buildurl-findroute}
 
-Fungsi ini bekerja dengan menambahkan URL ke variabel global \verb|url|, sesuai dengan opsi-opsi yang telah dimasukkan (dan diperlukan oleh API) untuk fitur \textit{findroute}. Adapun implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris 547 sampai baris 616.
+Fungsi ini bekerja dengan menambahkan URL ke variabel global \verb|url|, sesuai dengan opsi-opsi yang telah dimasukkan (dan diperlukan oleh API) untuk fitur \textit{findroute}. Adapun implementasi dari fungsi ini dapat dilihat di Lampiran \ref{appdx:A-buildurl-findroute}.
 
 \subsection{\texttt{reset\textunderscore url()}}
 \label{sec:testing-implementation-buildurl-reset}
 
-Fungsi ini hanya terdiri atas satu baris kode yang akan mengembalikan isi dari variabel \verb|url| ke nilai awalnya. Implementasi dari fungsi ini dapat dilihat langsung di lampiran \ref{appdx:A-maincode}, di baris 618 sampai 621.
+Fungsi ini hanya terdiri atas satu baris kode yang akan mengembalikan isi dari variabel \verb|url| ke nilai awalnya. Implementasi dari fungsi ini dapat dilihat langsung di Lampiran \ref{appdx:A-buildurl-reset}.
 	
 \subsection{\texttt{execute\textunderscore curl()}}
 \label{sec:testing-implementation-curl-execute}
 
-Fungsi ini merupakan fungsi yang mengatur seluruh proses yang berhubungan langsung dengan cURL dalam perkakas, mulai dari inisialisasi \textit{easy handle} cURL (serta proses pembersihannya di akhir fungsi), pengaturan penerimaan data keluaran proses cURL (\verb|write_memalloc()|), pengaturan variabel apa dalam perkakas yang akan diisi oleh data keluaran, serta \textit{error handler} apabila proses cURL gagal. Selain itu, fungsi ini juga mengatur proses apa yang harus dilakukan setelah data tersebut berhasil diterima, dengan cara memanggil fungsi yang sesuai dengan mode operasional yang telah ditentukan dalam masukan yang diberikan oleh pengguna. Adapun implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode} dari baris 410 ke baris 453.
+Fungsi ini merupakan fungsi yang mengatur seluruh proses yang berhubungan langsung dengan cURL dalam perkakas, mulai dari inisialisasi \textit{easy handle} cURL (serta proses pembersihannya di akhir fungsi), pengaturan penerimaan data keluaran proses cURL (\verb|write_memalloc()|), pengaturan variabel apa dalam perkakas yang akan diisi oleh data keluaran, serta \textit{error handler} apabila proses cURL gagal. Selain itu, fungsi ini juga mengatur proses apa yang harus dilakukan setelah data tersebut berhasil diterima, dengan cara memanggil fungsi yang sesuai dengan mode operasional yang telah ditentukan dalam masukan yang diberikan oleh pengguna. Adapun implementasi dari fungsi ini dapat dilihat di Lampiran \ref{appdx:A-curl-execute}.
 
 \subsection{\texttt{print\textunderscore curl\textunderscore error()}}
 \label{sec:testing-implementation-curl-error}
 
-Fungsi ini akan dipanggil apabila proses curl dari fungsi \verb|execute_curl()| tidak mengembalikan ``OK'' sebagai kode respons cURL-nya. Cara kerja fungsi ini adalah dengan mengecek kode bahasa (variabel \verb|locale|) dan mengeluarkan pesan \textit{error} yang sesuai. Implementasi fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris 396 sampai dengan 408.
+Fungsi ini akan dipanggil apabila proses curl dari fungsi \verb|execute_curl()| tidak mengembalikan ``OK'' sebagai kode respons cURL-nya. Cara kerja fungsi ini adalah dengan mengecek kode bahasa (variabel \verb|locale|) dan mengeluarkan pesan \textit{error} yang sesuai. Implementasi fungsi ini dapat dilihat di Lampiran \ref{appdx:A-curl-error}.
 	
 \subsection{\texttt{write\textunderscore memalloc()}}
 \label{sec:testing-implementation-write-memalloc}
 
-Fungsi ini adalah fungsi yang bertugas untuk memastikan bahwa data keluaran dari API yang diterima tidak melebihi ukuran maksimal yang diperbolehkan untuk dimasukkan ke dalam variabel tujuan. Implementasi dari fungsi ini dapat dilihat di lampiran \ref{appdx:A-maincode}, di baris ke-33 sampai dengan baris ke-47.
+Fungsi ini adalah fungsi yang bertugas untuk memastikan bahwa data keluaran dari API yang diterima tidak melebihi ukuran maksimal yang diperbolehkan untuk dimasukkan ke dalam variabel tujuan. Implementasi dari fungsi ini dapat dilihat di Lampiran \ref{appdx:A-write-memalloc}.
 
 Penjelasan detail dari proses yang dilakukan dalam fungsi ini adalah sebagai berikut.
 
@@ -68,45 +68,45 @@ Penjelasan detail dari proses yang dilakukan dalam fungsi ini adalah sebagai ber
 	\item Implementasi cara kerja fungsi ini adalah sebagai berikut:
 	
 	\begin{enumerate}
-		\item \textbf{Baris 34}: Hitung ukuran dari data yang masuk.
-		\item \textbf{Baris 35\textendash 40}: Cek apakah ukuran data melebihi yang diperbolehkan.
-		\item \textbf{Baris 41\textendash 44}: Setor data yang dimasukkan ke dalam variabel tujuan.
-		\item \textbf{Baris 46}: Kembalikan ukuran data yang masuk untuk verifikasi keutuhan data.
+		\item \textbf{Baris 4}: Hitung ukuran dari data yang masuk.
+		\item \textbf{Baris 5\textendash 10}: Cek apakah ukuran data melebihi yang diperbolehkan.
+		\item \textbf{Baris 11\textendash 14}: Setor data yang dimasukkan ke dalam variabel tujuan.
+		\item \textbf{Baris 16}: Kembalikan ukuran data yang masuk untuk verifikasi keutuhan data.
 	\end{enumerate}
 \end{itemize}
 
 \subsection{\texttt{write\textunderscore searchplace()}}
 \label{sec:testing-implementation-write-searchplace}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|searchplace|. Penerapan fungsi ini hanya meliputi pengambilan data yang diterima, mengubah format data tersebut dari JSON ke tipe data yang bisa langsung diproses dalam fungsi-fungsi bawaan bahasa C, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 49 sampai baris 127.
-	
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|searchplace|. Penerapan fungsi ini hanya meliputi pengambilan data yang diterima, mengubah format data tersebut dari JSON ke tipe data yang bisa langsung diproses dalam fungsi-fungsi bawaan bahasa C, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di Lampiran \ref{appdx:A-write-searchplace}.
+\newpage\vspace*{-3em} % prevent awkward cutoff
 \subsection{\texttt{write\textunderscore findroute()}}
 \label{sec:testing-implementation-write-findroute}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Sama seperti fungsi \verb|write_searchplace()|, penerapan fungsi ini hanya meliputi pengambilan data yang diterima, konversi format data tersebut dari JSON, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 218 sampai baris 334. Perlu ditekankan kembali bahwa fitur ini memiliki pembetulan \textit{bug} tambahan, yang diimplementasikan di baris 273 sampai dengan baris 292.
-
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Sama seperti fungsi \verb|write_searchplace()|, penerapan fungsi ini hanya meliputi pengambilan data yang diterima, konversi format data tersebut dari JSON, dan kemudian menampilkan hasilnya ke pengguna. Implementasi dari fungsi ini dapat dilihat di lampiran kode murni perkakas, baris 218 sampai baris 334. Perlu ditekankan kembali bahwa fitur ini memiliki pembetulan \textit{bug} tambahan, yang diimplementasikan di Lampiran \ref{appdx:A-write-findroute}.
+\vspace*{-0.5em} % prevent awkward cutoff
 \subsection{\texttt{write\textunderscore searchplace\textunderscore noreturns()}}
 \label{sec:testing-implementation-write-searchplacenoreturns}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|direct|. Seperti yang sudah dijelaskan di bagian perancangan alur kerja dari fungsi ini (subbab \ref{sec:design-code-write-searchplacenoreturns}), fungsi ini mirip dengan fungsi \verb|write_searchplace()|, hanya saja untuk keluarannya, fungsi ini tidak akan menampilkan koordinat lokasi yang ditemukan. Implementasi dari  fungsi ini ada di lampiran \ref{appdx:A-maincode}, di baris 129 sampai dengan 216.
-
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|direct|. Seperti yang sudah dijelaskan di bagian perancangan alur kerja dari fungsi ini (subbab \ref{sec:design-code-write-searchplacenoreturns}), fungsi ini mirip dengan fungsi \verb|write_searchplace()|, hanya saja untuk keluarannya, fungsi ini tidak akan menampilkan koordinat lokasi yang ditemukan. Implementasi dari  fungsi ini ada di Lampiran \ref{appdx:A-write-searchplacenoreturns}.
+\vspace*{-0.5em} % prevent awkward cutoff
 \subsection{Fungsi utama (\texttt{main})}
 \label{sec:testing-implementation-main}
 
-Fungsi \verb|main| di perkakas ini dapat dibagi menjadi dua buah proses utama, yaitu penerimaan masukan dari pengguna, serta penentuan langkah-langkah yang harus dijalankan untuk tiap-tiap mode operasional. Adapun implementasi dari fungsi utama ini ada di baris 645 sampai dengan 918, dengan proses-proses internalnya meliputi langkah-langkah berikut.
+Fungsi \verb|main| di perkakas ini dapat dibagi menjadi dua buah proses utama, yaitu penerimaan masukan dari pengguna, serta penentuan langkah-langkah yang harus dijalankan untuk tiap-tiap mode operasional. Adapun implementasi dari fungsi utama ini ada di Lampiran \ref{appdx:A-main}, dengan proses-proses internalnya meliputi langkah-langkah berikut.
 
 \begin{enumerate}
-	\item \textbf{Baris 646\textendash 827}: Implementasi \verb|getopt-long| dan pentransferan argumen ke dalam variabel-variabel internal perkakas.
-	\item \textbf{Baris 647 \& 648}: Inisialisasi \verb|opterr| dengan nilai 0, untuk mencegah \verb|getopt-long| mengeluarkan pesan \textit{error default}-nya untuk opsi-opsi yang tidak diketahui (\textquotesingle\verb|?|\textquotesingle). 
-	\item \textbf{Baris 830\textendash 848}: Pengecekan kelebihan argumen dalam perintah masukan.
-	\item \textbf{Baris 850\textendash 915}: Penentuan langkah-langkah yang harus ditempuh untuk setiap kemungkinan mode operasional.
-	\item \textbf{Baris 917}: \textit{Return code} 0, menandakan bahwa perkakas berhasil berjalan tanpa ada masalah.
+	\item \textbf{Baris 2\textendash 183}: Implementasi \verb|getopt-long| dan pentransferan argumen ke dalam variabel-variabel internal perkakas.
+	\item \textbf{Baris 3 \& 4}: Inisialisasi \verb|opterr| dengan nilai 0, untuk mencegah \verb|getopt-long| mengeluarkan pesan \textit{error default}-nya untuk opsi-opsi yang tidak diketahui (\textquotesingle\verb|?|\textquotesingle). 
+	\item \textbf{Baris 186\textendash 204}: Pengecekan kelebihan argumen dalam perintah masukan.
+	\item \textbf{Baris 206\textendash 271}: Penentuan langkah-langkah yang harus ditempuh untuk setiap kemungkinan mode operasional.
+	\item \textbf{Baris 273}: \textit{Return code} 0, menandakan bahwa perkakas berhasil berjalan tanpa ada masalah.
 \end{enumerate}
-
+\vspace*{-0.5em} % prevent awkward cutoff
 \subsection{CMakeLists}
 \label{sec:testing-implementation-cmakelists}
 
-Implementasi dari file CMakeLists.txt untuk perkakas ini dapat dilihat di lampiran \ref{appdx:A-cmakelists}. Adapun cara kerja file CMakeLists ini dapat dibagi menjadi beberapa bagian sebagai berikut:
+Implementasi dari file CMakeLists.txt untuk perkakas ini dapat dilihat di Lampiran \ref{appdx:A-cmakelists}. Adapun cara kerja file CMakeLists ini dapat dibagi menjadi beberapa bagian sebagai berikut:
 
 \begin{enumerate}
 	\item \textbf{Baris 1 \& 2}: Pengaturan nama proyek serta file-file utama dari proyeknya.
@@ -116,11 +116,11 @@ Implementasi dari file CMakeLists.txt untuk perkakas ini dapat dilihat di lampir
 	\item \textbf{Baris 9\textendash 14}: Pencarian dan pengintegrasian \textit{library-library} yang diperlukan perkakas.
 	\item \textbf{Baris 16\textendash 32}: Perintah-perintah spesifik untuk sistem operasi berbasis Linux, yang berhubungan dengan instalasi halaman manual (\textit{man page}). File yang berisi kode murni \textit{man page} akan di-\textit{compress}, dan kemudian diatur untuk dapat diinstal langsung ke direktori yang benar di Linux.
 \end{enumerate}
-
+\vspace*{-0.5em} % prevent awkward cutoff
 \subsection{Halaman manual (\textit{man page})}
 \label{sec:testing-implementation-man}
 
-Kode ini diperlukan untuk fitur halaman manual (man \textit{page}) di sistem operasi berbasis Linux, yang pada dasarnya merupakan bantuan penggunaan perkakas yang lebih panjang dan lebih detail. Implementasi dari perkakas ini ada di lampiran \ref{appdx:A-manpage}, di mana potongan kode tersebut dapat dibagi menjadi bagian bagian sebagai berikut, berdasarkan sintaks yang mengawali bagian-bagian dalam kode tersebut,\footnote{\href{https://www.linuxhowtos.org/System/creatingman.htm}{https://www.linuxhowtos.org/System/creatingman.htm}} yaitu:
+Kode ini diperlukan untuk fitur halaman manual (man \textit{page}) di sistem operasi berbasis Linux, yang pada dasarnya merupakan bantuan penggunaan perkakas yang lebih panjang dan lebih detail. Implementasi dari perkakas ini ada di Lampiran \ref{appdx:A-manpage}, di mana potongan kode tersebut dapat dibagi menjadi bagian bagian sebagai berikut, berdasarkan sintaks yang mengawali bagian-bagian dalam kode tersebut\footnote{\href{https://www.linuxhowtos.org/System/creatingman.htm}{https://www.linuxhowtos.org/System/creatingman.htm}}, yaitu:
 
 \begin{itemize}
 	\item \textbf{.TH} \\
@@ -200,7 +200,7 @@ Instalasi perkakas ini tentunya mengharuskan \textit{library-library} yang telah
 		\item cURL
 		\item CMake
 	\end{itemize}
-	
+	\newpage\vspace*{-1.5em} % prevent awkward cutoff
 	Perlu diperhatikan bahwa cURL (di Windows) harus diinstal melalui vcpkg\textemdash cURL bawaan dari Windows tidak mengandung \textit{library-library development} sekunder yang dibutuhkan oleh perkakas ini. Di lain hal, instalasi cURL secara manual hanya memungkinkan perkakas cURL-nya sendiri untuk diakses dari mana saja (melalui variabel \textit{environment}), tetapi hal ini tidak berlaku untuk \textit{library development} sekundernya.
 	
 	\item Linux \\
@@ -215,8 +215,8 @@ Instalasi perkakas ini tentunya mengharuskan \textit{library-library} yang telah
 	
 \end{itemize}
 \noindent
-Ingat bahwa perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{source code} dari \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
-
+Perkakas ini juga menggunakan \textit{library} cJSON, tetapi untuk alasan kompatibilitas antar Windows dan Linux, \textit{source code} dari \textit{library} ini langsung diikutkan di dalam perkakasnya sendiri, sehingga tidak perlu diinstal oleh pengguna lagi.
+\vspace*{-0.5em} % prevent awkward cutoff
 \subsubsection{Cara Instalasi}
 \label{sec:testing-implementation-installation-howto}
 
@@ -250,11 +250,11 @@ cmake ../
 			\item Direkomendasikan untuk menginstal \textit{compiler} \textbf{MinGW}, karena \textit{compiler} ini sudah mengikutkan salah satu file \textit{header} yang dibutuhkan oleh perkakas ini. Apabila pengguna menggunakan \textit{compiler} ini, variabel \verb|<compiler>| harus diisi dengan ``\verb|MinGW Makefiles|''.
 			\item \textbf{Jangan menggunakan \textit{compiler} Visual Studio}, karena \textit{compiler} ini tidak mengandung file \textit{header} C yang dibutuhkan di perkakas ini. Perlu diperhatikan juga bahwa \textit{compiler} Visual Studio ini merupakan nilai \textit{default} dari \verb|<compiler>| untuk sistem operasi Windows, jadi pengguna juga tidak boleh menghilangkan opsi \verb|-G| tersebut begitu saja.
 		\end{itemize}
-			
+		
 		\item Linux \\
 		Untuk sistem operasi berbasis Linux, tidak perlu mengatur \textit{compiler}, karena nilai \textit{default} dari variabel \verb|<compiler>| di sistem operasi berbasis Linux (\textbf{Unix Makefiles}) sudah ideal.
 	\end{itemize}
-	
+	\newpage\vspace*{-1.5em} % prevent widow
 	\item Lanjutkan dengan instalasi perkakas.
 	
 	\begin{itemize}
@@ -278,7 +278,7 @@ make install
 	
 	\item File \textit{executable} akan terletak di dalam \textit{folder} ``build'', dan siap dijalankan.
 \end{enumerate}
-
+\vspace*{-0.5em} % prevent widow
 \subsection{Pengujian}
 \label{sec:testing-experiments-testing}
 
@@ -303,13 +303,13 @@ Tabel \ref{tab:testing-experiments-testing-overview} memaparkan jumlah tes yang 
     \hline
         5 & Mode \textit{direct} & 10 \\
     \hline
-        6 & Integrasi perkakas \cl lain & 6 \\
+        6 & Integrasi perkakas \cl\xspace lain & 6 \\
     \hline
 	\end{tabular}
     \caption{Jumlah kategori dan tes yang dilakukan.}
     \label{tab:testing-experiments-testing-overview}
 \end{table}
-
+\vspace*{-2.5em} % prevent widow
 \subsubsection{Sintaks dasar}
 \label{sec:testing-experiments-testing-basic}
 
@@ -1136,15 +1136,15 @@ Locale available: id, en
 	
 \end{enumerate}
 
-\subsubsection{Integrasi perkakas \cl lain}
+\subsubsection{Integrasi perkakas \cl\xspace lain}
 \label{sec:testing-experiments-testing-integration}
 
-Pengujian ini dilakukan untuk menguji kompatibilitas keluaran perkakas dengan fungsi dari perkakas-perkakas \cl bawaan yang ada. Sebelum dilakukan, perlu ditetapkan beberapa aturan dasar untuk pengujian ini, yaitu sebagai berikut:
+Pengujian ini dilakukan untuk menguji kompatibilitas keluaran perkakas dengan fungsi dari perkakas-perkakas \cl\xspace bawaan yang ada. Perkakas yang telah dibuat akan memiliki keluaran berupa teks biasa, yang berarti bahwa keluaran perkakas seharusnya dapat digunakan langsung sebagai masukan perkakas-perkakas \cl\xspace lainnya, seperti \textit{pipeline} (\verb|>|) dan \verb|findstr|/\verb|grep|. Sebelum tes ini dilakukan, perlu ditetapkan beberapa aturan dasar untuk pengujian ini, yaitu sebagai berikut:
 
 \begin{itemize}
 	\item Tes kasus yang akan digunakan sebagai masukan adalah pencarian rute langsung dengan satu kemungkinan rute, dari ``ciwalk'' (Bandung) ke ``unpar'' (Bandung), dalam bahasa Inggris. Masukan ini akan disamakan untuk seluruh bagian ini untuk alasan konsistensi.
 	\item Pengujian akan dilakukan sebanyak dua kali untuk tiap kasus, untuk Windows dan Linux.
-	\item Pengujian hanya akan dilakukan sekali untuk kasus-kasus tertentu apabila fungsi yang diuji memiliki perintah yang sama, atau fungsi tersebut tidak didukung oleh perkakas \cl bawaan dalam sistem operasi tersebut.
+	\item Pengujian hanya akan dilakukan sekali untuk kasus-kasus tertentu apabila fungsi yang diuji memiliki perintah yang sama, atau fungsi tersebut tidak didukung oleh perkakas \cl\xspace bawaan dalam sistem operasi tersebut.
 \end{itemize}
 \newpage \noindent
 Berikut merupakan hasil pengujian untuk bagian ini.
@@ -1256,7 +1256,7 @@ Ada tiga langkah dalam rute yang diuji, jadi perkakas akan mengeluarkan `3'.
 		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 		\item Catatan tambahan: \\
-		Tes ini hanya berlaku untuk sistem operasi berbasis Linux, karena tidak ada perintah dasar bawaan dalam \cl Windows yang dapat menghitung jumlah baris dalam suatu keluaran. Tes ini juga tidak dapat dilakukan ke pencarian rute yang menghasilkan lebih dari satu hasil.
+		Tes ini hanya berlaku untuk sistem operasi berbasis Linux, karena tidak ada perintah dasar bawaan dalam \cl\xspace Windows yang dapat menghitung jumlah baris dalam suatu keluaran. Tes ini juga tidak dapat dilakukan ke pencarian rute yang menghasilkan lebih dari satu hasil.
 	\end{itemize}
 	
 \end{enumerate}
