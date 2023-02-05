@@ -514,7 +514,7 @@ Pengujian ini akan dilakukan untuk mengecek apakah fungsi-fungsi perkakas yang b
 kiritool --mode searchplace --region bdo --query unpar --locale id
 		\end{lstlisting}
 		\item Keluaran yang diharapkan: \\
-		Perkakas akan menampilkan nama dan koordinat \latlon lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
+		Perkakas akan menampilkan nama dan koordinat \latlon\xspace lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
 		\item Keluaran perkakas:
 		\begin{lstlisting}
 Lokasi:
@@ -532,7 +532,7 @@ Koordinat: -6.87520,107.60492
 kiritool --mode searchplace --region bdo --query ab --locale id
 		\end{lstlisting}
 		\item Keluaran yang diharapkan: \\
-		Perkakas akan menampilkan nama dan koordinat \latlon semua kemungkinan lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
+		Perkakas akan menampilkan nama dan koordinat \latlon\xspace semua kemungkinan lokasi, sesuai dengan bahasa yang diminta oleh pengguna.
 		\item Keluaran perkakas:
 		\begin{lstlisting}
 Lokasi 1:
@@ -638,7 +638,7 @@ Silakan cek ulang apakah kata kunci pencarian sudah diformat dengan benar.
 		\end{lstlisting}
 		\item Status tes: \textbf{Sukses}
 		\item Catatan tambahan: \\
-		Perkakas tetap menerima kata kunci pencarian yang diawali dengan tanda hubung (`-'), jadi perkakas tidak bisa langsung mengembalikan \textit{error} ke pengguna apabila pengguna (misal dalam kasus ini) memasukkan koordinat \latlon sebagai argumen opsi \verb|-q|.
+		Perkakas tetap menerima kata kunci pencarian yang diawali dengan tanda hubung (`-'), jadi perkakas tidak bisa langsung mengembalikan \textit{error} ke pengguna apabila pengguna (misal dalam kasus ini) memasukkan koordinat \latlon\xspace sebagai argumen opsi \verb|-q|.
 	\end{itemize}
 	
 	\item Pencarian lokasi tanpa pengaturan bahasa
@@ -786,7 +786,7 @@ kiritool --mode findroute --finish -6.87520,107.60492 --locale id
 kiritool --mode findroute --start -6.89350,107.60430 --locale id
 		\end{lstlisting}
 		\item Keluaran yang diharapkan: \\
-		Perkakas akan mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan koordinat \latlon lokasi awal atau akhir, tergantung dari lokasi mana yang tidak dimasukkan.
+		Perkakas akan mengeluarkan pesan \textit{error} yang mengingatkan pengguna untuk memasukkan koordinat \latlon\xspace lokasi awal atau akhir, tergantung dari lokasi mana yang tidak dimasukkan.
 		\item Keluaran perkakas: \\
 		\textbf{Kasus 1}: Lokasi awal tidak dimasukkan
 		\begin{lstlisting}

@@ -127,7 +127,7 @@ Alur kerja dari fitur pencarian rute angkot menggunakan kata kunci pencarian lok
 	\end{itemize}
 	
 	\item Langkah 2 sampai 5 akan diulang kembali untuk lokasi akhir.
-	\item Jika kata kunci kedua lokasi berhasil diproses, perkakas akan mengirim kembali koordinat \latlon\xspace dari kedua lokasi tersebut ke API sebagai masukan untuk proses kedua, yaitu mencari rute angkot dengan koordinat \latlon lokasi.
+	\item Jika kata kunci kedua lokasi berhasil diproses, perkakas akan mengirim kembali koordinat \latlon\xspace dari kedua lokasi tersebut ke API sebagai masukan untuk proses kedua, yaitu mencari rute angkot dengan koordinat \latlon\xspace lokasi.
 	\item Setelah selesai diproses, keluaran berupa rute dari API akan dikembalikan ke perkakas.
 	\item Perkakas akan mengecek keluaran yang diterimanya. Apabila rute:
 	
@@ -273,12 +273,12 @@ Perkakas ini memiliki beberapa variabel global, yang sengaja diletakkan sebagai 
 	\item \verb|error| (\verb|int|) \\
 	Kode yang menandakan apakah sebuah \textit{error} telah terjadi. Nilai awal dari variabel ini adalah \textbf{0}, dan jika variabel ini diganti menjadi \textbf{1}, di pengecekan kode \textit{error} selanjutnya, perkakas akan dihentikan.
 \end{itemize}
-
+\newpage\vspace*{-3.5em} % prevent awkward cutoff
 \subsection{\texttt{print\textunderscore help()}}
 \label{sec:design-code-printhelp}
 
 Fungsi ini merupakan fungsi yang akan dipanggil ketika pengguna memilih opsi standar \verb|--help|. Keterangan singkat dari fungsi ini dapat dilihat di Tabel \ref{tab:design-code-printhelp-details}.
-
+\vspace*{-0.25em} % prevent awkward cutoff
 \begin{table}[H]
     \centering
     \caption{Detail dari fungsi \texttt{print\char`_help()}.}
@@ -290,37 +290,18 @@ Fungsi ini merupakan fungsi yang akan dipanggil ketika pengguna memilih opsi sta
 	\hline
 		\textbf{\textit{Input}} & \multicolumn{2}{p{10.5cm} |}{Fungsi ini tidak memerlukan masukan apapun.} \\
 	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{Sekumpulan array karakter yang merupakan bantuan penggunaan perkakas.} \\
+		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{Sekumpulan \textit{string} berupa bantuan penggunaan perkakas.} \\
 	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{\textit{Pseudocode} tidak ditulis karena seluruh proses dalam fungsi ini hanya menampilkan sekumpulan \textit{array} karakter.} \\
+		\textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fungsi ini akan menampilkan bantuan penggunaan perkakas ke pengguna melalui \textit{output stream} standar (\texttt{stdout})} \\
 	\hline
 	\end{tabular}
     \label{tab:design-code-printhelp-details}
 \end{table}
-
+\vspace*{-1.5em} % prevent awkward cutoff
 \subsection{\texttt{replace\textunderscore space()}}
 \label{sec:design-code-replacespace}
 
-Fungsi ini merupakan fungsi yang berguna untuk mengganti semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Hal ini perlu dilakukan karena pengkodean HTML yang digunakan untuk format URL tidak mendukung karakter spasi, dan melainkan mensubstitusi seluruh kejadian karakter tersebut dalam suatu URL menjadi ``\%20''. Fungsi ini akan menerima sebuah \textit{array} karakter berisi URL permintaan sebagai masukannya, mengganti semua karakter spasi yang ada di dalamnya menjadi ``\%20'', dan meletakkan hasilnya di variabel global \verb|escape|. Adapun keterangan singkat dari fungsi ini dapat dilihat di Tabel \ref{tab:design-code-printhelp-details}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{replace\char`_space()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{replace\char`_space()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Meng-\textit{escape} seluruh karakter spasi di \textit{string} masukan.} \\
-	\hline
-		\textbf{\textit{Input}} & \multicolumn{2}{p{10.5cm} |}{Sebuah \textit{string} berupa \textit{array} karakter.} \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{String tersebut yang sudah di-\textit{escape} karakter spasinya, dimasukkan ke variabel global \texttt{escape}.} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat di Algoritma \ref{alg:design-replacespace}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-code-replacespace-details}
-\end{table}
+Fungsi ini merupakan fungsi yang berguna untuk mengganti semua karakter spasi (` ') dalam variabel-variabel kata kunci pencarian sebelum isi dari variabel-variabel tersebut dimasukkan ke dalam URL untuk permintaan GET. Hal ini perlu dilakukan karena pengkodean HTML yang digunakan untuk format URL tidak mendukung karakter spasi, dan melainkan mensubstitusi seluruh kejadian karakter tersebut dalam suatu URL menjadi ``\%20''. Fungsi ini akan menerima sebuah \textit{array} karakter berisi URL permintaan sebagai masukannya, mengganti semua karakter spasi yang ada di dalamnya menjadi ``\%20'', dan meletakkan hasilnya di variabel global \verb|escape|. Adapun \textit{pseudocode} dari fungsi ini dapat dilihat di Algoritma \ref{alg:design-replacespace}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{replace\char`_space()}}
@@ -328,8 +309,8 @@ Fungsi ini merupakan fungsi yang berguna untuk mengganti semua karakter spasi (`
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-        \textbf{Input:} $string$ \\
-        \textbf{Output:} $string$ yang sudah diganti semua spasinya ke ``\%20'' \\
+        \textbf{Input:} Sebuah \textit{string} berupa \textit{array} karakter. \\
+        \textbf{Output:} \textit{String} tersebut, yang sudah diganti semua karakter spasinya ke ``\%20''. \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
 	\begin{algorithmic}
@@ -353,14 +334,15 @@ Fungsi ini merupakan fungsi yang berguna untuk mengganti semua karakter spasi (`
 		\State \Return{$escape$}
 	\end{algorithmic}
 \end{algorithm}
-
+\vspace*{-1em} % prevent awkward cutoff
 \subsection{\texttt{build\textunderscore url\textunderscore searchplace()}}
 \label{sec:design-code-buildurl-searchplace}
 
-Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET untuk proses pencarian lokasi. Keterangan dari fungsi ini dapat dilihat di Tabel \ref{tab:design-code-buildurl-searchplace-details}.
+Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET untuk proses pencarian lokasi. Cara kerja fungsi ini dapat dilihat di Algoritma \ref{alg:design-buildurl-searchplace}.
 	
 	Selain itu, fitur ini juga memiliki implementasi tambahan yang tidak ada di API KIRI, yaitu implementasi variabel \verb|locale| untuk fitur pencarian lokasi, yang memungkinkan pemilihan bahasa Indonesia (\verb|id|) atau Inggris (\verb|en|) untuk keluaran serta pesan-pesan \textit{error} yang berhubungan dengan proses tersebut.
 
+\begin{comment}
 \begin{table}[H]
     \centering
     \caption{Detail dari fungsi \texttt{build\char`_url\char`_searchplace()}.}
@@ -382,6 +364,7 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 	\end{tabular}
     \label{tab:design-code-buildurl-searchplace-details}
 \end{table}
+\end{comment}
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{build\char`_url\char`_searchplace()}}
@@ -389,7 +372,11 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-        \textbf{Input:} $locale$, $region$, $query$, $error$ \\
+        \textbf{Input:} \\
+        \hspace{1.1em}\textendash\xspace $locale$: Kode bahasa \\
+        \hspace{1.1em}\textendash\xspace $region$: Region dari lokasi yang ingin dicari \\
+        \hspace{1.1em}\textendash\xspace $query$: Kata kunci pencarian lokasi \\
+        \hspace{1.1em}\textendash\xspace $error$: Variabel penanda terjadinya \textit{error} \\
         \textbf{Output:} $url$ permintaan GET API untuk fitur pencarian lokasi \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
@@ -446,29 +433,7 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 \subsection{\texttt{build\textunderscore url\textunderscore findroute()}}
 \label{sec:design-code-buildurl-findroute}
 
-Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET untuk proses pencarian rute angkot. Adapun penjelasan dari fungsi ini dapat dilihat di Tabel \ref{tab:design-code-buildurl-findroute-details}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{build\char`_url\char`_findroute()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{build\char`_url\char`_findroute()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Membangun URL untuk permintaan GET pencarian rute ke API KIRI.} \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{locale} (variabel global) \\
-		 & - & \texttt{start}: Koordinat lokasi awal \\
-		 & - & \texttt{finish}: Koordinat lokasi akhir \\
-	\hline
-		\textbf{\textit{Output}} & - & \texttt{error} (variabel global) \\
-		 & - & \texttt{url} (variabel global) \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat di Algoritma \ref{alg:design-buildurl-findroute}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-code-buildurl-findroute-details}
-\end{table}
+Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET untuk proses pencarian rute angkot. Adapun alur kerja dari fungsi ini dapat dilihat di Algoritma \ref{alg:design-buildurl-findroute}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{build\char`_url\char`_findroute()}}
@@ -476,7 +441,11 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-        \textbf{Input:} $locale$, $start$, $finish$, $error$ \\
+        \textbf{Input:} \\
+        \hspace{1.1em}\textendash\xspace $locale$: Kode bahasa keluaran perkakas \\
+        \hspace{1.1em}\textendash\xspace $start$: Koordinat \latlon\xspace lokasi awal \\
+        \hspace{1.1em}\textendash\xspace $finish$: Koordinat \latlon\xspace lokasi akhir \\
+        \hspace{1.1em}\textendash\xspace $error$: Variabel penanda terjadinya \textit{error} \\
         \textbf{Output:} $url$ permintaan GET API untuk fitur pencarian rute \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
@@ -539,7 +508,7 @@ Fungsi ini digunakan untuk mengembalikan isi dari variabel \verb|url| ke nilai s
 	\hline
 		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{url} yang sudah dikembalikan nilainya} \\
 	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{\textit{Pseudocode} fungsi ini tidak ditulis karena fungsi ini hanya berisi satu buah proses penggantian nilai \textit{array} karakter.} \\
+		\textbf{Deskripsi} & \multicolumn{2}{p{10.5cm} |}{Fungsi ini akan mengisi kembali nilai variabel url dengan \linebreak``\texttt{https://projectkiri.id/api?version=2}''} \\
 	\hline
 	\end{tabular}
     \label{tab:design-code-buildurl-reset-details}
@@ -548,28 +517,7 @@ Fungsi ini digunakan untuk mengembalikan isi dari variabel \verb|url| ke nilai s
 \subsection{\texttt{execute\textunderscore curl()}}
 \label{sec:design-code-curl-execute}
 
-Fungsi ini digunakan untuk proses pengiriman permintaan ke API, serta penerimaan respons dari API. Semua utilitas dari library cURL yang dipakai dalam perkakas ini, seperti \textit{handler} kelebihan memori data yang masuk, dan aturan variabel apa yang akan diisi dengan data respons API, akan diimplementasikan hanya di dalam fungsi ini. Adapun keterangan singkat dari fungsi ini tertera di Tabel \ref{tab:design-code-curl-execute}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{execute\char`_curl()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{execute\char`_curl()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Menjalankan proses cURL.} \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
-		 & - & \texttt{mode} (variabel global) \\
-		 & - & \texttt{step} (variabel global) \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{responsedata} yang sudah diisi dengan data respons cURL} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat Algoritma \ref{alg:design-curl-execute}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-code-curl-execute}
-\end{table}
+Fungsi ini digunakan untuk proses pengiriman permintaan ke API, serta penerimaan respons dari API. Semua utilitas dari library cURL yang dipakai dalam perkakas ini, seperti \textit{handler} kelebihan memori data yang masuk, dan aturan variabel apa yang akan diisi dengan data respons API, akan diimplementasikan hanya di dalam fungsi ini. Alur kerja dari fungsi ini tertera di Algoritma \ref{alg:design-curl-execute}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{execute\char`_curl()}}
@@ -577,7 +525,10 @@ Fungsi ini digunakan untuk proses pengiriman permintaan ke API, serta penerimaan
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} $responsedata$, $mode$, $step$ \\
+		\textbf{Input:} \\
+		\hspace{1.1em}\textendash\xspace $responsedata$: \texttt{Chunk} (kosong) yang akan diisi respons API KIRI \\
+		\hspace{1.1em}\textendash\xspace $mode$: Kode operasional perkakas \\
+		\hspace{1.1em}\textendash\xspace $step$: Kode khusus mode \texttt{direct} untuk menandakan proses mana yang sedang berlangsung \\
 		\textbf{Output:} $responsedata$ yang sudah diisi dengan respons API \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
@@ -626,26 +577,7 @@ Fungsi ini digunakan untuk proses pengiriman permintaan ke API, serta penerimaan
 \subsection{\texttt{print\textunderscore curl\textunderscore error()}}
 \label{sec:design-code-curl-error}
 
-Fungsi ini merupakan fungsi sederhana yang akan mengeluarkan pesan \textit{error} apabila terjadi \textit{error} koneksi ketika perkakas ingin melakukan komunikasi dengan API KIRI. Penjelasan lebih menyeluruh untuk fungsi ini ada di Tabel \ref{tab:design-code-curl-error}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{print\char`_curl\char`_error()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{print\char`_curl\char`_error()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Mengeluarkan pesan \textit{error} untuk kegagalan dalam proses cURL.} \\
-	\hline
-		\textbf{\textit{Input}} & \multicolumn{2}{p{10.5cm} |}{\texttt{error} (variabel global)} \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{Pesan \textit{error} yang memberitahu pengguna bahwa telah terjadi \textit{error} dalam proses cURL.} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat Algoritma \ref{alg:design-curl-error}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-code-curl-error}
-\end{table}
+Fungsi ini merupakan fungsi sederhana yang akan mengeluarkan pesan \textit{error} apabila terjadi \textit{error} koneksi ketika perkakas ingin melakukan komunikasi dengan API KIRI. Untuk keterangan cara kerja lebih lanjut, \textit{pseudocode} untuk fungsi ini dapat dilihat di Algoritma \ref{alg:design-curl-error}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{print\char`_curl\char`_error()}}
@@ -653,8 +585,8 @@ Fungsi ini merupakan fungsi sederhana yang akan mengeluarkan pesan \textit{error
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} $error$ \\
-		\textbf{Output:} Pesan \textit{error} terjadinya \textit{error} cURL \\
+		\textbf{Input:} $error$: Variabel penanda terjadinya \textit{error} \\
+		\textbf{Output:} Pesan \textit{error} yang memberitahu pengguna bahwa telah terjadi \textit{error} dalam proses cURL. \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
 	\begin{algorithmic}
@@ -667,30 +599,7 @@ Fungsi ini merupakan fungsi sederhana yang akan mengeluarkan pesan \textit{error
 \subsection{\texttt{write\textunderscore memalloc()}}
 \label{sec:design-code-write-memalloc}
 
-Fungsi ini adalah fungsi tambahan untuk libcurl yang bertugas menerima data yang masuk dari API. Di fungsi ini juga diimplementasikan sebuah \textit{handler} pengalokasian memori, yang akan menghindari terjadinya \textit{error} akibat ukuran data yang diterima melebihi alokasi memori yang diperbolehkan untuk variabel yang akan diisi dengan data tersebut. Adapun penjelasan singkat dari fungsi ini dapat dilihat di Tabel \ref{tab:design-write-memalloc}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{write\char`_memalloc()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_memalloc()}} \\
-	\hline
-		\textbf{Tujuan} & - & Mengurus penerimaan data dari hasil proses cURL. \\
-		 & - & Mencegah \textit{error} akibat kegagalan alokasi memori data yang diterima. \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{incomingdata}: Variabel sementara data yang diterima \\
-		 & - & \texttt{size}: Ukuran dari satu \textit{block} data \\
-		 & - & \texttt{nmenb}: Berapa banyak \textit{block} data yang diterima \\
-		 & - & \texttt{userdata}: Variabel yang diisi dengan data yang diterima \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{realsize}: Untuk verifikasi keutuhan data yang diterima} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat Algoritma \ref{alg:design-write-memalloc}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-write-memalloc}
-\end{table}
+Fungsi ini adalah fungsi tambahan untuk libcurl yang bertugas menerima data yang masuk dari API. Di fungsi ini juga diimplementasikan sebuah \textit{handler} pengalokasian memori, yang akan menghindari terjadinya \textit{error} akibat ukuran data yang diterima melebihi alokasi memori yang diperbolehkan untuk variabel yang akan diisi dengan data tersebut. Adapun penjelasan singkat dari fungsi ini dapat dilihat di Algoritma \ref{alg:design-write-memalloc}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{write\char`_memalloc()}}
@@ -698,8 +607,12 @@ Fungsi ini adalah fungsi tambahan untuk libcurl yang bertugas menerima data yang
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} $incomingdata$, $size$, $nmenb$, $userdata$ \\
-		\textbf{Output:} $realsize$ \\
+		\textbf{Input:} \\
+		\hspace{1.1em}\textendash\xspace $incomingdata$: Variabel sementara untuk menampung data yang diterima dari API \\
+		\hspace{1.1em}\textendash\xspace $size$: Ukuran dari satu \textit{block} data \\
+		\hspace{1.1em}\textendash\xspace $nmenb$: Berapa banyak \textit{block} data yang diterima \\
+		\hspace{1.1em}\textendash\xspace $userdata$: Variabel akhir yang akan diisi dengan data yang diterima dari API \\
+		\textbf{Output:} $realsize$: Ukuran total data yang diterima \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
 	\begin{algorithmic}
@@ -722,29 +635,7 @@ Fungsi ini adalah fungsi tambahan untuk libcurl yang bertugas menerima data yang
 \subsection{\texttt{write\textunderscore searchplace()}}
 \label{sec:design-code-write-searchplace}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|searchplace|. Penjelasan singkat dari fungsi ini tertera di Tabel \ref{tab:design-write-searchplace}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{write\char`_searchplace()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_searchplace()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian lokasi dan\linebreak menampilkan hasilnya ke pengguna.} \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
-		 & - & \texttt{responseJSON} (variabel global) \\
-		 & - & \texttt{error} (variabel global) \\
-		 & - & \texttt{locale} (variabel global) \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{Keluaran akhir perkakas untuk mode \textit{searchplace}} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat Algoritma \ref{alg:design-write-searchplace}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-write-searchplace}
-\end{table}
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|searchplace|. \textit{Pseudocode} dari fungsi ini tertulis di Algoritma \ref{alg:design-write-searchplace}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{write\char`_searchplace()}}
@@ -752,12 +643,16 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} $responsedata$, $responseJSON$, $error$, $locale$ \\
+		\textbf{Input:} \\
+		\hspace{1.1em}\textendash\xspace $responsedata$: \texttt{Chunk} yang sudah diisi dengan respons API KIRI \\
+		\hspace{1.1em}\textendash\xspace $responseJSON$: $responsedata$ yang sudah diubah ke bentuk yang dapat diolah bahasa C \\
+		\hspace{1.1em}\textendash\xspace $error$: Variabel penanda terjadinya \textit{error} \\
+		\hspace{1.1em}\textendash\xspace $locale$: Kode bahasa keluaran perkakas \\
 		\textbf{Output:} Keluaran akhir fitur pencarian lokasi \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
 	\begin{algorithmic}
-		\State $responseJSON \gets$ data dalam $responsedata$
+		\State $responseJSON \gets$ data dalam $responsedata$ yang diubah dari bentuk JSON
 		\State $status \gets$ \textquotesingle\textquotesingle status\textquotesingle\textquotesingle\xspace dalam $responseJSON$
 		
 		\If{$status \neq$ \textquotesingle\textquotesingle ok\textquotesingle\textquotesingle}
@@ -786,29 +681,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 \subsection{\texttt{write\textunderscore findroute()}}
 \label{sec:design-code-write-findroute}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Perlu diperhatikan bahwa ada sebuah \textit{bug} dari API KIRI di mana durasi rute dalam menit tidak diterjemahkan dari bahasa Inggris, apabila variabel \verb|locale| diatur ke bahasa Indonesia. Potongan kode untuk mengatasi \textit{bug} ini juga akan terdapat di dalam fungsi ini. Adapun penjelasan lebih lanjut dari fungsi ini dapat dilihat di Tabel \ref{tab:design-write-findroute}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{write\char`_findroute()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_findroute()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian rute dan\linebreak menampilkan hasilnya ke pengguna.} \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
-		 & - & \texttt{responseJSON} (variabel global) \\
-		 & - & \texttt{error} (variabel global) \\
-		 & - & \texttt{locale} (variabel global) \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{Keluaran akhir perkakas untuk mode \textit{findroute}} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat Algoritma \ref{alg:design-write-findroute}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-write-findroute}
-\end{table}
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian rute angkot. Perlu diperhatikan bahwa ada sebuah \textit{bug} dari API KIRI di mana durasi rute dalam menit tidak diterjemahkan dari bahasa Inggris, apabila variabel \verb|locale| diatur ke bahasa Indonesia. Potongan kode untuk mengatasi \textit{bug} ini juga akan terdapat di dalam fungsi ini. Adapun penjelasan lebih lanjut dari fungsi ini dapat dilihat di Algoritma \ref{alg:design-write-findroute}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{write\char`_findroute()}}
@@ -816,7 +689,11 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} $responsedata$, $responseJSON$, $error$, $locale$ \\
+		\textbf{Input:} \\
+		\hspace{1.1em}\textendash\xspace $responsedata$: \texttt{Chunk} yang sudah diisi dengan respons API KIRI \\
+		\hspace{1.1em}\textendash\xspace $responseJSON$: $responsedata$ yang sudah diubah ke bentuk yang dapat diolah bahasa C \\
+		\hspace{1.1em}\textendash\xspace $error$: Variabel penanda terjadinya \textit{error} \\
+		\hspace{1.1em}\textendash\xspace $locale$: Kode bahasa keluaran perkakas \\
 		\textbf{Output:} Keluaran akhir fitur pencarian rute \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
@@ -861,30 +738,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 \subsection{\texttt{write\textunderscore searchplace\textunderscore noreturns()}}
 \label{sec:design-code-write-searchplacenoreturns}
 
-Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|direct|. Berbeda dengan fungsi \verb|searchplace| sebelumnya, fungsi ini akan mengambil data dari variabel \verb|responsedata|, tetapi hanya akan menampilkan nama lokasi pertama yang ditemukan, atau jika terjadi \textit{error} di salah satu prosesnya, maka fitur ini akan menampilkan pesan \textit{error} yang sesuai. Adapun penjelasan lebih lanjut dari fungsi ini dapat dilihat di Tabel \ref{tab:design-write-searchplacenoreturns}.
-
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{write\char`_searchplace\char`_noreturns()()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{write\char`_searchplace\char`_noreturns()()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Memproses respons API untuk fitur pencarian lokasi dan\linebreak menampilkan hanya nama lokasi pertama yang ditemukan ke\linebreak pengguna.} \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{responsedata} (variabel global) \\
-		 & - & \texttt{responseJSON} (variabel global) \\
-		 & - & \texttt{error} (variabel global) \\
-		 & - & \texttt{step} (variabel global) \\
-		 & - & \texttt{locale} (variabel global) \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{Nama lokasi pertama yang ditemukan} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat Algoritma \ref{alg:design-write-searchplacenoreturns}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-write-searchplacenoreturns}
-\end{table}
+Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fitur pencarian lokasi dari mode \verb|direct|. Berbeda dengan fungsi \verb|searchplace| sebelumnya, fungsi ini akan mengambil data dari variabel \verb|responsedata|, tetapi hanya akan menampilkan nama lokasi pertama yang ditemukan, atau jika terjadi \textit{error} di salah satu prosesnya, maka fitur ini akan menampilkan pesan \textit{error} yang sesuai. Adapun penjelasan lebih lanjut dari alur kerja fungsi ini dapat dilihat di Algoritma \ref{alg:design-write-searchplacenoreturns}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{write\char`_searchplace\char`_noreturns()}}
@@ -892,7 +746,12 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} $responsedata$, $responseJSON$, $error$, $step$, $locale$ \\
+		\textbf{Input:} \\
+		\hspace{1.1em}\textendash\xspace $responsedata$: \texttt{Chunk} yang sudah diisi dengan respons API KIRI \\
+		\hspace{1.1em}\textendash\xspace $responseJSON$: $responsedata$ yang sudah diubah ke bentuk yang dapat diolah bahasa C \\
+		\hspace{1.1em}\textendash\xspace $error$: Variabel penanda terjadinya \textit{error} \\
+		\hspace{1.1em}\textendash\xspace $step$: Kode khusus mode \texttt{direct} untuk menandakan proses mana yang sedang berlangsung. \\
+		\hspace{1.1em}\textendash\xspace $locale$: Kode bahasa keluaran perkakas \\
 		\textbf{Output:} Nama lokasi pertama yang ditemukan \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}
@@ -928,7 +787,7 @@ Fungsi ini adalah fungsi yang bertugas untuk memproses respons dari API untuk fi
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Fungsi utama (\texttt{main})}
+\subsection{Fungsi utama (\texttt{main()})}
 \label{sec:design-code-main}
 
 Tentunya seluruh perangkat lunak bahasa C akan memiliki satu buah fungsi utama. Untuk perkakas ini, alur kerja dari fungsi utamanya adalah sebagai berikut.
@@ -938,9 +797,9 @@ Tentunya seluruh perangkat lunak bahasa C akan memiliki satu buah fungsi utama. 
 	\item Terjemahkan setiap opsi (serta argumennya, jika ada) ke nilai variabelnya masing-masing.
 	\item Kalau ada kelebihan opsi/argumen atau ada opsi/argumen yang tidak tepat/valid, \textit{return} $1$ sebagai penanda bahwa perkakas keluar dengan \textit{error}, dan keluarkan pesan \textit{error} yang sesuai.
 	\item Kalau semua masukan valid, lanjutkan proses sesuai variabel-variabel yang telah diterjemahkan tadi, sampai keluaran akhir dapat ditampilkan.
-\end{enumerate} 
-
-\textit{Pseudocode} dari alur kerja ini dapat dilihat di Algoritma \ref{alg:design-main}.
+\end{enumerate}
+\noindent
+\textit{Pseudocode} dari alur kerja fungsi utama ini dapat dilihat di Algoritma \ref{alg:design-main}.
 
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Alur kerja fungsi utama perkakas}
@@ -948,7 +807,7 @@ Tentunya seluruh perangkat lunak bahasa C akan memiliki satu buah fungsi utama. 
 	% input & output
 	\vspace{-0.6\baselineskip}
 	\begin{flushleft}
-		\textbf{Input:} Semua variabel global di subbab \ref{sec:design-implementation-globalvars} \\
+		\textbf{Input:} Semua variabel yang tertulis di subbab \ref{sec:design-implementation-globalvars} \\
 		\textbf{Output:} \textit{Exit code} perkakas. \\
 	\end{flushleft}
 	\vspace{-1.05\baselineskip}

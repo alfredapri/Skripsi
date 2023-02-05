@@ -147,7 +147,7 @@ Fungsi yang pertama dapat dilakukan memanggil perintah dengan format sebagai ber
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\linewidth]{ubercli-time}
-    \caption[Contoh penggunaan perkakas \ubercli (\textit{time})]{Contoh penggunaan fitur prediksi waktu perjalanan untuk perkakas \ubercli.\protect\footnotemark}
+    \caption[Contoh penggunaan perkakas \ubercli\xspace (\textit{time})]{Contoh penggunaan fitur prediksi waktu perjalanan untuk perkakas \ubercli.\protect\footnotemark}
     \label{fig:similarapps-ubercli-time}
 \end{figure}
 \footnotetext{\href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}
@@ -167,7 +167,7 @@ Keluaran dari fungsi kedua ini dapat dilihat di Ggambar \ref{fig:similarapps-ube
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{ubercli-price}
-    \caption[Contoh penggunaan perkakas \ubercli (\textit{price})]{Contoh penggunaan fitur prediksi harga perjalanan untuk perkakas \ubercli\protect\footnotemark.}
+    \caption[Contoh penggunaan perkakas \ubercli\xspace (\textit{price})]{Contoh penggunaan fitur prediksi harga perjalanan untuk perkakas \ubercli\protect\footnotemark.}
     \label{fig:similarapps-ubercli-price}
 \end{figure}
 \footnotetext{Gambar diambil dari \href{https://github.com/jaebradley/uber-cli}{https://github.com/jaebradley/uber-cli}}
@@ -210,7 +210,7 @@ Seperti tertulis di awal bab ini, perkakas ini juga tidak bisa digunakan. Alasan
 \section{Analisis API KIRI}
 \label{sec:analysis-kiri}
 
-API KIRI memiliki tiga buah layanan, yaitu \textit{search place}, \textit{routing}, dan \textit{smart direction}. Di antara ketiga layanan ini, perlu diingat bahwa \textit{smart direction} merupakan sebuah layanan yang bekerja dengan langsung membuka halaman \textit{web} KIRI sendiri, sehingga layanan ini tidak akan digunakan dalam pembuatan perkakas \cl untuk skripsi ini.
+API KIRI memiliki tiga buah layanan, yaitu \textit{search place}, \textit{routing}, dan \textit{smart direction}. Di antara ketiga layanan ini, perlu diingat bahwa \textit{smart direction} merupakan sebuah layanan yang bekerja dengan langsung membuka halaman \textit{web} KIRI sendiri, sehingga layanan ini tidak akan digunakan dalam pembuatan perkakas \cl\xspace untuk skripsi ini.
 
 \subsection{\textit{Search Place}}
 \label{sec:analysis-kiri-searchplace}
@@ -243,16 +243,16 @@ Layanan kedua dari API ini merupakan fungsi utama dari KIRI sendiri, yaitu penca
 	\item \verb|locale|\\
 	Isi dari parameter ini akan ditentukan pada saat pemakaian perkakas.
 	\item \verb|start|\\
-	Parameter ini merupakan nilai \latlon dari titik awal perjalanan pengguna, yang akan diberikan sebagai masukan pada saat pemakaian perkakas.
+	Parameter ini merupakan nilai \latlon\xspace dari titik awal perjalanan pengguna, yang akan diberikan sebagai masukan pada saat pemakaian perkakas.
 	\item \verb|finish|\\
-	Parameter ini merupakan nilai \latlon dari titik akhir/tujuan perjalanan pengguna, yang akan diberikan sebagai masukan pada saat pemakaian perkakas.
+	Parameter ini merupakan nilai \latlon\xspace dari titik akhir/tujuan perjalanan pengguna, yang akan diberikan sebagai masukan pada saat pemakaian perkakas.
 	\item \verb|presentation|\\
 	Parameter ini hanya digunakan untuk fitur \textit{backwards compatibility}. Jika parameter ini ingin digunakan, maka isi dari parameter ini hanya ada satu kemungkinan, yaitu \verb|desktop|. Parameter ini ada karena versi lama dari halaman \textit{web} KIRI memerlukan tampilan yang berbeda untuk perangkat-perangkat \textit{desktop} dan perangkat-perangkat \textit{mobile}. Walaupun begitu, sekarang parameter ini tidak lagi berpengaruh ke keluaran API.
 	\item \verb|apikey|\\
 	Sama seperti pada layanan \textit{search place}, parameter ini akan berisi sebuah nilai kunci API yang sudah dibuat sebelumnya, yaitu \verb|68C...97C|.
 \end{itemize}
 \vspace{\baselineskip}\noindent
-Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place}, terutama karena fitur pencarian rute hanya menerima nilai \latlon dari lokasi-lokasi yang akan digunakan sebagai masukan, yang tidak hanya akan menyusahkan pengguna dalam memakai perkakas \cl ini, tetapi juga kedua nilai tersebut juga merupakan salah satu dari keluaran layanan pencarian lokasi. Jadi, dengan menggunakan kedua layanan tersebut secara berurutan, maka pengguna akan bisa mencari lokasi awal dan akhir yang diinginkan hanya dengan kata-kata kunci, dan selanjutnya pengguna akan dapat menerima langkah-langkah yang harus ditempuh dalam rute sebagai keluaran akhir dari perkakas.
+Layanan ini dapat digunakan sebagai lanjutan dari layanan \textit{search place}, terutama karena fitur pencarian rute hanya menerima nilai \latlon\xspace dari lokasi-lokasi yang akan digunakan sebagai masukan, yang tidak hanya akan menyusahkan pengguna dalam memakai perkakas \cl\xspace ini, tetapi juga kedua nilai tersebut juga merupakan salah satu dari keluaran layanan pencarian lokasi. Jadi, dengan menggunakan kedua layanan tersebut secara berurutan, maka pengguna akan bisa mencari lokasi awal dan akhir yang diinginkan hanya dengan kata-kata kunci, dan selanjutnya pengguna akan dapat menerima langkah-langkah yang harus ditempuh dalam rute sebagai keluaran akhir dari perkakas.
 
 \section{Analisis Perkakas yang Dibuat}
 \label{sec:analysis-thesisapp}
@@ -262,9 +262,9 @@ Di bagian ini akan dibahas analisis hal-hal yang berhubungan dengan perkakas yan
 \subsection{Analisis Fitur Perkakas}
 \label{sec:analysis-thesisapp-features}
 
-Pada skripsi ini, akan dibangun sebuah aplikasi berupa perkakas \cl\xspace yang merupakan ekstensi dari sebuah aplikasi berbasis \textit{web} lain, yaitu KIRI. Perkakas ini akan menjadi ekstensi KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl\xspace milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
+Pada skripsi ini, dibangun sebuah aplikasi berupa perkakas \cl\xspace yang merupakan ekstensi dari sebuah aplikasi berbasis \textit{web} lain, yaitu KIRI. Perkakas ini menjadi ekstensi dari KIRI dengan cara memungkinkan penggunanya untuk mengakses fungsi-fungsi API KIRI dari \cl\xspace milik perangkat mereka masing-masing. Fungsi utama dari perkakas ini tentunya sama dengan KIRI sendiri, yaitu membantu navigasi dari satu lokasi ke lokasi lain dengan menggunakan angkot.
 
-Walaupun begitu, aplikasi ini akan memiliki tiga fitur utama yang berhubungan satu sama lain, yaitu pencarian lokasi dengan kata kunci pencarian, pencarian rute dengan koordinat \latlon\xspace lokasi awal dan akhir, dan pencarian rute dengan kata kunci pencarian lokasi awal dan akhir. Selain ketiga fitur utama ini, perkakas juga akan memiliki fitur untuk menampilkan halaman bantuan penggunaannya, seperti layaknya perkakas \cl\xspace pada umumnya.
+Walaupun begitu, aplikasi ini memiliki tiga fitur utama yang berhubungan satu sama lain, yaitu pencarian lokasi dengan kata kunci pencarian, pencarian rute dengan koordinat \latlon\xspace lokasi awal dan akhir, dan pencarian rute dengan kata kunci pencarian lokasi awal dan akhir. Selain ketiga fitur utama ini, perkakas juga memiliki fitur untuk menampilkan halaman bantuan penggunaannya, seperti layaknya perkakas \cl\xspace pada umumnya.
 
 \begin{itemize}
 	\item Pencarian lokasi dengan kata kunci pencarian\\
@@ -276,37 +276,37 @@ Walaupun begitu, aplikasi ini akan memiliki tiga fitur utama yang berhubungan sa
 	Pencarian rute angkot dengan kata kunci pencarian merupakan fungsi ketiga  dari perkakas ini. Dalam fungsi ini, perkakas akan meminta masukan dari pengguna berupa kata kunci untuk pencarian lokasi awal dan lokasi akhir dari perjalanan yang ingin dilakukan. Setelah masukan ini berhasil diterima dan diproses, perkakas akan langsung mengeluarkan keluaran akhir berupa langkah-langkah yang harus diambil oleh pengguna untuk pergi dari lokasi awal ke lokasi akhir, dengan memanfaatkan jasa angkot yang ada.
 \end{itemize}
 \vspace{\baselineskip}\noindent % Prevent widow on next page
-Selain itu, perkakas ini juga akan memiliki fitur-fitur standar yang harus dimiliki oleh perkakas-perkakas \cl, seperti dokumentasi singkat (bantuan penggunaan perkakas) sebagai salah satu mode operasional perkakas, dan juga \textit{man page} (khusus implementasi di Linux).
-
+Selain itu, perkakas ini juga memiliki fitur-fitur standar yang harus dimiliki oleh perkakas-perkakas \cl, seperti dokumentasi singkat (bantuan penggunaan perkakas) sebagai salah satu mode operasional perkakas, dan juga \textit{man page} (khusus implementasi di Linux).
+\vspace*{-0.5em} % prevent widow
 \subsubsection{Aturan Penamaan}
 \label{sec:analysis-thesisapp-features-conventions}
 
-Untuk memenuhi fitur-fitur tersebut, perkakas akan perlu berbagai opsi yang masing-masing merepresentasikan fitur (mode operasional) perkakas, serta variabel-variabel yang dibutuhkan oleh API. Setelah dilakukan analisis perkakas-perkakas sejenis yang memerlukan opsi-opsi dalam masukannya, dibuat seperangkat aturan yang mendasari penamaan dari opsi-opsi yang akan dimiliki perkakas yang akan dibuat. Berikut merupakan aturan-aturan tersebut.
+Untuk memenuhi fitur-fitur tersebut, perkakas memerlukan berbagai opsi yang masing-masing merepresentasikan fitur (mode operasional) perkakas, serta variabel-variabel yang dibutuhkan oleh API. Setelah dilakukan analisis perkakas-perkakas sejenis yang memerlukan opsi-opsi dalam masukannya, dibuat seperangkat aturan yang mendasari penamaan dari opsi-opsi yang dimiliki perkakas yang dibuat. Berikut merupakan aturan-aturan tersebut.
 
 \begin{enumerate}
-	\item Opsi-opsi perkakas yang akan dibuat akan dinamakan berdasarkan penamaan opsi-opsi dalam perkakas-perkakas yang telah dianalisis. Hal ini juga berarti bahwa nama-nama opsi perkakas yang akan dibuat kemungkinan besar tidak akan sama dengan nama opsi-opsi perkakas-perkakas yang dianalisis.
+	\item Opsi-opsi perkakas yang dibuat dinamakan berdasarkan penamaan opsi-opsi dalam perkakas-perkakas yang telah dianalisis. Hal ini juga berarti bahwa nama-nama opsi perkakas yang dibuat kemungkinan besar tidak akan sama dengan nama opsi-opsi perkakas-perkakas yang dianalisis.
 	\item Nama pendek (satu huruf) opsi umumnya akan dinamakan sesuai dengan huruf pertama dari fitur/variabel yang direpresentasikan oleh opsi tersebut.
 	\item Nama panjang dari opsi umumnya akan dinamakan sesuai dengan nama fitur/variabel yang direpresentasikan oleh opsi tersebut.
-	\item Argumen dari opsi yang merepresentasikan fitur perkakas akan dinamakan sesuai dengan nama dari mode operasionalnya masing-masing di API KIRI, kecuali \texttt{direct}, karena fitur ini merupakan mode tambahan yang bukan merupakan fitur langsung dari API KIRI.
+	\item Argumen dari opsi yang merepresentasikan fitur perkakas dinamakan sesuai dengan nama dari mode operasionalnya masing-masing di API KIRI, kecuali \texttt{direct}, karena fitur ini merupakan mode tambahan yang bukan merupakan fitur langsung dari API KIRI.
 	\item Nama-nama opsi dan, baik pendek maupun panjang, yang jika mengikuti ketiga aturan pertama akan menghasilkan nama yang sama dengan nama opsi lain, akan dinamakan dengan nama buatan yang artinya tidak terlalu jauh dengan variabel apa yang direpresentasikan olehnya.
 \end{enumerate}
-
+\vspace*{-0.5em} % prevent widow
 \subsubsection{Opsi-opsi Perkakas}
 \label{sec:analysis-thesisapp-features-options}
 
-Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab sebelumnya, berikut merupakan daftar serta penjelasan singkat dari opsi-opsi yang akan disediakan dalam perkakas yang akan dibangun.
+Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab sebelumnya, berikut merupakan daftar serta penjelasan singkat dari opsi-opsi yang tersedia dalam perkakas yang dibangun.
 
 \begin{itemize}
 	\item \verb|-h (--help)|\\
 	Perlu diingat juga bahwa aplikasi ini merupakan aplikasi \cl\xspace murni, yang berarti bahwa seluruh operasi dari aplikasi ini akan dilakukan tanpa bantuan gambar grafis apa pun, sehingga perintah untuk menunjukkan apa perintah-perintah dan opsi-opsi yang tersedia merupakan sebuah keharusan. Hal ini merupakan fungsi satu-satunya dari perintah ini. Mengikuti nama opsi-opsi bantuan dari perkakas-perkakas yang telah dianalisis, maka opsi ini akan dinamakan \verb|--help|, atau \verb|-h| untuk versi pendeknya.
-	
+	\newpage\vspace*{-1.5em} % prevent hanging widow
 	\item \verb|-m <mode> (--mode)|\\
 	Opsi ini merupakan opsi berparameter yang menentukan fitur mana yang ingin digunakan oleh pengguna. Nama dari opsi ini ditentukan sebagai \verb|-m| atau \verb|--mode| karena opsi ini merupakan opsi yang mengatur mode penggunaan perkakas. Adapun isi dari parameter \verb|<mode>| yang dapat digunakan adalah sebagai berikut:
 	
 	\begin{itemize}	
 		\item \verb|searchplace|\\
 		Parameter ini akan menandakan bahwa pengguna ingin menggunakan fitur \textit{search place} dari perkakas. Untuk mode ini, perkakas akan menerima input dari pengguna dalam bentuk parameter-parameter dari opsi-opsi tambahan. Adapun opsi-opsi tersebut adalah sebagai berikut.
-			
+		
 		\begin{itemize}
 			\item \verb|-r <region> (--region)|\\
 			Opsi ini merupakan opsi yang akan menerima parameter berupa kode area (region) dari lokasi yang ingin dicari.
@@ -334,7 +334,7 @@ Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab sebelumnya, berikut 
 		\begin{enumerate}
 			\item Perkakas akan menerima lokasi awal dan akhir berupa kata kunci dari pengguna yang dimasukkan ke dalam parameter dari opsi masing-masing.
 			\item Pencarian lokasi akan dilakukan dua kali\textemdash untuk lokasi awal dan lokasi akhir, dan hasilnya akan langsung ditampilkan ke pengguna. Perlu ditekankan bahwa:
-			\newpage\vspace*{-1.5em} % prevent hanging widow
+			
 			\begin{itemize}
 				\item Perkakas hanya akan mengambil hasil pertama saja di tiap pencariannya, jadi jika terdapat banyak hasil dari salah satu proses pencarian, hanya lokasi pertama saja yang akan digunakan untuk proses selanjutnya.
 				\item Perkakas tidak peduli apakah hasil pencarian tersebut benar merupakan hasil yang diinginkan pengguna atau tidak. Jika satu atau lebih lokasi ternyata tidak sesuai, pengguna dapat melakukan ulang seluruh prosesnya.
@@ -366,7 +366,7 @@ Mengikuti aturan-aturan yang sudah dipaparkan di sub-subbab sebelumnya, berikut 
 \subsection{Analisis Kebutuhan Perkakas}
 \label{sec:analysis-thesisapp-usecases}
 
-Perkakas \cl\xspace ini akan memiliki tiga fitur utama, yaitu pencarian lokasi dengan kata kunci, pencarian rute dengan koordinat \latlon\xspace lokasi, dan pencarian rute dengan kata kunci pencarian lokasi. Oleh karena itu, diagram \textit{use case} dari aplikasi ini akan mengandung empat \textit{use case}, yang dapat dilihat di Gambar \ref{fig:thesisapp-uml}. 
+Perkakas \cl\xspace ini memiliki tiga fitur utama, yaitu pencarian lokasi dengan kata kunci, pencarian rute dengan koordinat \latlon\xspace lokasi, dan pencarian rute dengan kata kunci pencarian lokasi. Oleh karena itu, diagram \textit{use case} dari aplikasi ini mengandung empat \textit{use case}, yang dapat dilihat di Gambar \ref{fig:thesisapp-uml}. 
 
 Berikut merupakan empat tabel \textit{scenario case}, yang masing-masing akan menjelaskan secara singkat keempat \textit{use case} dari perkakas yang dibuat. Tabel-tabel tersebut adalah sebagai berikut.
 
@@ -413,7 +413,7 @@ Berikut merupakan empat tabel \textit{scenario case}, yang masing-masing akan me
 		\textbf{Pos-kondisi} & \multicolumn{2}{p{10.5cm} |}{Halaman bantuan penggunaan.} \\
     \hline
 		\textbf{Skenario utama} & 1. & Perkakas membaca masukan pengguna, yaitu perintah untuk menampilkan bantuan penggunaan perkakas. \\
-		 & 2. & Perkakas menampilkan bantuan penggunaan perkakas kepada pengguna. \\
+		 & 2. & Perkakas menampilkan bantuan penggunaan perkakas ke pengguna. \\
     \hline
 		\textbf{Skenario eksepsi} & \multicolumn{2}{p{10.5cm} |}{Perintah yang dimasukkan pengguna tidak sesuai format/tidak valid.} \\
 \end{longtable}
