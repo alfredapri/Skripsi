@@ -342,30 +342,6 @@ Fungsi ini merupakan fungsi yang digunakan untuk pembangunan URL permintaan	GET 
 	
 	Selain itu, fitur ini juga memiliki implementasi tambahan yang tidak ada di API KIRI, yaitu implementasi variabel \verb|locale| untuk fitur pencarian lokasi, yang memungkinkan pemilihan bahasa Indonesia (\verb|id|) atau Inggris (\verb|en|) untuk keluaran serta pesan-pesan \textit{error} yang berhubungan dengan proses tersebut.
 
-\begin{comment}
-\begin{table}[H]
-    \centering
-    \caption{Detail dari fungsi \texttt{build\char`_url\char`_searchplace()}.}
-    \begin{tabular}{| l | c p{10cm} |}
-	\hline
-		\textbf{Nama fungsi} & \multicolumn{2}{p{10.5cm} |}{\texttt{build\char`_url\char`_searchplace()}} \\
-	\hline
-		\textbf{Tujuan} & \multicolumn{2}{p{10.5cm} |}{Membangun URL untuk permintaan GET pencarian lokasi ke API KIRI.} \\
-	\hline
-		\textbf{\textit{Input}} & - & \texttt{locale}: Kode bahasa \\
-		 & - & \texttt{region}: Region dari lokasi yang ingin dicari \\
-		 & - & \texttt{query}: Kata kunci pencarian lokasi \\
-		 & - & \texttt{error} (variabel global) \\
-	\hline
-		\textbf{\textit{Output}} & \multicolumn{2}{p{10.5cm} |}{\texttt{url} (variabel global)} \\
-	\hline
-		\textbf{\textit{Pseudocode}} & \multicolumn{2}{p{10.5cm} |}{Lihat di Algoritma \ref{alg:design-buildurl-searchplace}.} \\
-	\hline
-	\end{tabular}
-    \label{tab:design-code-buildurl-searchplace-details}
-\end{table}
-\end{comment}
-
 \begin{algorithm}[h]
 	\caption{\textendash\xspace Algoritma fungsi \texttt{build\char`_url\char`_searchplace()}}
 	\label{alg:design-buildurl-searchplace}
